@@ -48,7 +48,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 To deploy the site to the firebase host:
 
 ```
-npm run build`
+npm run build
 
 firebase deploy
 
