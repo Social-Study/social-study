@@ -6,6 +6,15 @@
 npm install
 ```
 
+### You will need the following global npm packages
+
+```
+npm install -g firebase-tools
+
+npm install -g @vue/cli
+
+```
+
 ### Compiles and hot-reloads for development
 
 ```
@@ -38,6 +47,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 To deploy the site to the firebase host:
 
-`npm run build`
+```
+npm run build`
 
-`firebase deploy`
+firebase deploy
+
+```
