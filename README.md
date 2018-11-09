@@ -53,3 +53,10 @@ npm run build
 firebase deploy
 
 ```
+
+# Main Technologies
+
+Vue.js
+Firebase / Vuefire
+Pose
+Vee - Validate

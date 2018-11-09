@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import "firebase/auth";
 
 const config = {
   apiKey: "AIzaSyBm8Y6ihxnlsTdvxbQ11X2owrg-C40Hon4",
@@ -9,4 +10,10 @@ const config = {
   messagingSenderId: "265403435232"
 };
 
+// export default config;
 export default firebase.initializeApp(config);
+
+// TODO: Change it so that components only use the parts of firebase that they need
+// Should reduce load time if you only load auth when you need it, etc.
+
+// TODO: Rename file to match naming scheme
