@@ -7,59 +7,82 @@
         <a href="..." class="navbar-brand m-2">Social Study</a>
       </section>
 
-      <!-- <section class="navbar-section "> -->
+      <!-- Login Form -->
       <form class="navbar-section login-container" @submit.prevent method="" data-vv-scope="login">
         <input v-validate.disable="'required|email'" name="email" v-model="email" placeholder="Email" type="text" id="" class="form-input mx-1" autofocus>
         <input v-validate.disable="'required|min:6'" name="password" v-model="password" placeholder="Password" type="password" id="" class="form-input mx-1">
         <button @click="logIn" class="btn btn-primary m-1">Log In</button>
       </form>
-      <!-- </section> -->
     </header>
 
+    <!-- Error Message Display -->
     <div v-show="error.show" class="toast toast-error">
       <button @click="error.show = !error.show" class="btn btn-clear float-right"></button>
       {{ this.error.message }}
     </div>
 
-    <!-- TODO: Use vee-validate to check inputs before sending to server -->
-
-    <!-- Left Block: Information -->
     <div class="container">
       <div class="columns">
-        <div class="column col-6">
-          <h1 id="logo">Social Study</h1>
-          <p>Social Study is an online learning tool for all ages.</p>
+
+        <!-- Left Block: Information -->
+        <div class="column col-6 col-md-12">
+
+          <div>
+            <h1 id="logo">Social Study</h1>
+            <!-- <p>Social Study is an online learning tool for all ages.</p> -->
+            <p>The <i>free</i> learning tool for all ages.</p>
+
+            <div class="svg-container">
+              <div id="row1">
+                <div class="tooltip tooltip-bottom" data-tooltip="Take quizzes">
+                  <img class="undraw-svg" src="../assets/undraw_exams.svg" alt="quizzes">
+                </div>
+                <div class="tooltip tooltip-bottom" data-tooltip="Study notes and flashcards">
+                  <img class="undraw-svg" src="../assets/undraw_studying.svg" alt="studying">
+                </div>
+                <div class="tooltip tooltip-bottom" data-tooltip="Communicate with classmates">
+                  <img class="undraw-svg" src="../assets/undraw_group_chat.svg" alt="communication">
+                </div>
+              </div>
+              <div id="row2">
+                <div class="tooltip tooltip-bottom" data-tooltip="Take and organize your notes">
+                  <img class="undraw-svg" src="../assets/undraw_taking_notes.svg" alt="note taking">
+                </div>
+                <div class="tooltip tooltip-bottom" data-tooltip="Create and manage events and assignments">
+                  <img class="undraw-svg" src="../assets/undraw_events.svg" alt="schedule management">
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- <div class="divider-vert "></div> -->
+        <!-- Right Block: Sign Up Form -->
+        <div class="column col-6 col-sm-12 col-md-12">
 
-        <!-- Right Block: Signup -->
-        <div class="column col-6">
-          <h2>Sign Up</h2>
-          <form @submit.prevent data-vv-scope="signup">
-            <input v-validate.disable="'required|alpha_spaces'" v-model="userName" class="form-input" type="text" name="name" placeholder="Name"><br>
-            <input v-validate.disable="'required|email'" v-model="newEmail" type="text" class="form-input" name="email" placeholder="Email Address"><br>
-            <input v-validate.disable="'required|min:6'" v-model="newPassword" class="form-input" type="password" name="password" placeholder="Password"><br>
-            <button @click="createAccount" class="btn btn-primary mx-1">Sign Up</button>
-            <button @click="googleSignIn" class="btn btn-primary mx-1">
-              <fa-icon :icon="['fab', 'google']"></fa-icon>
-            </button>
-          </form>
+          <div id="right-container">
 
-          <!-- <button @click="logout">Log Out</button><br>
-          <button @click="debug">Print User</button><br> -->
+            <form @submit.prevent data-vv-scope="signup">
+              <h1>Sign Up</h1>
+              <input v-validate.disable="'required|alpha_spaces'" v-model="userName" class="form-input" type="text" name="name" placeholder="Name"><br>
+              <input v-validate.disable="'required|email'" v-model="newEmail" type="text" class="form-input" name="email" placeholder="Email Address"><br>
+              <input v-validate.disable="'required|min:6'" v-model="newPassword" class="form-input" type="password" name="password" placeholder="Password"><br>
+              <button @click="createAccount" class="btn btn-primary mx-1">Sign Up</button>
+              <button @click="googleSignIn" class="btn mx-1">
+                <fa-icon :icon="['fab', 'google']"></fa-icon>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- Create new account -->
 
   </div>
 </template>
 
 <script>
 import firebase from "@/firebaseConfig";
-// Constant objects; Used for GetAuthTypeGoogle and Persistence
+// Constant objects; Needed for GetAuthTypeGoogle and Persistence
 import FirebaseConsts from "firebase";
 
 export default {
@@ -78,20 +101,11 @@ export default {
       user: null
     };
   },
-  beforeMount: function() {},
   mounted: function() {
     this.user = firebase.auth().currentUser;
   },
   methods: {
-    debug: function() {
-      // print the current username, shows that the update was successful
-      console.log(firebase.auth().currentUser.displayName);
-    },
-    logout: function() {
-      firebase.auth().signOut();
-    },
-    // TODO: Implement option that allows a user to sign in with their google account
-    // TODO: Add options to reset password and setup email confirmation
+    // TODO: Add options to reset password and setup email confirmation to enable it
     logIn: function() {
       // Attempt to log in
       this.$validator.validateAll("login").then(result => {
@@ -114,12 +128,14 @@ export default {
                 .then(() => {
                   this.$router.replace("dashboard");
                 })
-                .catch(function(error) {
-                  alert(error.message);
+                .catch(error => {
+                  this.error.show = true;
+                  this.error.message = error.message;
                 });
             })
             .catch(error => {
-              alert(error.message);
+              this.error.show = true;
+              this.error.message = error.message;
             });
         }
       });
@@ -128,7 +144,6 @@ export default {
       // Attempt to create an account
       this.$validator.validateAll("signup").then(result => {
         if (!result) {
-          console.log(this.errors);
           if (this.errors.first("signup.name")) {
             this.error.message = this.errors.first("signup.name");
           } else if (this.errors.first("signup.email")) {
@@ -158,36 +173,33 @@ export default {
                         this.$router.replace("dashboard");
                       })
                       .catch(error => {
-                        alert(error.message);
+                        this.error.show = true;
+                        this.error.message = error.message;
                       });
-                  } else {
-                    // TODO: change all alerts to error messages
-                    alert(
-                      "Unable to change username because I could not retrieve current user"
-                    );
                   }
                 })
-                .catch(function(error) {
-                  alert(error.message);
+                .catch(error => {
+                  this.error.show = true;
+                  this.error.message = error.message;
                 });
             });
         }
       });
     },
     googleSignIn: function() {
-      // TODO: Try out redirection instead of popup, works better for mobile
-      console.log("Google sign in here");
       let provider = new FirebaseConsts.auth.GoogleAuthProvider();
       firebase
         .auth()
-        .signInWithPopup(provider)
+        // .signInWithPopup(provider)
+        .signInWithRedirect(provider)
         .then(result => {
+          // not sure what token is for
           let token = result.credential.accessToken;
           var user = result.user;
-          console.log(user.displayName);
         })
         .catch(error => {
-          alert(error.message);
+          this.error.show = true;
+          this.error.message = error.message;
         });
     }
   }
@@ -198,12 +210,36 @@ export default {
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
 
-* {
-  font-family: "Inter UI", monospace;
+h1 {
+  font-size: 4em;
 }
-
 p {
   font-size: 1.5em;
+}
+
+.svg-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#row1,
+#row2 {
+  display: flex;
+  flex-direction: row;
+}
+
+.undraw-svg {
+  width: 14em;
+  margin: 1em;
+}
+
+.undraw-svg:hover {
+  // width: 15em;
+  transform: scale(1.25);
+  top: 5px;
+  z-index: 999;
 }
 
 .login-container {
@@ -212,27 +248,38 @@ p {
   justify-content: flex-end;
 }
 
-.container {
-  margin-top: 15%;
+.columns {
+  min-height: 92vh;
 }
 
 .column input {
-  max-width: 300px;
+  width: 20em;
   margin: auto;
 }
 
-.columns {
-  min-height: 100%;
+.column {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#right-container {
+  display: flex;
+  flex-direction: col;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar {
-  background-image: $main-gradient;
+  background-image: $nav-gradient;
   padding: 0px 10px;
+  position: absolution;
+  max-height: 8vh;
 }
 
 .navbar-section input {
   width: 35%;
-  margin: 0 100px 0 100px;
 }
 
 .navbar-brand {
@@ -243,6 +290,7 @@ p {
 
 #logo {
   font-family: "Pacifico", cursive;
-  font-size: 6em;
+  // font-size: 6rem;
+  font-size: 6vw;
 }
 </style>

@@ -17,11 +17,12 @@
 
 html,
 body {
-  min-height: 100vh;
+  height: 100vh;
+  max-height: 100vh;
 }
 
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Inter UI", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

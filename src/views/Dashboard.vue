@@ -1,6 +1,7 @@
 <template>
   <div>
-    <a @click="logout" href="#" class="button">
+    <h1>Welcome to Social Study, {{ user.displayName }}</h1>
+    <a @click="logout" href="#" class="btn">
       Log Out
     </a>
   </div>
@@ -12,7 +13,12 @@ import firebase from "@/firebaseConfig";
 export default {
   name: "dashboard",
   data: function() {
-    return {};
+    return {
+      user: null
+    };
+  },
+  beforeMount: function() {
+    this.user = firebase.auth().currentUser;
   },
   methods: {
     logout: function() {
