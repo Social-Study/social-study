@@ -7,18 +7,19 @@
         <a href="..." class="navbar-brand m-2">Social Study</a>
       </section>
 
-      <section class="navbar-section login-container">
+      <!-- <section class="navbar-section "> -->
+      <form class="navbar-section login-container" @submit.prevent method="" data-vv-scope="login">
         <input v-validate.disable="'required|email'" name="email" v-model="email" placeholder="Email" type="text" id="" class="form-input mx-1" autofocus>
         <input v-validate.disable="'required|min:6'" name="password" v-model="password" placeholder="Password" type="password" id="" class="form-input mx-1">
         <button @click="logIn" class="btn btn-primary m-1">Log In</button>
-      </section>
-
-      <div v-show="error.show" class="toast toast-error">
-        <button @click="error.show = !error.show" class="btn btn-clear float-right"></button>
-        {{ this.error.message }}
-      </div>
-
+      </form>
+      <!-- </section> -->
     </header>
+
+    <div v-show="error.show" class="toast toast-error">
+      <button @click="error.show = !error.show" class="btn btn-clear float-right"></button>
+      {{ this.error.message }}
+    </div>
 
     <!-- TODO: Use vee-validate to check inputs before sending to server -->
 
@@ -35,13 +36,15 @@
         <!-- Right Block: Signup -->
         <div class="column col-6">
           <h2>Sign Up</h2>
-          <input v-validate.disable="'required|alpha_spaces'" v-model="userName" class="form-input" type="text" name="name" placeholder="Name"><br>
-          <input v-validate.disable="'required|email'" v-model="newEmail" type="text" class="form-input" name="email" placeholder="Email Address"><br>
-          <input v-validate.disable="'required|min:6'" v-model="newPassword" class="form-input" type="password" name="password" placeholder="Password"><br>
-          <button @click="createAccount" class="btn btn-primary mx-1">Sign Up</button>
-          <button @click="googleSignIn" class="btn btn-primary mx-1">
-            <fa-icon :icon="['fab', 'google']"></fa-icon>
-          </button>
+          <form @submit.prevent data-vv-scope="signup">
+            <input v-validate.disable="'required|alpha_spaces'" v-model="userName" class="form-input" type="text" name="name" placeholder="Name"><br>
+            <input v-validate.disable="'required|email'" v-model="newEmail" type="text" class="form-input" name="email" placeholder="Email Address"><br>
+            <input v-validate.disable="'required|min:6'" v-model="newPassword" class="form-input" type="password" name="password" placeholder="Password"><br>
+            <button @click="createAccount" class="btn btn-primary mx-1">Sign Up</button>
+            <button @click="googleSignIn" class="btn btn-primary mx-1">
+              <fa-icon :icon="['fab', 'google']"></fa-icon>
+            </button>
+          </form>
 
           <!-- <button @click="logout">Log Out</button><br>
           <button @click="debug">Print User</button><br> -->
@@ -56,7 +59,7 @@
 
 <script>
 import firebase from "@/firebaseConfig";
-// need to import this by itself to get the persistance constants for some reason
+// Constant objects; Used for GetAuthTypeGoogle and Persistence
 import FirebaseConsts from "firebase";
 
 export default {
@@ -91,14 +94,13 @@ export default {
     // TODO: Add options to reset password and setup email confirmation
     logIn: function() {
       // Attempt to log in
-      this.$validator.validateAll().then(result => {
+      this.$validator.validateAll("login").then(result => {
         if (!result) {
-          // there is a validation error
-          // Show the email errors first before showing password errors
-          if (this.errors.first("email")) {
-            this.error.message = this.errors.first("email");
-          } else if (this.errors.first("password")) {
-            this.error.message = this.errors.first("password");
+          // there is a validation error, display them in order
+          if (this.errors.has("login.email")) {
+            this.error.message = this.errors.first("login.email");
+          } else if (this.errors.first("login.password")) {
+            this.error.message = this.errors.first("login.password");
           }
           this.error.show = true;
         } else {
@@ -124,16 +126,15 @@ export default {
     },
     createAccount: function() {
       // Attempt to create an account
-      this.$validator.validate().then(result => {
+      this.$validator.validateAll("signup").then(result => {
         if (!result) {
-          console.log("errrs btw");
-
-          if (this.errors.first("name")) {
-            this.error.message = this.errors.first("name");
-          } else if (this.errors.first("email")) {
-            this.error.message = this.errors.first("email");
-          } else if (this.errors.first("password")) {
-            this.error.message = this.errors.first("password");
+          console.log(this.errors);
+          if (this.errors.first("signup.name")) {
+            this.error.message = this.errors.first("signup.name");
+          } else if (this.errors.first("signup.email")) {
+            this.error.message = this.errors.first("signup.email");
+          } else if (this.errors.first("signup.password")) {
+            this.error.message = this.errors.first("signup.password");
           }
           this.error.show = true;
         } else {
@@ -160,6 +161,7 @@ export default {
                         alert(error.message);
                       });
                   } else {
+                    // TODO: change all alerts to error messages
                     alert(
                       "Unable to change username because I could not retrieve current user"
                     );
@@ -173,6 +175,7 @@ export default {
       });
     },
     googleSignIn: function() {
+      // TODO: Try out redirection instead of popup, works better for mobile
       console.log("Google sign in here");
       let provider = new FirebaseConsts.auth.GoogleAuthProvider();
       firebase
@@ -193,10 +196,7 @@ export default {
 
 
 <style lang="scss" scoped>
-// TODO: put some of these imports in the main css file
 @import "../styleVariables.scss";
-@import url("https://fonts.googleapis.com/css?family=Pacifico");
-@import url("https://rsms.me/inter/inter-ui.css");
 
 * {
   font-family: "Inter UI", monospace;
@@ -226,7 +226,8 @@ p {
 }
 
 .navbar {
-  background-image: linear-gradient(-90deg, #5c00fd, #fd007e);
+  background-image: $main-gradient;
+  padding: 0px 10px;
 }
 
 .navbar-section input {

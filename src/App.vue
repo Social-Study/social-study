@@ -12,6 +12,8 @@
 
 <style lang="scss">
 @import "node_modules/spectre.css/src/spectre.scss";
+@import url("https://fonts.googleapis.com/css?family=Pacifico");
+@import url("https://rsms.me/inter/inter-ui.css");
 
 html,
 body {
