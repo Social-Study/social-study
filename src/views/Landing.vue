@@ -1,47 +1,63 @@
 <template>
   <div class="landing">
-    <div class="info">
-      <h1 id="logo">Social Study</h1>
-      <p>Social Study is a brand new online study tool for students of all ages</p>
-    </div>
 
-    <!-- Login Forms -->
-    <div>
-      <!-- Toggle between sign in and sign up -->
-      <label class="switch">
-        <input type="checkbox" v-model="hasAccount">
-        <span class="slider round"></span>
-      </label>
+    <!-- Header Section -->
+    <header class="navbar">
+      <section class="navbar-section">
+        <a href="..." class="navbar-brand m-2">Social Study</a>
+      </section>
 
-      <!-- TODO: Use vee-validate to check inputs before sending to server -->
-      <!-- Conditional rendering of login or create account prompts -->
-      <!-- Login -->
-      <div v-show="hasAccount">
-        <h2>Sign In</h2>
-        <input v-model="email" type="text" placeholder="Email Address" autofocus><br>
-        <input v-model="password" type="password" placeholder="Password"><br>
-        <button @click="logIn">Log In</button>
+      <section class="navbar-section login-container">
+        <input v-validate.disable="'required|email'" name="email" v-model="email" placeholder="Email" type="text" id="" class="form-input mx-1" autofocus>
+        <input v-validate.disable="'required|min:6'" name="password" v-model="password" placeholder="Password" type="password" id="" class="form-input mx-1">
+        <button @click="logIn" class="btn btn-primary m-1">Log In</button>
+      </section>
+
+      <div v-show="error.show" class="toast toast-error">
+        <button @click="error.show = !error.show" class="btn btn-clear float-right"></button>
+        {{ this.error.message }}
       </div>
 
-      <!-- Create new account -->
-      <div v-show="!hasAccount">
-        <h2>Sign Up</h2>
-        <input v-model="userName" type="text" placeholder="Name"><br>
-        <input v-model="email" type="text" placeholder="Email Address"><br>
-        <input v-model="password" type="password" placeholder="Password"><br>
-        <button @click="createAccount">Sign Up</button>
-      </div>
+    </header>
 
-      <button @click="logout">Log Out</button><br>
-      <button @click="debug">Print User</button><br>
+    <!-- TODO: Use vee-validate to check inputs before sending to server -->
+
+    <!-- Left Block: Information -->
+    <div class="container">
+      <div class="columns">
+        <div class="column col-6">
+          <h1 id="logo">Social Study</h1>
+          <p>Social Study is an online learning tool for all ages.</p>
+        </div>
+
+        <!-- <div class="divider-vert "></div> -->
+
+        <!-- Right Block: Signup -->
+        <div class="column col-6">
+          <h2>Sign Up</h2>
+          <input v-validate.disable="'required|alpha_spaces'" v-model="userName" class="form-input" type="text" name="name" placeholder="Name"><br>
+          <input v-validate.disable="'required|email'" v-model="newEmail" type="text" class="form-input" name="email" placeholder="Email Address"><br>
+          <input v-validate.disable="'required|min:6'" v-model="newPassword" class="form-input" type="password" name="password" placeholder="Password"><br>
+          <button @click="createAccount" class="btn btn-primary mx-1">Sign Up</button>
+          <button @click="googleSignIn" class="btn btn-primary mx-1">
+            <fa-icon :icon="['fab', 'google']"></fa-icon>
+          </button>
+
+          <!-- <button @click="logout">Log Out</button><br>
+          <button @click="debug">Print User</button><br> -->
+        </div>
+      </div>
     </div>
+
+    <!-- Create new account -->
+
   </div>
 </template>
 
 <script>
 import firebase from "@/firebaseConfig";
-// need to import this by itself to get the persistance consts for some reason
-import persistance from "firebase";
+// need to import this by itself to get the persistance constants for some reason
+import FirebaseConsts from "firebase";
 
 export default {
   name: "landing",
@@ -49,8 +65,13 @@ export default {
     return {
       email: "",
       password: "",
-      hasAccount: false,
+      newEmail: "",
+      newPassword: "",
       userName: "",
+      error: {
+        show: false,
+        message: ""
+      },
       user: null
     };
   },
@@ -70,57 +91,100 @@ export default {
     // TODO: Add options to reset password and setup email confirmation
     logIn: function() {
       // Attempt to log in
-      firebase
-        .auth()
-        .setPersistence(persistance.auth.Auth.Persistence.LOCAL)
-        .then(() => {
+      this.$validator.validateAll().then(result => {
+        if (!result) {
+          // there is a validation error
+          // Show the email errors first before showing password errors
+          if (this.errors.first("email")) {
+            this.error.message = this.errors.first("email");
+          } else if (this.errors.first("password")) {
+            this.error.message = this.errors.first("password");
+          }
+          this.error.show = true;
+        } else {
           firebase
             .auth()
-            .signInWithEmailAndPassword(this.email, this.password)
+            .setPersistence(FirebaseConsts.auth.Auth.Persistence.LOCAL)
             .then(() => {
-              this.$router.replace("dashboard");
+              firebase
+                .auth()
+                .signInWithEmailAndPassword(this.email, this.password)
+                .then(() => {
+                  this.$router.replace("dashboard");
+                })
+                .catch(function(error) {
+                  alert(error.message);
+                });
             })
-            .catch(function(error) {
+            .catch(error => {
               alert(error.message);
             });
-        })
-        .catch(error => {
-          alert(error.message);
-        });
+        }
+      });
     },
     createAccount: function() {
       // Attempt to create an account
-      firebase
-        .auth()
-        .setPersistence(persistance.auth.Auth.Persistence.LOCAL)
-        .then(() => {
+      this.$validator.validate().then(result => {
+        if (!result) {
+          console.log("errrs btw");
+
+          if (this.errors.first("name")) {
+            this.error.message = this.errors.first("name");
+          } else if (this.errors.first("email")) {
+            this.error.message = this.errors.first("email");
+          } else if (this.errors.first("password")) {
+            this.error.message = this.errors.first("password");
+          }
+          this.error.show = true;
+        } else {
           firebase
             .auth()
-            .createUserWithEmailAndPassword(this.email, this.password)
+            .setPersistence(FirebaseConsts.auth.Auth.Persistence.LOCAL)
             .then(() => {
-              let user = firebase.auth().currentUser;
-              if (user) {
-                user
-                  .updateProfile({
-                    displayName: this.userName, //pass displayName from form
-                    photoURL: "" //you can pass this empty
-                  })
-                  .then(() => {
-                    //redirect to your post-registration page
-                    this.$router.replace("dashboard");
-                  })
-                  .catch(error => {
-                    alert(error.message);
-                  });
-              } else {
-                alert(
-                  "Unable to change username because I could not retrieve current user"
-                );
-              }
-            })
-            .catch(function(error) {
-              alert(error.message);
+              firebase
+                .auth()
+                .createUserWithEmailAndPassword(this.newEmail, this.newPassword)
+                .then(() => {
+                  let user = firebase.auth().currentUser;
+                  if (user) {
+                    user
+                      .updateProfile({
+                        displayName: this.userName, //pass displayName from form
+                        photoURL: "" //you can pass this empty
+                      })
+                      .then(() => {
+                        //redirect to your post-registration page
+                        this.$router.replace("dashboard");
+                      })
+                      .catch(error => {
+                        alert(error.message);
+                      });
+                  } else {
+                    alert(
+                      "Unable to change username because I could not retrieve current user"
+                    );
+                  }
+                })
+                .catch(function(error) {
+                  alert(error.message);
+                });
             });
+        }
+      });
+    },
+    googleSignIn: function() {
+      console.log("Google sign in here");
+      let provider = new FirebaseConsts.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(result => {
+          let token = result.credential.accessToken;
+          var user = result.user;
+          console.log(user.displayName);
+        })
+        .catch(error => {
+          alert(error.message);
         });
     }
   }
@@ -129,89 +193,55 @@ export default {
 
 
 <style lang="scss" scoped>
+// TODO: put some of these imports in the main css file
+@import "../styleVariables.scss";
 @import url("https://fonts.googleapis.com/css?family=Pacifico");
+@import url("https://rsms.me/inter/inter-ui.css");
+
+* {
+  font-family: "Inter UI", monospace;
+}
+
+p {
+  font-size: 1.5em;
+}
+
+.login-container {
+  display: flex;
+  flex: row;
+  justify-content: flex-end;
+}
+
+.container {
+  margin-top: 15%;
+}
+
+.column input {
+  max-width: 300px;
+  margin: auto;
+}
+
+.columns {
+  min-height: 100%;
+}
+
+.navbar {
+  background-image: linear-gradient(-90deg, #5c00fd, #fd007e);
+}
+
+.navbar-section input {
+  width: 35%;
+  margin: 0 100px 0 100px;
+}
+
+.navbar-brand {
+  font-family: "Pacifico", cursive;
+  font-size: 2em;
+  color: white;
+}
 
 #logo {
   font-family: "Pacifico", cursive;
   font-size: 6em;
-}
-
-.login {
-  margin-top: 40px;
-}
-
-input {
-  margin: 10px 0;
-  width: 20%;
-  padding: 15px;
-}
-
-button {
-  margin-top: 20px;
-  width: 10%;
-  cursor: pointer;
-}
-
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: #2196f3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
 }
 </style>

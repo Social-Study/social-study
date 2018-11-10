@@ -4,8 +4,19 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 import firebase from "./firebaseConfig";
+import VeeValidate from "vee-validate";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 Vue.config.productionTip = false;
+
+// Add the imported icon to the library and register it with the icon component
+library.add(faGoogle);
+Vue.component("fa-icon", FontAwesomeIcon);
+
+// Client-side validation library for user form inputs
+Vue.use(VeeValidate);
 
 // called every time the router attempts to change page. Only logged in users
 // can access pages marked requiresAuth in the router

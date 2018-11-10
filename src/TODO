@@ -1,0 +1,12 @@
+Fix the validation entanglement between the two separate forms.
+
+Figure out why I am getting a warning for the site being too large.
+  Might have to change the imports on some of the packages/CSS
+
+Work on the dashboard
+
+Finish up the landing page. Make the css work on mobile.
+
+Remove console.log statements
+
+Figure out how to make style variables that apply globally.

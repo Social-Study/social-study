@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1>Dashboard</h1>
-    <input @click="logout" type="button" value="Log Out">
+    <a @click="logout" href="#" class="button">
+      Log Out
+    </a>
   </div>
 </template>
 
@@ -10,6 +11,9 @@ import firebase from "@/firebaseConfig";
 
 export default {
   name: "dashboard",
+  data: function() {
+    return {};
+  },
   methods: {
     logout: function() {
       firebase.auth().signOut();
@@ -18,3 +22,8 @@ export default {
   }
 };
 </script>
+
+<style lang="sass" scoped>
+
+
+</style>

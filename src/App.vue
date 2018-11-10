@@ -11,6 +11,13 @@
 </template>
 
 <style lang="scss">
+@import "node_modules/spectre.css/src/spectre.scss";
+
+html,
+body {
+  min-height: 100vh;
+}
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
