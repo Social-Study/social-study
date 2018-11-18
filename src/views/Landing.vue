@@ -4,21 +4,47 @@
     <!-- Header Section -->
     <header class="navbar">
       <section class="navbar-section">
-        <a href="..." class="navbar-brand m-2">Social Study</a>
+        <a href="#" class="navbar-brand m-2">Social Study</a>
       </section>
 
       <!-- Login Form -->
       <form class="navbar-section login-container" @submit.prevent method="" data-vv-scope="login">
-        <input v-validate.disable="'required|email'" name="email" v-model="email" placeholder="Email" type="text" id="" class="form-input mx-1" autofocus>
+        <input v-validate.disable="'required|email'" name="email" ref="email" v-model="email" placeholder="Email" type="text" id="" class="form-input mx-1" autofocus>
         <input v-validate.disable="'required|min:6'" name="password" v-model="password" placeholder="Password" type="password" id="" class="form-input mx-1">
         <button @click="logIn" class="btn btn-primary m-1">Log In</button>
       </form>
     </header>
 
+    <!-- TODO: Figure out how to prevent page from getting longer when messages are active. Want to prevent scrollbar from appearing-->
+
+    <!-- Sucess Message Display -->
+    <MessageBar v-show="message.show" type="success">
+      {{ this.message.message }}
+    </MessageBar>
+
     <!-- Error Message Display -->
-    <div v-show="error.show" class="toast toast-error">
-      <button @click="error.show = !error.show" class="btn btn-clear float-right"></button>
+    <MessageBar @closeMessage="error.show=false" v-show="error.show" type="error">
       {{ this.error.message }}
+      <a v-show="error.passPrompt" href="#" style="cursor: pointer" @click="modalActive = true">Forgot Password?</a>
+    </MessageBar>
+
+    <!-- Password Reset Modal -->
+    <div v-show="modalActive" class="modal modal-sm active" id="modal-id">
+      <a href="#" class="modal-overlay" aria-label="Close"></a>
+      <div class="modal-container">
+        <div class="modal-header">
+          <a href="#" @click="modalActive = false" class="btn btn-clear float-right" aria-label="Close"></a>
+          <div class="modal-title h5">Enter your email</div>
+        </div>
+        <div class="modal-body">
+          <div class="content">
+            <input @focus="$event.target.select()" value="email" v-model="resetEmail" type="text" class="form-input" autofocus>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button @click="sendResetEmail" class="btn btn-primary m-1">Reset</button>
+        </div>
+      </div>
     </div>
 
     <div class="container">
@@ -84,28 +110,39 @@
 import firebase from "@/firebaseConfig";
 // Constant objects; Needed for GetAuthTypeGoogle and Persistence
 import FirebaseConsts from "firebase";
+import MessageBar from "@/components/MessageBar";
 
 export default {
   name: "landing",
+  components: {
+    MessageBar
+  },
   data: function() {
     return {
+      user: null,
       email: "",
       password: "",
       newEmail: "",
       newPassword: "",
+      resetEmail: "",
       userName: "",
       error: {
         show: false,
+        message: "",
+        passPrompt: false
+      },
+      message: {
+        show: false,
         message: ""
       },
-      user: null
+      modalActive: false
     };
   },
   mounted: function() {
     this.user = firebase.auth().currentUser;
+    // this.$nextTick(() => this.$refs.email.focus());
   },
   methods: {
-    // TODO: Add options to reset password and setup email confirmation to enable it
     logIn: function() {
       // Attempt to log in
       this.$validator.validateAll("login").then(result => {
@@ -117,6 +154,7 @@ export default {
             this.error.message = this.errors.first("login.password");
           }
           this.error.show = true;
+          this.error.passPrompt = true;
         } else {
           firebase
             .auth()
@@ -130,11 +168,13 @@ export default {
                 })
                 .catch(error => {
                   this.error.show = true;
+                  this.error.passPrompt = true;
                   this.error.message = error.message;
                 });
             })
             .catch(error => {
               this.error.show = true;
+              this.error.passPrompt = true;
               this.error.message = error.message;
             });
         }
@@ -152,6 +192,7 @@ export default {
             this.error.message = this.errors.first("signup.password");
           }
           this.error.show = true;
+          this.error.passPrompt = false;
         } else {
           firebase
             .auth()
@@ -174,12 +215,14 @@ export default {
                       })
                       .catch(error => {
                         this.error.show = true;
+                        this.error.passPrompt = false;
                         this.error.message = error.message;
                       });
                   }
                 })
                 .catch(error => {
                   this.error.show = true;
+                  this.error.passPrompt = false;
                   this.error.message = error.message;
                 });
             });
@@ -199,6 +242,25 @@ export default {
         })
         .catch(error => {
           this.error.show = true;
+          this.error.passPrompt = false;
+          this.error.message = error.message;
+        });
+    },
+    sendResetEmail: function() {
+      this.error.show = false;
+      this.modalActive = false;
+      firebase
+        .auth()
+        .sendPasswordResetEmail(this.resetEmail)
+        .then(() => {
+          this.message.show = true;
+          this.message.message =
+            "Email with password reset instructions has been sent to  " +
+            this.resetEmail;
+        })
+        .catch(error => {
+          this.error.show = true;
+          this.error.passPrompt = false;
           this.error.message = error.message;
         });
     }
@@ -236,7 +298,6 @@ p {
 }
 
 .undraw-svg:hover {
-  // width: 15em;
   transform: scale(1.25);
   top: 5px;
   z-index: 999;
@@ -290,7 +351,6 @@ p {
 
 #logo {
   font-family: "Pacifico", cursive;
-  // font-size: 6rem;
   font-size: 6vw;
 }
 </style>

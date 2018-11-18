@@ -1,0 +1,34 @@
+<template>
+  <div class="toast" :class="color">
+    <button @click="$emit('closeMessage')" class="btn btn-clear float-right"></button>
+    <slot>Message Here</slot>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "MessageBar",
+  props: {
+    visible: Boolean,
+    type: String
+  },
+  data: function() {
+    return {};
+  },
+  computed: {
+    color: function() {
+      return {
+        "toast-primary": this.type === "success",
+        "toast-error": this.type === "error"
+      };
+    }
+  }
+};
+</script>
+
+<style scoped>
+.toast-error {
+  background-color: #ff0000;
+  border-color: #ff0000;
+}
+</style>

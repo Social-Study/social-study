@@ -9,7 +9,10 @@
 
 <script>
 import firebase from "@/firebaseConfig";
-
+// TODO: Figure out if we need to get the user from firebase on each view.
+// May just be able to reference and set a single global variable.
+// I think we should implement VUEX store to handle this. The user account is
+// the most central part of the application
 export default {
   name: "dashboard",
   data: function() {
