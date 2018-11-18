@@ -38,6 +38,7 @@
         </div>
         <div class="modal-body">
           <div class="content">
+            <!-- TODO: Add vvalidate to this. May need to put inside form -->
             <input @focus="$event.target.select()" value="email" v-model="resetEmail" type="text" class="form-input" autofocus>
           </div>
         </div>
@@ -95,7 +96,7 @@
               <input v-validate.disable="'required|min:6'" v-model="newPassword" class="form-input" type="password" name="password" placeholder="Password"><br>
               <button @click="createAccount" class="btn btn-primary mx-1">Sign Up</button>
               <button @click="googleSignIn" class="btn mx-1">
-                <fa-icon :icon="['fab', 'google']"></fa-icon>
+                <v-icon name="brands/google" />
               </button>
             </form>
           </div>
@@ -237,8 +238,8 @@ export default {
         .signInWithRedirect(provider)
         .then(result => {
           // not sure what token is for
-          let token = result.credential.accessToken;
-          var user = result.user;
+          // let token = result.credential.accessToken;
+          this.user = result.user;
         })
         .catch(error => {
           this.error.show = true;
@@ -270,6 +271,8 @@ export default {
 
 
 <style lang="scss" scoped>
+// TODO: Make this look good  on mobile
+
 @import "../styleVariables.scss";
 
 h1 {
@@ -335,8 +338,6 @@ p {
 .navbar {
   background-image: $nav-gradient;
   padding: 0px 10px;
-  position: absolution;
-  max-height: 8vh;
 }
 
 .navbar-section input {

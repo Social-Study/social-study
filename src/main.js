@@ -5,15 +5,15 @@ import store from "./store";
 import "./registerServiceWorker";
 import firebase from "./firebaseConfig";
 import VeeValidate from "vee-validate";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import "vue-awesome/icons/brands/google";
+import "vue-awesome/icons/cog";
+import "vue-awesome/icons/sign-out-alt";
 
 Vue.config.productionTip = false;
 
-// Add the imported icon to the library and register it with the icon component
-library.add(faGoogle);
-Vue.component("fa-icon", FontAwesomeIcon);
+import Icon from "vue-awesome/components/Icon";
+
+Vue.component("v-icon", Icon);
 
 // Client-side validation library for user form inputs
 Vue.use(VeeValidate);
