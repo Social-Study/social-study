@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <NavBar :user="this.user" />
+    <NavBar :user="user" />
     <h1>Welcome to Social Study, {{ user.displayName }}</h1>
   </div>
 </template>
@@ -24,8 +24,14 @@ export default {
       user: null
     };
   },
-  beforeMount: function() {
-    this.user = firebase.auth().currentUser;
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+      } else {
+        this.user = null;
+      }
+    });
   },
   methods: {}
 };

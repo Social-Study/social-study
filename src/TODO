@@ -10,7 +10,6 @@ Finish up the landing page. Make the css work on mobile.
 Figure out why the redirect on login doesn't work properly.
   - May have to sleep for a second or something to get the firebase auth to load before redirecting
 
-Get Dylan to setup the email from the new site name
 
 Figure out how I want to handle the setting of default profile settings
   - Displayname

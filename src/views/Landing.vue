@@ -104,7 +104,6 @@
                 Sign in with Google
               </button>
             </form>
-            <p>{{this.firstName}}</p>
           </div>
         </div>
       </div>
@@ -147,7 +146,7 @@ export default {
     };
   },
   mounted: function() {
-    this.user = firebase.auth().currentUser;
+    // this.user = firebase.auth().currentUser;
   },
   methods: {
     logIn: function() {
@@ -211,24 +210,22 @@ export default {
               firebase
                 .auth()
                 .createUserWithEmailAndPassword(this.newEmail, this.newPassword)
-                .then(() => {
-                  let user = firebase.auth().currentUser;
-                  if (user) {
-                    user
-                      .updateProfile({
-                        displayName: fullName //pass displayName from form
-                        // photoURL: "" //you can pass this empty
-                      })
-                      .then(() => {
-                        //redirect to your post-registration page
-                        this.$router.replace("dashboard");
-                      })
-                      .catch(error => {
-                        this.error.show = true;
-                        this.error.passPrompt = false;
-                        this.error.message = error.message;
-                      });
-                  }
+                .then(authUser => {
+                  authUser.user
+                    .updateProfile({
+                      displayName: fullName //pass displayName from form
+                      // photoURL: "" //you can pass this empty
+                    })
+                    .then(() => {
+                      //redirect to the dashboard
+                      this.$router.replace("dashboard");
+                    })
+                    .catch(error => {
+                      this.error.show = true;
+                      this.error.passPrompt = false;
+                      this.error.message = error.message;
+                    });
+                  // }
                 })
                 .catch(error => {
                   this.error.show = true;
