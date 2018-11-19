@@ -4,7 +4,20 @@ Figure out why I am getting a warning for the site being too large.
 Work on the dashboard
 
 Finish up the landing page. Make the css work on mobile.
-  - Got this mostly working. Not sure how to handle the top login form
+  - Sure how to handle the top login form
   - Need to make text size scale.
 
-Remove console.log statements
+Figure out why the redirect on login doesn't work properly.
+  - May have to sleep for a second or something to get the firebase auth to load before redirecting
+
+Get Dylan to setup the email from the new site name
+
+Figure out how I want to handle the setting of default profile settings
+  - Displayname
+  - Profile Picture
+  - email change
+  - password change
+
+Create empty dashboard view placeholders
+  Create a new study group
+  Join a study group via link

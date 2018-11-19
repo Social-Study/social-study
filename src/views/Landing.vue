@@ -8,7 +8,7 @@
       </section>
 
       <!-- Login Form -->
-      <form class="navbar-section login-container" @submit.prevent method="" data-vv-scope="login">
+      <form class="hide-sm hide-xs navbar-section login-container" @submit.prevent method="" data-vv-scope="login">
         <input v-validate.disable="'required|email'" name="email" ref="email" v-model="email" placeholder="Email" type="text" id="" class="form-input mx-1" autofocus>
         <input v-validate.disable="'required|min:6'" name="password" v-model="password" placeholder="Password" type="password" id="" class="form-input mx-1">
         <button @click="logIn" class="btn btn-primary m-1">Log In</button>
@@ -56,23 +56,22 @@
 
           <div>
             <h1 id="logo">Social Study</h1>
-            <!-- <p>Social Study is an online learning tool for all ages.</p> -->
             <p>The <i>free</i> learning tool for all ages.</p>
 
             <div class="svg-container">
               <div id="row1">
-                <div class="tooltip tooltip-bottom" data-tooltip="Take quizzes">
-                  <img class="undraw-svg" src="../assets/undraw_exams.svg" alt="quizzes">
-                </div>
-                <div class="tooltip tooltip-bottom" data-tooltip="Study notes and flashcards">
+                <div class="tooltip tooltip-bottom" data-tooltip="Create and study notes and flashcards">
                   <img class="undraw-svg" src="../assets/undraw_studying.svg" alt="studying">
+                </div>
+                <div class="tooltip tooltip-bottom" data-tooltip="Take practice quizzes">
+                  <img class="undraw-svg" src="../assets/undraw_exams.svg" alt="quizzes">
                 </div>
                 <div class="tooltip tooltip-bottom" data-tooltip="Communicate with classmates">
                   <img class="undraw-svg" src="../assets/undraw_group_chat.svg" alt="communication">
                 </div>
               </div>
               <div id="row2">
-                <div class="tooltip tooltip-bottom" data-tooltip="Take and organize your notes">
+                <div class="tooltip tooltip-bottom" data-tooltip="Take notes and keep them organized">
                   <img class="undraw-svg" src="../assets/undraw_taking_notes.svg" alt="note taking">
                 </div>
                 <div class="tooltip tooltip-bottom" data-tooltip="Create and manage events and assignments">
@@ -91,14 +90,21 @@
 
             <form @submit.prevent data-vv-scope="signup">
               <h1>Sign Up</h1>
-              <input v-validate.disable="'required|alpha_spaces'" v-model="userName" class="form-input" type="text" name="name" placeholder="Name"><br>
+              <span id="name-container">
+                <input v-validate.disable="'required|alpha'" v-model="firstName" class="form-input" type="text" name="firstname" placeholder="First Name">
+                <input v-validate.disable="'required|alpha'" v-model="lastName" class="form-input" type="text" name="lastname" placeholder="Last Name">
+              </span>
+
+              <br>
               <input v-validate.disable="'required|email'" v-model="newEmail" type="text" class="form-input" name="email" placeholder="Email Address"><br>
               <input v-validate.disable="'required|min:6'" v-model="newPassword" class="form-input" type="password" name="password" placeholder="Password"><br>
               <button @click="createAccount" class="btn btn-primary mx-1">Sign Up</button>
               <button @click="googleSignIn" class="btn mx-1">
                 <v-icon name="brands/google" />
+                Sign in with Google
               </button>
             </form>
+            <p>{{this.firstName}}</p>
           </div>
         </div>
       </div>
@@ -126,7 +132,8 @@ export default {
       newEmail: "",
       newPassword: "",
       resetEmail: "",
-      userName: "",
+      firstName: "",
+      lastName: "",
       error: {
         show: false,
         message: "",
@@ -141,7 +148,6 @@ export default {
   },
   mounted: function() {
     this.user = firebase.auth().currentUser;
-    // this.$nextTick(() => this.$refs.email.focus());
   },
   methods: {
     logIn: function() {
@@ -185,8 +191,10 @@ export default {
       // Attempt to create an account
       this.$validator.validateAll("signup").then(result => {
         if (!result) {
-          if (this.errors.first("signup.name")) {
-            this.error.message = this.errors.first("signup.name");
+          if (this.errors.first("signup.firstname")) {
+            this.error.message = this.errors.first("signup.firstname");
+          } else if (this.errors.first("signup.lastname")) {
+            this.error.message = this.errors.first("signup.lastname");
           } else if (this.errors.first("signup.email")) {
             this.error.message = this.errors.first("signup.email");
           } else if (this.errors.first("signup.password")) {
@@ -199,6 +207,7 @@ export default {
             .auth()
             .setPersistence(FirebaseConsts.auth.Auth.Persistence.LOCAL)
             .then(() => {
+              var fullName = this.firstName + " " + this.lastName;
               firebase
                 .auth()
                 .createUserWithEmailAndPassword(this.newEmail, this.newPassword)
@@ -207,8 +216,8 @@ export default {
                   if (user) {
                     user
                       .updateProfile({
-                        displayName: this.userName, //pass displayName from form
-                        photoURL: "" //you can pass this empty
+                        displayName: fullName //pass displayName from form
+                        // photoURL: "" //you can pass this empty
                       })
                       .then(() => {
                         //redirect to your post-registration page
@@ -293,6 +302,7 @@ p {
 #row2 {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .undraw-svg {
@@ -317,7 +327,7 @@ p {
 }
 
 .column input {
-  width: 20em;
+  width: 25em;
   margin: auto;
 }
 
@@ -333,6 +343,21 @@ p {
   flex-direction: col;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
+}
+
+#name-container {
+  // box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 25em;
+}
+
+#name-container input {
+  width: 48%;
+  margin: 0;
 }
 
 .navbar {
