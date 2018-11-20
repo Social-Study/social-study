@@ -113,9 +113,7 @@
 </template>
 
 <script>
-import firebase from "@/firebaseConfig";
-// Constant objects; Needed for GetAuthTypeGoogle and Persistence
-import FirebaseConsts from "firebase";
+import firebase, { FirebaseConsts } from "@/firebaseConfig";
 import MessageBar from "@/components/MessageBar";
 
 export default {
@@ -144,9 +142,6 @@ export default {
       },
       modalActive: false
     };
-  },
-  mounted: function() {
-    // this.user = firebase.auth().currentUser;
   },
   methods: {
     logIn: function() {
@@ -240,12 +235,16 @@ export default {
       let provider = new FirebaseConsts.auth.GoogleAuthProvider();
       firebase
         .auth()
-        // .signInWithPopup(provider)
-        .signInWithRedirect(provider)
+        .signInWithPopup(provider)
+        // .signInWithRedirect(provider)
         .then(result => {
           // not sure what token is for
           // let token = result.credential.accessToken;
           this.user = result.user;
+          if (result.user) {
+            // console.log("Redirecting?");
+            this.$router.replace("dashboard");
+          }
         })
         .catch(error => {
           this.error.show = true;

@@ -7,16 +7,10 @@ Finish up the landing page. Make the css work on mobile.
   - Sure how to handle the top login form
   - Need to make text size scale.
 
-Figure out why the redirect on login doesn't work properly.
-  - May have to sleep for a second or something to get the firebase auth to load before redirecting
-
-
 Figure out how I want to handle the setting of default profile settings
   - Displayname
   - Profile Picture
   - email change
   - password change
 
-Create empty dashboard view placeholders
-  Create a new study group
-  Join a study group via link
+Make navbar menu icons float left

@@ -13,6 +13,7 @@ html,
 body {
   height: 100vh;
   max-height: 100vh;
+  background-color: #f7f8f9;
 }
 
 #app {

@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
 import "firebase/auth";
 
 const config = {
@@ -10,6 +10,10 @@ const config = {
   messagingSenderId: "265403435232"
 };
 
+// Export firebase object to be used for certain static methods like:
+//  - Persistance
+//  - GoogleAuthProvider
+export const FirebaseConsts = firebase;
 // export default config;
 export default firebase.initializeApp(config);
 
