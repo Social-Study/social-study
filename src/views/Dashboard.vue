@@ -1,8 +1,31 @@
 <template>
 
-  <div>
+  <!-- TODO: Render loading indicator if firebase has not finished async load -->
+  <div v-if="this.user !== null">
     <NavBar :user="user" />
-    <h1>Welcome to Social Study, {{ user.displayName }}</h1>
+
+    <div v-show="studyGroups === null">
+      <!-- <h1>Welcome to Social Study, {{ user.displayName }}</h1> -->
+      <div class="empty">
+        <div class="empty-icon">
+          <img id="undraw" class="undraw-svg" src="../assets/undraw_no_data.svg" alt="No Study Groups">
+        </div>
+        <p class="empty-title h5">You don't have any Study Groups!</p>
+        <p class="empty-subtitle">Create a brand new Study Group</p>
+        <div class="empty-action">
+          <button class="btn btn-primary">Create</button>
+        </div>
+        <p class="empty-subtitle">or</p>
+        <p class="empty-subtitle ">Join an existing Study Group.</p>
+        <div class="empty-action input-group input-inline">
+          <input class="form-input" type="text">
+          <button class="btn btn-primary input-group-btn">Join</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div v-else>
+    Loading info...
   </div>
 </template>
 
@@ -21,7 +44,8 @@ export default {
   },
   data: function() {
     return {
-      user: null
+      user: null,
+      studyGroups: null
     };
   },
   created() {
@@ -37,7 +61,12 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+#undraw {
+  width: 10em;
+}
 
-
+.empty {
+  margin-top: 8%;
+}
 </style>
