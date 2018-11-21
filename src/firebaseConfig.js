@@ -10,14 +10,9 @@ const config = {
   messagingSenderId: "265403435232"
 };
 
-// Export firebase object to be used for certain static methods like:
+// Export plain firebase object to be used for certain static methods like:
 //  - Persistance
 //  - GoogleAuthProvider
 export const FirebaseConsts = firebase;
 // export default config;
 export default firebase.initializeApp(config);
-
-// TODO: Change it so that components only use the parts of firebase that they need
-// Should reduce load time if you only load auth when you need it, etc.
-
-// TODO: Rename file to match naming scheme

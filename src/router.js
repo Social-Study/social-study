@@ -11,22 +11,22 @@ let router = new Router({
   routes: [
     {
       path: "*",
-      redirect: "/landing"
+      redirect: "/"
     },
     {
       path: "/",
-      redirect: "/landing"
-    },
-    {
-      path: "/landing",
       name: "landing",
-      component: Landing
+      component: Landing,
+      meta: {
+        title: "Social Study"
+      }
     },
     {
       path: "/dashboard",
       name: "dashboard",
       component: Dashboard,
       meta: {
+        title: "Dashboard | Social Study",
         requiresAuth: true
       }
     }

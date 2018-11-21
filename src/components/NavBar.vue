@@ -10,15 +10,15 @@
       <div @mouseover="menuActive = true" @mouseout="menuActive = false" class="menu-container">
         <Avatar :user="this.user" />
         <ul v-show="menuActive == true" class="menu">
-          <li class="menu-item">
+          <li class="menu-item text-left">
             <a href="#">
-              <v-icon name="cog" />
+              <v-icon name="cog" class="icon float-right" />
               Settings
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item text-left">
             <a @click="logOut" href="#">
-              <v-icon name="sign-out-alt" />
+              <v-icon name="sign-out-alt" class="float-right" />
               Log Out
             </a>
           </li>
@@ -61,6 +61,7 @@ export default {
 .navbar {
   background-image: $nav-gradient;
   padding: 0px 10px;
+  max-height: 8vh;
 }
 
 .navbar-brand {

@@ -19,9 +19,9 @@ Vue.config.productionTip = false;
 // Client-side validation library for user form inputs
 Vue.use(VeeValidate);
 
-// called every time the router attempts to change page. Only logged in users
-// can access pages marked requiresAuth in the router
+// Prevents navigation to certain pages if you are not logged in
 router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
   if (to.matched.some(record => record.meta.requiresAuth)) {
     firebase.auth().onAuthStateChanged(user => {
       if (!user) {
@@ -36,6 +36,17 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+// } else if (to.matched.some(record => record.meta.noAuth)) {
+//   firebase.auth().onAuthStateChanged(user => {
+//     if (user) {
+//       next({
+//         path: "/dashboard"
+//       });
+//     } else {
+//       next();
+//     }
+//   });
 
 new Vue({
   router,
