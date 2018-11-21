@@ -4,9 +4,9 @@
   <div v-if="this.user !== null">
     <NavBar :user="user" />
 
-    <div v-show="studyGroups === null">
-      <!-- <h1>Welcome to Social Study, {{ user.displayName }}</h1> -->
-      <div class="empty">
+    <!-- TODO: Create a flexbox? -->
+    <div class="dashboardBody">
+      <div v-show="studyGroups === null" class="empty">
         <div class="empty-icon">
           <img id="undraw" class="undraw-svg" src="../assets/undraw_no_data.svg" alt="No Study Groups">
         </div>
@@ -33,10 +33,6 @@
 import firebase from "@/firebaseConfig";
 import NavBar from "@/components/NavBar";
 
-// TODO: Figure out if we need to get the user from firebase on each view.
-// May just be able to reference and set a single global variable.
-// I think we should implement VUEX store to handle this. The user account is
-// the most central part of the application
 export default {
   name: "dashboard",
   components: {
@@ -67,6 +63,6 @@ export default {
 }
 
 .empty {
-  margin-top: 8%;
+  // margin: auto;
 }
 </style>

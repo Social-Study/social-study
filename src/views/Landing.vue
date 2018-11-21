@@ -4,18 +4,18 @@
     <!-- Header Section -->
     <header class="navbar">
       <section class="navbar-section">
-        <a href="#" class="navbar-brand m-2">Social Study</a>
+        <a href="#" class="navbar-brand m-2" :style="centerTitle">Social Study</a>
       </section>
 
       <!-- Login Form -->
-      <form class="hide-sm hide-xs navbar-section login-container" @submit.prevent method="" data-vv-scope="login">
-        <input v-validate.disable="'required|email'" name="email" ref="email" v-model="email" placeholder="Email" type="text" id="" class="form-input mx-1" autofocus>
-        <input v-validate.disable="'required|min:6'" name="password" v-model="password" placeholder="Password" type="password" id="" class="form-input mx-1">
+      <!-- <section class="navbar-section"> -->
+      <form class="hide-sm hide-xs navbar-section login-container form-group" @submit.prevent method="" data-vv-scope="login">
+        <input v-validate.disable="'required|email'" name="email" ref="email" v-model="email" placeholder="Email" type="text" id="" class="form-input form-inline mx-1" autofocus>
+        <input v-validate.disable="'required|min:6'" name="password" v-model="password" placeholder="Password" type="password" id="" class="form-input form-inline mx-1">
         <button @click="logIn" class="btn btn-primary m-1">Log In</button>
       </form>
+      <!-- </section> -->
     </header>
-
-    <!-- TODO: Figure out how to prevent page from getting longer when messages are active. Want to prevent scrollbar from appearing-->
 
     <!-- Sucess Message Display -->
     <MessageBar v-show="message.show" type="success">
@@ -49,52 +49,47 @@
     </div>
 
     <div class="container">
-      <div class="columns">
 
+      <div class="columns bodyContainer">
         <!-- Left Block: Information -->
         <div class="column col-6 col-md-12">
+          <div style="margin-left: 20px; margin-right: 20px;">
+            <h1 id="logo" class="hide-sm hide-xs">Social Study</h1>
+            <p style="margin-top: 20px;">The <i>free</i> learning tool for all ages.</p>
 
-          <div>
-            <h1 id="logo">Social Study</h1>
-            <p>The <i>free</i> learning tool for all ages.</p>
-
-            <div class="svg-container">
-              <div id="row1">
-                <div class="tooltip tooltip-bottom" data-tooltip="Create and study notes and flashcards">
-                  <img class="undraw-svg" src="../assets/undraw_studying.svg" alt="studying">
-                </div>
-                <div class="tooltip tooltip-bottom" data-tooltip="Take practice quizzes">
-                  <img class="undraw-svg" src="../assets/undraw_exams.svg" alt="quizzes">
-                </div>
-                <div class="tooltip tooltip-bottom" data-tooltip="Communicate with classmates">
-                  <img class="undraw-svg" src="../assets/undraw_group_chat.svg" alt="communication">
-                </div>
+            <div class="columns">
+              <div class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" data-tooltip="Create and study notes and flashcards">
+                <img class="img-responsive undraw-svg" src="../assets/undraw_studying.svg" alt="studying">
               </div>
-              <div id="row2">
-                <div class="tooltip tooltip-bottom" data-tooltip="Take notes and keep them organized">
-                  <img class="undraw-svg" src="../assets/undraw_taking_notes.svg" alt="note taking">
-                </div>
-                <div class="tooltip tooltip-bottom" data-tooltip="Create and manage events and assignments">
-                  <img class="undraw-svg" src="../assets/undraw_events.svg" alt="schedule management">
-                </div>
+              <div class=" col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" data-tooltip="Take practice quizzes">
+                <img class="img-responsive  undraw-svg" src="../assets/undraw_exams.svg" alt="quizzes">
+              </div>
+              <div class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" data-tooltip="Take notes and keep them organized">
+                <img class="img-responsive  undraw-svg" src="../assets/undraw_taking_notes.svg" alt="note taking">
+              </div>
+              <div class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" data-tooltip="Create and manage events and assignments">
+                <img class="img-responsive  undraw-svg" src="../assets/undraw_events.svg" alt="schedule management">
+              </div>
+              <div class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" data-tooltip="Communicate with classmates">
+                <img class="img-responsive  undraw-svg" src="../assets/undraw_group_chat.svg" alt="communication">
+              </div>
+              <div class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" style="top: 40px;" data-tooltip="Improve your academic success!">
+                <img class="img-responsive  undraw-svg" src="../assets/undraw_grad.svg" alt="communication">
               </div>
             </div>
           </div>
-
         </div>
 
         <!-- Right Block: Sign Up Form -->
-        <div class="column col-6 col-sm-12 col-md-12">
+        <div class="column col-6 col-sm-12 col-md-12 hide-xs hide-sm" style="margin-bottom: 30px;">
 
-          <div id="right-container">
-
+          <div id="right-container form-group">
             <form @submit.prevent data-vv-scope="signup">
-              <h1>Sign Up</h1>
+              <h1 style="margin-top: 40px;">Sign Up</h1>
               <span id="name-container">
                 <input v-validate.disable="'required|alpha'" v-model="firstName" class="form-input" type="text" name="firstname" placeholder="First Name">
                 <input v-validate.disable="'required|alpha'" v-model="lastName" class="form-input" type="text" name="lastname" placeholder="Last Name">
               </span>
-
               <br>
               <input v-validate.disable="'required|email'" v-model="newEmail" type="text" class="form-input" name="email" placeholder="Email Address"><br>
               <input v-validate.disable="'required|min:6'" v-model="newPassword" class="form-input" type="password" name="password" placeholder="Password"><br>
@@ -106,6 +101,11 @@
             </form>
           </div>
         </div>
+      </div>
+
+      <div class="show-xs show-sm" style="margin-top: 80px;">
+        <p>Unfortunately, <i>Social Study</i> is only available on desktop.</p>
+        <p>To sign up, please visit the site on your desktop!</p>
       </div>
     </div>
 
@@ -142,6 +142,15 @@ export default {
       },
       modalActive: false
     };
+  },
+  computed: {
+    centerTitle: function() {
+      if (window.innerWidth <= 600) {
+        return { width: "100%" };
+      } else {
+        return;
+      }
+    }
   },
   methods: {
     logIn: function() {
@@ -276,8 +285,6 @@ export default {
 
 
 <style lang="scss" scoped>
-// TODO: Make this look good  on mobile
-
 @import "../styleVariables.scss";
 
 h1 {
@@ -287,53 +294,36 @@ p {
   font-size: 1.5em;
 }
 
-.svg-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-#row1,
-#row2 {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
+// Images should be centered in their column
 .undraw-svg {
   width: 14em;
-  margin: 1em;
+  margin: auto;
 }
 
+// Enlarges images on hober
 .undraw-svg:hover {
   transform: scale(1.25);
   top: 5px;
   z-index: 999;
 }
 
-.login-container {
+// Aligns all content vertically on the screen
+.bodyContainer {
+  min-height: 92vh;
   display: flex;
   flex: row;
-  justify-content: flex-end;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 }
 
-.columns {
-  min-height: 92vh;
-}
-
+// Signup form input box widths
 .column input {
   width: 25em;
   margin: auto;
 }
 
-.column {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
+// Right signup information should be centered vertically and horizontally
 #right-container {
   display: flex;
   flex-direction: col;
@@ -342,25 +332,30 @@ p {
   margin-bottom: 20px;
 }
 
+// Two name input boxes should be inline with each other
 #name-container {
-  // box-sizing: border-box;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
   width: 25em;
+  margin: auto;
 }
 
+// Input boxes should have small gap between them
 #name-container input {
   width: 48%;
   margin: 0;
 }
 
+// Set navbar color to main gradient
 .navbar {
   background-image: $nav-gradient;
   padding: 0px 10px;
+  max-height: 8vh;
 }
 
+// Set login input form widths
 .navbar-section input {
   width: 35%;
 }
