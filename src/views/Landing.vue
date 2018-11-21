@@ -147,9 +147,8 @@ export default {
     centerTitle: function() {
       if (window.innerWidth <= 600) {
         return { width: "100%" };
-      } else {
-        return;
       }
+      return {};
     }
   },
   methods: {
@@ -218,7 +217,6 @@ export default {
                   authUser.user
                     .updateProfile({
                       displayName: fullName //pass displayName from form
-                      // photoURL: "" //you can pass this empty
                     })
                     .then(() => {
                       //redirect to the dashboard
@@ -247,9 +245,7 @@ export default {
         .signInWithPopup(provider)
         // .signInWithRedirect(provider)
         .then(result => {
-          // not sure what token is for
-          // let token = result.credential.accessToken;
-          this.user = result.user;
+          // this.user = result.user;
           if (result.user) {
             // console.log("Redirecting?");
             this.$router.replace("dashboard");
@@ -352,7 +348,7 @@ p {
 .navbar {
   background-image: $nav-gradient;
   padding: 0px 10px;
-  max-height: 8vh;
+  // max-height: 8vh;
 }
 
 // Set login input form widths

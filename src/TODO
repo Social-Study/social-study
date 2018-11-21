@@ -13,13 +13,10 @@ Figure out how I want to handle the setting of default profile settings
   - email change
   - password change
 
-Make navbar menu icons float left
-
 If the user refreshes the page once redirected, it takes them back to the landing page...
   Need to always redirect user if they are logged in
 
 Figure out fix for Icon misalignment
-
 
 Figure out an icon to use.
   Ask Dylan if he can design one for use in the Title Bar

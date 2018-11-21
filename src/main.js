@@ -37,17 +37,6 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-// } else if (to.matched.some(record => record.meta.noAuth)) {
-//   firebase.auth().onAuthStateChanged(user => {
-//     if (user) {
-//       next({
-//         path: "/dashboard"
-//       });
-//     } else {
-//       next();
-//     }
-//   });
-
 new Vue({
   router,
   store,
