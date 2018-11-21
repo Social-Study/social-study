@@ -5,13 +5,15 @@
       <a href="#" class="navbar-brand m-2">Social Study</a>
     </section>
 
+    <profile-settings :user="this.user" @closeSettings="isSettingsActive = false" v-show="isSettingsActive" />
+
     <!-- Right Side Menu and Avatar -->
     <section class="navbar-section">
       <div @mouseover="menuActive = true" @mouseout="menuActive = false" class="menu-container">
         <Avatar :user="this.user" />
         <ul v-show="menuActive == true" class="menu">
           <li class="menu-item text-left">
-            <a href="#">
+            <a @click="isSettingsActive = true" href="#">
               <v-icon name="cog" class="icon float-right" />
               Settings
             </a>
@@ -31,6 +33,7 @@
 
 <script>
 import Avatar from "@/components/Avatar";
+import ProfileSettings from "@/components/ProfileSettings";
 import firebase from "@/firebaseConfig";
 
 export default {
@@ -39,11 +42,13 @@ export default {
     user: Object
   },
   components: {
-    Avatar
+    Avatar,
+    ProfileSettings
   },
   data: function() {
     return {
-      menuActive: false
+      menuActive: false,
+      isSettingsActive: false
     };
   },
   methods: {

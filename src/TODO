@@ -1,15 +1,14 @@
 Figure out why I am getting a warning for the site being too large.
   Might have to change the imports on some of the packages/CSS
 
-Work on the dashboard
-
 Finish up the landing page. Make the css work on mobile.
   - Sure how to handle the top login form
   - Need to make text size scale.
 
-Figure out how I want to handle the setting of default profile settings
+Each user account has:
   - Displayname
   - Profile Picture
+  - Small description/bio
   - email change
   - password change
 
@@ -18,7 +17,6 @@ If the user refreshes the page once redirected, it takes them back to the landin
 
 Figure out fix for Icon misalignment
 
-Figure out an icon to use.
-  Ask Dylan if he can design one for use in the Title Bar
+Ask Dylan if he can design an application icon
 
 Think of better slogan.

@@ -7,6 +7,7 @@
 // Global Styles
 <style lang="scss">
 @import "node_modules/spectre.css/src/spectre.scss";
+@import "node_modules/spectre.css/src/spectre-icons.scss";
 @import url("https://fonts.googleapis.com/css?family=Pacifico");
 @import url("https://rsms.me/inter/inter-ui.css");
 

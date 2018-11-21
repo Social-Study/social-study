@@ -30,7 +30,7 @@
 
     <!-- Password Reset Modal -->
     <div v-show="modalActive" class="modal modal-sm active" id="modal-id">
-      <a href="#" class="modal-overlay" aria-label="Close"></a>
+      <a @click="modalActive = false" href="#" class="modal-overlay" aria-label="Close"></a>
       <div class="modal-container">
         <div class="modal-header">
           <a href="#" @click="modalActive = false" class="btn btn-clear float-right" aria-label="Close"></a>
