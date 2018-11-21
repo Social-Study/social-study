@@ -18,6 +18,7 @@
             </ul>
           </nav>
           <div class="panel-body">
+
             <!-- Tab One Content -->
             <div v-if="activeTab === 1">
               <div class="tile tile-centered">
@@ -44,7 +45,7 @@
                 <div class="tile-content">
                   <div class="tile-title text-bold">About You</div>
                   <div class="tile-subtitle">
-                    <textarea name="bio" cols="50" rows="3" style="resize: none;" placeholder="Write some details about yourself here"></textarea>
+                    <textarea name="bio" cols="53" rows="3" style="resize: none;" v-model="profileDetails.newBio" :placeholder="userBio"></textarea>
                   </div>
                 </div>
               </div>
@@ -89,6 +90,7 @@
             <button @click="saveChanges" class="btn btn-primary">
               Save Changes
             </button>
+            <!-- <button @click="console.log(userBio)"></button> -->
           </div>
         </div>
       </div>
@@ -98,10 +100,10 @@
 
 <script>
 // import firebase from "@/firebaseConfig";
-import { FirebaseConsts } from "@/firebaseConfig";
+import { Storage, db, FirebaseConsts } from "@/firebaseConfig";
 import Avatar from "@/components/Avatar";
 
-let picRef = FirebaseConsts.storage().ref();
+let picRef = Storage.ref();
 
 export default {
   name: "ProfileSettings",
@@ -118,8 +120,36 @@ export default {
         newName: "",
         newPhoto: null,
         newBio: ""
-      }
+      },
+      userBio: "",
+      users: []
     };
+  },
+  firestore() {
+    return {
+      users: db.collection("users")
+    };
+  },
+  beforeMount() {
+    // Get existing user bio to use as placeholder in textarea
+    db.collection("users")
+      .doc(this.user.uid)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          return doc.data().description;
+        } else {
+          return "";
+        }
+      })
+      .then(value => {
+        this.userBio = value;
+      });
+    // .then(querySnapShot => {
+    //   querySnapShot.forEach(doc => {
+    //     this.userBio = doc.data().description;
+    //   });
+    // });
   },
   methods: {
     saveChanges() {
@@ -157,6 +187,18 @@ export default {
             });
           // TODO: Figure out error checking for this
         }
+
+        // Create new profile bio in firestore
+        if (this.profileDetails.newBio !== "") {
+          db.collection("users")
+            .doc(this.user.uid)
+            .set({
+              uid: this.user.uid,
+              description: this.profileDetails.newBio,
+              lastUpdated: FirebaseConsts.firestore.FieldValue.serverTimestamp()
+            });
+        }
+
         this.$emit("closeSettings");
       }
     },

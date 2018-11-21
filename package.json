@@ -8,14 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "firebase": "^5.5.7",
+    "firebase": "^5.5.9",
+    "firebase-tools": "^6.1.1",
     "register-service-worker": "^1.0.0",
-    "spectre.css": "^0.5.5",
+    "spectre.css": "^0.5.6",
     "vee-validate": "^2.1.2",
     "vue": "^2.5.17",
     "vue-awesome": "^3.2.0",
     "vue-router": "^3.0.1",
-    "vuefire": "^1.4.5",
+    "vuefire": "^2.0.0-alpha.16",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

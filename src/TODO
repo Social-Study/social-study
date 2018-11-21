@@ -23,3 +23,8 @@ Think of better slogan.
 
 When the user updates their profile picture, the state isn't changed for some reason.
 Even though the displayName update triggers it?
+
+Figure out how to keep a variable in sync with firebase.
+
+Decide how I want the user accounts to work, I think I need to store every user's
+public data in the firebase store so that other users can see it...
