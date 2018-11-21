@@ -24,7 +24,7 @@
                 <div class="tile-content text-left">
                   <div class="tile-title text-bold">Display Name</div>
                   <div class="tile-subtitle">
-                    <input class="form-input" :value="user.displayName" type="text" placeholder="New Display Name">
+                    <input class="form-input" v-model="profileDetails.newName" type="text" :placeholder="user.displayName">
                   </div>
                 </div>
               </div>
@@ -35,7 +35,7 @@
                     <span>
                       Current Picture:
                       <Avatar style="margin: 5px;" :user="this.user" />
-                      <input class="form-input" type="file" name="" id="">
+                      <input class="form-input" @change="handleFile($event)" accept="image/*" type="file" name="" id="">
                     </span>
                   </div>
                 </div>
@@ -86,7 +86,7 @@
           </div>
 
           <div class="panel-footer">
-            <button class="btn btn-primary">
+            <button @click="saveChanges" class="btn btn-primary">
               Save Changes
             </button>
           </div>
@@ -97,7 +97,11 @@
 </template>
 
 <script>
+// import firebase from "@/firebaseConfig";
+import { FirebaseConsts } from "@/firebaseConfig";
 import Avatar from "@/components/Avatar";
+
+let picRef = FirebaseConsts.storage().ref();
 
 export default {
   name: "ProfileSettings",
@@ -109,8 +113,56 @@ export default {
   },
   data() {
     return {
-      activeTab: 1
+      activeTab: 1,
+      profileDetails: {
+        newName: "",
+        newPhoto: null,
+        newBio: ""
+      }
     };
+  },
+  methods: {
+    saveChanges() {
+      if (this.activeTab === 1) {
+        if (
+          this.profileDetails.newName !== this.user.displayName &&
+          this.profileDetails.newName !== ""
+        ) {
+          this.user.updateProfile({
+            displayName: this.profileDetails.newName
+          });
+        }
+
+        if (this.profileDetails.newPhoto !== null) {
+          // Set metadata for image
+          var metadata = {
+            contentType: "image/jpeg"
+          };
+
+          let path =
+            "profilePicture/" +
+            this.user.uid +
+            "_" +
+            this.profileDetails.newPhoto.name;
+
+          // Upload new picture
+          picRef.child(path).put(this.profileDetails.newPhoto, metadata);
+          picRef
+            .child(path)
+            .getDownloadURL()
+            .then(url => {
+              this.user.updateProfile({
+                photoURL: url
+              });
+            });
+          // TODO: Figure out error checking for this
+        }
+        this.$emit("closeSettings");
+      }
+    },
+    handleFile(event) {
+      this.profileDetails.newPhoto = event.target.files[0];
+    }
   }
 };
 </script>

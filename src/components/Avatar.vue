@@ -33,7 +33,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// img {
-//   border: 1px solid white;
-// }
 </style>

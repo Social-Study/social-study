@@ -20,3 +20,6 @@ Figure out fix for Icon misalignment
 Ask Dylan if he can design an application icon
 
 Think of better slogan.
+
+When the user updates their profile picture, the state isn't changed for some reason.
+Even though the displayName update triggers it?

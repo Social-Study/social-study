@@ -10,8 +10,12 @@
     <!-- Right Side Menu and Avatar -->
     <section class="navbar-section">
       <div @mouseover="menuActive = true" @mouseout="menuActive = false" class="menu-container">
-        <Avatar :user="this.user" />
+        <Avatar :user="user" />
         <ul v-show="menuActive == true" class="menu">
+          <li class="menu-item text-left">
+            <p class="h5">{{ user.displayName }}</p>
+          </li>
+          <li class="divider"></li>
           <li class="menu-item text-left">
             <a @click="isSettingsActive = true" href="#">
               <v-icon name="cog" class="icon float-right" />

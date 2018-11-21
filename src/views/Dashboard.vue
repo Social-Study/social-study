@@ -52,17 +52,12 @@ export default {
         this.user = null;
       }
     });
-  },
-  methods: {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 #undraw {
   width: 10em;
-}
-
-.empty {
-  // margin: auto;
 }
 </style>

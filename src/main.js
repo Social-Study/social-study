@@ -3,7 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
+
 import firebase from "./firebaseConfig";
+import VueFire from "vuefire";
 import VeeValidate from "vee-validate";
 
 // Icon Imports
@@ -18,6 +20,9 @@ Vue.config.productionTip = false;
 
 // Client-side validation library for user form inputs
 Vue.use(VeeValidate);
+
+// Enable VueFire
+Vue.use(VueFire);
 
 // Prevents navigation to certain pages if you are not logged in
 router.beforeEach((to, from, next) => {
