@@ -85,4 +85,8 @@ export default {
   top: 30px;
   right: 30px;
 }
+
+.h5 {
+  margin: 0;
+}
 </style>

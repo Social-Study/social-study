@@ -9,8 +9,7 @@ Each user account has:
   - Displayname
   - Profile Picture
   - Small description/bio
-  - email change
-  - password change
+  - list of study groups
 
 If the user refreshes the page once redirected, it takes them back to the landing page...
   Need to always redirect user if they are logged in
