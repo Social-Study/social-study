@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import firebase, { FirebaseConsts } from "@/firebaseConfig";
+import firebase, { db, FirebaseConsts } from "@/firebaseConfig";
 import MessageBar from "@/components/MessageBar";
 
 export default {
@@ -123,19 +123,25 @@ export default {
   },
   data: function() {
     return {
-      user: null,
+      // user: null,
+      // Login Variables
       email: "",
       password: "",
-      newEmail: "",
-      newPassword: "",
-      resetEmail: "",
+      // New Account Variables
       firstName: "",
       lastName: "",
+      newEmail: "",
+      newPassword: "",
+      // Reset Email Form Variable
+      resetEmail: "",
+      // Error Message Popup
       error: {
         show: false,
         message: "",
+        // Should message contain password reset prompt?
         passPrompt: false
       },
+      // Generic Message Popup
       message: {
         show: false,
         message: ""
@@ -144,6 +150,7 @@ export default {
     };
   },
   computed: {
+    // Only runs on page reload. Used to center logo on mobile
     centerTitle: function() {
       if (window.innerWidth <= 600) {
         return { width: "100%" };
@@ -152,7 +159,7 @@ export default {
     }
   },
   methods: {
-    logIn: function() {
+    logIn() {
       // Attempt to log in
       this.$validator.validateAll("login").then(result => {
         if (!result) {
@@ -189,7 +196,7 @@ export default {
         }
       });
     },
-    createAccount: function() {
+    createAccount() {
       // Attempt to create an account
       this.$validator.validateAll("signup").then(result => {
         if (!result) {
@@ -220,6 +227,7 @@ export default {
                     })
                     .then(() => {
                       //redirect to the dashboard
+                      this.newUserToStore(authUser.user);
                       this.$router.replace("dashboard");
                     })
                     .catch(error => {
@@ -238,16 +246,15 @@ export default {
         }
       });
     },
-    googleSignIn: function() {
+    googleSignIn() {
       let provider = new FirebaseConsts.auth.GoogleAuthProvider();
       firebase
         .auth()
         .signInWithPopup(provider)
         // .signInWithRedirect(provider)
         .then(result => {
-          // this.user = result.user;
           if (result.user) {
-            // console.log("Redirecting?");
+            this.newUserToStore(result.user);
             this.$router.replace("dashboard");
           }
         })
@@ -257,7 +264,7 @@ export default {
           this.error.message = error.message;
         });
     },
-    sendResetEmail: function() {
+    sendResetEmail() {
       this.error.show = false;
       this.modalActive = false;
       firebase
@@ -274,11 +281,21 @@ export default {
           this.error.passPrompt = false;
           this.error.message = error.message;
         });
+    },
+    newUserToStore(userAccount) {
+      db.collection("users")
+        .doc(userAccount.uid)
+        .set({
+          uid: userAccount.uid,
+          displayName: userAccount.displayName,
+          photoURL: userAccount.photoURL,
+          description: null,
+          studyGroups: []
+        });
     }
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 @import "../styleVariables.scss";

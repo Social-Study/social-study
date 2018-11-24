@@ -95,7 +95,7 @@
 
 <script>
 // import firebase from "@/firebaseConfig";
-import { Storage, db, FirebaseConsts } from "@/firebaseConfig";
+import { Storage, db } from "@/firebaseConfig";
 import Avatar from "@/components/Avatar";
 
 let picRef = Storage.ref();
@@ -164,11 +164,7 @@ export default {
             contentType: "image/jpeg"
           };
 
-          let path =
-            "profilePicture/" +
-            this.user.uid +
-            "_" +
-            this.profileDetails.newPhoto.name;
+          let path = "profile-pictures/" + this.user.uid;
 
           // Upload new picture
           picRef
@@ -182,6 +178,12 @@ export default {
                   this.user.updateProfile({
                     photoURL: url
                   });
+
+                  db.collection("users")
+                    .doc(this.user.uid)
+                    .update({
+                      photoURL: url
+                    });
                 });
             });
           // TODO: Figure out error checking for this
@@ -191,10 +193,8 @@ export default {
         if (this.profileDetails.newBio !== "") {
           db.collection("users")
             .doc(this.user.uid)
-            .set({
-              uid: this.user.uid,
-              description: this.profileDetails.newBio,
-              lastUpdated: FirebaseConsts.firestore.FieldValue.serverTimestamp()
+            .update({
+              description: this.profileDetails.newBio
             });
         }
 

@@ -5,11 +5,17 @@ Finish up the landing page. Make the css work on mobile.
   - Sure how to handle the top login form
   - Need to make text size scale.
 
-Each user account has:
-  - Displayname
+Each user account has (private/auth info):
+  - uid
+  - Display name
+  - Profile Picture
+
+Each User Entry in Firestore Has:
+  - uid
+  - Display Name
   - Profile Picture
   - Small description/bio
-  - list of study groups
+  - list of study groups (array)
 
 If the user refreshes the page once redirected, it takes them back to the landing page...
   Need to always redirect user if they are logged in
@@ -26,4 +32,4 @@ Even though the displayName update triggers it?
 Figure out how to keep a variable in sync with firebase.
 
 Decide how I want the user accounts to work, I think I need to store every user's
-public data in the firebase store so that other users can see it...
+  public data in the firebase store so that other users can see it...
