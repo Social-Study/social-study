@@ -6,9 +6,17 @@
 
     <!-- TODO: Create a flexbox? -->
     <div class="dashboardBody">
-      <div v-if="this.studyGroups.length <= 0" class="empty">
+      <div
+        v-if="this.studyGroups.length === 0"
+        class="empty"
+      >
         <div class="empty-icon">
-          <img id="undraw" class="undraw-svg" src="../assets/undraw_no_data.svg" alt="No Study Groups">
+          <img
+            id="undraw"
+            class="undraw-svg"
+            src="../assets/undraw_no_data.svg"
+            alt="No Study Groups"
+          >
         </div>
         <p class="empty-title h5">You don't have any Study Groups!</p>
         <p class="empty-subtitle">Create a brand new Study Group</p>
@@ -18,17 +26,28 @@
         <p class="empty-subtitle">or</p>
         <p class="empty-subtitle ">Join an existing Study Group.</p>
         <div class="empty-action input-group input-inline">
-          <input class="form-input" type="text">
+          <input
+            class="form-input"
+            type="text"
+          >
           <button class="btn btn-primary input-group-btn">Join</button>
         </div>
       </div>
       <div v-else>
+        <h1>Your Study Groups</h1>
         <ol>
-          <li v-for="(group, index) in studyGroups" :key="index">
-            <h1>{{ group }}</h1>
+          <li
+            v-for="(group, index) in studyGroups"
+            :key="index"
+          >
+            <router-link :to="{ name: 'home', params: { groupID: group.id }}">{{group.courseCode}}</router-link>
           </li>
         </ol>
       </div>
+      <button
+        class="btn btn-primary"
+        @click="debug()"
+      >Debug</button>
     </div>
   </div>
   <div v-else>
@@ -52,50 +71,35 @@ export default {
       studyGroups: []
     };
   },
+  methods: {
+    debug() {
+      console.log(this.studyGroups[0].id);
+    }
+  },
   created() {
+    // Set local user variable to the user's account information.
+    // Display loading indicator when not available or loading
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.user = user;
+        this.$bind(
+          "studyGroups",
+          db
+            .collection("study-groups")
+            .where("members", "array-contains", this.user.uid)
+        ).then(studyGroups => {
+          this.studyGroups === studyGroups;
+          // Study Groups are ready to be used
+          // if it contained any reference to other document or collection, the
+          // promise will wait for those references to be fetched as well
+          // you can unbind a property anytime you want
+          // this will be done automatically when the component is destroyed
+          // this.$unbind("todos");
+        });
       } else {
         this.user = null;
       }
     });
-  },
-  beforeMount() {
-    if (this.user) {
-      this.$bind(
-        "studyGroups",
-        db
-          .collection("study-groups")
-          .where("members", "array-contains", this.user.uid)
-      ).then(() => {
-        console.log(studyGroups);
-      });
-    }
-    // this.query = db
-    //   .collection("study-groups")
-    //   .where("members", "array-contains", this.user.uid);
-  },
-  beforeUpdate() {
-    // db.collection("study-groups")
-    //   .where("members", "array-contains", this.user.uid)
-    //   .get()
-    //   .then(querySnapshot => {
-    //     querySnapshot.forEach(doc => {
-    //       this.studyGroups.push(doc.data());
-    //     });
-    //   });
-    db.collection("study-groups")
-      .where("members", "array-contains", this.user.uid)
-      .get()
-      .then(querySnapshot => {
-        // this.studyGroups = querySnapshot.docs[0];
-        console.log(querySnapshot.docs[0].data().courseCode);
-        this.studyGroups[
-          this.studyGroups.length
-        ] = querySnapshot.docs[0].data().courseCode;
-      });
-    console.log(this.studyGroups.length);
   }
 };
 </script>
@@ -103,5 +107,8 @@ export default {
 <style lang="scss" scoped>
 #undraw {
   width: 10em;
+}
+.empty {
+  margin-top: 8%;
 }
 </style>

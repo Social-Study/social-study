@@ -8,10 +8,12 @@ General:
   ☐ Convert Project to new Element UI Library
   ☐ Make sure the build bundle size is not too large.
   ☐ Font-Awesome Icon Package Icons are not aligned properly
+  ☐ Figure out the sizing issues, I want body to be entire screen height but exclude the nav bar...
 
 Routing:
   Bugs:
     ☐ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in
+    ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
 
 Dashboard:
   ☐ When you update your profile picture, you must refresh page to see it
