@@ -1,35 +1,25 @@
-Figure out why I am getting a warning for the site being too large.
-  Might have to change the imports on some of the packages/CSS
+Branding:
+  ☐ Design a logo / titlebar icon
+  ☐ Think of better slogan.
 
-Finish up the landing page. Make the css work on mobile.
-  - Sure how to handle the top login form
-  - Need to make text size scale.
+Database Design:
+  ☐ Do I need to store a user's photURL and other info in the firestore for other users to see it?
 
-Each user account has (private/auth info):
-  - uid
-  - Display name
-  - Profile Picture
+General:
+  ☐ Convert Project to new Element UI Library
+  ☐ Make sure the build bundle size is not too large.
+  ☐ Font-Awesome Icon Package Icons are not aligned properly
 
-Each User Entry in Firestore Has:
-  - uid
-  - Display Name
-  - Profile Picture
-  - Small description/bio
-  - list of study groups (array)
+Routing:
+  Bugs:
+    ☐ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in
 
-If the user refreshes the page once redirected, it takes them back to the landing page...
-  Need to always redirect user if they are logged in
+Dashboard:
+  ☐ When you update your profile picture, you must refresh page to see it
+    - Might have something to do with the photoURL being stored in auth not firestore
 
-Figure out fix for Icon misalignment
-
-Ask Dylan if he can design an application icon
-
-Think of better slogan.
-
-When the user updates their profile picture, the state isn't changed for some reason.
-Even though the displayName update triggers it?
-
-Figure out how to keep a variable in sync with firebase.
-
-Decide how I want the user accounts to work, I think I need to store every user's
-  public data in the firebase store so that other users can see it...
+Prototype Presentation:
+  ☐ Implement Study Groups
+    ☐ Figure out how routing will work
+  ☐ Implement a Study Group feature
+    ☐ Flashcards
