@@ -21,11 +21,7 @@
         <p class="empty-title h5">You don't have any Study Groups!</p>
         <p class="empty-subtitle">Create a brand new Study Group</p>
         <div class="empty-action">
-          <router-link
-            class="btn btn-primary"
-            to="/dashboard/create"
-          >Create</router-link>
-          <!-- <button class="btn btn-primary">Create</button> -->
+          <button class="btn btn-primary">Create</button>
         </div>
         <p class="empty-subtitle">or</p>
         <p class="empty-subtitle ">Join an existing Study Group.</p>
@@ -44,7 +40,7 @@
             v-for="(group, index) in studyGroups"
             :key="index"
           >
-            <router-link :to="{ name: 'home', params: { groupID: group.id }}">{{group.className}}</router-link>
+            <router-link :to="{ name: 'home', params: { groupID: group.id }}">{{group.courseCode}}</router-link>
           </li>
         </ol>
       </div>

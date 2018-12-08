@@ -2,56 +2,29 @@
   <header class="navbar">
 
     <section class="navbar-section">
-      <a
-        href="#"
-        class="navbar-brand m-2"
-      >Social Study</a>
+      <a href="#" class="navbar-brand m-2">Social Study</a>
     </section>
 
-    <profile-settings
-      :user="this.user"
-      @closeSettings="isSettingsActive = false"
-      v-show="isSettingsActive"
-    />
+    <profile-settings :user="this.user" @closeSettings="isSettingsActive = false" v-show="isSettingsActive" />
 
     <!-- Right Side Menu and Avatar -->
     <section class="navbar-section">
-
-      <div
-        @mouseover="menuActive = true"
-        @mouseout="menuActive = false"
-        class="menu-container"
-      >
+      <div @mouseover="menuActive = true" @mouseout="menuActive = false" class="menu-container">
         <Avatar :user="user" />
-        <ul
-          v-show="menuActive == true"
-          class="menu"
-        >
+        <ul v-show="menuActive == true" class="menu">
           <li class="menu-item text-left">
             <p class="h5">{{ user.displayName }}</p>
           </li>
           <li class="divider"></li>
           <li class="menu-item text-left">
-            <a
-              @click="isSettingsActive = true"
-              href="#"
-            >
-              <v-icon
-                name="cog"
-                class="icon float-right"
-              />
+            <a @click="isSettingsActive = true" href="#">
+              <v-icon name="cog" class="icon float-right" />
               Settings
             </a>
           </li>
           <li class="menu-item text-left">
-            <a
-              @click="logOut"
-              href="#"
-            >
-              <v-icon
-                name="sign-out-alt"
-                class="float-right"
-              />
+            <a @click="logOut" href="#">
+              <v-icon name="sign-out-alt" class="float-right" />
               Log Out
             </a>
           </li>
