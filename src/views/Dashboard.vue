@@ -2,7 +2,7 @@
 
   <!-- TODO: Render loading indicator if firebase has not finished async load -->
   <div v-if="this.user !== null">
-    <NavBar :user="user" />
+    <!-- <NavBar :user="user" /> -->
 
     <!-- TODO: Create a flexbox? -->
     <div class="dashboardBody">
@@ -40,7 +40,7 @@
             v-for="(group, index) in studyGroups"
             :key="index"
           >
-            <router-link :to="{ name: 'home', params: { groupID: group.id }}">{{group.courseCode}}</router-link>
+            <router-link :to="{ name: 'home', params: { groupID: group.id }}">{{group.className}}</router-link>
           </li>
         </ol>
       </div>

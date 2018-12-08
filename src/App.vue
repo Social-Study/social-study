@@ -1,8 +1,37 @@
 <template>
   <div id="app">
+    <div v-show="$route.name !== 'landing'">
+      <NavBar
+        v-if="user !== null"
+        :user="user"
+      />
+    </div>
     <router-view />
   </div>
 </template>
+
+
+<script>
+import NavBar from "@/components/NavBar";
+import firebase from "./firebaseConfig";
+export default {
+  name: "App",
+  components: {
+    NavBar
+  },
+  data() {
+    return {
+      user: null
+    };
+  },
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      this.user = user;
+    });
+  }
+};
+</script>
+
 
 // Global Styles
 <style lang="scss">

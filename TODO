@@ -10,6 +10,10 @@ General:
   ☐ Font-Awesome Icon Package Icons are not aligned properly
   ☐ Figure out the sizing issues, I want body to be entire screen height but exclude the nav bar...
 
+Profile Settings:
+  ☐ Make sure to delete/overwrite old profile picture when someone changes theirs
+  ☐ Not sure how I can get the profile picture to automatically update when they change it
+
 Routing:
   Bugs:
     ☐ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in
@@ -18,6 +22,10 @@ Routing:
 Dashboard:
   ☐ When you update your profile picture, you must refresh page to see it
     - Might have something to do with the photoURL being stored in auth not firestore
+
+Create Study Group:
+  ☐ Add validation on the inputs
+  ☐ Add transitions to make it look nice
 
 Prototype Presentation:
   ☐ Implement Study Groups

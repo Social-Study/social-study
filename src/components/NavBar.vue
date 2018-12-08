@@ -2,29 +2,59 @@
   <header class="navbar">
 
     <section class="navbar-section">
-      <a href="#" class="navbar-brand m-2">Social Study</a>
+      <router-link
+        class="navbar-brand"
+        to="/dashboard"
+      >Social Study</router-link>
+      <!-- <a
+        href="#"
+        class="navbar-brand m-2"
+      >Social Study</a> -->
     </section>
 
-    <profile-settings :user="this.user" @closeSettings="isSettingsActive = false" v-show="isSettingsActive" />
+    <profile-settings
+      :user="this.user"
+      @closeSettings="isSettingsActive = false"
+      v-show="isSettingsActive"
+    />
 
     <!-- Right Side Menu and Avatar -->
     <section class="navbar-section">
-      <div @mouseover="menuActive = true" @mouseout="menuActive = false" class="menu-container">
+      <div
+        @mouseover="menuActive = true"
+        @mouseout="menuActive = false"
+        class="menu-container"
+      >
         <Avatar :user="user" />
-        <ul v-show="menuActive == true" class="menu">
+        <ul
+          v-show="menuActive == true"
+          class="menu"
+        >
           <li class="menu-item text-left">
             <p class="h5">{{ user.displayName }}</p>
           </li>
           <li class="divider"></li>
           <li class="menu-item text-left">
-            <a @click="isSettingsActive = true" href="#">
-              <v-icon name="cog" class="icon float-right" />
+            <a
+              @click="isSettingsActive = true"
+              href="#"
+            >
+              <v-icon
+                name="cog"
+                class="icon float-right"
+              />
               Settings
             </a>
           </li>
           <li class="menu-item text-left">
-            <a @click="logOut" href="#">
-              <v-icon name="sign-out-alt" class="float-right" />
+            <a
+              @click="logOut"
+              href="#"
+            >
+              <v-icon
+                name="sign-out-alt"
+                class="float-right"
+              />
               Log Out
             </a>
           </li>
@@ -58,7 +88,7 @@ export default {
   methods: {
     logOut: function() {
       firebase.auth().signOut();
-      this.$router.replace("login");
+      this.$router.push("/");
     }
   }
 };
@@ -70,12 +100,13 @@ export default {
 .navbar {
   background-image: $nav-gradient;
   padding: 0px 10px;
-  max-height: 8vh;
+  max-height: 6vh;
+  min-height: 6vh;
 }
 
-.navbar-brand {
+a.navbar-brand {
   font-family: $logo-font;
-  font-size: 2em;
+  font-size: 1.7em;
   color: white;
 }
 
