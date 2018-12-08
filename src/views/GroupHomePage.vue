@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="studyGroup.length !== 0">
-      <h1>Home Page for {{ this.studyGroup.courseName }}</h1>
+      <h1>Home Page for {{ this.studyGroup.className }}</h1>
       <h3></h3>
     </div>
     <div v-else>
@@ -29,6 +29,7 @@ export default {
       "studyGroup",
       db.collection("study-groups").doc(this.$route.params.groupID)
     ).then(studyGroup => {
+      console.log(studyGroup);
       this.studyGroup === studyGroup;
     });
   }

@@ -3,6 +3,9 @@ import Router from "vue-router";
 import Dashboard from "./views/Dashboard.vue";
 import Landing from "./views/Landing.vue";
 import GroupHomePage from "./views/GroupHomePage";
+import CreateGroup from "./views/CreateGroup";
+
+import firebase from "./firebaseConfig";
 
 Vue.use(Router);
 
@@ -32,6 +35,15 @@ let router = new Router({
       }
     },
     {
+      path: "/dashboard/create",
+      name: "create",
+      component: CreateGroup,
+      meta: {
+        title: "Create New Group",
+        requiresAuth: true
+      }
+    },
+    {
       path: "/:groupID/home",
       name: "home",
       component: GroupHomePage,
@@ -41,6 +53,24 @@ let router = new Router({
       }
     }
   ]
+});
+
+// Prevents navigation to certain pages if you are not logged in
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        next({
+          path: "/landing"
+        });
+      } else {
+        next();
+      }
+    });
+  } else {
+    next();
+  }
 });
 
 export default router;

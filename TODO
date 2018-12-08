@@ -19,6 +19,9 @@ Dashboard:
   ☐ When you update your profile picture, you must refresh page to see it
     - Might have something to do with the photoURL being stored in auth not firestore
 
+Study Group Creation:
+  ☐ The TimePicker component's time indicator seems to be offset for some reason. The lines don't surround the currently selected time
+
 Prototype Presentation:
   ☐ Implement Study Groups
     ☐ Figure out how routing will work
