@@ -16,6 +16,7 @@
     "vee-validate": "^2.1.2",
     "vue": "^2.5.17",
     "vue-awesome": "^3.2.0",
+    "vue-pose": "^0.5.0",
     "vue-router": "^3.0.1",
     "vuefire": "^2.0.0-alpha.16",
     "vuex": "^3.0.1",

@@ -5,6 +5,37 @@
         class="navbar-brand"
         to="/dashboard"
       >Social Study</router-link>
+
+      <!-- Study Group Switcher -->
+      <div
+        v-if="studyGroups.length > 0"
+        class="dropdown"
+      >
+        <a
+          class="btn btn-primary dropdown-toggle"
+          tabindex="0"
+        >
+          Your Study Groups<i class="icon icon-caret"></i>
+        </a>
+        <!-- Your Study Group List Dropdown Items -->
+        <ul class="menu">
+          <li
+            v-for="(group, index) in studyGroups"
+            :key="index"
+          >
+            <!-- <a @click="switchGroup(group.id)">{{group.className}}</a> -->
+            <router-link :to="{ name: 'home', params: { groupID: group.id }}">{{group.className}}</router-link>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Create New Study Group Button -->
+      <button
+        @click="$router.push('/dashboard/create')"
+        style="margin: 0 10px;"
+        class="btn btn-link btn-action btn-create"
+      ><i class="icon icon-plus"></i></button>
+
     </section>
 
     <profile-settings
@@ -87,7 +118,8 @@ export default {
       menuActive: false,
       isSettingsActive: false,
       user: null,
-      firestoreUser: null
+      firestoreUser: null,
+      studyGroups: []
     };
   },
   created() {
@@ -95,7 +127,7 @@ export default {
       "firestoreUser",
       db.collection("users").doc(this.$store.getters.uid)
     ).then(user => {
-      this.firestoreUser = user;
+      this.firestoreUser === user;
       // this.$unbind("todos");
     });
 
@@ -103,6 +135,16 @@ export default {
       if (user) {
         this.user = user;
         this.$store.commit("setUID", user.uid);
+
+        this.$bind(
+          "studyGroups",
+          db
+            .collection("study-groups")
+            .where("members", "array-contains", this.$store.getters.uid)
+        ).then(studyGroups => {
+          this.studyGroups === studyGroups;
+          // this.$unbind("todos");
+        });
       } else {
         this.user = null;
       }
@@ -112,6 +154,9 @@ export default {
     logOut: function() {
       firebase.auth().signOut();
       this.$router.push("/");
+    },
+    switchGroup(id) {
+      this.$router.push(`/${id}/home`);
     }
   }
 };
@@ -130,6 +175,7 @@ export default {
 a.navbar-brand {
   font-family: $logo-font;
   font-size: 1.7em;
+  margin-right: 20px;
   color: white;
 }
 
@@ -138,6 +184,10 @@ a.navbar-brand {
   // position: fixed;
   top: 30px;
   right: 30px;
+}
+
+.btn-create:hover {
+  background-color: white;
 }
 
 .h5 {

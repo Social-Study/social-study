@@ -4,14 +4,23 @@
     <div class="createContent">
 
       <div class="navContainer">
-        <el-button
+
+        <button
+          @click="back"
+          class="btn btn-action btn-success btn-lg s-circle"
+          :class="active===0 ?'disabled c-not-allowed' : '' "
+        >
+          <i class="icon icon-arrow-left"></i>
+        </button>
+
+        <!-- <el-button
           :disabled="active === 0"
           @click="back"
           type="danger"
           class="arrow-buttons"
           icon="el-icon-arrow-left"
           circle
-        ></el-button>
+        ></el-button> -->
 
         <div
           v-if="active===0"
@@ -145,14 +154,22 @@
           </el-button>
         </div>
 
-        <el-button
+        <button
+          @click="next"
+          class="btn btn-action btn-success btn-lg s-circle"
+          :class="active===6 ?'disabled c-not-allowed' : '' "
+        >
+          <i class="icon icon-arrow-right"></i>
+        </button>
+
+        <!-- <el-button
           :disabled="active === 6"
           @click="next"
           type="danger"
           class="arrow-buttons"
           icon="el-icon-arrow-right"
           circle
-        ></el-button>
+        ></el-button> -->
       </div>
 
       <el-steps
@@ -250,6 +267,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
+
+button.s-circle {
+  margin: 15px;
+}
 
 .pageTitle {
   position: fixed;

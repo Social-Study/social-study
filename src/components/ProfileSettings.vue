@@ -208,11 +208,6 @@ export default {
       .then(value => {
         this.userBio = value;
       });
-    // .then(querySnapShot => {
-    //   querySnapShot.forEach(doc => {
-    //     this.userBio = doc.data().description;
-    //   });
-    // });
   },
   methods: {
     saveChanges() {

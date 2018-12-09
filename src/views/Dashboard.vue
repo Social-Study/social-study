@@ -6,10 +6,7 @@
 
     <!-- TODO: Create a flexbox? -->
     <div class="dashboardBody">
-      <div
-        v-if="this.studyGroups.length === 0"
-        class="empty"
-      >
+      <div class="empty">
         <div class="empty-icon">
           <img
             id="undraw"
@@ -18,10 +15,16 @@
             alt="No Study Groups"
           >
         </div>
-        <p class="empty-title h5">You don't have any Study Groups!</p>
+        <p
+          v-if="this.studyGroups.length === 0"
+          class="empty-title h5"
+        >You don't have any Study Groups!</p>
         <p class="empty-subtitle">Create a brand new Study Group</p>
         <div class="empty-action">
-          <button class="btn btn-primary">Create</button>
+          <button
+            @click="$router.push('/dashboard/create')"
+            class="btn btn-primary"
+          >Create</button>
         </div>
         <p class="empty-subtitle">or</p>
         <p class="empty-subtitle ">Join an existing Study Group.</p>
@@ -33,21 +36,6 @@
           <button class="btn btn-primary input-group-btn">Join</button>
         </div>
       </div>
-      <div v-else>
-        <h1>Your Study Groups</h1>
-        <ol>
-          <li
-            v-for="(group, index) in studyGroups"
-            :key="index"
-          >
-            <router-link :to="{ name: 'home', params: { groupID: group.id }}">{{group.className}}</router-link>
-          </li>
-        </ol>
-      </div>
-      <button
-        class="btn btn-primary"
-        @click="debug()"
-      >Debug</button>
     </div>
   </div>
   <div v-else>
@@ -67,11 +55,7 @@ export default {
       studyGroups: []
     };
   },
-  methods: {
-    debug() {
-      console.log(this.studyGroups[0].id);
-    }
-  },
+  methods: {},
   created() {
     // Set local user variable to the user's account information.
     // Display loading indicator when not available or loading
@@ -82,9 +66,9 @@ export default {
           "studyGroups",
           db
             .collection("study-groups")
-            .where("members", "array-contains", this.user.uid)
+            .where("members", "array-contains", this.$store.getters.uid)
         ).then(studyGroups => {
-          this.studyGroups = studyGroups;
+          this.studyGroups === studyGroups;
           // this.$unbind("todos");
         });
       } else {
@@ -96,10 +80,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.dashboardBody {
+  min-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #undraw {
   width: 10em;
-}
-.empty {
-  margin-top: 8%;
 }
 </style>

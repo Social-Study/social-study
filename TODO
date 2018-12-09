@@ -1,9 +1,14 @@
 Branding:
   ☐ Design a logo / titlebar icon
   ☐ Think of better slogan.
+  ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
 
 Database Design:
-  ☐ Does the user's photoURL need to be stored in the firestore for other users to view it?
+  ✔ Does the user's photoURL need to be stored in the firestore for other users to view it? @done(18-12-08 23:38)
+  ☐ Not sure if the user's study groups need to be stored in their profile, I can just query the "study-group" collection for all groups with the users id in the member array
+  ☐ Implement Study Group Invite Code Logic...
+  ☐ Figure out how to delete a code after 24 hours.
+    - May just have it set so that when a new user requests a code, the cloud functions deletes any old codes that are older than 24 hours old
 General:
   ☐ Convert Project to new Element UI Library
   ☐ Make sure the build bundle size is not too large.
@@ -12,7 +17,9 @@ General:
 
 Profile Settings:
   ☐ Make sure to delete/overwrite old profile picture when someone changes theirs
-  ☐ Not sure how I can get the profile picture to automatically update when they change it
+  ☐ Automatically update to the file picker's picture so user can preview what it will look like
+  ☐ Add Study Groups tab so users can remove study groups from their account
+  ✔ Not sure how I can get the profile picture to automatically update when they change it @done(18-12-08 23:39)
 
 Routing:
   Bugs:
@@ -20,19 +27,21 @@ Routing:
     ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
 
 NavBar:
-  ☐ Make the navbar manage it's own state from firebase
+  ✔ Make the navbar manage it's own state from firebase @done(18-12-08 22:56)
   ☐ Implement the dropdown menus and create study group buttons
 
 Dashboard:
-  ☐ When you update your profile picture, you must refresh page to see it
+  ✔ When you update your profile picture, you must refresh page to see it @done(18-12-08 22:56)
     - Might have something to do with the photoURL being stored in auth not firestore
 
 Create Study Group:
   ☐ Add validation on the inputs
   ☐ Add transitions to make it look nice
+  ☐ Revert back to Spectre.css
+    - Element is too opinionated, and it is a pain in the ass trying to override most of the defaults
 
 Prototype Presentation:
-  ☐ Implement Study Groups
-    ☐ Figure out how routing will work
+  ✔ Implement Study Groups @done(18-12-08 22:55)
+    ✔ Figure out how routing will work @done(18-12-08 22:55)
   ☐ Implement a Study Group feature
     ☐ Flashcards
