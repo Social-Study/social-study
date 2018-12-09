@@ -1,19 +1,17 @@
 <template>
   <header class="navbar">
-
     <section class="navbar-section">
       <router-link
         class="navbar-brand"
         to="/dashboard"
       >Social Study</router-link>
-      <!-- <a
-        href="#"
-        class="navbar-brand m-2"
-      >Social Study</a> -->
     </section>
 
     <profile-settings
+      v-if="user && firestoreUser"
+      profile-settings
       :user="this.user"
+      :photoURL="this.firestoreUser.photoURL"
       @closeSettings="isSettingsActive = false"
       v-show="isSettingsActive"
     />
@@ -25,13 +23,21 @@
         @mouseout="menuActive = false"
         class="menu-container"
       >
-        <Avatar :user="user" />
+        <Avatar
+          v-if="firestoreUser"
+          :user="{ displayName: this.firestoreUser.displayName,
+                   photoURL: this.firestoreUser.photoURL
+                 }"
+        />
         <ul
           v-show="menuActive == true"
           class="menu"
         >
           <li class="menu-item text-left">
-            <p class="h5">{{ user.displayName }}</p>
+            <p
+              v-if="user"
+              class="h5"
+            >{{ user.displayName }}</p>
           </li>
           <li class="divider"></li>
           <li class="menu-item text-left">
@@ -68,13 +74,10 @@
 <script>
 import Avatar from "@/components/Avatar";
 import ProfileSettings from "@/components/ProfileSettings";
-import firebase from "@/firebaseConfig";
+import firebase, { db } from "@/firebaseConfig";
 
 export default {
   name: "NavBar",
-  props: {
-    user: Object
-  },
   components: {
     Avatar,
     ProfileSettings
@@ -82,8 +85,28 @@ export default {
   data: function() {
     return {
       menuActive: false,
-      isSettingsActive: false
+      isSettingsActive: false,
+      user: null,
+      firestoreUser: null
     };
+  },
+  created() {
+    this.$bind(
+      "firestoreUser",
+      db.collection("users").doc(this.$store.getters.uid)
+    ).then(user => {
+      this.firestoreUser = user;
+      // this.$unbind("todos");
+    });
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+        this.$store.commit("setUID", user.uid);
+      } else {
+        this.user = null;
+      }
+    });
   },
   methods: {
     logOut: function() {

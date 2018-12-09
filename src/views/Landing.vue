@@ -332,7 +332,9 @@ export default {
               firebase
                 .auth()
                 .signInWithEmailAndPassword(this.email, this.password)
-                .then(() => {
+                .then(user => {
+                  console.log(user.user.uid);
+                  this.$store.commit("setUID", user.user.uid);
                   this.$router.replace("dashboard");
                 })
                 .catch(error => {

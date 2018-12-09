@@ -19,6 +19,10 @@ Routing:
     ☐ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in
     ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
 
+NavBar:
+  ☐ Make the navbar manage it's own state from firebase
+  ☐ Implement the dropdown menus and create study group buttons
+
 Dashboard:
   ☐ When you update your profile picture, you must refresh page to see it
     - Might have something to do with the photoURL being stored in auth not firestore

@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <div v-show="$route.name !== 'landing'">
-      <NavBar
-        v-if="user !== null"
-        :user="user"
-      />
-    </div>
+    <NavBar v-if="$route.name !== 'landing'" />
     <router-view />
   </div>
 </template>

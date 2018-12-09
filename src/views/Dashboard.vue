@@ -89,11 +89,6 @@ export default {
             .where("members", "array-contains", this.user.uid)
         ).then(studyGroups => {
           this.studyGroups === studyGroups;
-          // Study Groups are ready to be used
-          // if it contained any reference to other document or collection, the
-          // promise will wait for those references to be fetched as well
-          // you can unbind a property anytime you want
-          // this will be done automatically when the component is destroyed
           // this.$unbind("todos");
         });
       } else {
