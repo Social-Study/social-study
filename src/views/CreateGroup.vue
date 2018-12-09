@@ -261,7 +261,10 @@ export default {
 
 .createContent {
   min-height: 94vh;
-  background-image: $green-gradient;
+  // background-image: $green-gradient;
+  // background-color: #97d9e1;
+  // TODO: Figure out good background color
+  // background-color: grey;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -57,13 +57,9 @@
 
 <script>
 import firebase, { db } from "@/firebaseConfig";
-import NavBar from "@/components/NavBar";
 
 export default {
   name: "dashboard",
-  components: {
-    NavBar
-  },
   data: function() {
     return {
       user: null,
@@ -88,7 +84,7 @@ export default {
             .collection("study-groups")
             .where("members", "array-contains", this.user.uid)
         ).then(studyGroups => {
-          this.studyGroups === studyGroups;
+          this.studyGroups = studyGroups;
           // this.$unbind("todos");
         });
       } else {
