@@ -13,15 +13,6 @@
           <i class="icon icon-arrow-left"></i>
         </button>
 
-        <!-- <el-button
-          :disabled="active === 0"
-          @click="back"
-          type="danger"
-          class="arrow-buttons"
-          icon="el-icon-arrow-left"
-          circle
-        ></el-button> -->
-
         <div
           v-if="active===0"
           class="infoContainer"
@@ -213,6 +204,7 @@
 
 <script>
 import firebase, { db } from "../firebaseConfig";
+import generateCode from "../scripts/generateCode";
 
 export default {
   name: "CreateGroup",
@@ -252,7 +244,8 @@ export default {
           websiteURL: this.websiteURL,
           extraInfo: this.extraInfo,
           owner: firebase.auth().currentUser.uid,
-          members: [firebase.auth().currentUser.uid]
+          members: [firebase.auth().currentUser.uid],
+          inviteCodes: [generateCode()]
         })
         .then(docRef => {
           this.$router.push({ path: `/${docRef.id}/home` });
@@ -305,7 +298,8 @@ button.s-circle {
   max-width: 800px;
   min-width: 800px;
   background-color: rgb(255, 255, 255);
-  border-radius: 16px;
+  border-radius: 10px;
+  // border-radius: 16px;
   box-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
 }
 

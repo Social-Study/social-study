@@ -14,7 +14,7 @@
         class="off-canvas-sidebar"
         :class="{ active : sidebarActive }"
       >
-        <ul class="menu">
+        <ul class="menu sidebar">
           <li
             class="menu-item"
             style="padding-top: 10px;"
@@ -33,15 +33,24 @@
           </li>
           <li class="divider"></li>
           <li class="menu-item">
-            <div class="menu-badge">
+            <!-- <div class="menu-badge">
               <label class="label label-primary">2</label>
-            </div><a
+            </div>
+            <a
               class="active"
               href="#menus"
-            >My profile</a>
+            >My profile</a> -->
           </li>
-          <li class="menu-item"><a href="#menus">Settings</a></li>
-          <li class="menu-item"><a href="#menus">Logout</a></li>
+          <li class="menu-item text-left"><a class="active">Home</a></li>
+          <li class="menu-item text-left"><a>Flashcards</a></li>
+          <li class="menu-item text-left"><a>Quiz</a></li>
+          <li class="menu-item text-left"><a>Agenda</a></li>
+          <li class="menu-item text-left"><a>Notes</a></li>
+          <li class="menu-item text-left">
+            <div class="menu-badge">
+              <label class="member-num label label-primary">{{studyGroup.members.length}}</label>
+            </div><a>Members</a>
+          </li>
         </ul>
       </div>
 
@@ -102,22 +111,31 @@ export default {
 };
 </script>
 
-<style>
-/* .content-container {
-  /* min-height: 94vh; */
-/* } */
-
-.menu {
+// cannot be scoped, or else it will not override the default sidebar and menu styling
+<style lang="scss">
+.sidebar {
   box-shadow: none;
+  background: #3c3c3c;
 }
 
+.member-num {
+  padding-left: 8px;
+  padding-right: 8px;
+  /* padding: 10px; */
+}
+
+.sidebar > li.menu-item {
+  color: white;
+}
+
+.sidebar > li > a.active {
+  background-image: linear-gradient(90deg, #ffa404 0%, #ff0479 100%) !important;
+  color: white !important;
+}
 div.off-canvas-sidebar {
-  /* overflow: hidden; */
-  background: white !important;
+  background: #3c3c3c !important;
   width: 200px;
-  /* min-height: 94vh; */
 }
-
 div.off-canvas-content {
   min-height: 94vh;
 }

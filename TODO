@@ -4,44 +4,53 @@ Branding:
   ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
 
 Database Design:
-  ✔ Does the user's photoURL need to be stored in the firestore for other users to view it? @done(18-12-08 23:38)
+  ☐ May have to mess with the structure of the database. I need to update the database a user is joining. Changed the rules to allow any authenticated user to modify the study group but there has to be a better way to do it.
+    - May have to put the members list in a separate location or something.
+    ☐ Might implement a public facing version...
   ☐ Not sure if the user's study groups need to be stored in their profile, I can just query the "study-group" collection for all groups with the users id in the member array
   ☐ Implement Study Group Invite Code Logic...
   ☐ Figure out how to delete a code after 24 hours.
     - May just have it set so that when a new user requests a code, the cloud functions deletes any old codes that are older than 24 hours old
 General:
-  ☐ Convert Project to new Element UI Library
+  ☐ Not sure why the favicon is not showing????
   ☐ Make sure the build bundle size is not too large.
   ☐ Font-Awesome Icon Package Icons are not aligned properly
+    ☐ Get rid of vueawesome and use cdn to reduce package size and wierd errors
   ☐ Figure out the sizing issues, I want body to be entire screen height but exclude the nav bar...
 
 Profile Settings:
   ☐ Make sure to delete/overwrite old profile picture when someone changes theirs
   ☐ Automatically update to the file picker's picture so user can preview what it will look like
   ☐ Add Study Groups tab so users can remove study groups from their account
-  ✔ Not sure how I can get the profile picture to automatically update when they change it @done(18-12-08 23:39)
 
 Routing:
   Bugs:
     ☐ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in
     ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
 
-NavBar:
-  ✔ Make the navbar manage it's own state from firebase @done(18-12-08 22:56)
-  ☐ Implement the dropdown menus and create study group buttons
-
-Dashboard:
-  ✔ When you update your profile picture, you must refresh page to see it @done(18-12-08 22:56)
-    - Might have something to do with the photoURL being stored in auth not firestore
+Group Homepage:
+  ☐ Extra navbar to a component
+    ☐ Make sure that there is a slot because all page content has to be inside it
 
 Create Study Group:
   ☐ Add validation on the inputs
   ☐ Add transitions to make it look nice
   ☐ Revert back to Spectre.css
     - Element is too opinionated, and it is a pain in the ass trying to override most of the defaults
+    - It is also very large, > 1mb
+  ☐ Change steps so that the one before the end is the finish
+  ☐ Add url test <a> tag below the website input box
+  ☐ Add the ability to copy the study group invite code before redirecting to the new homepage
 
 Prototype Presentation:
-  ✔ Implement Study Groups @done(18-12-08 22:55)
-    ✔ Figure out how routing will work @done(18-12-08 22:55)
   ☐ Implement a Study Group feature
     ☐ Flashcards
+Archive:
+  ✘ Convert Project to new Element UI Library @cancelled(18-12-09 12:55) @project(General)
+  ✔ Implement the dropdown menus and create study group buttons @done(18-12-09 13:05) @project(NavBar)
+  ✔ Does the user's photoURL need to be stored in the firestore for other users to view it? @done(18-12-08 23:38) @project(Database Design)
+  ✔ Not sure how I can get the profile picture to automatically update when they change it @done(18-12-08 23:39) @project(Profile Settings)
+  ✔ Make the navbar manage it's own state from firebase @done(18-12-08 22:56) @project(NavBar)
+  ✔ When you update your profile picture, you must refresh page to see it @done(18-12-08 22:56) @project(Dashboard)
+  ✔ Implement Study Groups @done(18-12-08 22:55) @project(Prototype Presentation)
+  ✔ Figure out how routing will work @done(18-12-08 22:55) @project(Prototype Presentation)
