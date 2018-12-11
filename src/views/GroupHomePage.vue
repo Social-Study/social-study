@@ -42,7 +42,7 @@
             >My profile</a> -->
           </li>
           <li class="menu-item text-left"><a class="active">Home</a></li>
-          <li class="menu-item text-left"><a>Flashcards</a></li>
+          <li class="menu-item text-left"><router-link class="sidebar-flashcard" to="/flashcardStudy">Flashcards</router-link>
           <li class="menu-item text-left"><a>Quiz</a></li>
           <li class="menu-item text-left"><a>Agenda</a></li>
           <li class="menu-item text-left"><a>Notes</a></li>
