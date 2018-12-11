@@ -54,7 +54,7 @@
         </li>
         <li class="menu-item text-left">
           <div class="menu-badge">
-            <label class="member-num label label-primary">{{activeGroup.memberCount}}</label>
+            <label class="member-num label label-primary">{{activeGroup.members.length}}</label>
           </div>
           <router-link
             :class="$route.name === 'members' ? 'active' : ''"
@@ -86,7 +86,7 @@ export default {
     };
   },
   created() {
-    this.activeGroup = this.$store.getters.activeGroup;
+    this.activeGroup = this.$store.getters.activeGroup.details;
   }
 };
 </script>

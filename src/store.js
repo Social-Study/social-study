@@ -19,10 +19,8 @@ export default new Vuex.Store({
   state: {
     uid: "",
     activeGroup: {
-      className: "",
-      instructorName: "",
-      memberCount: null,
-      groupID: ""
+      groupID: "",
+      details: null
     }
   },
   mutations: {
@@ -30,14 +28,11 @@ export default new Vuex.Store({
     setUID(state, uid) {
       state.uid = uid;
     },
-    // Store the current group's details so the sidebar has access to them
-    setActiveGroupDetails(
-      state,
-      { className, instructorName, memberCount, groupID }
-    ) {
-      state.activeGroup.className = className;
-      state.activeGroup.instructorName = instructorName;
-      state.activeGroup.memberCount = memberCount;
+    // This is to store the currently active group between study group feature pages
+    // Prevents having to reload from the firebase firestore on switches
+    // the details is just the surface level group data, not the study group subcollections
+    setActiveGroup(state, { details, groupID }) {
+      state.activeGroup.details = details;
       state.activeGroup.groupID = groupID;
     }
   },

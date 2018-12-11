@@ -42,6 +42,7 @@ export default {
       this.loadGroupData(this.$route.params.groupID);
     } else {
       console.log("the same. skip reload");
+      this.studyGroup = this.$store.getters.activeGroup.details;
     }
   },
   methods: {
@@ -52,11 +53,9 @@ export default {
           this.studyGroup === studyGroup;
         })
         .then(() => {
-          this.$store.commit("setActiveGroupDetails", {
-            className: this.studyGroup.className,
-            instructorName: this.studyGroup.instructorName,
-            memberCount: this.studyGroup.members.length,
-            groupID: groupID
+          this.$store.commit("setActiveGroup", {
+            groupID: groupID,
+            details: this.studyGroup
           });
         });
     }
