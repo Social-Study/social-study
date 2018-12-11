@@ -16,7 +16,7 @@ General:
   ☐ Make sure the build bundle size is not too large.
   ☐ Font-Awesome Icon Package Icons are not aligned properly
     ☐ Get rid of vueawesome and use cdn to reduce package size and wierd errors
-  ☐ Figure out the sizing issues, I want body to be entire screen height but exclude the nav bar...
+  ✔ Figure out the sizing issues, I want body to be entire screen height but exclude the nav bar... @done(18-12-11 14:10)
 
 Profile Settings:
   ☐ Make sure to delete/overwrite old profile picture when someone changes theirs

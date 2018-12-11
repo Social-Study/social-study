@@ -32,16 +32,14 @@ export default {
     };
   },
   created() {
-    console.log("Store Data:" + this.$store.getters.activeGroup.groupID);
-    console.log("Route data: " + this.$route.params.groupID);
-
+    // Check if the study group has changed by checking id of group in store
+    // with the router's group id. If they are different reload the group data,
+    // otherwise just set the study group to the stored details
     if (
       this.$store.getters.activeGroup.groupID !== this.$route.params.groupID
     ) {
-      console.log("not the same reloading data");
       this.loadGroupData(this.$route.params.groupID);
     } else {
-      console.log("the same. skip reload");
       this.studyGroup = this.$store.getters.activeGroup.details;
     }
   },
