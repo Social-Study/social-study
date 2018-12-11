@@ -5,12 +5,12 @@ Branding:
 
 Database Design:
   ☐ May have to mess with the structure of the database. I need to update the database a user is joining. Changed the rules to allow any authenticated user to modify the study group but there has to be a better way to do it.
-    - May have to put the members list in a separate location or something.
-    ☐ Might implement a public facing version...
+    May have to put the members list in a separate location or something.
+    Might implement a public facing version...
   ☐ Not sure if the user's study groups need to be stored in their profile, I can just query the "study-group" collection for all groups with the users id in the member array
   ☐ Implement Study Group Invite Code Logic...
   ☐ Figure out how to delete a code after 24 hours.
-    - May just have it set so that when a new user requests a code, the cloud functions deletes any old codes that are older than 24 hours old
+    May just have it set so that when a new user requests a code, the cloud functions deletes any old codes that are older than 24 hours old
 General:
   ☐ Not sure why the favicon is not showing????
   ☐ Make sure the build bundle size is not too large.
@@ -29,7 +29,7 @@ Routing:
     ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
 
 Group Homepage:
-  ☐ Extra navbar to a component
+  ☐ Extract sidebar to a component
     ☐ Make sure that there is a slot because all page content has to be inside it
 
 Create Study Group:

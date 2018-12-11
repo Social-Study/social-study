@@ -113,7 +113,6 @@ export default {
         });
     },
     queryStudyGroup() {
-      let groupID;
       if (this.inviteCode !== "") {
         db.collection("study-groups")
           .where("inviteCodes", "array-contains", this.inviteCode)

@@ -1,89 +1,31 @@
 <template>
   <div class="content-container">
-    <div class="off-canvas off-canvas-sidebar-show">
-      <!-- off-screen toggle button -->
-      <a
-        @click="sidebarActive = true"
-        class="off-canvas-toggle btn btn-primary btn-action"
-      >
-        <i class="icon icon-menu"></i>
-      </a>
+    <side-bar :studyGroup="studyGroup">
+      <div v-if="studyGroup.length !== 0">
 
-      <div
-        id="sidebar-id"
-        class="off-canvas-sidebar"
-        :class="{ active : sidebarActive }"
-      >
-        <ul class="menu sidebar">
-          <li
-            class="menu-item"
-            style="padding-top: 10px;"
-          >
-            <div class="tile tile-centered">
-              <!-- <div class="tile-icon"><img
-                  class="avatar"
-                  src="../assets/logo.png"
-                  alt="Avatar"
-                ></div> -->
-              <div class="tile-content">
-                <h5>{{studyGroup.className}}</h5>
-                <p style="margin: 0;">{{studyGroup.instructorName}}</p>
-              </div>
-            </div>
-          </li>
-          <li class="divider"></li>
-          <li class="menu-item">
-            <!-- <div class="menu-badge">
-              <label class="label label-primary">2</label>
-            </div>
-            <a
-              class="active"
-              href="#menus"
-            >My profile</a> -->
-          </li>
-          <li class="menu-item text-left"><a class="active">Home</a></li>
-          <li class="menu-item text-left"><a>Flashcards</a></li>
-          <li class="menu-item text-left"><a>Quiz</a></li>
-          <li class="menu-item text-left"><a>Agenda</a></li>
-          <li class="menu-item text-left"><a>Notes</a></li>
-          <li class="menu-item text-left">
-            <div class="menu-badge">
-              <label class="member-num label label-primary">{{studyGroup.members.length}}</label>
-            </div><a>Members</a>
-          </li>
-        </ul>
+        <h1>Home Page for {{ this.studyGroup.className }}</h1>
+        <h3></h3>
       </div>
-
-      <a
-        @click="sidebarActive = false"
-        class="off-canvas-overlay"
-      ></a>
-
-      <div class="off-canvas-content">
-        <div v-if="studyGroup.length !== 0">
-
-          <h1>Home Page for {{ this.studyGroup.className }}</h1>
-          <h3></h3>
-        </div>
-        <div v-else>
-          <h1 style="margin-top: 25%">Error Loading Your Study Group</h1>
-          <p>Make sure you are a member of the group!</p>
-        </div>
+      <div v-else>
+        <h1 style="margin-top: 25%">Error Loading Your Study Group</h1>
+        <p>Make sure you are a member of the group!</p>
       </div>
-    </div>
-
+    </side-bar>
   </div>
 </template>
 
 <script>
-import firebase, { db } from "../firebaseConfig";
+import { db } from "../firebaseConfig";
+import SideBar from "../components/SideBar";
 export default {
   name: "GroupHomePage",
+  components: {
+    SideBar
+  },
   data: function() {
     return {
-      sidebarActive: false,
       groupID: "",
-      studyGroup: []
+      studyGroup: null
     };
   },
   created() {

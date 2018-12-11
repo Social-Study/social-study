@@ -250,8 +250,9 @@ export default {
         .then(docRef => {
           this.$router.push({ path: `/${docRef.id}/home` });
         })
-        .catch(erorr => {
+        .catch(error => {
           console.log("Error creating new Study Group");
+          console.log(error);
         });
     }
   }
