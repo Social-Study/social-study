@@ -1,10 +1,22 @@
 <template>
-  <figure v-if="this.user.photoURL === null" :data-initial="initials" class="avatar avatar-lg">
+  <figure
+    v-if="this.user.photoURL === null"
+    :data-initial="initials"
+    class="avatar avatar-lg"
+  >
   </figure>
 
-  <figure v-else class="avatar avatar-lg">
-    <img :src="this.user.photoURL" alt="avatar">
+  <figure
+    v-else
+    class="avatar avatar-lg"
+  >
+    <img
+      :src="this.user.photoURL"
+      alt="avatar"
+    >
   </figure>
+  </div>
+
 </template>
 
 <script>

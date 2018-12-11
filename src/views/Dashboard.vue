@@ -47,7 +47,7 @@
           >
         </div>
         <p
-          v-if="this.studyGroups.length === 0"
+          v-if="this.studyGroups && this.studyGroups.length === 0"
           class="empty-title h5"
         >You don't have any Study Groups!</p>
         <p class="empty-subtitle">Create a brand new Study Group</p>
@@ -74,7 +74,7 @@
     </div>
   </div>
   <div v-else>
-    Loading info...
+    <div class="loading loading-lg"></div>
   </div>
 </template>
 
@@ -99,6 +99,7 @@ export default {
     };
   },
   methods: {
+    // Add the current user's id to the new Study Group
     joinStudyGroup() {
       db.collection("study-groups")
         .doc(this.newGroupID)
@@ -112,6 +113,7 @@ export default {
           this.$router.push(`/${this.newGroupID}/home`);
         });
     },
+    // Search all study groups to find a matching group for the invite code
     queryStudyGroup() {
       if (this.inviteCode !== "") {
         db.collection("study-groups")
@@ -163,7 +165,6 @@ export default {
             .where("members", "array-contains", this.$store.getters.uid)
         ).then(studyGroups => {
           this.studyGroups === studyGroups;
-          // this.$unbind("todos");
         });
       } else {
         this.user = null;

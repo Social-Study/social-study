@@ -31,10 +31,17 @@
         </li>
         <!-- Change the active highlight depending on the current page name -->
         <li class="menu-item text-left">
-          <a :class="$route.name === 'home' ? 'active' : ''">Home</a>
+          <router-link
+            :class="$route.name === 'home' ? 'active' : ''"
+            :to="{ name: 'home'}"
+          >Home</router-link>
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'flashcards' ? 'active' : ''">Flashcards</a>
+          <router-link
+            :class="$route.name === 'flashcards' ? 'active' : ''"
+            :to="{ name: 'flashcards'}"
+          >Flashcards</router-link>
+          <!-- <a :class="$route.name === 'flashcards' ? 'active' : ''">Flashcards</a> -->
         </li>
         <li class="menu-item text-left">
           <a :class="$route.name === 'quiz' ? 'active' : ''">Quiz</a>
@@ -49,12 +56,10 @@
           <div class="menu-badge">
             <label class="member-num label label-primary">{{activeGroup.memberCount}}</label>
           </div>
-          <!-- <router-link to=""></router-link> -->
           <router-link
             :class="$route.name === 'members' ? 'active' : ''"
             :to="{ name: 'members'}"
           >Members</router-link>
-          <!-- <a :class="$route.name === 'members' ? 'active' : ''">Members</a> -->
         </li>
       </ul>
     </div>
@@ -85,3 +90,34 @@ export default {
   }
 };
 </script>
+
+// @HACK: Have to set !important on certain styling to override spectre defaults
+// Must be global styling not scoped to take affect
+<style lang="scss">
+.sidebar {
+  box-shadow: none;
+  background: #3c3c3c;
+}
+
+.member-num {
+  padding-left: 8px;
+  padding-right: 8px;
+  /* padding: 10px; */
+}
+
+.sidebar > li.menu-item {
+  color: white;
+}
+
+.sidebar > li > a.active {
+  background-image: linear-gradient(90deg, #ffa404 0%, #ff0479 100%) !important;
+  color: white !important;
+}
+div.off-canvas-sidebar {
+  background: #3c3c3c !important;
+  width: 200px;
+}
+div.off-canvas-content {
+  min-height: 94vh;
+}
+</style>

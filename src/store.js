@@ -21,7 +21,8 @@ export default new Vuex.Store({
     activeGroup: {
       className: "",
       instructorName: "",
-      memberCount: null
+      memberCount: null,
+      groupID: ""
     }
   },
   mutations: {
@@ -30,10 +31,14 @@ export default new Vuex.Store({
       state.uid = uid;
     },
     // Store the current group's details so the sidebar has access to them
-    setActiveGroupDetails(state, { className, instructorName, memberCount }) {
+    setActiveGroupDetails(
+      state,
+      { className, instructorName, memberCount, groupID }
+    ) {
       state.activeGroup.className = className;
       state.activeGroup.instructorName = instructorName;
       state.activeGroup.memberCount = memberCount;
+      state.activeGroup.groupID = groupID;
     }
   },
   actions: {},

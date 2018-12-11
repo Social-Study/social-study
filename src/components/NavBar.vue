@@ -60,6 +60,12 @@
                    photoURL: this.firestoreUser.photoURL
                  }"
         />
+        <div
+          v-else
+          style="background-color: #3c3c3c; border-radius: 50%; height: 48px; width: 48px;"
+          class="loading loading-lg"
+        ></div>
+
         <ul
           v-show="menuActive == true"
           class="menu"
@@ -128,7 +134,6 @@ export default {
       db.collection("users").doc(this.$store.getters.uid)
     ).then(user => {
       this.firestoreUser === user;
-      // this.$unbind("todos");
     });
 
     firebase.auth().onAuthStateChanged(user => {
@@ -143,7 +148,6 @@ export default {
             .where("members", "array-contains", this.$store.getters.uid)
         ).then(studyGroups => {
           this.studyGroups === studyGroups;
-          // this.$unbind("todos");
         });
       } else {
         this.user = null;

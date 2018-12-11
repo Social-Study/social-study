@@ -333,7 +333,6 @@ export default {
                 .auth()
                 .signInWithEmailAndPassword(this.email, this.password)
                 .then(user => {
-                  console.log(user.user.uid);
                   this.$store.commit("setUID", user.user.uid);
                   this.$router.replace("dashboard");
                 })
