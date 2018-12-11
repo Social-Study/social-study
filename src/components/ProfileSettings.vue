@@ -26,14 +26,21 @@
             class="tab-item"
             :class="[activeTab === 1 ? 'active' : '']"
           >
-            <a href="#">Profile</a>
+            <a>Profile</a>
           </li>
           <li
             @click="activeTab = 2"
             class="tab-item"
             :class="[activeTab === 2 ? 'active' : '']"
           >
-            <a href="#">Account</a>
+            <a>Account</a>
+          </li>
+          <li
+            @click="activeTab = 3"
+            class="tab-item"
+            :class="[activeTab === 3 ? 'active' : '']"
+          >
+            <a>Study Groups</a>
           </li>
         </ul>
 
@@ -56,12 +63,12 @@
             <div class="tile-content text-left">
               <div class="tile-title text-bold">Profile Picture</div>
               <div class="tile-subtitle">
-                Current Picture:
-                <Avatar
+                Upload a new picture:
+                <!-- <Avatar
                   class="form-inline"
                   style="margin: 10px;"
                   :user="this.user"
-                />
+                /> -->
                 <input
                   class="form-input form-inline"
                   @change="handleFile($event)"
@@ -157,7 +164,7 @@
       <div class="modal-footer">
         <button
           @click="saveChanges"
-          class="btn btn-primary"
+          class="save-btn btn btn-primary"
         >
           Save Changes
         </button>
@@ -249,7 +256,6 @@ export default {
                     });
                 });
             });
-          // TODO: Figure out error checking for this
         }
 
         // Create new profile bio in firestore
@@ -274,6 +280,10 @@ export default {
 <style lang="scss" scoped>
 .modal-container {
   border-radius: 10px;
+}
+
+.tab-item {
+  cursor: pointer;
 }
 
 .tile-title {

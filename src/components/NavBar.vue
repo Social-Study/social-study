@@ -197,6 +197,9 @@ a.navbar-brand {
 
 .menu {
   border-radius: 10px;
+  li {
+    margin-top: 0;
+  }
 }
 
 .settings-menu {

@@ -10,12 +10,8 @@
     v-else
     class="avatar avatar-lg"
   >
-    <img
-      :src="this.user.photoURL"
-      alt="avatar"
-    >
+    <img :src="this.user.photoURL">
   </figure>
-  </div>
 
 </template>
 

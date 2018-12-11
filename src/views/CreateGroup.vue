@@ -4,7 +4,6 @@
     <div class="createContent">
 
       <div class="navContainer">
-
         <button
           @click="back"
           class="btn btn-action btn-success btn-lg s-circle"
@@ -92,8 +91,10 @@
           >
           </el-switch>
           <br>
-          <transition name="el-zoom-in-top">
+          <transition-group name="el-zoom-in-top">
+
             <el-input
+              key="input"
               style="margin-top: 12px;"
               v-show="hasWebsite"
               @keydown.enter.native="next"
@@ -101,8 +102,17 @@
               v-model="websiteURL"
               clearable
             >
+              <template slot="prepend">https://</template>
             </el-input>
-          </transition>
+            <br key="break">
+            <br key="break2">
+            <a
+              v-show="hasWebsite && websiteURL !== ''"
+              target="_blank"
+              key="link"
+              :href="formattedURL"
+            >{{formattedURL}}</a>
+          </transition-group>
         </div>
 
         <div
@@ -144,23 +154,49 @@
             Create Study Group
           </el-button>
         </div>
+        <!-- Show invite code to user -->
+        <div
+          class="infoContainer"
+          v-else-if="active===7"
+        >
+          <h3>Your new Study Group has been created!</h3>
+          <div
+            style="width: 50%; margin: 20px auto;"
+            class="input-group"
+          >
+            <input
+              type="text"
+              ref="inviteDisplay"
+              class="form-input"
+              placeholder="Invite Code"
+              v-model="inviteCode"
+            >
+            <br>
+            <br>
+            <button
+              @click="copyCode"
+              class="btn btn-primary input-group-btn"
+            >Copy Code</button>
+          </div>
+          <router-link
+            class="btn"
+            :to="{name: 'dashboard'}"
+          >Dashboard</router-link>
+          <!-- this.$router.push({ path: `/${docRef.id}/home` }); -->
+          <router-link
+            style="margin: 0px 10px;"
+            class="btn btn-success"
+            :to="{ name: 'home', params: { groupID:newGroupID }}"
+          >New Group</router-link>
+        </div>
 
         <button
           @click="next"
           class="btn btn-action btn-success btn-lg s-circle"
-          :class="active===6 ?'disabled c-not-allowed' : '' "
+          :class="active===7 ?'disabled' : '' "
         >
           <i class="icon icon-arrow-right"></i>
         </button>
-
-        <!-- <el-button
-          :disabled="active === 6"
-          @click="next"
-          type="danger"
-          class="arrow-buttons"
-          icon="el-icon-arrow-right"
-          circle
-        ></el-button> -->
       </div>
 
       <el-steps
@@ -194,6 +230,10 @@
         ></el-step>
         <el-step
           @click.native="active = 6"
+          title="Step 7"
+        ></el-step>
+        <el-step
+          @click.native="active = 7"
           title="Finalize"
         ></el-step>
       </el-steps>
@@ -203,7 +243,7 @@
 </template>
 
 <script>
-import firebase, { db } from "../firebaseConfig";
+import firebase, { db, FirebaseConsts } from "../firebaseConfig";
 import generateCode from "../scripts/generateCode";
 
 export default {
@@ -220,7 +260,9 @@ export default {
       extraInfo: "",
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       meetingDays: [],
-      meetingTime: [new Date(), new Date()]
+      meetingTime: [new Date(), new Date()],
+      inviteCode: "",
+      newGroupID: ""
     };
   },
   methods: {
@@ -232,7 +274,14 @@ export default {
         this.active--;
       }
     },
+    copyCode() {
+      // Allows user to copy the invite code on button click
+      this.$refs.inviteDisplay.select();
+      document.execCommand("copy");
+    },
     createStudyGroup() {
+      // Generate random invite code and save it
+      this.inviteCode = generateCode();
       // Create new study group in the firestore
       db.collection("study-groups")
         .add({
@@ -241,19 +290,27 @@ export default {
           meetingDays: this.meetingDays,
           meetingTime: this.meetingTime,
           location: this.location,
-          websiteURL: this.websiteURL,
+          // Check to see if it is just the prepend or the actual url
+          websiteURL:
+            this.websiteURL === "" ? "" : "https://" + this.websiteURL,
           extraInfo: this.extraInfo,
           owner: firebase.auth().currentUser.uid,
           members: [firebase.auth().currentUser.uid],
-          inviteCodes: [generateCode()]
+          inviteCodes: [this.inviteCode]
         })
         .then(docRef => {
-          this.$router.push({ path: `/${docRef.id}/home` });
+          this.newGroupID = docRef.id;
+          this.next();
         })
         .catch(error => {
           console.log("Error creating new Study Group");
           console.log(error);
         });
+    }
+  },
+  computed: {
+    formattedURL() {
+      return "https://" + this.websiteURL;
     }
   }
 };
@@ -274,6 +331,7 @@ button.s-circle {
   text-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
 }
 
+// Main container, centers all content on the page
 .createContent {
   min-height: 94vh;
   // background-image: $green-gradient;
@@ -286,6 +344,7 @@ button.s-circle {
   align-items: center;
 }
 
+// Aligns the card into a row between the two traversal buttons.
 .navContainer {
   display: flex;
   flex-direction: row;

@@ -1,5 +1,7 @@
 <template>
-  <side-bar>Hello World</side-bar>
+  <side-bar>
+    <h1>Flashcard Collection</h1>
+  </side-bar>
 </template>
 
 <script>

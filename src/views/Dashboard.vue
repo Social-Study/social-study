@@ -125,7 +125,6 @@ export default {
               querySnapshot.forEach(doc => {
                 this.newGroupID = doc.id;
                 this.confirmJoin = true;
-                console.log("Found your group: ", this.newGroupID);
               });
               return true;
             } else {
@@ -140,7 +139,6 @@ export default {
                 .get()
                 .then(doc => {
                   this.inviteGroup = doc.data();
-                  console.log(this.inviteGroup);
                 });
             } else {
               console.log("didn't run because group not found");
