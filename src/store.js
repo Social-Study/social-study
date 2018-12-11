@@ -17,15 +17,28 @@ const vuexLocalStorage = new VuexPersist({
 export default new Vuex.Store({
   plugins: [vuexLocalStorage.plugin],
   state: {
-    uid: ""
+    uid: "",
+    activeGroup: {
+      className: "",
+      instructorName: "",
+      memberCount: null
+    }
   },
   mutations: {
+    // Logged in user's identifier
     setUID(state, uid) {
       state.uid = uid;
+    },
+    // Store the current group's details so the sidebar has access to them
+    setActiveGroupDetails(state, { className, instructorName, memberCount }) {
+      state.activeGroup.className = className;
+      state.activeGroup.instructorName = instructorName;
+      state.activeGroup.memberCount = memberCount;
     }
   },
   actions: {},
   getters: {
-    uid: state => state.uid
+    uid: state => state.uid,
+    activeGroup: state => state.activeGroup
   }
 });

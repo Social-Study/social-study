@@ -1,6 +1,6 @@
 <template>
-  <div class="content-container">
-    <side-bar :studyGroup="studyGroup">
+  <div v-if="studyGroup">
+    <side-bar>
       <div v-if="studyGroup.length !== 0">
 
         <h1>Home Page for {{ this.studyGroup.className }}</h1>
@@ -11,6 +11,9 @@
         <p>Make sure you are a member of the group!</p>
       </div>
     </side-bar>
+  </div>
+  <div v-else>
+    <div class="loading loading-lg"></div>
   </div>
 </template>
 
@@ -34,11 +37,17 @@ export default {
   methods: {
     loadGroupData(groupID) {
       // Load study group from the route params
-      this.$bind("studyGroup", db.collection("study-groups").doc(groupID)).then(
-        studyGroup => {
+      this.$bind("studyGroup", db.collection("study-groups").doc(groupID))
+        .then(studyGroup => {
           this.studyGroup === studyGroup;
-        }
-      );
+        })
+        .then(() => {
+          this.$store.commit("setActiveGroupDetails", {
+            className: this.studyGroup.className,
+            instructorName: this.studyGroup.instructorName,
+            memberCount: this.studyGroup.members.length
+          });
+        });
     }
   },
   watch: {

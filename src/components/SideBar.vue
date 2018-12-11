@@ -9,6 +9,7 @@
     </a>
 
     <div
+      v-if="activeGroup"
       id="sidebar-id"
       class="off-canvas-sidebar"
       :class="{ active : sidebarActive }"
@@ -20,8 +21,8 @@
         >
           <div class="tile tile-centered">
             <div class="tile-content">
-              <h5>{{studyGroup.className}}</h5>
-              <p style="margin: 0;">{{studyGroup.instructorName}}</p>
+              <h5>{{activeGroup.className}}</h5>
+              <p style="margin: 0;">{{activeGroup.instructorName}}</p>
             </div>
           </div>
         </li>
@@ -46,7 +47,7 @@
         </li>
         <li class="menu-item text-left">
           <div class="menu-badge">
-            <label class="member-num label label-primary">{{studyGroup.members.length}}</label>
+            <label class="member-num label label-primary">{{activeGroup.memberCount}}</label>
           </div>
           <!-- <router-link to=""></router-link> -->
           <router-link
@@ -73,13 +74,14 @@
 <script>
 export default {
   name: "SideBar",
-  props: {
-    studyGroup: Object
-  },
   data() {
     return {
-      sidebarActive: false
+      sidebarActive: false,
+      activeGroup: null
     };
+  },
+  created() {
+    this.activeGroup = this.$store.getters.activeGroup;
   }
 };
 </script>
