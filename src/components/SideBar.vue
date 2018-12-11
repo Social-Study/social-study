@@ -28,15 +28,32 @@
         <li class="divider"></li>
         <li class="menu-item">
         </li>
-        <li class="menu-item text-left"><a class="active">Home</a></li>
-        <li class="menu-item text-left"><a>Flashcards</a></li>
-        <li class="menu-item text-left"><a>Quiz</a></li>
-        <li class="menu-item text-left"><a>Agenda</a></li>
-        <li class="menu-item text-left"><a>Notes</a></li>
+        <!-- Change the active highlight depending on the current page name -->
+        <li class="menu-item text-left">
+          <a :class="$route.name === 'home' ? 'active' : ''">Home</a>
+        </li>
+        <li class="menu-item text-left">
+          <a :class="$route.name === 'flashcards' ? 'active' : ''">Flashcards</a>
+        </li>
+        <li class="menu-item text-left">
+          <a :class="$route.name === 'quiz' ? 'active' : ''">Quiz</a>
+        </li>
+        <li class="menu-item text-left">
+          <a :class="$route.name === 'agenda' ? 'active' : ''">Agenda</a>
+        </li>
+        <li class="menu-item text-left">
+          <a :class="$route.name === 'notes' ? 'active' : ''">Notes</a>
+        </li>
         <li class="menu-item text-left">
           <div class="menu-badge">
             <label class="member-num label label-primary">{{studyGroup.members.length}}</label>
-          </div><a>Members</a>
+          </div>
+          <!-- <router-link to=""></router-link> -->
+          <router-link
+            :class="$route.name === 'members' ? 'active' : ''"
+            :to="{ name: 'members'}"
+          >Members</router-link>
+          <!-- <a :class="$route.name === 'members' ? 'active' : ''">Members</a> -->
         </li>
       </ul>
     </div>

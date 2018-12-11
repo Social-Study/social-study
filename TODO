@@ -20,6 +20,7 @@ General:
 
 Profile Settings:
   ☐ Make sure to delete/overwrite old profile picture when someone changes theirs
+    Otherwise we will have multiple orphaned photos taking up storage space
   ☐ Automatically update to the file picker's picture so user can preview what it will look like
   ☐ Add Study Groups tab so users can remove study groups from their account
 
