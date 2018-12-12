@@ -116,6 +116,7 @@ export default {
   background-color: #E7E7E7;
   border-radius: 10px;
   width: 500px;
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.5);
 
 
 }
