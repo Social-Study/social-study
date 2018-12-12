@@ -1,17 +1,33 @@
 <template>
-  <figure v-if="this.user.photoURL === null" :data-initial="initials" class="avatar avatar-lg">
+  <figure
+    v-if="this.user.photoURL === null"
+    :style="{backgroundColor: color}"
+    :data-initial="initials"
+    class="avatar avatar-lg"
+  >
   </figure>
 
-  <figure v-else class="avatar avatar-lg">
-    <img :src="this.user.photoURL" alt="avatar">
+  <figure
+    v-else
+    class="avatar avatar-lg"
+  >
+    <img :src="this.user.photoURL">
   </figure>
+
 </template>
 
 <script>
 export default {
   name: "avatar",
   props: {
-    user: Object
+    user: {
+      type: Object,
+      required: true
+    },
+    color: {
+      type: String,
+      default: "#3c3c3c"
+    }
   },
   data: function() {
     return {

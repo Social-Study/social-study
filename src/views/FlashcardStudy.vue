@@ -1,25 +1,34 @@
 <template>
-<div class="content-container">
+  <div class="content-container">
 
-  <h1>CSS-354 Flashcards</h1>
-  <div class="page-content">
-    <button @click="prevCard" class="btn btn-action btn-success btn-lg s-circle" >  <i class="icon icon-arrow-left"></i>
-    </button>
-    <div class = "flashcard-container">
-        <div class = "flashcard"  @click="flipcard">
-          <h1 class = "flashcard-term">{{currentContent}}</h1>
-        </div>    
+    <h1>Software Engineering Flashcards</h1>
+    <div class="page-content">
+      <button
+        @click="prevCard"
+        class="btn btn-action btn-success btn-lg s-circle"
+      > <i class="icon icon-arrow-left"></i>
+      </button>
+      <div class="flashcard-container">
+        <div
+          class="flashcard"
+          @click="flipcard"
+        >
+          <h1 class="flashcard-term">{{currentContent}}</h1>
+        </div>
+      </div>
+      <button
+        @click="nextCard"
+        class="btn btn-action btn-success btn-lg s-circle"
+      > <i class="icon icon-arrow-right"></i>
+      </button>
     </div>
-    <button @click="nextCard" class="btn btn-action btn-success btn-lg s-circle" >  <i class="icon icon-arrow-right"></i>
-    </button>
+    <h1> {{cardIndex + 1}} / 5</h1>
   </div>
-  <h1> {{cardIndex + 1}} / 5</h1>
-</div>
 
 </template>
 
 <script>
-import firebase, { db, FirebaseConsts } from "@/firebaseConfig";
+// import firebase, { db, FirebaseConsts } from "@/firebaseConfig";
 
 export default {
   name: "dashboard",
@@ -32,74 +41,78 @@ export default {
       termList: [],
       definitionList: [],
 
-
       // hard-coded flashcard deck for testing
       flashcardDeck: [
-        {term: "WBS", definition: "Work Breakdown Structure"},
-        {term: "Risk", definition: "Unwanted event that has negative consequences usually"},
-        {term: "Funcational Requirements", definition: "Statements of services the system should provide"},
-        {term: "SDLC", definition: "Systems Development Lifecycle"},
-        {term: "<<include>>", definition: "Relationship always required"},
+        { term: "WBS", definition: "Work Breakdown Structure" },
+        {
+          term: "Risk",
+          definition: "Unwanted event that has negative consequences usually"
+        },
+        {
+          term: "Functional Requirements",
+          definition: "Statements of services the system should provide"
+        },
+        { term: "SDLC", definition: "Systems Development Lifecycle" },
+        { term: "<<include>>", definition: "Relationship always required" }
       ]
-    
     };
   },
   methods: {
     //flips the current card
-    flipcard(){
-      if(this.flipped){
+    flipcard() {
+      if (this.flipped) {
         this.getCurrentContent();
         this.flipped = false;
-      }else{
+      } else {
         this.getCurrentContent();
         this.flipped = true;
       }
     },
     //incrases the current card index and updates the displayed content
-    nextCard(){
-      if(this.cardIndex < this.termList.length - 1) {
-        this.cardIndex ++;
-        this.currentContent = this.termList[this.cardIndex];      
+    nextCard() {
+      if (this.cardIndex < this.termList.length - 1) {
+        this.cardIndex++;
+        this.currentContent = this.termList[this.cardIndex];
       }
     },
-    prevCard(){
-      if(this.cardIndex > 0) {
-        this.cardIndex --;
+    prevCard() {
+      if (this.cardIndex > 0) {
+        this.cardIndex--;
         this.currentContent = this.termList[this.cardIndex];
       }
     },
     //loads the content that should be shown into the currentContent variable
-    getCurrentContent(){
-      if(this.flipped){
+    getCurrentContent() {
+      if (this.flipped) {
         this.currentContent = this.termList[this.cardIndex];
-      }else{
+      } else {
         this.currentContent = this.definitionList[this.cardIndex];
-      }     
+      }
     }
   },
   //load all the data from the flashcard deck into arrays
   //set the first card's content
   created() {
-    for(var cards in this.flashcardDeck){
+    for (var cards in this.flashcardDeck) {
       this.termList.push(this.flashcardDeck[cards].term);
       this.definitionList.push(this.flashcardDeck[cards].definition);
     }
     this.currentContent = this.termList[this.cardIndex];
-
   }
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../styleVariables.scss";
 
-.page-content{
-  display:flex;
+.page-content {
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-.flashcard-container{
+.flashcard-container {
   min-height: 64vh;
   align-items: baseline;
   display: flex;
@@ -108,20 +121,18 @@ export default {
   align-items: center;
 }
 
-.flashcard{
+.flashcard {
   min-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #E7E7E7;
+  background-color: #e7e7e7;
   border-radius: 10px;
   width: 500px;
-  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.5);
-
-
+  box-shadow: $shadow-heavy;
 }
 
-.flashcard-term{
+.flashcard-term {
   font-size: 50px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -130,7 +141,7 @@ export default {
   -ms-user-select: none;
   user-select: none;
 }
-.btn{
+.btn {
   margin: 10px;
 }
 </style>

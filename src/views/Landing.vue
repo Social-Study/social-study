@@ -205,7 +205,7 @@
               <span id="name-container">
                 <input
                   v-validate.disable="'required|alpha'"
-                  v-model="firstName"
+                  v-model.trim="firstName"
                   class="form-input"
                   type="text"
                   name="firstname"
@@ -213,7 +213,7 @@
                 >
                 <input
                   v-validate.disable="'required|alpha'"
-                  v-model="lastName"
+                  v-model.trim="lastName"
                   class="form-input"
                   type="text"
                   name="lastname"
@@ -333,7 +333,6 @@ export default {
                 .auth()
                 .signInWithEmailAndPassword(this.email, this.password)
                 .then(user => {
-                  console.log(user.user.uid);
                   this.$store.commit("setUID", user.user.uid);
                   this.$router.replace("dashboard");
                 })

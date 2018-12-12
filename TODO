@@ -5,21 +5,33 @@ Branding:
 
 Database Design:
   ☐ May have to mess with the structure of the database. I need to update the database a user is joining. Changed the rules to allow any authenticated user to modify the study group but there has to be a better way to do it.
-    - May have to put the members list in a separate location or something.
-    ☐ Might implement a public facing version...
+    May have to put the members list in a separate location or something.
+    Might implement a public facing version...
   ☐ Not sure if the user's study groups need to be stored in their profile, I can just query the "study-group" collection for all groups with the users id in the member array
-  ☐ Implement Study Group Invite Code Logic...
+  ✔ Implement Study Group Invite Code Logic... @done(18-12-11 21:49)
   ☐ Figure out how to delete a code after 24 hours.
-    - May just have it set so that when a new user requests a code, the cloud functions deletes any old codes that are older than 24 hours old
+    May just have it set so that when a new user requests a code, the cloud functions deletes any old codes that are older than 24 hours old
 General:
   ☐ Not sure why the favicon is not showing????
   ☐ Make sure the build bundle size is not too large.
   ☐ Font-Awesome Icon Package Icons are not aligned properly
     ☐ Get rid of vueawesome and use cdn to reduce package size and wierd errors
-  ☐ Figure out the sizing issues, I want body to be entire screen height but exclude the nav bar...
+  ☐ Go through an error check all inputs where necessary
+  ☐ Create a universal notifaction popup, not like the homepage error notifcation but a bubble type.
+  ☐ Extract common firebase function calls to an outside file
+    ☐ Generate Code
+  ☐ Add sidebar icons
+
+Components Needed:
+  ☐ Notification popup
+  ☐ Small info modal?
+
+Homepage:
+  ☐ Add homepage option to list and remove active invite codes.
 
 Profile Settings:
-  ☐ Make sure to delete/overwrite old profile picture when someone changes theirs
+  ✔ Make sure to delete/overwrite old profile picture when someone changes theirs @done(18-12-11 16:16)
+  ☐ When I implement the account deletion make sure to remove the photos as well as the user account
   ☐ Automatically update to the file picker's picture so user can preview what it will look like
   ☐ Add Study Groups tab so users can remove study groups from their account
 
@@ -28,24 +40,27 @@ Routing:
     ☐ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in
     ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
 
-Group Homepage:
-  ☐ Extra navbar to a component
-    ☐ Make sure that there is a slot because all page content has to be inside it
+Study Group:
+  ☐ Show a study group settings modal only to the group owner to allow them to change the details after creation
 
 Create Study Group:
+  ☐ Prevent user from clicking create and getting to copy code if they don't do all steps
   ☐ Add validation on the inputs
   ☐ Add transitions to make it look nice
   ☐ Revert back to Spectre.css
     - Element is too opinionated, and it is a pain in the ass trying to override most of the defaults
     - It is also very large, > 1mb
   ☐ Change steps so that the one before the end is the finish
-  ☐ Add url test <a> tag below the website input box
-  ☐ Add the ability to copy the study group invite code before redirecting to the new homepage
+  ✔ Add url test <a> tag below the website input box @done(18-12-11 16:17)
+  ✔ Add the ability to copy the study group invite code before redirecting to the new homepage @done(18-12-11 16:17)
 
 Prototype Presentation:
   ☐ Implement a Study Group feature
     ☐ Flashcards
 Archive:
+  ✔ Figure out the sizing issues, I want body to be entire screen height but exclude the nav bar... @done(18-12-11 14:10) @project(General)
+  ✔ Extract sidebar to a component @done(18-12-11 14:58) @project(Group Homepage)
+  ✔ Make sure that there is a slot because all page content has to be inside it @done(18-12-11 14:58) @project(Group Homepage)
   ✘ Convert Project to new Element UI Library @cancelled(18-12-09 12:55) @project(General)
   ✔ Implement the dropdown menus and create study group buttons @done(18-12-09 13:05) @project(NavBar)
   ✔ Does the user's photoURL need to be stored in the firestore for other users to view it? @done(18-12-08 23:38) @project(Database Design)

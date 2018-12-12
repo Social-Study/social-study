@@ -4,6 +4,9 @@ import Dashboard from "./views/Dashboard.vue";
 import Landing from "./views/Landing.vue";
 import GroupHomePage from "./views/GroupHomePage";
 import CreateGroup from "./views/CreateGroup";
+
+import MembersPage from "./views/MembersPage";
+import FlashcardCollection from "./views/FlashcardCollection";
 import FlashcardStudy from "./views/FlashcardStudy";
 
 Vue.use(Router);
@@ -23,16 +26,7 @@ let router = new Router({
       meta: {
         title: "Social Study"
       }
-      // redirect: "/"
     },
-    // {
-    //   path: "/",
-    //   name: "landing",
-    //   component: Landing,
-    //   meta: {
-    //     title: "Social Study"
-    //   }
-    // },
     {
       path: "/dashboard",
       name: "dashboard",
@@ -61,11 +55,29 @@ let router = new Router({
       }
     },
     {
-      path: "/FlashcardStudy",
+      path: "/:groupID/flashcards",
+      name: "flashcards",
+      component: FlashcardCollection,
+      meta: {
+        title: "Flcashcards | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/:groupID/flashcards/study",
       name: "flashcardStudy",
       component: FlashcardStudy,
       meta: {
         title: "Flashcard | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/:groupID/members",
+      name: "members",
+      component: MembersPage,
+      meta: {
+        title: "Members | Social Study",
         requiresAuth: true
       }
     }

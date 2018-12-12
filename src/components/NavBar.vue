@@ -12,20 +12,28 @@
         class="dropdown"
       >
         <a
-          class="btn btn-primary dropdown-toggle"
+          class="nav-button btn btn-primary dropdown-toggle"
           tabindex="0"
         >
-          Your Study Groups<i class="icon icon-caret"></i>
+          Study Groups<i class="icon icon-caret"></i>
         </a>
         <!-- Your Study Group List Dropdown Items -->
         <ul class="menu">
-          <li
+          <div
             v-for="(group, index) in studyGroups"
             :key="index"
           >
-            <!-- <a @click="switchGroup(group.id)">{{group.className}}</a> -->
-            <router-link :to="{ name: 'home', params: { groupID: group.id }}">{{group.className}}</router-link>
-          </li>
+            <li>
+              <!-- <a @click="switchGroup(group.id)">{{group.className}}</a> -->
+              <router-link :to="{ name: 'home', params: { groupID: group.id }}">{{group.className}}</router-link>
+
+            </li>
+            <li
+              v-if="studyGroups.length > 1"
+              class="divider"
+            ></li>
+          </div>
+
         </ul>
       </div>
 
@@ -60,9 +68,15 @@
                    photoURL: this.firestoreUser.photoURL
                  }"
         />
+        <div
+          v-else
+          style="background-color: #3c3c3c; border-radius: 50%; height: 48px; width: 48px;"
+          class="loading loading-lg"
+        ></div>
+
         <ul
           v-show="menuActive == true"
-          class="menu"
+          class="menu settings-menu"
         >
           <li class="menu-item text-left">
             <p
@@ -128,7 +142,6 @@ export default {
       db.collection("users").doc(this.$store.getters.uid)
     ).then(user => {
       this.firestoreUser === user;
-      // this.$unbind("todos");
     });
 
     firebase.auth().onAuthStateChanged(user => {
@@ -143,7 +156,6 @@ export default {
             .where("members", "array-contains", this.$store.getters.uid)
         ).then(studyGroups => {
           this.studyGroups === studyGroups;
-          // this.$unbind("todos");
         });
       } else {
         this.user = null;
@@ -165,9 +177,13 @@ export default {
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
 
+.nav-button {
+  width: 180px;
+}
+
 .navbar {
   background-image: $nav-gradient;
-  padding: 0px 10px;
+  padding: 0px 10px 0px 0px;
   max-height: 6vh;
   min-height: 6vh;
 }
@@ -175,14 +191,21 @@ export default {
 a.navbar-brand {
   font-family: $logo-font;
   font-size: 1.7em;
-  margin-right: 20px;
   color: white;
+  min-width: 200px;
 }
 
 .menu {
+  border-radius: 10px;
+  li {
+    margin-top: 0;
+  }
+}
+
+.settings-menu {
   position: absolute;
-  // position: fixed;
-  top: 30px;
+  border-radius: 10px 0px 10px 10px;
+  top: 25px;
   right: 30px;
 }
 
