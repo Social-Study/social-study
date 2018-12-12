@@ -1,14 +1,12 @@
 <template>
   <div v-if="studyGroup">
-    <side-bar>
-      <div v-if="studyGroup.length !== 0">
-        <h1>Home Page for {{ studyGroup.className }}</h1>
-      </div>
-      <div v-else>
-        <h1 style="margin-top: 25%">Error Loading Your Study Group</h1>
-        <p>Make sure you are a member of the group!</p>
-      </div>
-    </side-bar>
+    <div v-if="studyGroup.length !== 0">
+      <h1>Home Page for {{ studyGroup.className }}</h1>
+    </div>
+    <div v-else>
+      <h1 style="margin-top: 25%">Error Loading Your Study Group</h1>
+      <p>Make sure you are a member of the group!</p>
+    </div>
   </div>
   <div v-else>
     <div class="loading loading-lg"></div>

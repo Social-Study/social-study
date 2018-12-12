@@ -1,18 +1,23 @@
 <template>
   <div id="app">
     <NavBar v-if="$route.name !== 'landing'" />
-    <router-view />
+    <router-view v-if="!$route.params.groupID" />
+    <side-bar v-else>
+      <router-view />
+    </side-bar>
   </div>
 </template>
 
 
 <script>
 import NavBar from "@/components/NavBar";
+import SideBar from "@/components/SideBar";
 import firebase from "./firebaseConfig";
 export default {
   name: "App",
   components: {
-    NavBar
+    NavBar,
+    SideBar
   },
   data() {
     return {

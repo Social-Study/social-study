@@ -1,37 +1,45 @@
 <template>
-  <div class="content-container">
-
-    <h1>Software Engineering Flashcards</h1>
-    <div class="page-content">
-      <button
-        @click="prevCard"
-        class="btn btn-action btn-success btn-lg s-circle"
-      > <i class="icon icon-arrow-left"></i>
-      </button>
-      <div class="flashcard-container">
-        <div
-          class="flashcard"
-          @click="flipcard"
-        >
-          <h1 class="flashcard-term">{{currentContent}}</h1>
+  <div>
+    <page-title>
+      {{$store.getters.activeGroup.details.className}} Flashcards
+    </page-title>
+    <div class="content-container">
+      <div class="page-content">
+        <button
+          @click="prevCard"
+          class="btn btn-action btn-success btn-lg s-circle"
+        > <i class="icon icon-arrow-left"></i>
+        </button>
+        <div class="flashcard-container">
+          <div
+            class="flashcard"
+            @click="flipcard"
+          >
+            <h1 class="flashcard-term">{{currentContent}}</h1>
+          </div>
         </div>
+        <button
+          @click="nextCard"
+          class="btn btn-action btn-success btn-lg s-circle"
+        > <i class="icon icon-arrow-right"></i>
+        </button>
       </div>
-      <button
-        @click="nextCard"
-        class="btn btn-action btn-success btn-lg s-circle"
-      > <i class="icon icon-arrow-right"></i>
-      </button>
+      <h1> {{cardIndex + 1}} / 5</h1>
     </div>
-    <h1> {{cardIndex + 1}} / 5</h1>
   </div>
 
 </template>
 
 <script>
-// import firebase, { db, FirebaseConsts } from "@/firebaseConfig";
+import SideBar from "../components/SideBar";
+import PageTitle from "../components/PageTitle";
 
 export default {
-  name: "dashboard",
+  name: "FlashcardStudy",
+  components: {
+    SideBar,
+    PageTitle
+  },
   data: function() {
     return {
       user: null,

@@ -9,6 +9,8 @@ import MembersPage from "./views/MembersPage";
 import FlashcardCollection from "./views/FlashcardCollection";
 import FlashcardStudy from "./views/FlashcardStudy";
 
+import firebase from "./firebaseConfig";
+
 Vue.use(Router);
 
 let router = new Router({
@@ -59,13 +61,13 @@ let router = new Router({
       name: "flashcards",
       component: FlashcardCollection,
       meta: {
-        title: "Flcashcards | Social Study",
+        title: "Flashcards | Social Study",
         requiresAuth: true
       }
     },
     {
       path: "/:groupID/flashcards/study",
-      name: "flashcardStudy",
+      name: "study",
       component: FlashcardStudy,
       meta: {
         title: "Flashcard | Social Study",
@@ -82,6 +84,24 @@ let router = new Router({
       }
     }
   ]
+});
+
+// Prevents navigation to certain pages if you are not logged in
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        next({
+          path: "/landing"
+        });
+      } else {
+        next();
+      }
+    });
+  } else {
+    next();
+  }
 });
 
 export default router;

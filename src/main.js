@@ -4,7 +4,6 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 
-import firebase from "./firebaseConfig";
 import VueFire from "vuefire";
 import VeeValidate from "vee-validate";
 
@@ -29,24 +28,6 @@ Vue.use(VeeValidate);
 
 // Enable VueFire
 Vue.use(VueFire);
-
-// Prevents navigation to certain pages if you are not logged in
-router.beforeEach((to, from, next) => {
-  document.title = to.meta.title;
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    firebase.auth().onAuthStateChanged(user => {
-      if (!user) {
-        next({
-          path: "/landing"
-        });
-      } else {
-        next();
-      }
-    });
-  } else {
-    next();
-  }
-});
 
 new Vue({
   router,

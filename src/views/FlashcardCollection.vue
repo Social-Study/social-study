@@ -1,16 +1,16 @@
 <template>
-  <side-bar>
-    <h1>Flashcard Collection</h1>
-  </side-bar>
+  <page-title>Flashcard Collection</page-title>
 </template>
 
 <script>
 import SideBar from "../components/SideBar";
+import PageTitle from "../components/PageTitle";
 
 export default {
   name: "FlashcardCollection",
   components: {
-    SideBar
+    SideBar,
+    PageTitle
   }
 };
 </script>

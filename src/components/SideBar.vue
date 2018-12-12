@@ -38,7 +38,7 @@
         </li>
         <li class="menu-item text-left">
           <router-link
-            :class="$route.name === 'flashcards' ? 'active' : ''"
+            :class="$route.name === 'flashcards' ? 'active' : '' || $route.name === 'study' ? 'active' : ''"
             :to="{ name: 'flashcards'}"
           >Flashcards</router-link>
           <!-- <a :class="$route.name === 'flashcards' ? 'active' : ''">Flashcards</a> -->
@@ -88,18 +88,7 @@ export default {
     };
   },
   created() {
-    // TODO: Figure out how to prevent sidebar from reloading on page changes.
     this.loadGroupData(this.$route.params.groupID);
-    // if (
-    //   this.$route.params.groupID !== this.$store.getters.activeGroup.groupID
-    // ) {
-    //   console.log("sidebar create reloading ");
-    // } else {
-    //   console.log("sidebar not recreating");
-    // }
-
-    // this.activeGroup = this.$store.getters.activeGroup.details;
-    // console.log(this.activeGroup.members);
   },
   methods: {
     loadGroupData(groupID) {
@@ -152,5 +141,6 @@ div.off-canvas-sidebar {
 }
 div.off-canvas-content {
   min-height: 94vh;
+  padding: 0 !important;
 }
 </style>

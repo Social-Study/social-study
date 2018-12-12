@@ -26,7 +26,7 @@ export default {
     },
     color: {
       type: String,
-      default: "#3c3c3c"
+      default: "#f6f6f6"
     }
   },
   data: function() {
@@ -49,4 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+figure.avatar {
+  color: #3c3c3c;
+}
 </style>
