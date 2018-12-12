@@ -27,14 +27,6 @@ let router = new Router({
         title: "Social Study"
       }
     },
-    // {
-    //   path: "/",
-    //   name: "landing",
-    //   component: Landing,
-    //   meta: {
-    //     title: "Social Study"
-    //   }
-    // },
     {
       path: "/dashboard",
       name: "dashboard",
@@ -86,7 +78,8 @@ let router = new Router({
       component: MembersPage,
       meta: {
         title: "Members | Social Study",
-      requiresAuth: true
+        requiresAuth: true
+      }
     }
   ]
 });

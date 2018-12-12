@@ -168,6 +168,7 @@ export default {
   border-radius: 16px;
   background-color: white;
   box-shadow: $shadow;
+  user-select: none;
 
   &:hover {
     box-shadow: $shadow-hovered;
@@ -210,6 +211,7 @@ export default {
   height: 140px;
   border-radius: 50%;
   background-color: #bebebe;
+  user-select: none;
 }
 
 // Image on top of the gradient background
