@@ -4,6 +4,7 @@ import Dashboard from "./views/Dashboard.vue";
 import Landing from "./views/Landing.vue";
 import GroupHomePage from "./views/GroupHomePage";
 import CreateGroup from "./views/CreateGroup";
+import FlashcardStudy from "./views/FlashcardStudy";
 
 Vue.use(Router);
 
@@ -56,6 +57,15 @@ let router = new Router({
       component: GroupHomePage,
       meta: {
         title: "Homepage | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/FlashcardStudy",
+      name: "flashcardStudy",
+      component: FlashcardStudy,
+      meta: {
+        title: "Flashcard | Social Study",
         requiresAuth: true
       }
     }
