@@ -77,6 +77,8 @@
 </template>
 
 <script>
+import { db } from "../firebaseConfig";
+
 export default {
   name: "SideBar",
   data() {
@@ -86,7 +88,38 @@ export default {
     };
   },
   created() {
-    this.activeGroup = this.$store.getters.activeGroup.details;
+    // TODO: Figure out how to prevent sidebar from reloading on page changes.
+    this.loadGroupData(this.$route.params.groupID);
+    // if (
+    //   this.$route.params.groupID !== this.$store.getters.activeGroup.groupID
+    // ) {
+    //   console.log("sidebar create reloading ");
+    // } else {
+    //   console.log("sidebar not recreating");
+    // }
+
+    // this.activeGroup = this.$store.getters.activeGroup.details;
+    // console.log(this.activeGroup.members);
+  },
+  methods: {
+    loadGroupData(groupID) {
+      console.log("Sidebar: Loading Group Data function...");
+      // Load study group from the route params
+      this.$bind(
+        "activeGroup",
+        db.collection("study-groups").doc(groupID)
+      ).then(active => {
+        this.activeGroup === active;
+      });
+    }
+  },
+  watch: {
+    "$route.params.groupID"(id) {
+      console.log(
+        "Sidebar: Active Group Changed - Getting new data from firestore"
+      );
+      this.loadGroupData(id);
+    }
   }
 };
 </script>

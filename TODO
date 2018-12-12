@@ -8,7 +8,7 @@ Database Design:
     May have to put the members list in a separate location or something.
     Might implement a public facing version...
   ☐ Not sure if the user's study groups need to be stored in their profile, I can just query the "study-group" collection for all groups with the users id in the member array
-  ☐ Implement Study Group Invite Code Logic...
+  ✔ Implement Study Group Invite Code Logic... @done(18-12-11 21:49)
   ☐ Figure out how to delete a code after 24 hours.
     May just have it set so that when a new user requests a code, the cloud functions deletes any old codes that are older than 24 hours old
 General:
@@ -18,6 +18,16 @@ General:
     ☐ Get rid of vueawesome and use cdn to reduce package size and wierd errors
   ☐ Go through an error check all inputs where necessary
   ☐ Create a universal notifaction popup, not like the homepage error notifcation but a bubble type.
+  ☐ Extract common firebase function calls to an outside file
+    ☐ Generate Code
+  ☐ Add sidebar icons
+
+Components Needed:
+  ☐ Notification popup
+  ☐ Small info modal?
+
+Homepage:
+  ☐ Add homepage option to list and remove active invite codes.
 
 Profile Settings:
   ✔ Make sure to delete/overwrite old profile picture when someone changes theirs @done(18-12-11 16:16)

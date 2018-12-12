@@ -45,6 +45,7 @@ export default {
   },
   methods: {
     loadGroupData(groupID) {
+      console.log("Hompage: Loading group data function");
       // Load study group from the route params
       this.$bind("studyGroup", db.collection("study-groups").doc(groupID))
         .then(studyGroup => {

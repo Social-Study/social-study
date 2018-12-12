@@ -171,8 +171,6 @@
               placeholder="Invite Code"
               v-model="inviteCode"
             >
-            <br>
-            <br>
             <button
               @click="copyCode"
               class="btn btn-primary input-group-btn"
@@ -360,7 +358,7 @@ button.s-circle {
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   // border-radius: 16px;
-  box-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
+  box-shadow: 5px 12px 20px rgba(36, 37, 38, 0.13);
 }
 
 .createBtn {
@@ -375,7 +373,7 @@ button.s-circle {
 
   &:hover {
     color: whitesmoke;
-    box-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
+    // box-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
   }
 }
 
