@@ -2,9 +2,7 @@
   <div v-if="studyGroup">
     <side-bar>
       <div v-if="studyGroup.length !== 0">
-
         <h1>Home Page for {{ studyGroup.className }}</h1>
-        <h3></h3>
       </div>
       <div v-else>
         <h1 style="margin-top: 25%">Error Loading Your Study Group</h1>
