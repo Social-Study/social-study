@@ -173,6 +173,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styleVariables.scss";
+
+.empty {
+  background-color: $background-color;
+}
+
 .modal-container {
   border-radius: 10px;
 }

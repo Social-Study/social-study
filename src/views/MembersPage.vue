@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-title>
-      {{$store.getters.activeGroup.details.className}} Members
+      {{$store.getters.activeGroup.details.className}}: Members
     </page-title>
 
     <div v-if="!loading">
@@ -135,6 +135,9 @@ export default {
     this.memberIDs = this.$store.getters.activeGroup.details.members;
     this.ownerID = this.$store.getters.activeGroup.details.owner;
     this.getMemberInfo();
+  },
+  beforeUpdate() {
+    // this.getMemberInfo();
   }
 };
 </script>
@@ -148,69 +151,5 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
-
-// // Individual info card
-// .profile-card {
-//   cursor: pointer;
-//   height: 300px;
-//   width: 300px;
-//   margin: 0 20px 20px 0px;
-//   border-radius: 16px;
-//   background-color: white;
-//   box-shadow: $shadow;
-//   user-select: none;
-
-//   &:hover {
-//     box-shadow: $shadow-hovered;
-//   }
-// }
-
-// // gradient background around border
-// .gradient-border {
-//   margin: 30px auto;
-//   height: 160px;
-//   width: 160px;
-//   border-radius: 50%;
-//   background-image: $blue-gradient;
-// }
-
-// Change the gradient color for the add member button
-.add {
-  background-image: $nav-gradient;
-}
-
-// Icon on the new members button
-.button-icon {
-  text-align: center;
-  font-size: 144px;
-  font-weight: 600;
-  background: $nav-gradient;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  bottom: 25px;
-  position: relative;
-  vertical-align: center;
-}
-
-// Circle background between the gradient and add icon
-.add-button {
-  position: relative;
-  top: 10px;
-  left: 10px;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  background-color: #bebebe;
-  user-select: none;
-}
-
-// Image on top of the gradient background
-.profile-image {
-  position: relative;
-  top: 10px;
-  width: 140px;
-  height: 140px;
-  font-size: 60px;
 }
 </style>

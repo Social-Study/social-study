@@ -1,7 +1,7 @@
 <template>
   <div v-if="studyGroup">
     <div v-if="studyGroup.length !== 0">
-      <h1>Home Page for {{ studyGroup.className }}</h1>
+      <page-title>{{ studyGroup.className }}: Home Page</page-title>
     </div>
     <div v-else>
       <h1 style="margin-top: 25%">Error Loading Your Study Group</h1>
@@ -16,10 +16,13 @@
 <script>
 import { db } from "../firebaseConfig";
 import SideBar from "../components/SideBar";
+import PageTitle from "../components/PageTitle";
+
 export default {
   name: "GroupHomePage",
   components: {
-    SideBar
+    SideBar,
+    PageTitle
   },
   data: function() {
     return {

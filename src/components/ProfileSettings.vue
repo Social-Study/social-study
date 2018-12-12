@@ -159,6 +159,33 @@
             </div>
           </div>
         </div>
+
+        <!-- Tab Three Content -->
+        <div v-if="activeTab === 3">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Study Group</th>
+                <th>Members</th>
+                <th>Leave Group</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(group, index) in groupList"
+                :key=index
+              >
+                <td>{{group.className}}</td>
+                <td>{{group.membersLength}}</td>
+                <td><i
+                    @click="leaveGroup(group.groupID)"
+                    style="color: red"
+                    class="icon icon-cross"
+                  ></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -175,7 +202,7 @@
 
 <script>
 // import firebase from "@/firebaseConfig";
-import { Storage, db } from "@/firebaseConfig";
+import { FirebaseConsts, Storage, db } from "@/firebaseConfig";
 import Avatar from "@/components/Avatar";
 
 let picRef = Storage.ref();
@@ -197,6 +224,7 @@ export default {
         newPhoto: null,
         newBio: ""
       },
+      groupList: [],
       userBio: ""
     };
   },
@@ -215,8 +243,39 @@ export default {
       .then(value => {
         this.userBio = value;
       });
+
+    this.loadGroups();
   },
   methods: {
+    loadGroups() {
+      this.groupList = [];
+      db.collection("study-groups")
+        .where("members", "array-contains", this.$store.getters.uid)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            console.log(doc.data());
+            this.groupList.push({
+              className: doc.data().className,
+              membersLength: doc.data().members.length,
+              groupID: doc.id
+            });
+          });
+        })
+        .then(() => {
+          console.log(this.groupList);
+        });
+    },
+    leaveGroup(id) {
+      db.collection("study-groups")
+        .doc(id)
+        .update({
+          members: FirebaseConsts.firestore.FieldValue.arrayRemove(
+            this.$store.getters.uid
+          )
+        });
+      this.loadGroups();
+    },
     saveChanges() {
       if (this.activeTab === 1) {
         if (
@@ -278,6 +337,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+i.icon {
+  cursor: pointer;
+  padding: 5px;
+  &:hover {
+    background-color: grey;
+  }
+}
+
 .modal-container {
   border-radius: 10px;
 }

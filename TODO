@@ -39,6 +39,8 @@ Routing:
   Bugs:
     ☐ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in
     ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
+    ☐ Fix avatar sizing on the navbar
+      May have to change the avatar to not use a set size, but allow the user to enter custom sizing
 
 Study Group:
   ☐ Show a study group settings modal only to the group owner to allow them to change the details after creation

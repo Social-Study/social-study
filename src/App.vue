@@ -36,6 +36,7 @@ export default {
 
 // Global Styles
 <style lang="scss">
+@import "./styleVariables.scss";
 @import "node_modules/spectre.css/src/spectre.scss";
 @import "node_modules/spectre.css/src/spectre-icons.scss";
 @import "node_modules/spectre.css/src/spectre-exp.scss";
@@ -47,7 +48,7 @@ body {
   min-height: 100vh;
   max-height: 100vh;
   // background-color: #f7f8f9;
-  background-color: #f6f6f6;
+  background-color: $background-color;
 }
 
 #app {

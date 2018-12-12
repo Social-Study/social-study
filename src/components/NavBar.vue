@@ -63,6 +63,7 @@
         class="menu-container"
       >
         <Avatar
+          style="width: 40px; height: 40px;"
           v-if="firestoreUser"
           :user="{ displayName: this.firestoreUser.displayName,
                    photoURL: this.firestoreUser.photoURL
@@ -200,6 +201,10 @@ a.navbar-brand {
   li {
     margin-top: 0;
   }
+}
+
+.menu-container {
+  padding: 2px;
 }
 
 .settings-menu {

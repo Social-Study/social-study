@@ -185,7 +185,7 @@
             style="margin: 0px 10px;"
             class="btn btn-success"
             :to="{ name: 'home', params: { groupID:newGroupID }}"
-          >New Group</router-link>
+          >Go to Group</router-link>
         </div>
 
         <button

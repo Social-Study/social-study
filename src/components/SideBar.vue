@@ -103,6 +103,9 @@ export default {
     }
   },
   watch: {
+    "this.activeGroup.length"(length) {
+      console.log("group length changed");
+    },
     "$route.params.groupID"(id) {
       console.log(
         "Sidebar: Active Group Changed - Getting new data from firestore"
@@ -115,7 +118,7 @@ export default {
 
 // @HACK: Have to set !important on certain styling to override spectre defaults
 // Must be global styling not scoped to take affect
-<style lang="scss">
+<style lang="scss" scoped>
 .sidebar {
   box-shadow: none;
   background: #3c3c3c;

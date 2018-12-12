@@ -23,7 +23,7 @@
         :user="{photoURL: photoURL, displayName: displayName}"
       />
     </div>
-    <h1>{{ displayName }}</h1>
+    <h2 style="width: 100%;">{{ displayName }}</h2>
   </div>
 </template>
 
@@ -85,9 +85,11 @@ export default {
   text-align: center;
   font-size: 144px;
   font-weight: 600;
-  background: $nav-gradient;
+  // TODO: Add gradient button later, not working on chrome because the -webkit-text-fill-color
+  // background: $nav-gradient;
+  // color: transparent;
+  // -webkit-text-fill-color: transparent;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
   bottom: 25px;
   position: relative;
   vertical-align: center;
