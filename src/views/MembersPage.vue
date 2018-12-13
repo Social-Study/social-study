@@ -100,14 +100,12 @@ export default {
     getGroupData(this.$route.params.groupID)
       .then(group => {
         this.studyGroup = group;
-        console.log(group);
       })
       .catch(error => {
         console.log(error);
       });
 
     // Watch for changes on the document, if there is, set study group to new info
-    console.log("Created called");
     db.collection("study-groups")
       .doc(this.$route.params.groupID)
       .onSnapshot(snapshot => {
@@ -151,7 +149,6 @@ export default {
             }
           });
       });
-      console.log(this.memberDetails);
     }
   }
 };

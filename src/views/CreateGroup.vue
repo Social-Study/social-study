@@ -301,8 +301,7 @@ export default {
           this.next();
         })
         .catch(error => {
-          console.log("Error creating new Study Group");
-          console.log(error);
+          console.log("CreateGroup: " + error);
         });
     }
   },

@@ -1,8 +1,8 @@
 <template>
-  <div v-if="studyGroup">
-    <div v-if="studyGroup.length !== 0">
-      <page-title>{{ studyGroup.className }}: Home Page</page-title>
-    </div>
+  <!-- <div v-if="studyGroup">
+    <div v-if="studyGroup.length !== 0"> -->
+  <page-title>{{ $store.getters.activeGroup.details.className }}: Home Page</page-title>
+  <!-- </div>
     <div v-else>
       <h1 style="margin-top: 25%">Error Loading Your Study Group</h1>
       <p>Make sure you are a member of the group!</p>
@@ -10,7 +10,7 @@
   </div>
   <div v-else>
     <div class="loading loading-lg"></div>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -23,18 +23,17 @@ export default {
   components: {
     SideBar,
     PageTitle
-  },
-  data: function() {
-    return {
-      // groupID: "",
-      studyGroup: null
-    };
-  },
-  created() {
-    this.studyGroup = this.$store.getters.activeGroup.details;
   }
-  // REMOVED ALL LOGIC FROM THE HOMEPAGE, THE SIDEBAR NOW HANDLES THIS LOGIC
-  // created() {
+  // data: function() {
+  //   return {
+  //     studyGroup: null
+  //   };
+  // },
+  // // created() {
+  // //   this.studyGroup = this.$store.getters.activeGroup.details;
+  // // },
+  // // REMOVED ALL LOGIC FROM THE HOMEPAGE, THE SIDEBAR NOW HANDLES THIS LOGIC
+  // mounted() {
   //   // Check if the study group has changed by checking id of group in store
   //   // with the router's group id. If they are different reload the group data,
   //   // otherwise just set the study group to the stored details
@@ -68,7 +67,7 @@ export default {
   //       inside the same component so it doesn't re-render
   //   */
   //   "$route.params.groupID"(id) {
-  //     this.loadGroupData(id);
+  //     this.studyGroup = this.$store.getters.activeGroup.details;
   //   }
   // }
 };
