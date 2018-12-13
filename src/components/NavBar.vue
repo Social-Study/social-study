@@ -138,13 +138,6 @@ export default {
     };
   },
   created() {
-    this.$bind(
-      "firestoreUser",
-      db.collection("users").doc(this.$store.getters.uid)
-    ).then(user => {
-      this.firestoreUser === user;
-    });
-
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.user = user;
@@ -158,6 +151,12 @@ export default {
         ).then(studyGroups => {
           this.studyGroups === studyGroups;
         });
+
+        this.$bind("firestoreUser", db.collection("users").doc(user.uid)).then(
+          user => {
+            this.firestoreUser === user;
+          }
+        );
       } else {
         this.user = null;
       }

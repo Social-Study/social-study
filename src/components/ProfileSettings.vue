@@ -64,11 +64,6 @@
               <div class="tile-title text-bold">Profile Picture</div>
               <div class="tile-subtitle">
                 Upload a new picture:
-                <!-- <Avatar
-                  class="form-inline"
-                  style="margin: 10px;"
-                  :user="this.user"
-                /> -->
                 <input
                   class="form-input form-inline"
                   @change="handleFile($event)"
@@ -201,7 +196,7 @@
 </template>
 
 <script>
-import { getUserData, getUserGroups } from "../scripts/firebaseFunctions";
+import { getUserData, getUserGroups } from "../scripts/userFuncs";
 import { FirebaseConsts, Storage, db } from "@/firebaseConfig";
 import Avatar from "@/components/Avatar";
 

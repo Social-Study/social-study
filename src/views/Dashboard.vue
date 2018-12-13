@@ -80,6 +80,7 @@
 
 <script>
 import firebase, { db, FirebaseConsts } from "@/firebaseConfig";
+import { getUserData } from "@/scripts/userFuncs";
 
 export default {
   name: "dashboard",
@@ -153,20 +154,25 @@ export default {
   created() {
     // Set local user variable to the user's account information.
     // Display loading indicator when not available or loading
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
+    // FIXME: Maybe use this logic in the Navbar instead, something that is always shown?
+
+    // Load user data from firebase using the stored uid
+    getUserData(this.$store.getters.uid)
+      .then(user => {
         this.user = user;
-        this.$bind(
-          "studyGroups",
-          db
-            .collection("study-groups")
-            .where("members", "array-contains", this.$store.getters.uid)
-        ).then(studyGroups => {
-          this.studyGroups === studyGroups;
-        });
-      } else {
-        this.user = null;
-      }
+      })
+      .catch(error => {
+        console.log(eror);
+      });
+
+    // Get members list of joined study Groups
+    this.$bind(
+      "studyGroups",
+      db
+        .collection("study-groups")
+        .where("members", "array-contains", this.$store.getters.uid)
+    ).then(studyGroups => {
+      this.studyGroups === studyGroups;
     });
   }
 };

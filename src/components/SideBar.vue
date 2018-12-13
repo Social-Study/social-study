@@ -107,7 +107,6 @@ export default {
       });
     }
   },
-  // FIXME: Maybe need a computed function to watch the activeGroup's member count?
   watch: {
     "$route.params.groupID"(id) {
       console.log(
@@ -130,7 +129,6 @@ export default {
 .member-num {
   padding-left: 8px;
   padding-right: 8px;
-  /* padding: 10px; */
 }
 
 .sidebar > li.menu-item {

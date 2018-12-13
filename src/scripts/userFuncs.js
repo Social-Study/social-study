@@ -1,5 +1,7 @@
 import { db } from "../firebaseConfig";
 
+// These functions all relate to loading firebase data for a specific user.
+
 /**
  * Search the firestore for all Study Groups that have the uid in the members list
  *
@@ -47,19 +49,4 @@ function getUserData(uid) {
   });
 }
 
-function getGroupData(groupID) {
-  return new Promise((resolve, reject) => {
-    db.collection("study-groups")
-      .doc(groupID)
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          resolve({ id: doc.id, ...doc.data() });
-        } else {
-          reject("Group not found.");
-        }
-      });
-  });
-}
-
-export { getUserData, getUserGroups, getGroupData };
+export { getUserData, getUserGroups };
