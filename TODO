@@ -21,13 +21,16 @@ General:
   ☐ Extract common firebase function calls to an outside file
     ☐ Generate Code
   ☐ Add sidebar icons
-
+  ☐ find new animation library
+  ☐ add dark blur effect to modals
+  
 Components Needed:
   ☐ Notification popup
   ☐ Small info modal?
 
 Homepage:
   ☐ Add homepage option to list and remove active invite codes.
+  ☐ Add more detail to Study Group cards in dropdown
 
 Profile Settings:
   ✔ Make sure to delete/overwrite old profile picture when someone changes theirs @done(18-12-11 16:16)
@@ -39,6 +42,10 @@ Routing:
   Bugs:
     ☐ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in
     ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
+
+Side Bar:
+  ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
+
 
 Study Group:
   ☐ Show a study group settings modal only to the group owner to allow them to change the details after creation
@@ -54,9 +61,15 @@ Create Study Group:
   ✔ Add url test <a> tag below the website input box @done(18-12-11 16:17)
   ✔ Add the ability to copy the study group invite code before redirecting to the new homepage @done(18-12-11 16:17)
 
+Flashcards:
+  ☐ Implement navigation animations
+  ✔ Implement keyboard controls @done(18-12-12 19:33)
+  ☐ Implement firebase functionality
+  ☐ find a way to better indicate which side of the flashcard is currently displaying
+
 Prototype Presentation:
   ☐ Implement a Study Group feature
-    ☐ Flashcards
+    ✔ Flashcards @done(18-12-12 19:32)
 Archive:
   ✔ Figure out the sizing issues, I want body to be entire screen height but exclude the nav bar... @done(18-12-11 14:10) @project(General)
   ✔ Extract sidebar to a component @done(18-12-11 14:58) @project(Group Homepage)
