@@ -201,7 +201,7 @@
 </template>
 
 <script>
-// import firebase from "@/firebaseConfig";
+import { getUserData, getUserGroups } from "../scripts/firebaseFunctions";
 import { FirebaseConsts, Storage, db } from "@/firebaseConfig";
 import Avatar from "@/components/Avatar";
 
@@ -229,44 +229,30 @@ export default {
     };
   },
   beforeMount() {
-    // Get existing user bio to use as placeholder in textarea
-    db.collection("users")
-      .doc(this.user.uid)
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          return doc.data().description;
-        } else {
-          return "";
-        }
+    // Load the user's description from firestore
+    getUserData(this.user.uid)
+      .then(user => {
+        this.userBio = user.description;
       })
-      .then(value => {
-        this.userBio = value;
+      .catch(error => {
+        console.log("ProfileSettings: Error retreiving user.");
       });
 
     this.loadGroups();
   },
   methods: {
     loadGroups() {
-      this.groupList = [];
-      db.collection("study-groups")
-        .where("members", "array-contains", this.$store.getters.uid)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            console.log(doc.data());
-            this.groupList.push({
-              className: doc.data().className,
-              membersLength: doc.data().members.length,
-              groupID: doc.id
-            });
-          });
-        })
-        .then(() => {
+      getUserGroups(this.user.uid)
+        .then(groupList => {
+          this.groupList = groupList;
           console.log(this.groupList);
+        })
+        .catch(error => {
+          console.log(error);
         });
     },
     leaveGroup(id) {
+      // Remove the user from members list of specific study group
       db.collection("study-groups")
         .doc(id)
         .update({

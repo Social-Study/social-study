@@ -26,7 +26,6 @@ export default {
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
-      console.log("app: user updated");
       this.user = user;
     });
   }
@@ -47,7 +46,6 @@ html,
 body {
   min-height: 100vh;
   max-height: 100vh;
-  // background-color: #f7f8f9;
   background-color: $background-color;
 }
 
@@ -58,14 +56,4 @@ body {
   text-align: center;
   color: #2c3e50;
 }
-// #nav {
-//   padding: 30px;
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-// }
 </style>

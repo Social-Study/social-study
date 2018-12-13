@@ -71,7 +71,7 @@
         />
         <div
           v-else
-          style="background-color: #3c3c3c; border-radius: 50%; height: 48px; width: 48px;"
+          style="background-color: #3c3c3c; border-radius: 50%; height: 40px; width: 40px;"
           class="loading loading-lg"
         ></div>
 
