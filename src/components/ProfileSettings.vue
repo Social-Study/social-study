@@ -159,6 +159,33 @@
             </div>
           </div>
         </div>
+
+        <!-- Tab Three Content -->
+        <div v-if="activeTab === 3">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Study Group</th>
+                <th>Members</th>
+                <th>Leave Group</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(group, index) in groupList"
+                :key=index
+              >
+                <td>{{group.className}}</td>
+                <td>{{group.membersLength}}</td>
+                <td><i
+                    @click="leaveGroup(group.groupID)"
+                    style="color: red"
+                    class="icon icon-cross"
+                  ></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -174,8 +201,8 @@
 </template>
 
 <script>
-// import firebase from "@/firebaseConfig";
-import { Storage, db } from "@/firebaseConfig";
+import { getUserData, getUserGroups } from "../scripts/firebaseFunctions";
+import { FirebaseConsts, Storage, db } from "@/firebaseConfig";
 import Avatar from "@/components/Avatar";
 
 let picRef = Storage.ref();
@@ -197,26 +224,44 @@ export default {
         newPhoto: null,
         newBio: ""
       },
+      groupList: [],
       userBio: ""
     };
   },
   beforeMount() {
-    // Get existing user bio to use as placeholder in textarea
-    db.collection("users")
-      .doc(this.user.uid)
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          return doc.data().description;
-        } else {
-          return "";
-        }
+    // Load the user's description from firestore
+    getUserData(this.user.uid)
+      .then(user => {
+        this.userBio = user.description;
       })
-      .then(value => {
-        this.userBio = value;
+      .catch(error => {
+        console.log("ProfileSettings: Error retreiving user.");
       });
+
+    this.loadGroups();
   },
   methods: {
+    loadGroups() {
+      getUserGroups(this.user.uid)
+        .then(groupList => {
+          this.groupList = groupList;
+          console.log(this.groupList);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    leaveGroup(id) {
+      // Remove the user from members list of specific study group
+      db.collection("study-groups")
+        .doc(id)
+        .update({
+          members: FirebaseConsts.firestore.FieldValue.arrayRemove(
+            this.$store.getters.uid
+          )
+        });
+      this.loadGroups();
+    },
     saveChanges() {
       if (this.activeTab === 1) {
         if (
@@ -278,6 +323,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+i.icon {
+  cursor: pointer;
+  padding: 5px;
+  &:hover {
+    background-color: grey;
+  }
+}
+
 .modal-container {
   border-radius: 10px;
 }

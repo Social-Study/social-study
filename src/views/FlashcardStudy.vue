@@ -34,7 +34,6 @@
         <i class="icon icon-arrow-right"></i>
       </button>
     </div>
-    <h1> {{cardIndex + 1}} / 5</h1>
   </div>
 
 </template>
@@ -68,7 +67,6 @@ export default {
       }
     })
   },
-
   data: function() {
     return {
       isFlipping: false,

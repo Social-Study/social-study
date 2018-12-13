@@ -38,7 +38,7 @@
         </li>
         <li class="menu-item text-left">
           <router-link
-            :class="$route.name === 'flashcards' ? 'active' : ''"
+            :class="$route.name === 'flashcards' ? 'active' : '' || $route.name === 'study' ? 'active' : ''"
             :to="{ name: 'flashcards'}"
           >Flashcards</router-link>
           <!-- <a :class="$route.name === 'flashcards' ? 'active' : ''">Flashcards</a> -->
@@ -79,6 +79,7 @@
 <script>
 import { db } from "../firebaseConfig";
 
+// The sidebar is in charge of managing the group's initial load state.
 export default {
   name: "SideBar",
   data() {
@@ -88,18 +89,7 @@ export default {
     };
   },
   created() {
-    // TODO: Figure out how to prevent sidebar from reloading on page changes.
     this.loadGroupData(this.$route.params.groupID);
-    // if (
-    //   this.$route.params.groupID !== this.$store.getters.activeGroup.groupID
-    // ) {
-    //   console.log("sidebar create reloading ");
-    // } else {
-    //   console.log("sidebar not recreating");
-    // }
-
-    // this.activeGroup = this.$store.getters.activeGroup.details;
-    // console.log(this.activeGroup.members);
   },
   methods: {
     loadGroupData(groupID) {
@@ -110,9 +100,14 @@ export default {
         db.collection("study-groups").doc(groupID)
       ).then(active => {
         this.activeGroup === active;
+        this.$store.commit("setActiveGroup", {
+          groupID: active.id,
+          details: active
+        });
       });
     }
   },
+  // FIXME: Maybe need a computed function to watch the activeGroup's member count?
   watch: {
     "$route.params.groupID"(id) {
       console.log(
@@ -126,7 +121,7 @@ export default {
 
 // @HACK: Have to set !important on certain styling to override spectre defaults
 // Must be global styling not scoped to take affect
-<style lang="scss">
+<style lang="scss" scoped>
 .sidebar {
   box-shadow: none;
   background: #3c3c3c;
@@ -152,5 +147,6 @@ div.off-canvas-sidebar {
 }
 div.off-canvas-content {
   min-height: 94vh;
+  padding: 0 !important;
 }
 </style>

@@ -63,6 +63,7 @@
         class="menu-container"
       >
         <Avatar
+          style="width: 40px; height: 40px;"
           v-if="firestoreUser"
           :user="{ displayName: this.firestoreUser.displayName,
                    photoURL: this.firestoreUser.photoURL
@@ -70,7 +71,7 @@
         />
         <div
           v-else
-          style="background-color: #3c3c3c; border-radius: 50%; height: 48px; width: 48px;"
+          style="background-color: #3c3c3c; border-radius: 50%; height: 40px; width: 40px;"
           class="loading loading-lg"
         ></div>
 
@@ -200,6 +201,10 @@ a.navbar-brand {
   li {
     margin-top: 0;
   }
+}
+
+.menu-container {
+  padding: 2px;
 }
 
 .settings-menu {

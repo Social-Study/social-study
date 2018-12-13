@@ -1,18 +1,23 @@
 <template>
   <div id="app">
     <NavBar v-if="$route.name !== 'landing'" />
-    <router-view />
+    <router-view v-if="!$route.params.groupID" />
+    <side-bar v-else>
+      <router-view />
+    </side-bar>
   </div>
 </template>
 
 
 <script>
 import NavBar from "@/components/NavBar";
+import SideBar from "@/components/SideBar";
 import firebase from "./firebaseConfig";
 export default {
   name: "App",
   components: {
-    NavBar
+    NavBar,
+    SideBar
   },
   data() {
     return {
@@ -21,7 +26,6 @@ export default {
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
-      console.log("app: user updated");
       this.user = user;
     });
   }
@@ -31,6 +35,7 @@ export default {
 
 // Global Styles
 <style lang="scss">
+@import "./styleVariables.scss";
 @import "node_modules/spectre.css/src/spectre.scss";
 @import "node_modules/spectre.css/src/spectre-icons.scss";
 @import "node_modules/spectre.css/src/spectre-exp.scss";
@@ -41,8 +46,7 @@ html,
 body {
   min-height: 100vh;
   max-height: 100vh;
-  // background-color: #f7f8f9;
-  background-color: #f6f6f6;
+  background-color: $background-color;
 }
 
 #app {
@@ -52,14 +56,4 @@ body {
   text-align: center;
   color: #2c3e50;
 }
-// #nav {
-//   padding: 30px;
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-// }
 </style>
