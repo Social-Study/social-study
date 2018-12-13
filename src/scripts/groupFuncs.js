@@ -1,5 +1,7 @@
 // These functions all relate to loading firebase data for a specific Study Group
 
+import { db } from "../firebaseConfig";
+
 function getGroupData(groupID) {
   return new Promise((resolve, reject) => {
     db.collection("study-groups")
