@@ -1,19 +1,18 @@
 <template>
-  <div 
-  class="content-container"
-  @keyup.space="flipcard()"
+  <div
+    class="content-container"
+    @keyup.space="flipcard()"
   >
 
-    <h1>Software Engineering Flashcards</h1>
-    <div 
-    class="page-content"
-    >
+    <page-title>Software Engineering Terms</page-title>
+    <div class="page-content">
       <button
         @click="prevCard"
         class="btn btn-action btn-success btn-lg s-circle"
+        :class="cardIndex === 0 ? 'disabled' : ''"
       > <i class="icon icon-arrow-left"></i>
       </button>
-      <div class = "flashcard-container">
+      <div class="flashcard-container">
         <flashcard
           class="flashcard"
           :style="{backgroundColor: cardColor}"
@@ -23,14 +22,16 @@
           <flashcardContent
             class="flashcard-content"
             :pose="isFlipping ? 'shrinkContent' : 'growContent' "
-            >
+          >
             {{currentContent}}
           </flashcardContent>
         </flashcard>
       </div>
-      <button 
-        @click="nextCard" 
-        class="btn btn-action btn-success btn-lg s-circle">  
+      <button
+        @click="nextCard"
+        class="btn btn-action btn-success btn-lg s-circle"
+        :class="cardIndex === 4 ? 'disabled' : ''"
+      >
         <i class="icon icon-arrow-right"></i>
       </button>
     </div>
@@ -40,18 +41,20 @@
 
 <script>
 // import firebase, { db, FirebaseConsts } from "@/firebaseConfig";
-import posed from 'vue-pose';
-import { setTimeout } from 'timers';
+import PageTitle from "../components/PageTitle";
+import posed from "vue-pose";
+import { setTimeout } from "timers";
 
 export default {
   name: "flashcardStudy",
   components: {
+    PageTitle,
     flashcard: posed.div({
-      shrink: { 
+      shrink: {
         height: 0,
-        transition: { duration: 200}
+        transition: { duration: 200 }
       },
-      grow: { 
+      grow: {
         height: 300,
         transition: { duration: 200 }
       }
@@ -63,7 +66,7 @@ export default {
       },
       growContent: {
         opacity: 1,
-        transition: {delay: 100}
+        transition: { delay: 100 }
       }
     })
   },
@@ -76,9 +79,7 @@ export default {
       flipped: false,
       termList: [],
       definitionList: [],
-      cardColor: '#E7E7E7',
-
-
+      cardColor: "#E7E7E7",
 
       // hard-coded flashcard deck for testing
       flashcardDeck: [
@@ -101,30 +102,29 @@ export default {
     flipcard() {
       this.isFlipping = true;
       const self = this;
-      setTimeout(function(){ 
-      self.isFlipping = false;
-      //definition side
-      if (self.flipped) {
-        self.getCurrentContent();
-        self.flipped = false;
-        self.cardColor = '#E7E7E7';
-      } 
-      //term side
-      else {
-        self.getCurrentContent();
-        self.flipped = true;
-        self.cardColor = '#c5c5c5';
-      }
-    }, 100);  
-
-  },
+      setTimeout(function() {
+        self.isFlipping = false;
+        //definition side
+        if (self.flipped) {
+          self.getCurrentContent();
+          self.flipped = false;
+          self.cardColor = "#E7E7E7";
+        }
+        //term side
+        else {
+          self.getCurrentContent();
+          self.flipped = true;
+          self.cardColor = "#c5c5c5";
+        }
+      }, 100);
+    },
     //increments the current card index and updates the displayed content
     nextCard() {
       if (this.cardIndex < this.termList.length - 1) {
         this.cardIndex++;
         this.currentContent = this.termList[this.cardIndex];
         this.flipped = false;
-        this.cardColor = '#E7E7E7';
+        this.cardColor = "#E7E7E7";
       }
     },
     //decrements the current card index and updates the displayed info
@@ -133,7 +133,7 @@ export default {
         this.cardIndex--;
         this.flipped = false;
         this.currentContent = this.termList[this.cardIndex];
-        this.cardColor = '#E7E7E7';
+        this.cardColor = "#E7E7E7";
       }
     },
     //loads the content that should be shown into the currentContent variable based on flipped variable
@@ -146,7 +146,7 @@ export default {
     },
     //calls the correct function based on key press
     keyPressed(event) {
-      switch(event.which){
+      switch (event.which) {
         case 32:
           this.flipcard();
           break;
@@ -161,11 +161,11 @@ export default {
   },
   //creates the key event listener
   beforeMount() {
-    window.addEventListener('keyup', this.keyPressed);
+    window.addEventListener("keyup", this.keyPressed);
   },
   //destroys the key event listener
-  beforeDestroy () {
-    window.removeEventListener('keyup', this.keyPressed);
+  beforeDestroy() {
+    window.removeEventListener("keyup", this.keyPressed);
   },
   //load all the data from the flashcard deck into arrays
   //set the first card's content
