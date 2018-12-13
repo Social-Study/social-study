@@ -35,12 +35,12 @@
         <i class="icon icon-arrow-right"></i>
       </button>
     </div>
+    <h1>{{cardIndex + 1}} / {{termList.length}}</h1>
   </div>
 
 </template>
 
 <script>
-// import firebase, { db, FirebaseConsts } from "@/firebaseConfig";
 import PageTitle from "../components/PageTitle";
 import posed from "vue-pose";
 import { setTimeout } from "timers";

@@ -2,6 +2,7 @@ Branding:
   ☐ Design a logo / titlebar icon
   ☐ Think of better slogan.
   ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
+  ☐ PURPLE??????????????????????????????????????????????????????@critical
 
 Database Design:
   ☐ May have to mess with the structure of the database. I need to update the database a user is joining. Changed the rules to allow any authenticated user to modify the study group but there has to be a better way to do it.
@@ -11,8 +12,8 @@ Database Design:
   ☐ Figure out how to delete a code after 24 hours.
     May just have it set so that when a new user requests a code, the cloud functions deletes any old codes that are older than 24 hours old
 General:
-  ☐ Not sure why the favicon is not showing????
-  ☐ Make sure the build bundle size is not too large.
+  ☐ Not sure why the favicon is not showing???? @low
+  ☐ Make sure the build bundle size is not too large. @low
   ☐ Font-Awesome Icon Package Icons are not aligned properly
     ☐ Get rid of vueawesome and use cdn to reduce package size and wierd errors
   ☐ Go through an error check all inputs where necessary
@@ -20,11 +21,12 @@ General:
   ☐ Extract common firebase function calls to an outside file
     ☐ Generate Code
   ☐ Add sidebar icons
-  ☐ The vuex store requires the vuex-persist plugin to save to the computers local storage. I think this is a bad thing and we should try to stop using it. The firebase state should be saved to the session so idk what's going on.
-  ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header
+  ☐ The vuex store requires the vuex-persist plugin to save to the computers local storage. I think this is a bad thing and we should try to stop using it. The firebase state should be saved to the session so idk what's going on. @critical
+  ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
     Not exactly sure how to do this.
   ☐ find new animation library
   ☐ add dark blur effect to modals
+  ☐ Maybe allow users to upload pdfs and save notes to their own documents
 
 Components Needed:
   ☐ Notification popup
@@ -77,7 +79,7 @@ Flashcards:
 Prototype Presentation:
   ☐ Implement a Study Group feature
     ✔ Flashcards @done(18-12-12 19:32)
-    
+
 Archive:
   ✔ Add Study Groups tab so users can remove study groups from their account @done(18-12-12 16:54) @project(Profile Settings)
   ✔ Fix avatar sizing on the navbar @done(18-12-12 16:54) @project(Routing.Bugs)
