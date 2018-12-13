@@ -4,15 +4,16 @@
       {{$store.getters.activeGroup.details.className}}: Members
     </page-title>
     <div v-if="!loading">
+
       <!-- Display card for each member of the Study Group -->
       <div class="content-container">
-        <!-- TODO: Export members card to a separate component -->
         <member-card
           v-for="(member, index) in memberDetails"
           :key="index"
           :photoURL="member.photoURL"
           :displayName="member.displayName"
         ></member-card>
+        <!-- Invite New Member Card -->
         <member-card
           @click.native="inviteMember()"
           add
@@ -87,7 +88,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      loading: true,
       memberDetails: [],
       displayModal: false,
       inviteCode: "",
@@ -95,15 +96,24 @@ export default {
     };
   },
   created() {
-    // Watch for changes on the document, if there is, reload the info
+    // Load initial group data and save it
+    getGroupData(this.$route.params.groupID)
+      .then(group => {
+        this.studyGroup = group;
+        console.log(group);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    // Watch for changes on the document, if there is, set study group to new info
     console.log("Created called");
     db.collection("study-groups")
-      .doc(this.$store.getters.activeGroup.groupID)
+      .doc(this.$route.params.groupID)
       .onSnapshot(snapshot => {
+        this.studyGroup = snapshot.data();
         this.getMemberInfo();
       });
-    this.studyGroup = this.$store.getters.activeGroup.details;
-    this.getMemberInfo();
   },
   methods: {
     // TODO: Extract this code to an outside file
@@ -126,7 +136,6 @@ export default {
     getMemberInfo() {
       let counter = this.studyGroup.members.length;
       this.memberDetails = [];
-
       this.studyGroup.members.forEach(uid => {
         db.collection("users")
           .where("uid", "==", uid)

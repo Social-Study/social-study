@@ -49,12 +49,12 @@ function getUserData(uid) {
 
 function getGroupData(groupID) {
   return new Promise((resolve, reject) => {
-    db.collection("users")
+    db.collection("study-groups")
       .doc(groupID)
       .get()
       .then(doc => {
         if (doc.exists) {
-          resolve({ id: doc.id, data: doc.data() });
+          resolve({ id: doc.id, ...doc.data() });
         } else {
           reject("Group not found.");
         }
