@@ -157,6 +157,10 @@ export default {
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
 
+.modal-container {
+  border-radius: 10px;
+}
+
 // Flexbox container to hold all member cards
 .content-container {
   margin: 40px;
