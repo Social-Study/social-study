@@ -3,7 +3,6 @@
     <page-title>
       {{$store.getters.activeGroup.details.className}}: Members
     </page-title>
-
     <div v-if="!loading">
       <!-- Display card for each member of the Study Group -->
       <div class="content-container">
@@ -75,7 +74,9 @@ import PageTitle from "../components/PageTitle";
 import MemberCard from "../components/MemberCard";
 
 import { db, FirebaseConsts } from "../firebaseConfig";
+import { getGroupData } from "../scripts/firebaseFunctions";
 import generateCode from "../scripts/generateCode";
+
 export default {
   name: "MembersPage",
   components: {
@@ -86,12 +87,23 @@ export default {
   },
   data() {
     return {
-      loading: true,
-      memberIDs: [],
+      loading: false,
       memberDetails: [],
       displayModal: false,
-      inviteCode: ""
+      inviteCode: "",
+      studyGroup: null
     };
+  },
+  created() {
+    // Watch for changes on the document, if there is, reload the info
+    console.log("Created called");
+    db.collection("study-groups")
+      .doc(this.$store.getters.activeGroup.groupID)
+      .onSnapshot(snapshot => {
+        this.getMemberInfo();
+      });
+    this.studyGroup = this.$store.getters.activeGroup.details;
+    this.getMemberInfo();
   },
   methods: {
     // TODO: Extract this code to an outside file
@@ -108,13 +120,14 @@ export default {
       document.execCommand("copy");
     },
     inviteMember() {
-      console.log("invite function");
       this.inviteCode = generateCode();
       this.displayModal = true;
     },
     getMemberInfo() {
-      let counter = this.memberIDs.length;
-      this.memberIDs.forEach(uid => {
+      let counter = this.studyGroup.members.length;
+      this.memberDetails = [];
+
+      this.studyGroup.members.forEach(uid => {
         db.collection("users")
           .where("uid", "==", uid)
           .limit(1)
@@ -129,15 +142,8 @@ export default {
             }
           });
       });
+      console.log(this.memberDetails);
     }
-  },
-  created() {
-    this.memberIDs = this.$store.getters.activeGroup.details.members;
-    this.ownerID = this.$store.getters.activeGroup.details.owner;
-    this.getMemberInfo();
-  },
-  beforeUpdate() {
-    // this.getMemberInfo();
   }
 };
 </script>

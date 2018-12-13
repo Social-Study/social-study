@@ -79,6 +79,7 @@
 <script>
 import { db } from "../firebaseConfig";
 
+// The sidebar is in charge of managing the group's initial load state.
 export default {
   name: "SideBar",
   data() {
@@ -99,13 +100,15 @@ export default {
         db.collection("study-groups").doc(groupID)
       ).then(active => {
         this.activeGroup === active;
+        this.$store.commit("setActiveGroup", {
+          groupID: active.id,
+          details: active
+        });
       });
     }
   },
+  // FIXME: Maybe need a computed function to watch the activeGroup's member count?
   watch: {
-    "this.activeGroup.length"(length) {
-      console.log("group length changed");
-    },
     "$route.params.groupID"(id) {
       console.log(
         "Sidebar: Active Group Changed - Getting new data from firestore"

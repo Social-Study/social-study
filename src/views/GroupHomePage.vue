@@ -31,41 +31,45 @@ export default {
     };
   },
   created() {
-    // Check if the study group has changed by checking id of group in store
-    // with the router's group id. If they are different reload the group data,
-    // otherwise just set the study group to the stored details
-    if (
-      this.$store.getters.activeGroup.groupID !== this.$route.params.groupID
-    ) {
-      this.loadGroupData(this.$route.params.groupID);
-    } else {
-      this.studyGroup = this.$store.getters.activeGroup.details;
-    }
-  },
-  methods: {
-    loadGroupData(groupID) {
-      console.log("Hompage: Loading group data function");
-      // Load study group from the route params
-      this.$bind("studyGroup", db.collection("study-groups").doc(groupID))
-        .then(studyGroup => {
-          this.studyGroup === studyGroup;
-        })
-        .then(() => {
-          this.$store.commit("setActiveGroup", {
-            groupID: groupID,
-            details: this.studyGroup
-          });
-        });
-    }
-  },
-  watch: {
-    /* Manually reload new group's data when the route address changes.
-        without this, the data never gets loaded because you are switching
-        inside the same component so it doesn't re-render
-    */
-    "$route.params.groupID"(id) {
-      this.loadGroupData(id);
-    }
+    this.studyGroup = this.$store.getters.activeGroup.details;
   }
+  // REMOVED ALL LOGIC FROM THE HOMEPAGE, THE SIDEBAR NOW HANDLES THIS LOGIC
+  // created() {
+  //   // Check if the study group has changed by checking id of group in store
+  //   // with the router's group id. If they are different reload the group data,
+  //   // otherwise just set the study group to the stored details
+  //   if (
+  //     this.$store.getters.activeGroup.groupID !== this.$route.params.groupID
+  //   ) {
+  //     this.loadGroupData(this.$route.params.groupID);
+  //   } else {
+  //     this.studyGroup = this.$store.getters.activeGroup.details;
+  //   }
+  // },
+  // methods: {
+  //   loadGroupData(groupID) {
+  //     console.log("Hompage: Loading group data function");
+  //     // Load study group from the route params
+  //     this.$bind("studyGroup", db.collection("study-groups").doc(groupID))
+  //       .then(studyGroup => {
+  //         this.studyGroup === studyGroup;
+  //       })
+  //       .then(() => {
+  //         this.$store.commit("setActiveGroup", {
+  //           groupID: groupID,
+  //           details: this.studyGroup
+  //         });
+  //       });
+  //   }
+  // },
+  // watch: {
+  //   /* Manually reload new group's data when the route address changes.
+  //       without this, the data never gets loaded because you are switching
+  //       inside the same component so it doesn't re-render
+  //   */
+  //   "$route.params.groupID"(id) {
+  //     this.loadGroupData(id);
+  //   }
+  // }
 };
 </script>
