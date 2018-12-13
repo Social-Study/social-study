@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-title>
-      {{$store.getters.activeGroup.details.className}}: Members
+      Study Group Members
     </page-title>
     <div v-if="!loading">
 

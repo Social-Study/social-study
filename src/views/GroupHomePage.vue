@@ -1,7 +1,7 @@
 <template>
   <!-- <div v-if="studyGroup">
     <div v-if="studyGroup.length !== 0"> -->
-  <page-title>{{ $store.getters.activeGroup.details.className }}: Home Page</page-title>
+  <page-title>{{ $store.getters.activeGroup.details.className }} Home</page-title>
   <!-- </div>
     <div v-else>
       <h1 style="margin-top: 25%">Error Loading Your Study Group</h1>
