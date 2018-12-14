@@ -13,8 +13,6 @@ import locale from "element-ui/lib/locale/lang/en";
 
 Vue.use(ElementUI, { locale });
 
-Vue.component("v-icon", Icon);
-
 Vue.config.productionTip = false;
 
 // Client-side validation library for user form inputs

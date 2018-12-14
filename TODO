@@ -14,12 +14,11 @@ Database Design:
 General:
   ☐ Not sure why the favicon is not showing???? @low
   ☐ Make sure the build bundle size is not too large. @low
-  ☐ Font-Awesome Icon Package Icons are not aligned properly
-    ☐ Get rid of vueawesome and use cdn to reduce package size and wierd errors
+  ✔ Font-Awesome Icon Package Icons are not aligned properly @done(18-12-13 20:39)
+    ✔ Get rid of vueawesome and use cdn to reduce package size and wierd errors @done(18-12-13 20:39)
   ☐ Go through an error check all inputs where necessary
   ☐ Create a universal notifaction popup, not like the homepage error notifcation but a bubble type.
-  ☐ Extract common firebase function calls to an outside file
-    ☐ Generate Code
+
   ☐ Add sidebar icons
   ☐ The vuex store requires the vuex-persist plugin to save to the computers local storage. I think this is a bad thing and we should try to stop using it. The firebase state should be saved to the session so idk what's going on. @critical
   ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
@@ -31,6 +30,9 @@ General:
 Components Needed:
   ☐ Notification popup
   ☐ Small info modal?
+
+Firebase Functions File:
+  ☐ Generate Invite Code
 
 Vuex Store:
   ☐ Only save the uid to local storage
