@@ -245,7 +245,7 @@
                 @click="googleSignIn"
                 class="btn mx-1"
               >
-                <v-icon name="brands/google" />
+                <i class="fab fa-google"></i>
                 Sign in with Google
               </button>
             </form>

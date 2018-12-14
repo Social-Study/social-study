@@ -7,12 +7,6 @@ import "./registerServiceWorker";
 import VueFire from "vuefire";
 import VeeValidate from "vee-validate";
 
-// Icon Imports
-import "vue-awesome/icons/brands/google";
-import "vue-awesome/icons/cog";
-import "vue-awesome/icons/sign-out-alt";
-import Icon from "vue-awesome/components/Icon";
-
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import locale from "element-ui/lib/locale/lang/en";

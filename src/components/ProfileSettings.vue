@@ -202,15 +202,11 @@
 <script>
 import { getUserData, getUserGroups } from "../scripts/userFuncs";
 import { FirebaseConsts, Storage, db } from "@/firebaseConfig";
-import Avatar from "@/components/Avatar";
 
 let picRef = Storage.ref();
 
 export default {
   name: "ProfileSettings",
-  components: {
-    Avatar
-  },
   props: {
     user: Object,
     photoURL: String
@@ -234,7 +230,7 @@ export default {
         this.userBio = user.description;
       })
       .catch(error => {
-        console.log("ProfileSettings: Error retreiving user.");
+        console.log("ProfileSettings: " + error);
       });
 
     this.loadGroups();

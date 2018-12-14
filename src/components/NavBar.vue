@@ -82,31 +82,33 @@
           <li class="menu-item text-left">
             <p
               v-if="user"
-              class="h5"
+              class="h5 text-center text-ellipsis"
             >{{ user.displayName }}</p>
           </li>
           <li class="divider"></li>
+          <!-- Settings Button -->
           <li class="menu-item text-left">
             <a
               @click="isSettingsActive = true"
-              href="#"
+              class="text-center c-pointer"
             >
-              <v-icon
-                name="cog"
-                class="icon float-right"
-              />
+              <i
+                class="fas fa-cog"
+                style="margin-right: 10px;"
+              ></i>
               Settings
             </a>
           </li>
+          <!-- Log Out Button -->
           <li class="menu-item text-left">
             <a
               @click="logOut"
-              href="#"
+              class="text-center"
             >
-              <v-icon
-                name="sign-out-alt"
-                class="float-right"
-              />
+              <i
+                class="fas fa-sign-out-alt"
+                style="margin-right: 10px;"
+              ></i>
               Log Out
             </a>
           </li>
@@ -196,6 +198,7 @@ a.navbar-brand {
 }
 
 .menu {
+  cursor: pointer;
   border-radius: 10px;
   li {
     margin-top: 0;

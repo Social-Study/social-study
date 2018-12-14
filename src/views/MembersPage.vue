@@ -81,8 +81,6 @@
 </template>
 
 <script>
-import SideBar from "../components/SideBar";
-import Avatar from "../components/Avatar";
 import PageTitle from "../components/PageTitle";
 import MemberCard from "../components/MemberCard";
 
@@ -93,8 +91,6 @@ import generateCode from "../scripts/generateCode";
 export default {
   name: "MembersPage",
   components: {
-    Avatar,
-    SideBar,
     PageTitle,
     MemberCard
   },
