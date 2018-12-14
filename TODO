@@ -14,13 +14,10 @@ Database Design:
 General:
   ☐ Not sure why the favicon is not showing???? @low
   ☐ Make sure the build bundle size is not too large. @low
-  ✔ Font-Awesome Icon Package Icons are not aligned properly @done(18-12-13 20:39)
-    ✔ Get rid of vueawesome and use cdn to reduce package size and wierd errors @done(18-12-13 20:39)
   ☐ Go through an error check all inputs where necessary
   ☐ Create a universal notifaction popup, not like the homepage error notifcation but a bubble type.
 
   ☐ Add sidebar icons
-  ☐ The vuex store requires the vuex-persist plugin to save to the computers local storage. I think this is a bad thing and we should try to stop using it. The firebase state should be saved to the session so idk what's going on. @critical
   ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
     Not exactly sure how to do this.
   ☐ find new animation library
@@ -58,7 +55,6 @@ Routing:
 Side Bar:
   ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
 
-
 Study Group:
   ☐ Show a study group settings modal only to the group owner to allow them to change the details after creation
 
@@ -71,18 +67,18 @@ Create Study Group:
     - It is also very large, > 1mb
   ☐ Change steps so that the one before the end is the finish
 
-
 Flashcards:
   ☐ Implement navigation animations
-  ✔ Implement keyboard controls @done(18-12-12 19:33)
   ☐ Implement firebase functionality
   ☐ find a way to better indicate which side of the flashcard is currently displaying
 
-Prototype Presentation:
-  ☐ Implement a Study Group feature
-    ✔ Flashcards @done(18-12-12 19:32)
-
 Archive:
+  ✔ Font-Awesome Icon Package Icons are not aligned properly @done(18-12-13 20:39) @project(General)
+  ✔ Get rid of vueawesome and use cdn to reduce package size and wierd errors @done(18-12-13 20:39) @project(General)
+  ✔ The vuex store requires the vuex-persist plugin to save to the computers local storage. I think this is a bad thing and we should try to stop using it. The firebase state should be saved to the session so idk what's going on. @critical @done(18-12-13 20:40) @project(General)
+  ✔ Implement keyboard controls @done(18-12-12 19:33) @project(Flashcards)
+  ✔ Implement a Study Group feature @done(18-12-13 20:40) @project(Prototype Presentation)
+  ✔ Flashcards @done(18-12-12 19:32) @project(Prototype Presentation)
   ✔ Add Study Groups tab so users can remove study groups from their account @done(18-12-12 16:54) @project(Profile Settings)
   ✔ Fix avatar sizing on the navbar @done(18-12-12 16:54) @project(Routing.Bugs)
     May have to change the avatar to not use a set size, but allow the user to enter custom sizing
