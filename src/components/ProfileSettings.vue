@@ -162,7 +162,7 @@
               <tr>
                 <th>Study Group</th>
                 <th>Members</th>
-                <th>Leave Group</th>
+                <th class="text-center">Leave Group</th>
               </tr>
             </thead>
             <tbody>
@@ -172,11 +172,14 @@
               >
                 <td>{{group.className}}</td>
                 <td>{{group.membersLength}}</td>
-                <td><i
+                <td>
+                  <button
                     @click="leaveGroup(group.groupID)"
-                    style="color: red"
-                    class="icon icon-cross"
-                  ></i></td>
+                    class="btn btn-error btn-block"
+                  >
+                    <i class="icon icon-cross"></i>
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -185,6 +188,7 @@
 
       <div class="modal-footer">
         <button
+          v-if="activeTab !== 3"
           @click="saveChanges"
           class="save-btn btn btn-primary"
         >
@@ -240,7 +244,6 @@ export default {
       getUserGroups(this.user.uid)
         .then(groupList => {
           this.groupList = groupList;
-          console.log(this.groupList);
         })
         .catch(error => {
           console.log(error);
@@ -318,13 +321,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-i.icon {
-  cursor: pointer;
-  padding: 5px;
-  &:hover {
-    background-color: grey;
-  }
-}
+// .close-btn {
+//   padding: 2px;
+//   height: 40px;
+//   width: 40px;
+//   &:hover {
+//     background-color: grey;
+//   }
+//   i.icon.icon-cross {
+//     cursor: pointer;
+//   }
+// }
 
 .modal-container {
   border-radius: 10px;

@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "animate.css": "^3.7.0",
     "element-ui": "^2.4.11",
     "firebase": "^5.5.9",
     "firebase-tools": "^6.1.2",
