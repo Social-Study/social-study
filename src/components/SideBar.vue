@@ -1,6 +1,6 @@
 <template>
   <div class="off-canvas off-canvas-sidebar-show">
-    <!-- off-screen toggle button -->
+    <!-- Sidebar Toggle Button; Only shows when screen is too small -->
     <a
       @click="sidebarActive = true"
       class="off-canvas-toggle btn btn-primary btn-action"
@@ -64,6 +64,7 @@
       </ul>
     </div>
 
+    <!-- Overlay that shows when screen is too small. Clicking hides the sidebar -->
     <a
       @click="sidebarActive = false"
       class="off-canvas-overlay"
@@ -71,12 +72,31 @@
 
     <div class="off-canvas-content">
       <!-- Slot where all other page content will be inserted -->
-      <slot></slot>
+      <slot v-if="isMember && !isLoading"></slot>
+      <!-- If they are not a member, show the generic error message -->
+      <div
+        v-else-if="!isMember && !isLoading"
+        style="margin-top: 10%;"
+      >
+        <img
+          style="width: 10em;"
+          class="undraw-svg"
+          src="../assets/undraw_warning.svg"
+          alt="Error Loading Group"
+        >
+        <h1>Error loading group data...</h1>
+        <h2>Please make sure you are a member of the group.</h2>
+        <h2>Please make sure the group exists.</h2>
+      </div>
+      <div v-else>
+        <div class="loading loading-lg"></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { checkAccess } from "../scripts/groupFuncs";
 import { db } from "../firebaseConfig";
 
 // The sidebar is in charge of managing the group's initial load state.
@@ -85,7 +105,9 @@ export default {
   data() {
     return {
       sidebarActive: false,
-      activeGroup: null
+      activeGroup: null,
+      isMember: false,
+      isLoading: true
     };
   },
   created() {
@@ -94,17 +116,29 @@ export default {
   methods: {
     loadGroupData(groupID) {
       console.log("Sidebar: Loading Group Data function...");
-      // Load study group from the route params
-      this.$bind(
-        "activeGroup",
-        db.collection("study-groups").doc(groupID)
-      ).then(active => {
-        this.activeGroup === active;
-        this.$store.commit("setActiveGroup", {
-          groupID: active.id,
-          details: active
+
+      // Make sure the user is part of the group
+      checkAccess(this.$store.getters.uid, this.$route.params.groupID)
+        .then(() => {
+          // If they are... load the group's data.
+          this.$bind(
+            "activeGroup",
+            db.collection("study-groups").doc(groupID)
+          ).then(active => {
+            this.activeGroup === active;
+            this.$store.commit("setActiveGroup", {
+              groupID: active.id,
+              details: active
+            });
+          });
+
+          this.isMember = true;
+          this.isLoading = false;
+        })
+        .catch(() => {
+          console.log("You are not a member!");
+          this.isLoading = false;
         });
-      });
     }
   },
   watch: {
@@ -145,6 +179,7 @@ div.off-canvas-sidebar {
 }
 div.off-canvas-content {
   min-height: 94vh;
+  // min-height: 100%;
   padding: 0 !important;
 }
 </style>

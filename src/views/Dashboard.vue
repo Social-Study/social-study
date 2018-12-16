@@ -3,6 +3,7 @@
   <!-- TODO: Render loading indicator if firebase has not finished async load -->
   <div v-if="this.user !== null">
 
+    <!-- Class Join Confirmation Modal -->
     <div
       v-if="confirmJoin && inviteGroup !== null"
       class="modal modal-sm active"
@@ -152,10 +153,6 @@ export default {
     }
   },
   created() {
-    // Set local user variable to the user's account information.
-    // Display loading indicator when not available or loading
-    // FIXME: Maybe use this logic in the Navbar instead, something that is always shown?
-
     // Load user data from firebase using the stored uid
     getUserData(this.$store.getters.uid)
       .then(user => {

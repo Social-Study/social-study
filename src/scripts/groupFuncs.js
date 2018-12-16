@@ -17,4 +17,19 @@ function getGroupData(groupID) {
   });
 }
 
-export { getGroupData };
+function checkAccess(userID, groupID) {
+  return new Promise((resolve, reject) => {
+    db.collection("study-groups")
+      .doc(groupID)
+      .get()
+      .then(doc => {
+        if (doc.data().members.includes(userID)) {
+          resolve();
+        } else {
+          reject();
+        }
+      });
+  });
+}
+
+export { getGroupData, checkAccess };
