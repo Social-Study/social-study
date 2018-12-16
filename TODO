@@ -3,19 +3,17 @@ Branding:
   ☐ Think of better slogan.
   ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
   ☐ PURPLE??????????????????????????????????????????????????????@critical
+  ☐ Find better flashcard sidebar icon
 
 Database Design:
-  ✔ May have to mess with the structure of the database. I need to update the database a user is joining. Changed the rules to allow any authenticated user to modify the study group but there has to be a better way to do it. @done(18-12-16 11:36)
   ☐ Decide if I should store each user's study groups in their profile as well as in the actual study group itself
   ☐ Figure out how to delete a code after 24 hours.
-  ✔ Figure out how to block user's from viewing groups they don't belong to @done(18-12-16 11:35)
 General:
   ☐ Not sure why the favicon is not showing???? @low
   ☐ Make sure the build bundle size is not too large. @low
   ☐ Go through an error check all inputs where necessary
   ☐ Create a universal notifaction popup, not like the homepage error notifcation but a bubble type.
 
-  ☐ Add sidebar icons
   ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
     Not exactly sure how to do this.
   ☐ find new animation library
@@ -46,9 +44,7 @@ Profile Settings:
 
 Routing:
   Bugs:
-    ✔ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in @done(18-12-15 16:33)
     ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
-    ✔ User list should auto update when a new user joins the group @done(18-12-15 16:33)
 
 Side Bar:
   ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
@@ -74,6 +70,11 @@ Flashcards:
   ☐ find a way to better indicate which side of the flashcard is currently displaying
 
 Archive:
+  ✔ May have to mess with the structure of the database. I need to update the database a user is joining. Changed the rules to allow any authenticated user to modify the study group but there has to be a better way to do it. @done(18-12-16 11:36) @project(Database Design)
+  ✔ Figure out how to block user's from viewing groups they don't belong to @done(18-12-16 11:35) @project(Database Design)
+  ✔ Add sidebar icons @done(18-12-16 12:19) @project(General)
+  ✔ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in @done(18-12-15 16:33) @project(Routing.Bugs)
+  ✔ User list should auto update when a new user joins the group @done(18-12-15 16:33) @project(Routing.Bugs)
   ✔ Font-Awesome Icon Package Icons are not aligned properly @done(18-12-13 20:39) @project(General)
   ✔ Get rid of vueawesome and use cdn to reduce package size and wierd errors @done(18-12-13 20:39) @project(General)
   ✔ The vuex store requires the vuex-persist plugin to save to the computers local storage. I think this is a bad thing and we should try to stop using it. The firebase state should be saved to the session so idk what's going on. @critical @done(18-12-13 20:40) @project(General)
