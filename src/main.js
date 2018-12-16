@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 
+// Firebase bindings for Vue.js
 import VueFire from "vuefire";
 Vue.use(VueFire);
 
@@ -15,8 +16,6 @@ import Notification from "vue-notification";
 Vue.use(Notification);
 
 Vue.config.productionTip = false;
-
-// Enable VueFire
 
 new Vue({
   router,

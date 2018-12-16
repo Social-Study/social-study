@@ -1,7 +1,7 @@
 <template>
   <div class="modal modal-md active">
     <a
-      @click="$emit('closeSettings')"
+      @click="$emit('closeSettings');"
       href="#close"
       class="modal-overlay"
       aria-label="Close"
@@ -10,7 +10,7 @@
     <div class="modal-container">
       <div class="modal-header">
         <a
-          @click="$emit('closeSettings')"
+          @click="$emit('closeSettings');"
           href="#close"
           class="btn btn-clear float-right"
           aria-label="Close"
@@ -19,24 +19,23 @@
         <div class="modal-title h4">Settings</div>
       </div>
       <div class="modal-body">
-
         <ul class="tab">
           <li
-            @click="activeTab = 1"
+            @click="activeTab = 1;"
             class="tab-item"
             :class="[activeTab === 1 ? 'active' : '']"
           >
             <a>Profile</a>
           </li>
           <li
-            @click="activeTab = 2"
+            @click="activeTab = 2;"
             class="tab-item"
             :class="[activeTab === 2 ? 'active' : '']"
           >
             <a>Account</a>
           </li>
           <li
-            @click="activeTab = 3"
+            @click="activeTab = 3;"
             class="tab-item"
             :class="[activeTab === 3 ? 'active' : '']"
           >
@@ -55,7 +54,7 @@
                   v-model="profileDetails.newName"
                   type="text"
                   :placeholder="user.displayName"
-                >
+                />
               </div>
             </div>
           </div>
@@ -66,13 +65,13 @@
                 Upload a new picture:
                 <input
                   class="form-input form-inline"
-                  @change="handleFile($event)"
+                  @change="handleFile($event);"
                   style="width: 300px;"
                   accept="image/*"
                   type="file"
                   name=""
                   id=""
-                >
+                />
               </div>
             </div>
           </div>
@@ -99,12 +98,14 @@
           <div class="tile">
             <div class="tile-content text-left">
               <div class="tile-title text-bold">Email</div>
-              <div class="tile-subtitle"><input
+              <div class="tile-subtitle">
+                <input
                   class="form-input"
                   :value="user.email"
                   type="text"
                   placeholder="New Email"
-                ></div>
+                />
+              </div>
             </div>
           </div>
           <div class="tile">
@@ -112,26 +113,24 @@
               <div class="tile-title text-bold">Password</div>
               <div class="tile-subtitle">
                 <div class="form-group">
-                  <label
-                    class="form-label"
-                    for="currentPassword"
-                  >Confirm Current Password</label>
+                  <label class="form-label" for="currentPassword"
+                    >Confirm Current Password</label
+                  >
                   <input
                     class="form-input"
                     type="password"
                     id="currentPassword"
                     placeholder="Old Password"
+                  />
+                  <label class="form-label" for="newPassword"
+                    >Enter New Password</label
                   >
-                  <label
-                    class="form-label"
-                    for="newPassword"
-                  >Enter New Password</label>
                   <input
                     class="form-input"
                     type="password"
                     id="newPassword"
                     placeholder="New Password"
-                  >
+                  />
                 </div>
               </div>
             </div>
@@ -141,14 +140,12 @@
               <div class="tile-title text-bold">Delete Account</div>
               <div class="tile-subtitle">
                 <div class="form-group">
-                  <label
-                    for="deleteBtn"
-                    class="form-label text-warning"
-                  >This cannot be undone!</label>
-                  <button
-                    id="deleteBtn"
-                    class="btn btn-error"
-                  >Delete Account</button>
+                  <label for="deleteBtn" class="form-label text-warning"
+                    >This cannot be undone!</label
+                  >
+                  <button id="deleteBtn" class="btn btn-error">
+                    Delete Account
+                  </button>
                 </div>
               </div>
             </div>
@@ -166,15 +163,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                v-for="(group, index) in groupList"
-                :key=index
-              >
-                <td>{{group.className}}</td>
-                <td>{{group.membersLength}}</td>
+              <tr v-for="(group, index) in groupList" :key="index">
+                <td>{{ group.className }}</td>
+                <td>{{ group.membersLength }}</td>
                 <td>
                   <button
-                    @click="leaveGroup(group.groupID)"
+                    @click="leaveGroup(group.groupID);"
                     class="btn btn-error btn-block"
                   >
                     <i class="icon icon-cross"></i>
@@ -240,7 +234,7 @@ export default {
   watch: {
     activeTab(newVal, oldVal) {
       if (newVal === 3) {
-        console.log("reloading groups");
+        // console.log("reloading groups");
         this.loadGroups();
       }
     }

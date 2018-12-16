@@ -7,12 +7,10 @@ Branding:
 
 Database Design:
   ☐ Decide if I should store each user's study groups in their profile as well as in the actual study group itself
-  ☐ Figure out how to delete a code after 24 hours.
-General:
+☐ General:
   ☐ Not sure why the favicon is not showing???? @low
   ☐ Make sure the build bundle size is not too large. @low
   ☐ Go through an error check all inputs where necessary
-  ☐ Create a universal notifaction popup, not like the homepage error notifcation but a bubble type.
 
   ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
     Not exactly sure how to do this.
@@ -22,17 +20,19 @@ General:
 
 Components Needed:
   ☐ Notification popup
+    Currently using vue-notifications but would be willing to switch to something better.
   ☐ Modal that can be used for all other modals.
   ☐ Custom designed switch component
 
 Firebase Functions File:
-  ☐ Generate Invite Code
+  ☐ Remove expired invite codes
+  ☐ Downscale images?
+  ☐ `something I forgot`
 
 Vuex Store:
   ☐ Only save the uid to local storage
 
 Homepage:
-  ☐ Add homepage option to list and remove active invite codes.
   ☐ Add more detail to Study Group cards in dropdown
 
 Members Page:
@@ -43,9 +43,10 @@ Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
   ☐ Automatically update to the file picker's picture so user can preview what it will look like
 
-Routing:
-  Bugs:
-    ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
+Study Group Settings:
+  ☐ Add homepage option to list and remove active invite codes.
+  ☐ Allow option to remove members from group
+  ☐ Show a study group settings page only to the group owner to allow them to change the details after creation
 
 Side Bar:
   ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
@@ -53,14 +54,9 @@ Side Bar:
 NavBar:
   ☐ Redesign navbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility
 
-Study Group:
-  ☐ Show a study group settings modal only to the group owner to allow them to change the details after creation
-
 Create Study Group:
   ☐ Prevent user from clicking create and getting to copy code if they don't do all steps
   ☐ Add transitions to make it look nice
-    - Element is too opinionated, and it is a pain in the ass trying to override most of the defaults
-    - It is also very large, > 1mb
 
 Flashcards:
   ☐ Implement navigation animations
@@ -73,6 +69,9 @@ Animations / Transitions:
     ☐ Animation when user navigates between cards
 
 Archive:
+  ✘ Figure out how to delete a code after 24 hours. @cancelled(18-12-16 17:08) @project(Database Design)
+  ✘ Create a universal notifaction popup, not like the homepage error notifcation but a bubble type. @cancelled(18-12-16 17:04)
+  ✔ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list @done(18-12-16 17:07) @project(Routing.Bugs)
   ✘ Add validation on the inputs @cancelled(18-12-16 15:23) @project(Create Study Group)
   ✔ Revert back to Spectre.css @done(18-12-16 15:23) @project(Create Study Group)
   ✘ Change steps so that the one before the end is the finish @cancelled(18-12-16 15:23) @project(Create Study Group)

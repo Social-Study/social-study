@@ -2,7 +2,7 @@
   <div class="off-canvas off-canvas-sidebar-show">
     <!-- Sidebar Toggle Button; Only shows when screen is too small -->
     <a
-      @click="sidebarActive = true"
+      @click="sidebarActive = true;"
       class="off-canvas-toggle btn btn-primary btn-action"
     >
       <i class="icon icon-menu"></i>
@@ -12,53 +12,66 @@
       v-if="activeGroup"
       id="sidebar-id"
       class="off-canvas-sidebar"
-      :class="{ active : sidebarActive }"
+      :class="{ active: sidebarActive }"
     >
       <ul class="menu sidebar">
-        <li
-          class="menu-item"
-          style="padding-top: 10px;"
-        >
+        <li class="menu-item" style="padding-top: 10px;">
           <div class="tile tile-centered">
             <div class="tile-content">
-              <h5>{{activeGroup.className}}</h5>
-              <p style="margin: 0;">{{activeGroup.instructorName}}</p>
+              <h5>{{ activeGroup.className }}</h5>
+              <p style="margin: 0;">{{ activeGroup.instructorName }}</p>
             </div>
           </div>
         </li>
         <li class="divider"></li>
-        <li class="menu-item">
-        </li>
+        <li class="menu-item"></li>
         <!-- Change the active highlight depending on the current page name -->
         <li class="menu-item text-left">
           <router-link
             :class="$route.name === 'home' ? 'active' : ''"
-            :to="{ name: 'home'}"
-          ><i class="fas fa-home"></i> Home</router-link>
+            :to="{ name: 'home' }"
+            ><i class="fas fa-home"></i> Home</router-link
+          >
         </li>
         <li class="menu-item text-left">
           <router-link
-            :class="$route.name === 'flashcards' ? 'active' : '' || $route.name === 'study' ? 'active' : ''"
-            :to="{ name: 'flashcards'}"
-          ><i class="fas fa-sticky-note"></i> Flashcards</router-link>
+            :class="
+              $route.name === 'flashcards'
+                ? 'active'
+                : '' || $route.name === 'study'
+                ? 'active'
+                : ''
+            "
+            :to="{ name: 'flashcards' }"
+            ><i class="fas fa-sticky-note"></i> Flashcards</router-link
+          >
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'quiz' ? 'active' : ''"><i class="fas fa-pencil-alt"></i> Quiz</a>
+          <a :class="$route.name === 'quiz' ? 'active' : ''"
+            ><i class="fas fa-pencil-alt"></i> Quiz</a
+          >
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'agenda' ? 'active' : ''"><i class="fas fa-calendar-alt"></i> Agenda</a>
+          <a :class="$route.name === 'agenda' ? 'active' : ''"
+            ><i class="fas fa-calendar-alt"></i> Agenda</a
+          >
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'notes' ? 'active' : ''"><i class="fas fa-file"></i> Notes</a>
+          <a :class="$route.name === 'notes' ? 'active' : ''"
+            ><i class="fas fa-file"></i> Notes</a
+          >
         </li>
         <li class="menu-item text-left">
           <div class="menu-badge">
-            <label class="member-num label label-primary">{{activeGroup.members.length}}</label>
+            <label class="member-num label label-primary">{{
+              activeGroup.members.length
+            }}</label>
           </div>
           <router-link
             :class="$route.name === 'members' ? 'active' : ''"
-            :to="{ name: 'members'}"
-          ><i class="fas fa-user-circle"></i> Members</router-link>
+            :to="{ name: 'members' }"
+            ><i class="fas fa-user-circle"></i> Members</router-link
+          >
         </li>
         <li
           v-if="activeGroup.owner === $store.getters.uid"
@@ -66,38 +79,34 @@
         >
           <a><i class="fas fa-cog"></i> Group Settings</a>
           <!-- TODO: Implement Group Settings Page -->
-          <!-- <a :class="$route.name === 'notes' ? 'active' : ''"><i class="fas fa-file"></i> Notes</a> -->
+          <!--
+            <a :class="$route.name === 'notes' ? 'active' : ''"><i class="fas fa-file"></i> Notes</a>
+          -->
         </li>
       </ul>
     </div>
 
-    <!-- Overlay that shows when screen is too small. Clicking hides the sidebar -->
-    <a
-      @click="sidebarActive = false"
-      class="off-canvas-overlay"
-    ></a>
+    <!--
+      Overlay that shows when screen is too small. Clicking hides the sidebar
+    -->
+    <a @click="sidebarActive = false;" class="off-canvas-overlay"></a>
 
     <div class="off-canvas-content">
       <!-- Slot where all other page content will be inserted -->
       <slot v-if="isMember && !isLoading"></slot>
       <!-- If they are not a member, show the generic error message -->
-      <div
-        v-else-if="!isMember && !isLoading"
-        style="margin-top: 10%;"
-      >
+      <div v-else-if="!isMember && !isLoading" style="margin-top: 10%;">
         <img
           style="width: 10em;"
           class="undraw-svg"
           src="../assets/undraw_warning.svg"
           alt="Error Loading Group"
-        >
+        />
         <h1>Error loading group data...</h1>
         <h2>Please make sure you are a member of the group.</h2>
         <h2>Please make sure the group exists.</h2>
       </div>
-      <div v-else>
-        <div class="loading loading-lg"></div>
-      </div>
+      <div v-else><div class="loading loading-lg"></div></div>
     </div>
   </div>
 </template>
@@ -122,7 +131,7 @@ export default {
   },
   methods: {
     loadGroupData(groupID) {
-      console.log("Sidebar: Loading Group Data function...");
+      // console.log("Sidebar: Loading Group Data function...");
 
       // Make sure the user is part of the group
       checkAccess(this.$store.getters.uid, this.$route.params.groupID)
@@ -143,16 +152,16 @@ export default {
           this.isLoading = false;
         })
         .catch(() => {
-          console.log("You are not a member!");
+          // console.log("You are not a member!");
           this.isLoading = false;
         });
     }
   },
   watch: {
     "$route.params.groupID"(id) {
-      console.log(
-        "Sidebar: Active Group Changed - Getting new data from firestore"
-      );
+      // console.log(
+      //   "Sidebar: Active Group Changed - Getting new data from firestore"
+      // );
       this.loadGroupData(id);
     }
   }
