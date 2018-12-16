@@ -234,6 +234,16 @@ export default {
       });
 
     this.loadGroups();
+
+    // db.collection("study-groups").where();
+  },
+  watch: {
+    activeTab(newVal, oldVal) {
+      if (newVal === 3) {
+        console.log("reloading groups");
+        this.loadGroups();
+      }
+    }
   },
   methods: {
     loadGroups() {
@@ -317,18 +327,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .close-btn {
-//   padding: 2px;
-//   height: 40px;
-//   width: 40px;
-//   &:hover {
-//     background-color: grey;
-//   }
-//   i.icon.icon-cross {
-//     cursor: pointer;
-//   }
-// }
-
 .modal-container {
   border-radius: 10px;
 }

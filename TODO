@@ -24,7 +24,7 @@ General:
 
 Components Needed:
   ☐ Notification popup
-  ☐ Small info modal?
+  ☐ Modal that can be used for all other modals.
 
 Firebase Functions File:
   ☐ Generate Invite Code
