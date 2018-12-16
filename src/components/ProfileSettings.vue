@@ -157,7 +157,7 @@
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th>Study Group</th>
+                <th>Group Name</th>
                 <th>Members</th>
                 <th class="text-center">Leave Group</th>
               </tr>

@@ -295,6 +295,7 @@ export default {
     return {
       active: 0,
       className: "",
+      courseCode: "",
       instructorName: "",
       location: "",
       hasWebsite: false,
@@ -358,6 +359,7 @@ export default {
       db.collection("study-groups")
         .add({
           className: this.className,
+          courseCode: this.courseCode,
           instructorName: this.instructorName,
           meetingDays: this.meetingDays,
           meetingTime: this.meetingTime,
@@ -394,22 +396,9 @@ button.s-circle {
   margin: 15px;
 }
 
-// .pageTitle {
-//   position: fixed;
-//   width: 100%;
-//   margin-top: 50px;
-//   font-family: $logo-font;
-//   text-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
-// }
-
 // Main container, centers all content on the page
 .createContent {
-  // min-height: 600px
-  margin-top: 15%;
-  // background-image: $green-gradient;
-  // background-color: #97d9e1;
-  // TODO: Figure out good background color
-  // background-color: grey;
+  height: 88vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
