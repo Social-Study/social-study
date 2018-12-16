@@ -34,23 +34,22 @@
           <router-link
             :class="$route.name === 'home' ? 'active' : ''"
             :to="{ name: 'home'}"
-          >Home</router-link>
+          ><i class="fas fa-home"></i> Home</router-link>
         </li>
         <li class="menu-item text-left">
           <router-link
             :class="$route.name === 'flashcards' ? 'active' : '' || $route.name === 'study' ? 'active' : ''"
             :to="{ name: 'flashcards'}"
-          >Flashcards</router-link>
-          <!-- <a :class="$route.name === 'flashcards' ? 'active' : ''">Flashcards</a> -->
+          ><i class="fas fa-sticky-note"></i> Flashcards</router-link>
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'quiz' ? 'active' : ''">Quiz</a>
+          <a :class="$route.name === 'quiz' ? 'active' : ''"><i class="fas fa-pencil-alt"></i> Quiz</a>
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'agenda' ? 'active' : ''">Agenda</a>
+          <a :class="$route.name === 'agenda' ? 'active' : ''"><i class="fas fa-calendar-alt"></i> Agenda</a>
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'notes' ? 'active' : ''">Notes</a>
+          <a :class="$route.name === 'notes' ? 'active' : ''"><i class="fas fa-file"></i> Notes</a>
         </li>
         <li class="menu-item text-left">
           <div class="menu-badge">
@@ -59,7 +58,15 @@
           <router-link
             :class="$route.name === 'members' ? 'active' : ''"
             :to="{ name: 'members'}"
-          >Members</router-link>
+          ><i class="fas fa-user-circle"></i> Members</router-link>
+        </li>
+        <li
+          v-if="activeGroup.owner === $store.getters.uid"
+          class="menu-item text-left"
+        >
+          <a><i class="fas fa-cog"></i> Group Settings</a>
+          <!-- TODO: Implement Group Settings Page -->
+          <!-- <a :class="$route.name === 'notes' ? 'active' : ''"><i class="fas fa-file"></i> Notes</a> -->
         </li>
       </ul>
     </div>
