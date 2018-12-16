@@ -48,12 +48,15 @@ Profile Settings:
 
 Routing:
   Bugs:
-    ☐ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in
+    ✔ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in @done(18-12-15 16:33)
     ☐ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list
-    ☐ User list should auto update when a new user joins the group
+    ✔ User list should auto update when a new user joins the group @done(18-12-15 16:33)
 
 Side Bar:
   ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
+
+NavBar:
+  ☐ Redesign navbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility
 
 Study Group:
   ☐ Show a study group settings modal only to the group owner to allow them to change the details after creation
