@@ -3,6 +3,7 @@
     <h1 class="pageTitle">Create a New Study Group</h1>
     <div class="createContent">
 
+      <!-- Contains Center Content; Buttons and Content -->
       <div class="navContainer">
         <button
           @click="back"
@@ -12,98 +13,142 @@
           <i class="icon icon-arrow-left"></i>
         </button>
 
+        <!-- Class Name Form -->
         <div
           v-if="active===0"
           class="infoContainer"
         >
           <h2>What is the name of the class?</h2>
-          <el-input
+          <input
             @keydown.enter.native="next"
-            placeholder="Class Name"
+            class="form-input"
+            type="text"
             v-model="className"
-            clearable
+            placeholder="Class Name"
           >
-          </el-input>
         </div>
+
+        <!-- Instructor Name Form -->
         <div
           class="infoContainer"
           v-else-if="active===1"
         >
           <h2>What is the course intructor's name?</h2>
-          <el-input
+          <input
             @keydown.enter.native="next"
-            placeholder="Instructor Name"
+            class="form-input"
+            type="text"
             v-model="instructorName"
-            clearable
+            placeholder="Instructor Name"
           >
-          </el-input>
         </div>
+
+        <!-- Class Meeting Time Form -->
         <div
           class="infoContainer"
           v-else-if="active===2"
         >
           <h2>When does your class meet?</h2>
-          <el-checkbox-group v-model="meetingDays">
-            <el-checkbox-button
-              v-for="(day, index) in days"
-              :label="day"
-              :key="index"
-            >{{day}}</el-checkbox-button>
-          </el-checkbox-group>
+
+          <div class="btn-group btn-group-block">
+            <button
+              @click="toggle('monday')"
+              :class="meetingDays.monday ? 'active':''"
+              class="btn"
+            >Monday</button>
+            <button
+              @click="toggle('tuesday')"
+              :class="meetingDays.tuesday ? 'active':''"
+              class="btn"
+            >Tuesday</button>
+            <button
+              @click="toggle('wednesday')"
+              :class="meetingDays.wednesday ? 'active':''"
+              class="btn"
+            >Wednesday</button>
+            <button
+              @click="toggle('thursday')"
+              :class="meetingDays.thursday ? 'active':''"
+              class="btn"
+            >Thursday</button>
+            <button
+              @click="toggle('friday')"
+              :class="meetingDays.friday ? 'active':''"
+              class="btn"
+            >Friday</button>
+          </div>
+
           <br>
-          <el-time-picker
-            style="margin-top: 20px;"
-            format="hh:mm:A"
-            is-range
-            arrow-control
-            v-model="meetingTime"
-            range-separator="-"
-            start-placeholder="Start time"
-            end-placeholder="End time"
-          >
-          </el-time-picker>
+          <div class="time-group">
+
+            <input
+              type="time"
+              class="time-picker form-input"
+              v-model="meetingTime[0]"
+            >
+            <input
+              type="time"
+              class="time-picker form-input"
+              v-model="meetingTime[1]"
+            >
+          </div>
         </div>
 
+        <!-- Class Meeting Location Form -->
         <div
           class="infoContainer"
           v-else-if="active===3"
         >
           <h2>Where does the class meet?</h2>
-          <el-input
+
+          <input
             @keydown.enter.native="next"
-            placeholder="Location"
+            class="form-input"
+            type="text"
             v-model="location"
-            clearable
+            placeholder="Class Location"
           >
-          </el-input>
         </div>
 
+        <!-- Instructor Website Form -->
         <div
           class="infoContainer"
           v-else-if="active===4"
         >
           <h2>Does your instructor have a website?</h2>
-          <el-switch
-            v-model="hasWebsite"
-            active-text="Yes"
-            inactive-text="No"
-            active-color="#13ce66"
-          >
-          </el-switch>
-          <br>
-          <transition-group name="el-zoom-in-top">
 
-            <el-input
-              key="input"
-              style="margin-top: 12px;"
+          <div class="form-group switch">
+            <label class="form-switch">
+              <input
+                type="checkbox"
+                v-model="hasWebsite"
+              >
+              <i class="form-icon"></i>
+            </label>
+          </div>
+          <br>
+          <transition-group
+            name="transition"
+            enter-active-class="animated fadeInDown"
+            leave-active-class="animated fadeOutUp"
+          >
+
+            <div
               v-show="hasWebsite"
-              @keydown.enter.native="next"
-              placeholder="Website URL"
-              v-model="websiteURL"
-              clearable
+              key="input"
+              class="input-group"
             >
-              <template slot="prepend">https://</template>
-            </el-input>
+              <span class="input-group-addon">https://</span>
+              <input
+                @keydown.enter.native="next"
+                style="margin: 0;"
+                class="form-input"
+                type="text"
+                v-model="websiteURL"
+                placeholder="Website URL"
+              >
+            </div>
+
             <br key="break">
             <br key="break2">
             <a
@@ -115,46 +160,61 @@
           </transition-group>
         </div>
 
+        <!-- Extra Group Info Form -->
         <div
           class="infoContainer"
           v-else-if="active===5"
         >
           <h2>Would you like to enter any additional information?</h2>
-          <el-switch
-            v-model="hasExtraInfo"
-            active-text="Yes"
-            inactive-text="No"
-            active-color="#13ce66"
-          >
-          </el-switch>
+          <div class="form-group switch">
+            <label class="form-switch">
+              <input
+                type="checkbox"
+                v-model="hasExtraInfo"
+              >
+              <i class="form-icon"></i>
+            </label>
+          </div>
           <br>
-          <transition name="el-zoom-in-top">
-            <el-input
-              style="margin-top: 12px;"
-              v-show="hasExtraInfo"
-              @keydown.ctrl.enter.native="next"
-              type="textarea"
-              :rows="4"
-              resize="none"
-              placeholder="Additional Class Info"
-              v-model="extraInfo"
+          <div
+            v-show="hasExtraInfo"
+            key="input"
+            class="input-group"
+          >
+            <transition
+              name="transition"
+              enter-active-class="animated fadeInDown"
+              leave-active-class="animated fadeOutUp"
             >
-            </el-input>
-          </transition>
+              <textarea
+                v-show="hasExtraInfo"
+                @keydown.enter.native="next"
+                style="resize: none"
+                class="form-input"
+                type="text-area"
+                v-model="extraInfo"
+                cols="53"
+                rows="3"
+                placeholder="Additional Class Info"
+              ></textarea>
+            </transition>
+          </div>
         </div>
 
+        <!-- Create Group with previous data confirmation -->
         <div
           class="infoContainer"
           v-else-if="active===6"
         >
-          <el-button
+          <button
             @click="createStudyGroup"
             class="createBtn"
           >
             Create Study Group
-          </el-button>
+          </button>
         </div>
-        <!-- Show invite code to user -->
+
+        <!-- Invite Code / New Group Links -->
         <div
           class="infoContainer"
           v-else-if="active===7"
@@ -170,24 +230,28 @@
               class="form-input"
               placeholder="Invite Code"
               v-model="inviteCode"
+              style="margin: 0;"
             >
             <button
               @click="copyCode"
               class="btn btn-primary input-group-btn"
             >Copy Code</button>
           </div>
-          <router-link
-            class="btn"
-            :to="{name: 'dashboard'}"
-          >Dashboard</router-link>
-          <!-- this.$router.push({ path: `/${docRef.id}/home` }); -->
-          <router-link
-            style="margin: 0px 10px;"
-            class="btn btn-success"
-            :to="{ name: 'home', params: { groupID:newGroupID }}"
-          >Go to Group</router-link>
+          <div id="btnContainer">
+
+            <router-link
+              class="btn"
+              :to="{name: 'dashboard'}"
+            >Dashboard</router-link>
+            <router-link
+              style="margin: 0px 10px;"
+              class="btn btn-success"
+              :to="{ name: 'home', params: { groupID:newGroupID }}"
+            >Go to Group</router-link>
+          </div>
         </div>
 
+        <!-- Next Button -->
         <button
           @click="next"
           class="btn btn-action btn-success btn-lg s-circle"
@@ -197,46 +261,83 @@
         </button>
       </div>
 
-      <el-steps
-        :active="active"
-        finish-status="success"
-        simple
-      >
-        <el-step
-          @click.native="active = 0"
-          title="Step 1"
-        ></el-step>
-        <el-step
-          @click.native="active = 1"
-          title="Step 2"
-        ></el-step>
-        <el-step
-          @click.native="active = 2"
-          title="Step 3"
-        ></el-step>
-        <el-step
-          @click.native="active = 3"
-          title="Step 4"
-        ></el-step>
-        <el-step
-          @click.native="active = 4"
-          title="Step 5"
-        ></el-step>
-        <el-step
-          @click.native="active = 5"
-          title="Step 6"
-        ></el-step>
-        <el-step
-          @click.native="active = 6"
-          title="Step 7"
-        ></el-step>
-        <el-step
-          @click.native="active = 7"
-          title="Finalize"
-        ></el-step>
-      </el-steps>
-
+      <!-- Bottom Of Page Steps Indicator -->
+      <ul class="step">
+        <li
+          :class="active === 0 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Group Name"
+          >Step 1</a>
+        </li>
+        <li
+          :class="active === 1 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Instructor's Name"
+          >Step 2</a>
+        </li>
+        <li
+          :class="active === 2 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Meeting Times"
+          >Step 3</a>
+        </li>
+        <li
+          :class="active === 3 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Meeting Location"
+          >Step 4</a>
+        </li>
+        <li
+          :class="active === 4 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Instructor Website"
+          >Step 5</a>
+        </li>
+        <li
+          :class="active === 5 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Additional Information"
+          >Step 6</a>
+        </li>
+        <li
+          :class="active === 6 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Confirm Creation"
+          >Step 7</a>
+        </li>
+        <li
+          :class="active === 7 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Success"
+          >Done</a>
+        </li>
+      </ul>
     </div>
+
   </div>
 </template>
 
@@ -246,6 +347,7 @@ import generateCode from "../scripts/generateCode";
 
 export default {
   name: "CreateGroup",
+  // TODO: Convert the containers to be flexbox...
   data() {
     return {
       active: 0,
@@ -256,14 +358,22 @@ export default {
       websiteURL: "",
       hasExtraInfo: false,
       extraInfo: "",
-      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      meetingDays: [],
+      meetingDays: {
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false
+      },
       meetingTime: [new Date(), new Date()],
       inviteCode: "",
       newGroupID: ""
     };
   },
   methods: {
+    toggle(key) {
+      this.meetingDays[key] = !this.meetingDays[key];
+    },
     next() {
       this.active++;
     },
@@ -278,6 +388,7 @@ export default {
       document.execCommand("copy");
     },
     createStudyGroup() {
+      // FIXME: Parse only true days from the meetingDays object, and save them into array
       // Generate random invite code and save it
       this.inviteCode = generateCode();
       // Create new study group in the firestore
@@ -350,64 +461,77 @@ button.s-circle {
 }
 
 .infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   padding: 20px;
-  min-height: 225px;
+  min-height: 400px;
   max-width: 800px;
   min-width: 800px;
   background-color: rgb(255, 255, 255);
-  border-radius: 10px;
+  border-radius: 4px;
   // border-radius: 16px;
   box-shadow: 5px 12px 20px rgba(36, 37, 38, 0.13);
 }
 
 .createBtn {
-  margin-top: 55px;
+  cursor: pointer;
   background-image: $nav-gradient;
   width: 300px;
   padding: 20px;
   font-family: $logo-font;
   font-size: 30px;
   color: white;
-  border-radius: 10px;
+  border-radius: 16px;
+  border: 0;
 
   &:hover {
-    color: whitesmoke;
-    // box-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
+    color: lightgrey;
+    box-shadow: $shadow-heavy;
   }
 }
 
-.el-input {
+.time-group {
+  display: block;
+}
+
+.time-picker {
+  width: 140px;
+}
+
+input {
   margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
   width: 60%;
 }
 
-.el-textarea {
-  width: 80%;
-}
-
-.el-step {
-  cursor: pointer;
+textarea {
+  width: 60%;
 }
 
 .arrow-buttons {
   margin: 20px;
 }
 
-// .el-switch {
-//   padding: 50px;
-// }
-
-.buttonContainer {
-  display: block;
+.blocked {
+  cursor: not-allowed !important;
 }
-.el-steps {
-  // background-color: rgba(0, 0, 0, 0);
-  box-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
+
+.switch {
+  margin: 0 auto 20px auto;
+  width: 50px;
+}
+
+.step {
+  box-shadow: $shadow;
   position: fixed;
   bottom: 0;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 5px 10px;
   margin: 30px auto;
   width: 80%;
+  border-radius: 10px;
 }
 </style>

@@ -23,6 +23,7 @@ General:
 Components Needed:
   ☐ Notification popup
   ☐ Modal that can be used for all other modals.
+  ☐ Custom designed switch component
 
 Firebase Functions File:
   ☐ Generate Invite Code
@@ -57,19 +58,24 @@ Study Group:
 
 Create Study Group:
   ☐ Prevent user from clicking create and getting to copy code if they don't do all steps
-  ☐ Add validation on the inputs
   ☐ Add transitions to make it look nice
-  ☐ Revert back to Spectre.css
     - Element is too opinionated, and it is a pain in the ass trying to override most of the defaults
     - It is also very large, > 1mb
-  ☐ Change steps so that the one before the end is the finish
 
 Flashcards:
   ☐ Implement navigation animations
   ☐ Implement firebase functionality
   ☐ find a way to better indicate which side of the flashcard is currently displaying
 
+Animations / Transitions:
+  Create Page:
+    ☐ Animation when steps indicator changes
+    ☐ Animation when user navigates between cards
+
 Archive:
+  ✘ Add validation on the inputs @cancelled(18-12-16 15:23) @project(Create Study Group)
+  ✔ Revert back to Spectre.css @done(18-12-16 15:23) @project(Create Study Group)
+  ✘ Change steps so that the one before the end is the finish @cancelled(18-12-16 15:23) @project(Create Study Group)
   ✔ May have to mess with the structure of the database. I need to update the database a user is joining. Changed the rules to allow any authenticated user to modify the study group but there has to be a better way to do it. @done(18-12-16 11:36) @project(Database Design)
   ✔ Figure out how to block user's from viewing groups they don't belong to @done(18-12-16 11:35) @project(Database Design)
   ✔ Add sidebar icons @done(18-12-16 12:19) @project(General)
