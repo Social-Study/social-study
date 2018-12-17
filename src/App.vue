@@ -57,4 +57,9 @@ body {
   text-align: center;
   color: #2c3e50;
 }
+
+// Applies to all modal-overlays
+a.modal-overlay {
+  background-image: $dark-gradient !important;
+}
 </style>

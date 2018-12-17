@@ -15,7 +15,10 @@
       :class="{ active: sidebarActive }"
     >
       <ul class="menu sidebar">
-        <li class="menu-item" style="padding-top: 10px;">
+        <li
+          class="menu-item"
+          style="padding-top: 10px;"
+        >
           <div class="tile tile-centered">
             <div class="tile-content">
               <h5>{{ activeGroup.className }}</h5>
@@ -30,8 +33,7 @@
           <router-link
             :class="$route.name === 'home' ? 'active' : ''"
             :to="{ name: 'home' }"
-            ><i class="fas fa-home"></i> Home</router-link
-          >
+          ><i class="fas fa-home"></i> Home</router-link>
         </li>
         <li class="menu-item text-left">
           <router-link
@@ -43,35 +45,27 @@
                 : ''
             "
             :to="{ name: 'flashcards' }"
-            ><i class="fas fa-sticky-note"></i> Flashcards</router-link
-          >
+          ><i class="fas fa-sticky-note"></i> Flashcards</router-link>
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'quiz' ? 'active' : ''"
-            ><i class="fas fa-pencil-alt"></i> Quiz</a
-          >
+          <a :class="$route.name === 'quiz' ? 'active' : ''"><i class="fas fa-pencil-alt"></i> Quiz</a>
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'agenda' ? 'active' : ''"
-            ><i class="fas fa-calendar-alt"></i> Agenda</a
-          >
+          <a :class="$route.name === 'agenda' ? 'active' : ''"><i class="fas fa-calendar-alt"></i> Agenda</a>
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'notes' ? 'active' : ''"
-            ><i class="fas fa-file"></i> Notes</a
-          >
+          <a :class="$route.name === 'notes' ? 'active' : ''"><i class="fas fa-file"></i> Notes</a>
         </li>
         <li class="menu-item text-left">
           <div class="menu-badge">
             <label class="member-num label label-primary">{{
               activeGroup.members.length
-            }}</label>
+              }}</label>
           </div>
           <router-link
             :class="$route.name === 'members' ? 'active' : ''"
             :to="{ name: 'members' }"
-            ><i class="fas fa-user-circle"></i> Members</router-link
-          >
+          ><i class="fas fa-user-circle"></i> Members</router-link>
         </li>
         <li
           v-if="activeGroup.owner === $store.getters.uid"
@@ -89,13 +83,19 @@
     <!--
       Overlay that shows when screen is too small. Clicking hides the sidebar
     -->
-    <a @click="sidebarActive = false;" class="off-canvas-overlay"></a>
+    <a
+      @click="sidebarActive = false;"
+      class="off-canvas-overlay"
+    ></a>
 
     <div class="off-canvas-content">
       <!-- Slot where all other page content will be inserted -->
       <slot v-if="isMember && !isLoading"></slot>
       <!-- If they are not a member, show the generic error message -->
-      <div v-else-if="!isMember && !isLoading" style="margin-top: 10%;">
+      <div
+        v-else-if="!isMember && !isLoading"
+        style="margin-top: 10%;"
+      >
         <img
           style="width: 10em;"
           class="undraw-svg"
@@ -106,7 +106,9 @@
         <h2>Please make sure you are a member of the group.</h2>
         <h2>Please make sure the group exists.</h2>
       </div>
-      <div v-else><div class="loading loading-lg"></div></div>
+      <div v-else>
+        <div class="loading loading-lg"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -171,6 +173,8 @@ export default {
 // @HACK: Have to set !important on certain styling to override spectre defaults
 // Must be global styling not scoped to take affect
 <style lang="scss" scoped>
+@import "../styleVariables.scss";
+
 .sidebar {
   box-shadow: none;
   background: #3c3c3c;
@@ -186,7 +190,7 @@ export default {
 }
 
 .sidebar > li > a.active {
-  background-image: linear-gradient(90deg, #ffa404 0%, #ff0479 100%) !important;
+  background-image: $orange-gradient !important;
   color: white !important;
 }
 div.off-canvas-sidebar {

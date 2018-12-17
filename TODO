@@ -5,7 +5,6 @@ Branding:
   ☐ Find better flashcard sidebar icon
 
 Database Design:
-  ☐ Decide if I should store each user's study groups in their profile as well as in the actual study group itself
 ☐ General:
   ☐ Not sure why the favicon is not showing???? @low
   ☐ Make sure the build bundle size is not too large. @low
@@ -14,7 +13,7 @@ Database Design:
   ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
     Not exactly sure how to do this.
   ☐ find new animation library
-  ☐ add dark blur effect to modals
+    - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
 
 Components Needed:
@@ -32,7 +31,8 @@ Vuex Store:
   ☐ Only save the uid to local storage
 
 Homepage:
-  ☐ Add more detail to Study Group cards in dropdown
+  ✔ Add more detail to Study Group cards in dropdown @done(18-12-16 21:51)
+  ☐ Figure out what the card backgrounds should look like
 
 Members Page:
   ☐ Add members list page sort filters
@@ -51,6 +51,7 @@ Side Bar:
   ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
 
 NavBar:
+  ☐ Upgrade navbar dropdown to look more like the figma design. Each class should provide some details @today
   ☐ Redesign navbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility
 
 Create Study Group:
@@ -69,6 +70,8 @@ Animations / Transitions:
     ☐ Animation when user navigates between cards
 
 Archive:
+  ✔ Decide if I should store each user's study groups in their profile as well as in the actual study group itself @done(18-12-16 20:15) @project(Database Design)
+  ✔ add dark blur effect to modals @done(18-12-16 20:12)
   ✘ Figure out how to delete a code after 24 hours. @cancelled(18-12-16 17:08) @project(Database Design)
   ✘ Create a universal notifaction popup, not like the homepage error notifcation but a bubble type. @cancelled(18-12-16 17:04)
   ✔ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list @done(18-12-16 17:07) @project(Routing.Bugs)

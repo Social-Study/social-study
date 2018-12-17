@@ -18,32 +18,48 @@
           Study Groups<i class="icon icon-caret"></i>
         </a>
         <!-- Your Study Group List Dropdown Items -->
-        <ul class="menu">
+        <ul class="menu group-menu">
+          <!-- <li>
+            <router-link :to="{name:'create'}">Create New Group</router-link>
+          </li>
+          <li
+            style="color: white;"
+            class="divider"
+          ></li> -->
           <div
             v-for="(group, index) in studyGroups"
             :key="index"
           >
             <li>
-              <!-- <a @click="switchGroup(group.id)">{{group.className}}</a> -->
-              <router-link :to="{ name: 'home', params: { groupID: group.id }}">{{group.className}}</router-link>
-
+              <div
+                class="group-card"
+                :class="index+1 === studyGroups.length ? '' : 'mb-2'"
+              >
+                <router-link :to="{ name: 'home', params: { groupID: group.id } }">
+                  <p class="card-text text-ellipsis text-bold text-large text-left">
+                    {{ group.className }}
+                  </p>
+                  <p class="card-text text-ellipsis text-italic text-left">
+                    {{ group.instructorName }}
+                  </p>
+                  <p class="card-text text-ellipsis text-center">
+                    {{ getAbrev(group.meetingDays) }} | {{ getTime(group.meetingTime[0])}}-{{ getTime(group.meetingTime[1]) }}
+                  </p>
+                </router-link>
+              </div>
             </li>
-            <li
-              v-if="studyGroups.length > 1"
-              class="divider"
-            ></li>
           </div>
-
         </ul>
       </div>
 
       <!-- Create New Study Group Button -->
       <button
-        @click="$router.push('/dashboard/create')"
+        @click="$router.push('/dashboard/create');"
         style="margin: 0 10px;"
         class="btn btn-link btn-action btn-create"
-      ><i class="icon icon-plus"></i></button>
-
+      >
+        <i class="icon icon-plus"></i>
+      </button>
     </section>
 
     <profile-settings
@@ -51,21 +67,22 @@
       profile-settings
       :user="this.user"
       :photoURL="this.firestoreUser.photoURL"
-      @closeSettings="isSettingsActive = false"
+      @closeSettings="isSettingsActive = false;"
       v-show="isSettingsActive"
     />
 
     <!-- Right Side Menu and Avatar -->
     <section class="navbar-section">
       <div
-        @mouseover="menuActive = true"
-        @mouseout="menuActive = false"
+        @mouseover="menuActive = true;"
+        @mouseout="menuActive = false;"
         class="menu-container"
       >
         <Avatar
           style="width: 40px; height: 40px;"
           v-if="firestoreUser"
-          :user="{ displayName: this.firestoreUser.displayName,
+          :user="{
+            displayName: this.firestoreUser.displayName,
                    photoURL: this.firestoreUser.photoURL
                  }"
         />
@@ -83,20 +100,21 @@
             <p
               v-if="user"
               class="h5 text-center text-ellipsis"
-            >{{ user.displayName }}</p>
+            >
+              {{ user.displayName }}
+            </p>
           </li>
           <li class="divider"></li>
           <!-- Settings Button -->
           <li class="menu-item text-left">
             <a
-              @click="isSettingsActive = true"
+              @click="isSettingsActive = true;"
               class="text-center c-pointer"
             >
               <i
                 class="fas fa-cog"
                 style="margin-right: 10px;"
-              ></i>
-              Settings
+              ></i> Settings
             </a>
           </li>
           <!-- Log Out Button -->
@@ -115,7 +133,6 @@
         </ul>
       </div>
     </section>
-
   </header>
 </template>
 
@@ -165,6 +182,22 @@ export default {
     });
   },
   methods: {
+    getTime(time) {
+      let hour = parseInt(time.split(":")[0]);
+      let minutes = time.split(":")[1];
+      return ((hour + 11) % 12) + 1 + ":" + minutes;
+    },
+    getAbrev(days) {
+      let string = "";
+      days.forEach(day => {
+        if (day === "Thursday") {
+          string += day.slice(0, 2) + " ";
+        } else {
+          string += day.charAt(0).toUpperCase() + " ";
+        }
+      });
+      return string;
+    },
     logOut: function() {
       firebase.auth().signOut();
       this.$router.push("/");
@@ -179,8 +212,26 @@ export default {
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
 
+.group-card {
+  width: 100%;
+  max-width: 250px;
+  padding: 5px;
+  border-radius: 10px;
+  background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 100%);
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.card-text {
+  user-select: none;
+  margin: 0;
+  color: white;
+}
+
 .nav-button {
-  width: 180px;
+  width: 250px;
 }
 
 .navbar {
@@ -203,6 +254,12 @@ a.navbar-brand {
   li {
     margin-top: 0;
   }
+}
+
+.group-menu {
+  background-image: $dark-gradient;
+  max-width: 250px;
+  min-width: 250px;
 }
 
 .menu-container {
