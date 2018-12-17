@@ -91,6 +91,7 @@
     <div class="off-canvas-content">
       <!-- Slot where all other page content will be inserted -->
       <slot v-if="isMember && !isLoading"></slot>
+
       <!-- If they are not a member, show the generic error message -->
       <div
         v-else-if="!isMember && !isLoading"

@@ -12,6 +12,7 @@
 <script>
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
+
 import firebase from "./firebaseConfig";
 export default {
   name: "App",
