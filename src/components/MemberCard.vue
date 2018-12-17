@@ -2,7 +2,7 @@
   <!-- Add Member Card -->
   <div
     v-if="add"
-    class="profile-card"
+    class="profile-card c-hand"
   >
     <div class="gradient-border add">
       <div class="add-button">
@@ -23,7 +23,10 @@
         :user="{photoURL: photoURL, displayName: displayName}"
       />
     </div>
-    <h2 style="width: 100%;">{{ displayName }}</h2>
+    <h2
+      style="width: 100%;"
+      class="text-ellipsis"
+    >{{ displayName }}</h2>
   </div>
 </template>
 

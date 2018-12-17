@@ -1,163 +1,263 @@
 <template>
   <div>
-    <h1 class="pageTitle">Create a New Study Group</h1>
-    <div class="createContent">
+    <!-- <h1 class="pageTitle">Create a New Study Group</h1> -->
+    <page-title> Create a new Study Group </page-title>
 
+    <!-- Notification -->
+    <notifications
+      group="create"
+      position="right bottom"
+    />
+    <div class="createContent">
+      <!-- Contains Center Content; Buttons and Content -->
       <div class="navContainer">
         <button
           @click="back"
           class="btn btn-action btn-success btn-lg s-circle"
-          :class="active===0 ?'disabled c-not-allowed' : '' "
+          :class="active === 0 ? 'disabled c-not-allowed' : ''"
         >
           <i class="icon icon-arrow-left"></i>
         </button>
 
+        <!-- Class Name Form -->
         <div
-          v-if="active===0"
+          v-if="active === 0"
           class="infoContainer"
         >
           <h2>What is the name of the class?</h2>
-          <el-input
-            @keydown.enter.native="next"
-            placeholder="Class Name"
+          <input
+            @keydown.enter="next"
+            class="form-input"
+            type="text"
             v-model="className"
-            clearable
-          >
-          </el-input>
+            placeholder="Class Name"
+            name="className"
+            v-validate="'required'"
+          />
+          <span style="color: red;">{{ errors.first("className") }}</span>
+          <h3 style="margin-top: 20px;">Course Code? (Optional)</h3>
+          <input
+            @keydown.enter="next"
+            class="form-input"
+            type="text"
+            v-model="courseCode"
+            style="width: 200px;"
+            placeholder="Course Code "
+          />
         </div>
+
+        <!-- Instructor Name Form -->
         <div
           class="infoContainer"
-          v-else-if="active===1"
+          v-else-if="active === 1"
         >
           <h2>What is the course intructor's name?</h2>
-          <el-input
-            @keydown.enter.native="next"
-            placeholder="Instructor Name"
+          <input
+            @keydown.enter="next"
+            class="form-input"
+            type="text"
             v-model="instructorName"
-            clearable
-          >
-          </el-input>
+            placeholder="Instructor Name"
+            name="instructorName"
+            v-validate="'required'"
+          />
+          <span style="color: red;">{{ errors.first("instructorName") }}</span>
         </div>
+
+        <!-- Class Meeting Time Form -->
         <div
           class="infoContainer"
-          v-else-if="active===2"
+          v-else-if="active === 2"
         >
           <h2>When does your class meet?</h2>
-          <el-checkbox-group v-model="meetingDays">
-            <el-checkbox-button
-              v-for="(day, index) in days"
-              :label="day"
-              :key="index"
-            >{{day}}</el-checkbox-button>
-          </el-checkbox-group>
-          <br>
-          <el-time-picker
-            style="margin-top: 20px;"
-            format="hh:mm:A"
-            is-range
-            arrow-control
-            v-model="meetingTime"
-            range-separator="-"
-            start-placeholder="Start time"
-            end-placeholder="End time"
-          >
-          </el-time-picker>
+
+          <div class="btn-group btn-group-block">
+            <button
+              @click="toggle('monday');"
+              :class="meetingDays.monday ? 'active' : ''"
+              class="btn"
+            >
+              Monday
+            </button>
+            <button
+              @click="toggle('tuesday');"
+              :class="meetingDays.tuesday ? 'active' : ''"
+              class="btn"
+            >
+              Tuesday
+            </button>
+            <button
+              @click="toggle('wednesday');"
+              :class="meetingDays.wednesday ? 'active' : ''"
+              class="btn"
+            >
+              Wednesday
+            </button>
+            <button
+              @click="toggle('thursday');"
+              :class="meetingDays.thursday ? 'active' : ''"
+              class="btn"
+            >
+              Thursday
+            </button>
+            <button
+              @click="toggle('friday');"
+              :class="meetingDays.friday ? 'active' : ''"
+              class="btn"
+            >
+              Friday
+            </button>
+          </div>
+
+          <br />
+          <div class="time-group">
+            <input
+              type="time"
+              class="time-picker form-input"
+              v-model="meetingTime[0]"
+            />
+            <input
+              type="time"
+              class="time-picker form-input"
+              v-model="meetingTime[1]"
+            />
+          </div>
         </div>
 
+        <!-- Class Meeting Location Form -->
         <div
           class="infoContainer"
-          v-else-if="active===3"
+          v-else-if="active === 3"
         >
           <h2>Where does the class meet?</h2>
-          <el-input
-            @keydown.enter.native="next"
-            placeholder="Location"
+
+          <input
+            @keydown.enter="next"
+            class="form-input"
+            type="text"
             v-model="location"
-            clearable
-          >
-          </el-input>
+            name="location"
+            v-validate="'required'"
+            placeholder="Class Location"
+          />
+          <span style="color: red;">{{ errors.first("location") }}</span>
         </div>
 
+        <!-- Instructor Website Form -->
         <div
           class="infoContainer"
-          v-else-if="active===4"
+          v-else-if="active === 4"
         >
           <h2>Does your instructor have a website?</h2>
-          <el-switch
-            v-model="hasWebsite"
-            active-text="Yes"
-            inactive-text="No"
-            active-color="#13ce66"
-          >
-          </el-switch>
-          <br>
-          <transition-group name="el-zoom-in-top">
 
-            <el-input
-              key="input"
-              style="margin-top: 12px;"
+          <div class="form-group switch">
+            <label class="form-switch">
+              <input
+                type="checkbox"
+                v-model="hasWebsite"
+              />
+              <i class="form-icon"></i>
+            </label>
+          </div>
+          <br />
+          <transition-group
+            name="transition"
+            enter-active-class="animated fadeInDown"
+            leave-active-class="animated fadeOutUp"
+          >
+            <div
               v-show="hasWebsite"
-              @keydown.enter.native="next"
-              placeholder="Website URL"
-              v-model="websiteURL"
-              clearable
+              key="input"
+              class="input-group"
             >
-              <template slot="prepend">https://</template>
-            </el-input>
-            <br key="break">
-            <br key="break2">
+              <span class="input-group-addon">https://</span>
+              <input
+                @keydown.enter="next"
+                style="margin: 0;"
+                class="form-input"
+                type="text"
+                v-model="websiteURL"
+                name="url"
+                v-validate="'url'"
+                placeholder="Website URL"
+              />
+            </div>
+            <span
+              key="error-string"
+              style="color: red;"
+            >{{
+              errors.first("url")
+              }}</span>
+
+            <br key="break" />
+            <br key="break2" />
             <a
               v-show="hasWebsite && websiteURL !== ''"
               target="_blank"
               key="link"
               :href="formattedURL"
-            >{{formattedURL}}</a>
+            >{{ formattedURL }}</a>
           </transition-group>
         </div>
 
+        <!-- Extra Group Info Form -->
         <div
           class="infoContainer"
-          v-else-if="active===5"
+          v-else-if="active === 5"
         >
           <h2>Would you like to enter any additional information?</h2>
-          <el-switch
-            v-model="hasExtraInfo"
-            active-text="Yes"
-            inactive-text="No"
-            active-color="#13ce66"
+          <div class="form-group switch">
+            <label class="form-switch">
+              <input
+                type="checkbox"
+                v-model="hasExtraInfo"
+              />
+              <i class="form-icon"></i>
+            </label>
+          </div>
+          <br />
+          <div
+            v-show="hasExtraInfo"
+            key="input"
+            class="input-group"
           >
-          </el-switch>
-          <br>
-          <transition name="el-zoom-in-top">
-            <el-input
-              style="margin-top: 12px;"
-              v-show="hasExtraInfo"
-              @keydown.ctrl.enter.native="next"
-              type="textarea"
-              :rows="4"
-              resize="none"
-              placeholder="Additional Class Info"
-              v-model="extraInfo"
+            <transition
+              name="transition"
+              enter-active-class="animated fadeInDown"
+              leave-active-class="animated fadeOutUp"
             >
-            </el-input>
-          </transition>
+              <textarea
+                v-show="hasExtraInfo"
+                @keydown.enter="next"
+                style="resize: none"
+                class="form-input"
+                type="text-area"
+                v-model="extraInfo"
+                cols="53"
+                rows="3"
+                placeholder="Additional Class Info"
+              ></textarea>
+            </transition>
+          </div>
         </div>
 
+        <!-- Create Group with previous data confirmation -->
         <div
           class="infoContainer"
-          v-else-if="active===6"
+          v-else-if="active === 6"
         >
-          <el-button
+          <button
             @click="createStudyGroup"
             class="createBtn"
           >
             Create Study Group
-          </el-button>
+          </button>
         </div>
-        <!-- Show invite code to user -->
+
+        <!-- Invite Code / New Group Links -->
         <div
           class="infoContainer"
-          v-else-if="active===7"
+          v-else-if="active === 7"
         >
           <h3>Your new Study Group has been created!</h3>
           <div
@@ -170,122 +270,207 @@
               class="form-input"
               placeholder="Invite Code"
               v-model="inviteCode"
-            >
+              style="margin: 0;"
+            />
             <button
               @click="copyCode"
               class="btn btn-primary input-group-btn"
-            >Copy Code</button>
+            >
+              Copy Code
+            </button>
           </div>
-          <router-link
-            class="btn"
-            :to="{name: 'dashboard'}"
-          >Dashboard</router-link>
-          <!-- this.$router.push({ path: `/${docRef.id}/home` }); -->
-          <router-link
-            style="margin: 0px 10px;"
-            class="btn btn-success"
-            :to="{ name: 'home', params: { groupID:newGroupID }}"
-          >Go to Group</router-link>
+          <div id="btnContainer">
+            <router-link
+              class="btn"
+              :to="{ name: 'dashboard' }"
+            >Dashboard</router-link>
+            <router-link
+              style="margin: 0px 10px;"
+              class="btn btn-success"
+              :to="{ name: 'home', params: { groupID: newGroupID } }"
+            >Go to Group</router-link>
+          </div>
         </div>
 
+        <!-- Next Button -->
         <button
           @click="next"
           class="btn btn-action btn-success btn-lg s-circle"
-          :class="active===7 ?'disabled' : '' "
+          :class="active === 7 ? 'disabled' : ''"
         >
           <i class="icon icon-arrow-right"></i>
         </button>
       </div>
 
-      <el-steps
-        :active="active"
-        finish-status="success"
-        simple
-      >
-        <el-step
-          @click.native="active = 0"
-          title="Step 1"
-        ></el-step>
-        <el-step
-          @click.native="active = 1"
-          title="Step 2"
-        ></el-step>
-        <el-step
-          @click.native="active = 2"
-          title="Step 3"
-        ></el-step>
-        <el-step
-          @click.native="active = 3"
-          title="Step 4"
-        ></el-step>
-        <el-step
-          @click.native="active = 4"
-          title="Step 5"
-        ></el-step>
-        <el-step
-          @click.native="active = 5"
-          title="Step 6"
-        ></el-step>
-        <el-step
-          @click.native="active = 6"
-          title="Step 7"
-        ></el-step>
-        <el-step
-          @click.native="active = 7"
-          title="Finalize"
-        ></el-step>
-      </el-steps>
-
+      <!-- Bottom Of Page Steps Indicator -->
+      <ul class="step">
+        <li
+          :class="active === 0 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Group Name"
+          >Step 1</a>
+        </li>
+        <li
+          :class="active === 1 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Instructor's Name"
+          >Step 2</a>
+        </li>
+        <li
+          :class="active === 2 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Meeting Times"
+          >Step 3</a>
+        </li>
+        <li
+          :class="active === 3 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Meeting Location"
+          >Step 4</a>
+        </li>
+        <li
+          :class="active === 4 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Instructor Website"
+          >Step 5</a>
+        </li>
+        <li
+          :class="active === 5 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Additional Information"
+          >Step 6</a>
+        </li>
+        <li
+          :class="active === 6 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Confirm Creation"
+          >Step 7</a>
+        </li>
+        <li
+          :class="active === 7 ? 'active' : ''"
+          class="step-item"
+        >
+          <a
+            class="tooltip"
+            data-tooltip="Success"
+          >Done</a>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-import firebase, { db, FirebaseConsts } from "../firebaseConfig";
+import firebase, { db } from "../firebaseConfig";
 import generateCode from "../scripts/generateCode";
+import PageTitle from "../components/PageTitle";
 
 export default {
   name: "CreateGroup",
+  components: {
+    PageTitle
+  },
   data() {
     return {
       active: 0,
       className: "",
+      courseCode: "",
       instructorName: "",
       location: "",
       hasWebsite: false,
       websiteURL: "",
       hasExtraInfo: false,
       extraInfo: "",
-      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      meetingDays: [],
+      meetingDays: {
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false
+      },
       meetingTime: [new Date(), new Date()],
       inviteCode: "",
       newGroupID: ""
     };
   },
   methods: {
+    toggle(key) {
+      this.meetingDays[key] = !this.meetingDays[key];
+    },
     next() {
-      this.active++;
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          this.active++;
+        } else {
+          this.$notify({
+            group: "create",
+            type: "error",
+            title: "Validation Errors!",
+            text: "All errors must be corrected."
+          });
+        }
+      });
     },
     back() {
-      if (this.active !== 0) {
-        this.active--;
-      }
+      this.$validator.validateAll().then(result => {
+        if (result && this.active !== 0) {
+          this.active--;
+        } else {
+          this.$notify({
+            group: "create",
+            type: "error",
+            title: "Validation Errors!",
+            text: "All errors must be corrected."
+          });
+        }
+      });
     },
     copyCode() {
       // Allows user to copy the invite code on button click
       this.$refs.inviteDisplay.select();
       document.execCommand("copy");
     },
+    getDaysArray() {
+      let arr = [];
+      Object.keys(this.meetingDays).forEach(key => {
+        if (this.meetingDays[key] === true) {
+          arr.push(key.charAt(0).toUpperCase() + key.slice(1));
+        }
+      });
+      return arr;
+    },
     createStudyGroup() {
+      // FIXME: Parse only true days from the meetingDays object, and save them into array
       // Generate random invite code and save it
       this.inviteCode = generateCode();
       // Create new study group in the firestore
       db.collection("study-groups")
         .add({
           className: this.className,
+          courseCode: this.courseCode,
           instructorName: this.instructorName,
-          meetingDays: this.meetingDays,
+          meetingDays: this.getDaysArray(),
           meetingTime: this.meetingTime,
           location: this.location,
           // Check to see if it is just the prepend or the actual url
@@ -320,21 +505,9 @@ button.s-circle {
   margin: 15px;
 }
 
-.pageTitle {
-  position: fixed;
-  width: 100%;
-  margin-top: 50px;
-  font-family: $logo-font;
-  text-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
-}
-
 // Main container, centers all content on the page
 .createContent {
-  min-height: 94vh;
-  // background-image: $green-gradient;
-  // background-color: #97d9e1;
-  // TODO: Figure out good background color
-  // background-color: grey;
+  height: 88vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -350,64 +523,76 @@ button.s-circle {
 }
 
 .infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   padding: 20px;
-  min-height: 225px;
-  max-width: 800px;
-  min-width: 800px;
+  min-height: 400px;
+  width: 800px;
   background-color: rgb(255, 255, 255);
-  border-radius: 10px;
+  border-radius: 4px;
   // border-radius: 16px;
   box-shadow: 5px 12px 20px rgba(36, 37, 38, 0.13);
 }
 
 .createBtn {
-  margin-top: 55px;
+  cursor: pointer;
   background-image: $nav-gradient;
   width: 300px;
   padding: 20px;
   font-family: $logo-font;
   font-size: 30px;
   color: white;
-  border-radius: 10px;
+  border-radius: 16px;
+  border: 0;
 
   &:hover {
-    color: whitesmoke;
-    // box-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
+    color: lightgrey;
+    box-shadow: $shadow-heavy;
   }
 }
 
-.el-input {
+.time-group {
+  display: block;
+}
+
+.time-picker {
+  width: 140px;
+}
+
+input {
   margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
   width: 60%;
 }
 
-.el-textarea {
-  width: 80%;
-}
-
-.el-step {
-  cursor: pointer;
+textarea {
+  width: 60%;
 }
 
 .arrow-buttons {
   margin: 20px;
 }
 
-// .el-switch {
-//   padding: 50px;
-// }
-
-.buttonContainer {
-  display: block;
+.blocked {
+  cursor: not-allowed !important;
 }
-.el-steps {
-  // background-color: rgba(0, 0, 0, 0);
-  box-shadow: rgba(36, 37, 38, 0.13) 5px 12px 20px;
+
+.switch {
+  margin: 0 auto 20px auto;
+  width: 50px;
+}
+
+.step {
+  box-shadow: $shadow;
   position: fixed;
   bottom: 0;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 5px 10px;
   margin: 30px auto;
   width: 80%;
+  border-radius: 10px;
 }
 </style>

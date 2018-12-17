@@ -1,7 +1,7 @@
 <template>
   <div class="modal modal-md active">
     <a
-      @click="$emit('closeSettings')"
+      @click="$emit('closeSettings');"
       href="#close"
       class="modal-overlay"
       aria-label="Close"
@@ -10,7 +10,7 @@
     <div class="modal-container">
       <div class="modal-header">
         <a
-          @click="$emit('closeSettings')"
+          @click="$emit('closeSettings');"
           href="#close"
           class="btn btn-clear float-right"
           aria-label="Close"
@@ -19,24 +19,23 @@
         <div class="modal-title h4">Settings</div>
       </div>
       <div class="modal-body">
-
         <ul class="tab">
           <li
-            @click="activeTab = 1"
+            @click="activeTab = 1;"
             class="tab-item"
             :class="[activeTab === 1 ? 'active' : '']"
           >
             <a>Profile</a>
           </li>
           <li
-            @click="activeTab = 2"
+            @click="activeTab = 2;"
             class="tab-item"
             :class="[activeTab === 2 ? 'active' : '']"
           >
             <a>Account</a>
           </li>
           <li
-            @click="activeTab = 3"
+            @click="activeTab = 3;"
             class="tab-item"
             :class="[activeTab === 3 ? 'active' : '']"
           >
@@ -55,7 +54,7 @@
                   v-model="profileDetails.newName"
                   type="text"
                   :placeholder="user.displayName"
-                >
+                />
               </div>
             </div>
           </div>
@@ -64,20 +63,15 @@
               <div class="tile-title text-bold">Profile Picture</div>
               <div class="tile-subtitle">
                 Upload a new picture:
-                <!-- <Avatar
-                  class="form-inline"
-                  style="margin: 10px;"
-                  :user="this.user"
-                /> -->
                 <input
                   class="form-input form-inline"
-                  @change="handleFile($event)"
+                  @change="handleFile($event);"
                   style="width: 300px;"
                   accept="image/*"
                   type="file"
                   name=""
                   id=""
-                >
+                />
               </div>
             </div>
           </div>
@@ -104,12 +98,14 @@
           <div class="tile">
             <div class="tile-content text-left">
               <div class="tile-title text-bold">Email</div>
-              <div class="tile-subtitle"><input
+              <div class="tile-subtitle">
+                <input
                   class="form-input"
                   :value="user.email"
                   type="text"
                   placeholder="New Email"
-                ></div>
+                />
+              </div>
             </div>
           </div>
           <div class="tile">
@@ -126,7 +122,7 @@
                     type="password"
                     id="currentPassword"
                     placeholder="Old Password"
-                  >
+                  />
                   <label
                     class="form-label"
                     for="newPassword"
@@ -136,7 +132,7 @@
                     type="password"
                     id="newPassword"
                     placeholder="New Password"
-                  >
+                  />
                 </div>
               </div>
             </div>
@@ -153,7 +149,9 @@
                   <button
                     id="deleteBtn"
                     class="btn btn-error"
-                  >Delete Account</button>
+                  >
+                    Delete Account
+                  </button>
                 </div>
               </div>
             </div>
@@ -165,23 +163,26 @@
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th>Study Group</th>
+                <th>Group Name</th>
                 <th>Members</th>
-                <th>Leave Group</th>
+                <th class="text-center">Leave Group</th>
               </tr>
             </thead>
             <tbody>
               <tr
                 v-for="(group, index) in groupList"
-                :key=index
+                :key="index"
               >
-                <td>{{group.className}}</td>
-                <td>{{group.membersLength}}</td>
-                <td><i
-                    @click="leaveGroup(group.groupID)"
-                    style="color: red"
-                    class="icon icon-cross"
-                  ></i></td>
+                <td>{{ group.className }}</td>
+                <td>{{ group.membersLength }}</td>
+                <td>
+                  <button
+                    @click="leaveGroup(group.groupID);"
+                    class="btn btn-error btn-block"
+                  >
+                    <i class="icon icon-cross"></i>
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -190,6 +191,7 @@
 
       <div class="modal-footer">
         <button
+          v-if="activeTab !== 3"
           @click="saveChanges"
           class="save-btn btn btn-primary"
         >
@@ -201,17 +203,13 @@
 </template>
 
 <script>
-import { getUserData, getUserGroups } from "../scripts/firebaseFunctions";
+import { getUserData, getUserGroups } from "../scripts/userFuncs";
 import { FirebaseConsts, Storage, db } from "@/firebaseConfig";
-import Avatar from "@/components/Avatar";
 
 let picRef = Storage.ref();
 
 export default {
   name: "ProfileSettings",
-  components: {
-    Avatar
-  },
   props: {
     user: Object,
     photoURL: String
@@ -235,17 +233,26 @@ export default {
         this.userBio = user.description;
       })
       .catch(error => {
-        console.log("ProfileSettings: Error retreiving user.");
+        console.log("ProfileSettings: " + error);
       });
 
     this.loadGroups();
+
+    // db.collection("study-groups").where();
+  },
+  watch: {
+    activeTab(newVal, oldVal) {
+      if (newVal === 3) {
+        // console.log("reloading groups");
+        this.loadGroups();
+      }
+    }
   },
   methods: {
     loadGroups() {
       getUserGroups(this.user.uid)
         .then(groupList => {
           this.groupList = groupList;
-          console.log(this.groupList);
         })
         .catch(error => {
           console.log(error);
@@ -323,14 +330,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-i.icon {
-  cursor: pointer;
-  padding: 5px;
-  &:hover {
-    background-color: grey;
-  }
-}
-
 .modal-container {
   border-radius: 10px;
 }

@@ -6,19 +6,30 @@
     <div v-if="!loading">
 
       <!-- Display card for each member of the Study Group -->
-      <div class="content-container">
-        <member-card
-          v-for="(member, index) in memberDetails"
-          :key="index"
-          :photoURL="member.photoURL"
-          :displayName="member.displayName"
-        ></member-card>
+      <transition-group
+        name="transition"
+        enter-active-class="animated pulse"
+        leave-active-class="animated fadeOut"
+        appear
+        class="content-container"
+      >
         <!-- Invite New Member Card -->
         <member-card
+          key="addButton"
           @click.native="inviteMember()"
           add
         > </member-card>
-      </div>
+
+        <!-- Show card for each group member -->
+        <member-card
+          v-for="member in memberDetails"
+          :key="member.uid"
+          :photoURL="member.photoURL"
+          :displayName="member.displayName"
+        >
+        </member-card>
+      </transition-group>
+
     </div>
     <div
       v-else
@@ -45,7 +56,8 @@
             class="btn btn-clear float-right"
             aria-label="Close"
           ></a>
-          <div class="modal-title h5">Study Group Invite Code</div>
+          <div class="modal-title h5">Activate New Invite Code</div>
+
         </div>
         <div class="modal-body">
           <div class="content">
@@ -69,20 +81,16 @@
 </template>
 
 <script>
-import SideBar from "../components/SideBar";
-import Avatar from "../components/Avatar";
 import PageTitle from "../components/PageTitle";
 import MemberCard from "../components/MemberCard";
 
 import { db, FirebaseConsts } from "../firebaseConfig";
-import { getGroupData } from "../scripts/firebaseFunctions";
+import { getGroupData } from "../scripts/groupFuncs";
 import generateCode from "../scripts/generateCode";
 
 export default {
   name: "MembersPage",
   components: {
-    Avatar,
-    SideBar,
     PageTitle,
     MemberCard
   },
@@ -157,9 +165,13 @@ export default {
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
 
+.modal-container {
+  border-radius: 10px;
+}
+
 // Flexbox container to hold all member cards
 .content-container {
-  margin: 40px;
+  margin: 40px 25px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

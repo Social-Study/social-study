@@ -36,6 +36,7 @@ export default {
 // Global Styles
 <style lang="scss">
 @import "./styleVariables.scss";
+@import "node_modules/animate.css/animate";
 @import "node_modules/spectre.css/src/spectre.scss";
 @import "node_modules/spectre.css/src/spectre-icons.scss";
 @import "node_modules/spectre.css/src/spectre-exp.scss";
@@ -55,5 +56,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+// Applies to all modal-overlays
+a.modal-overlay {
+  background-image: $dark-gradient !important;
 }
 </style>

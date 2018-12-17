@@ -89,8 +89,8 @@ let router = new Router({
 // Prevents navigation to certain pages if you are not logged in
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    firebase.auth().onAuthStateChanged(user => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
       if (!user) {
         next({
           path: "/landing"
@@ -98,10 +98,33 @@ router.beforeEach((to, from, next) => {
       } else {
         next();
       }
-    });
-  } else {
-    next();
-  }
+    } else {
+      if (user && to.name === "landing") {
+        next({
+          path: "/dashboard"
+        });
+      } else {
+        next();
+      }
+    }
+  });
 });
+// router.beforeEach((to, from, next) => {
+//   document.title = to.meta.title;
+//   console.log(to);
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     firebase.auth().onAuthStateChanged(user => {
+//       if (!user) {
+//         next({
+//           path: "/landing"
+//         });
+//       } else {
+//         next();
+//       }
+//     });
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

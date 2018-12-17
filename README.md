@@ -60,4 +60,6 @@ Vue.js
 Firebase / Vuefire
 Pose
 Vee - Validate
+Animate.css
+vue-pose
 Spectre.css
