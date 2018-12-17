@@ -382,7 +382,7 @@
 </template>
 
 <script>
-import firebase, { db, FirebaseConsts } from "../firebaseConfig";
+import firebase, { db } from "../firebaseConfig";
 import generateCode from "../scripts/generateCode";
 import PageTitle from "../components/PageTitle";
 
