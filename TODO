@@ -25,7 +25,8 @@ Components Needed:
 Firebase Functions File:
   ☐ Remove expired invite codes
   ☐ Downscale images?
-  ☐ `something I forgot`
+  ☐ Remove messages once size reaches > 1000 messages
+  ☐ Function to increment message counter of the document everytime a new document is created
 
 Known Bugs:
   ☐ When you click a group in the drop down, there are two bars that appear. Not sure what causes it.
@@ -61,6 +62,7 @@ Create Study Group:
   ☐ Prevent user from clicking create and getting to copy code if they don't do all steps
   ☐ Add transitions to make it look nice
   ☐ Figure out how to center the content without using a fixed page size (94vh)
+  ☐ Put a conditional on the meeting days and times. Ask "Does the have designated meeting days and times?"
 
 Flashcards:
   ☐ Implement navigation animations

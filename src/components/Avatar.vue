@@ -3,7 +3,7 @@
     v-if="this.user.photoURL === null"
     :style="{backgroundColor: color}"
     :data-initial="initials"
-    class="avatar"
+    class="avatar avatar-lg"
   >
     <!--  avatar-lg -->
   </figure>

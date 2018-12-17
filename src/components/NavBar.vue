@@ -73,6 +73,12 @@
 
     <!-- Right Side Menu and Avatar -->
     <section class="navbar-section">
+      <button
+        v-if="$route.params.groupID"
+        style="width: 34px; height: 34px;margin-right: 20px; border: none"
+        class="btn s-circle"
+        @click="$store.commit('toggleChatActive')"
+      ><i class="fas fa-comment-alt"></i></button>
       <div
         @mouseover="menuActive = true;"
         @mouseout="menuActive = false;"
@@ -157,6 +163,7 @@ export default {
     };
   },
   created() {
+    // TODO: Might get this as a prop from the App component. Would let the app have a single source of truth.
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.user = user;
@@ -183,9 +190,13 @@ export default {
   },
   methods: {
     getTime(time) {
-      let hour = parseInt(time.split(":")[0]);
-      let minutes = time.split(":")[1];
-      return ((hour + 11) % 12) + 1 + ":" + minutes;
+      try {
+        let hour = parseInt(time.split(":")[0]);
+        let minutes = time.split(":")[1];
+        return ((hour + 11) % 12) + 1 + ":" + minutes;
+      } catch (err) {
+        // console.log(err);
+      }
     },
     getAbrev(days) {
       let string = "";

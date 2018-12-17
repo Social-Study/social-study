@@ -7,47 +7,38 @@
       <div class="content">
         <h3 id="header">Study Group Chat</h3>
         <div class="divider"></div>
-        <div class="messages">
-          <div class="message">
-            <p class="message-sender">Kevin Meizanis</p>
-            <div class="message-inline">
-              <img
-                class="message-profile"
-                src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.ZzK9QmxgtHFysccpbohqYAHaHa%26pid%3D15.1&f=1"
-              >
-              <p class="message-content">Gang Gang. This is a really fucking long message. Hopefully it shows up properly btw</p>
-            </div>
-          </div>
-          <div class="message">
-            <p class="message-sender">Kevin Meizanis</p>
-            <div class="message-inline">
-              <img
-                class="message-profile"
-                src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.ZzK9QmxgtHFysccpbohqYAHaHa%26pid%3D15.1&f=1"
-              >
-              <p class="message-content">Gang Gang.</p>
-            </div>
-          </div>
-          <div class="message sent">
-            <!-- <p class="message-sender">Evan Buss</p> -->
-            <div class="message-inline">
-              <!-- <img
-                class="message-profile"
-                src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.ZzK9QmxgtHFysccpbohqYAHaHa%26pid%3D15.1&f=1"
-              > -->
-              <p class="message-content">Hello Big Kev</p>
-            </div>
-          </div>
+        <div
+          class="messages"
+          ref="messages"
+        >
+          <transition-group
+            enter-active-class="animated fadeInDown"
+            leave-active-class="animated fadeOutUp"
+          >
+            <message
+              v-for="message in groupMessages"
+              :key="message.date.toString()"
+              :sender="message.sender === $store.getters.uid ? true: false"
+              :details="message"
+            ></message>
+          </transition-group>
+
         </div>
         <div class="divider"></div>
         <textarea
+          @keydown.ctrl.enter="sendMessage"
           class="message-input"
-          name=""
-          id=""
+          placeholder="Group message"
+          v-model="userMessage"
           cols="30"
-          rows="4"
+          rows="2"
         ></textarea>
-        <button class="btn btn-primary">Send</button>
+        <!-- TODO: Disable button if field is blank -->
+        <button
+          @click="sendMessage()"
+          class="btn btn-primary"
+          :class="userMessage === '' ? 'disabled' : ''"
+        >Send</button>
       </div>
 
     </div>
@@ -56,12 +47,71 @@
 </template>
 
 <script>
+import Message from "@/components/Message";
+import firebase, { db } from "@/firebaseConfig";
+import { log } from "util";
+
 export default {
   name: "Chat",
+  components: {
+    Message
+  },
   props: {
     show: {
       type: Boolean,
       default: false
+    },
+    user: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      userMessage: "",
+      groupMessages: []
+    };
+  },
+  methods: {
+    scrollToBottom() {
+      this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+    },
+    sendMessage() {
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("messages")
+        .add({
+          date: new Date(),
+          displayName: this.user.displayName,
+          message: this.userMessage,
+          photoURL: this.user.photoURL,
+          sender: this.$store.getters.uid
+        })
+        .then(() => {
+          this.scrollToBottom();
+        });
+    },
+    loadGroupMessages() {
+      this.$bind(
+        "groupMessages",
+        db
+          .collection("study-groups")
+          .doc(this.$route.params.groupID)
+          .collection("messages")
+          .orderBy("date", "asc")
+      ).then(groupMessages => {
+        this.groupMessages === groupMessages;
+        this.scrollToBottom();
+      });
+    }
+  },
+  created() {
+    this.loadGroupMessages();
+  },
+  watch: {
+    // Reload the group's messages when the user switches groups
+    "$route.params.groupID"(id) {
+      this.loadGroupMessages();
     }
   }
 };
@@ -72,7 +122,7 @@ export default {
 #header {
   display: block;
   transition: 1s;
-  flex: 0;
+  // flex: 0;
 }
 
 .sidebar {
@@ -104,55 +154,8 @@ export default {
   overflow-y: auto;
 }
 
-// Show other user's messages on the left, next to their profile picture
-.message {
-  margin-bottom: 5px;
-
-  .message-sender {
-    text-align: left;
-    color: darkgrey;
-    margin: 0 45px;
-    font-size: 12px;
-  }
-
-  .message-inline {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-
-    .message-profile {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      align-self: flex-end;
-      display: inline-block;
-    }
-    .message-content {
-      text-align: left;
-      margin: 0 4px;
-      display: inline-block;
-      padding: 2px 6px;
-      border-radius: 16px;
-      color: black;
-      background-color: #f1f3f4;
-    }
-  }
-}
-
-// Show your sent messages on the right
-.message.sent {
-  width: 100%;
-  .message-inline {
-    flex-direction: row-reverse;
-    .message-content {
-      float: right;
-      background-color: #d2e3fc;
-    }
-  }
-}
-
 .message-input {
-  margin: 10px;
+  // margin: 10px;
   resize: none;
 }
 
