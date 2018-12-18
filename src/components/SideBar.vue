@@ -28,6 +28,7 @@
         </li>
         <li class="divider"></li>
         <li class="menu-item"></li>
+
         <!-- Change the active highlight depending on the current page name -->
         <li class="menu-item text-left">
           <router-link
@@ -38,12 +39,8 @@
         <li class="menu-item text-left">
           <router-link
             :class="
-              $route.name === 'flashcards'
-                ? 'active'
-                : '' || $route.name === 'study'
-                ? 'active'
-                : ''
-            "
+              $route.name === 'flashcards' ? 'active' : '' ||
+               $route.name === 'study' ? 'active' : ''"
             :to="{ name: 'flashcards' }"
           ><i class="fas fa-sticky-note"></i> Flashcards</router-link>
         </li>
@@ -54,7 +51,12 @@
           <a :class="$route.name === 'agenda' ? 'active' : ''"><i class="fas fa-calendar-alt"></i> Agenda</a>
         </li>
         <li class="menu-item text-left">
-          <a :class="$route.name === 'notes' ? 'active' : ''"><i class="fas fa-file"></i> Notes</a>
+          <router-link
+            :to="{name: 'notes'}"
+            :class="$route.name === 'notes' ? 'active' : ''"
+          >
+            <i class="fas fa-file"></i> Notes
+          </router-link>
         </li>
         <li class="menu-item text-left">
           <div class="menu-badge">
@@ -72,10 +74,6 @@
           class="menu-item text-left"
         >
           <a><i class="fas fa-cog"></i> Group Settings</a>
-          <!-- TODO: Implement Group Settings Page -->
-          <!--
-            <a :class="$route.name === 'notes' ? 'active' : ''"><i class="fas fa-file"></i> Notes</a>
-          -->
         </li>
       </ul>
     </div>

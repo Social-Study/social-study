@@ -1,11 +1,14 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Dashboard from "./views/Dashboard.vue";
+
 import Landing from "./views/Landing.vue";
+
 import GroupHomePage from "./views/GroupHomePage";
 import CreateGroup from "./views/CreateGroup";
-
 import MembersPage from "./views/MembersPage";
+import NotesCollection from "@/views/NotesCollection";
+import NotePage from "@/views/NotePage";
 import FlashcardCollection from "./views/FlashcardCollection";
 import FlashcardStudy from "./views/FlashcardStudy";
 
@@ -13,6 +16,7 @@ import firebase from "./firebaseConfig";
 
 Vue.use(Router);
 
+// TODO: Figure out how to get dynamic page titles.
 let router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
@@ -57,6 +61,24 @@ let router = new Router({
       }
     },
     {
+      path: "/:groupID/notes",
+      name: "notes",
+      component: NotesCollection,
+      meta: {
+        title: "Notes | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/:groupID/notes/:noteID",
+      name: "note",
+      component: NotePage,
+      meta: {
+        title: "Note | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
       path: "/:groupID/flashcards",
       name: "flashcards",
       component: FlashcardCollection,
@@ -65,6 +87,10 @@ let router = new Router({
         requiresAuth: true
       }
     },
+
+    // in the working product this path will have to be /:groupID/flashcards/deckID/study
+    //                                                                             /edit
+    //                                                                             /create
     {
       path: "/:groupID/flashcards/study",
       name: "study",
