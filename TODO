@@ -1,0 +1,125 @@
+Branding:
+  ☐ Design a logo / titlebar icon
+  ☐ Think of better slogan.
+  ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
+  ☐ Find better flashcard sidebar icon
+
+Database Design:
+☐ General:
+  ☐ Not sure why the favicon is not showing???? @low
+  ☐ Make sure the build bundle size is not too large. @low
+  ☐ Go through an error check all inputs where necessary
+
+  ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
+    Not exactly sure how to do this.
+  ☐ find new animation library
+    - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
+  ☐ Maybe allow users to upload pdfs and save notes to their own documents
+  ☐ Store displayname in firestore so that it updates
+
+Components Needed:
+  ☐ Notification popup
+    Currently using vue-notifications but would be willing to switch to something better.
+  ☐ Modal that can be used for all other modals.
+  ☐ Custom designed switch component
+
+Firebase Functions File:
+  ☐ Remove expired invite codes
+  ☐ Downscale images?
+  ☐ Remove messages once size reaches > 1000 messages
+  ☐ Function to increment message counter of the document everytime a new document is created
+
+
+Notifications:
+  ☐ Notification when group not found
+
+Known Bugs:
+  ☐ When you click a group in the drop down, there are two bars that appear. Not sure what causes it.
+  ☐ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present
+
+Vuex Store:
+  ☐ Only save the uid to local storage
+
+Homepage:
+  ✔ Add more detail to Study Group cards in dropdown @done(18-12-16 21:51)
+  ☐ Figure out what the card backgrounds should look like
+
+Members Page:
+  ☐ Add members list page sort filters
+    - Joined Date, Alphabetical, etc...
+
+Profile Settings:
+  ☐ When I implement the account deletion make sure to remove the photos as well as the user account
+  ☐ Automatically update to the file picker's picture so user can preview what it will look like
+
+Study Group Settings:
+  ☐ Add homepage option to list and remove active invite codes.
+  ☐ Allow option to remove members from group
+  ☐ Show a study group settings page only to the group owner to allow them to change the details after creation
+
+Side Bar:
+  ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
+
+NavBar:
+  ☐ Upgrade navbar dropdown to look more like the figma design. Each class should provide some details @today
+  ☐ Redesign navbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility
+
+Create Study Group:
+  ☐ Prevent user from clicking create and getting to copy code if they don't do all steps
+  ☐ Add transitions to make it look nice
+  ☐ Figure out how to center the content without using a fixed page size (94vh)
+  ☐ Put a conditional on the meeting days and times. Ask "Does the have designated meeting days and times?"
+
+Flashcards Collection:
+  ☐ Figure out proper way to get the last row to the left instead of centering it.
+
+Flashcards:
+  ☐ Implement navigation animations
+  ☐ Implement firebase functionality
+  ☐ find a way to better indicate which side of the flashcard is currently displaying
+
+Animations / Transitions:
+  Create Page:
+    ☐ Animation when steps indicator changes
+    ☐ Animation when user navigates between cards
+
+Archive:
+  ✔ Decide if I should store each user's study groups in their profile as well as in the actual study group itself @done(18-12-16 20:15) @project(Database Design)
+  ✔ add dark blur effect to modals @done(18-12-16 20:12)
+  ✘ Figure out how to delete a code after 24 hours. @cancelled(18-12-16 17:08) @project(Database Design)
+  ✘ Create a universal notifaction popup, not like the homepage error notifcation but a bubble type. @cancelled(18-12-16 17:04)
+  ✔ Setup firebase auth to not allow users to see the page that aren't in the study group's auth list @done(18-12-16 17:07) @project(Routing.Bugs)
+  ✘ Add validation on the inputs @cancelled(18-12-16 15:23) @project(Create Study Group)
+  ✔ Revert back to Spectre.css @done(18-12-16 15:23) @project(Create Study Group)
+  ✘ Change steps so that the one before the end is the finish @cancelled(18-12-16 15:23) @project(Create Study Group)
+  ✔ May have to mess with the structure of the database. I need to update the database a user is joining. Changed the rules to allow any authenticated user to modify the study group but there has to be a better way to do it. @done(18-12-16 11:36) @project(Database Design)
+  ✔ Figure out how to block user's from viewing groups they don't belong to @done(18-12-16 11:35) @project(Database Design)
+  ✔ Add sidebar icons @done(18-12-16 12:19) @project(General)
+  ✔ User refreshes page after being redirected and it takes them back to landing, it should prevent them from seeing the landing while logged in @done(18-12-15 16:33) @project(Routing.Bugs)
+  ✔ User list should auto update when a new user joins the group @done(18-12-15 16:33) @project(Routing.Bugs)
+  ✔ Font-Awesome Icon Package Icons are not aligned properly @done(18-12-13 20:39) @project(General)
+  ✔ Get rid of vueawesome and use cdn to reduce package size and wierd errors @done(18-12-13 20:39) @project(General)
+  ✔ The vuex store requires the vuex-persist plugin to save to the computers local storage. I think this is a bad thing and we should try to stop using it. The firebase state should be saved to the session so idk what's going on. @critical @done(18-12-13 20:40) @project(General)
+  ✔ Implement keyboard controls @done(18-12-12 19:33) @project(Flashcards)
+  ✔ Implement a Study Group feature @done(18-12-13 20:40) @project(Prototype Presentation)
+  ✔ Flashcards @done(18-12-12 19:32) @project(Prototype Presentation)
+  ✔ Add Study Groups tab so users can remove study groups from their account @done(18-12-12 16:54) @project(Profile Settings)
+  ✔ Fix avatar sizing on the navbar @done(18-12-12 16:54) @project(Routing.Bugs)
+    May have to change the avatar to not use a set size, but allow the user to enter custom sizing
+  ✔ Implement Study Group Invite Code Logic... @done(18-12-11 21:49) @project(Database Design)
+  ✔ Make sure to delete/overwrite old profile picture when someone changes theirs @done(18-12-11 16:16) @project(Profile Settings)
+  ✔ Add url test <a> tag below the website input box @done(18-12-11 16:17) @project(Create Study Group)
+  ✔ Add the ability to copy the study group invite code before redirecting to the new homepage @done(18-12-11 16:17) @project(Create Study Group)
+  ✔ Implement a Study Group feature @done(18-12-12 16:28) @project(Prototype Presentation)
+  ✔ Flashcards @done(18-12-12 16:28) @project(Prototype Presentation)
+  ✔ Figure out the sizing issues, I want body to be entire screen height but exclude the nav bar... @done(18-12-11 14:10) @project(General)
+  ✔ Extract sidebar to a component @done(18-12-11 14:58) @project(Group Homepage)
+  ✔ Make sure that there is a slot because all page content has to be inside it @done(18-12-11 14:58) @project(Group Homepage)
+  ✘ Convert Project to new Element UI Library @cancelled(18-12-09 12:55) @project(General)
+  ✔ Implement the dropdown menus and create study group buttons @done(18-12-09 13:05) @project(NavBar)
+  ✔ Does the user's photoURL need to be stored in the firestore for other users to view it? @done(18-12-08 23:38) @project(Database Design)
+  ✔ Not sure how I can get the profile picture to automatically update when they change it @done(18-12-08 23:39) @project(Profile Settings)
+  ✔ Make the navbar manage it's own state from firebase @done(18-12-08 22:56) @project(NavBar)
+  ✔ When you update your profile picture, you must refresh page to see it @done(18-12-08 22:56) @project(Dashboard)
+  ✔ Implement Study Groups @done(18-12-08 22:55) @project(Prototype Presentation)
+  ✔ Figure out how routing will work @done(18-12-08 22:55) @project(Prototype Presentation)

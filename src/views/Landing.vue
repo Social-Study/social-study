@@ -4,46 +4,110 @@
     <!-- Header Section -->
     <header class="navbar">
       <section class="navbar-section">
-        <a href="#" class="navbar-brand m-2" :style="centerTitle">Social Study</a>
+        <a
+          href="#"
+          class="navbar-brand m-2"
+          :style="centerTitle"
+        >Social Study</a>
       </section>
 
       <!-- Login Form -->
       <!-- <section class="navbar-section"> -->
-      <form class="hide-sm hide-xs navbar-section login-container form-group" @submit.prevent method="" data-vv-scope="login">
-        <input v-validate.disable="'required|email'" name="email" ref="email" v-model="email" placeholder="Email" type="text" id="" class="form-input form-inline mx-1" autofocus>
-        <input v-validate.disable="'required|min:6'" name="password" v-model="password" placeholder="Password" type="password" id="" class="form-input form-inline mx-1">
-        <button @click="logIn" class="btn btn-primary m-1">Log In</button>
+      <form
+        class="hide-sm hide-xs navbar-section login-container form-group"
+        @submit.prevent
+        method=""
+        data-vv-scope="login"
+      >
+        <input
+          v-validate.disable="'required|email'"
+          name="email"
+          ref="email"
+          v-model="email"
+          placeholder="Email"
+          type="text"
+          class="form-input form-inline mx-1"
+          autofocus
+        >
+        <input
+          v-validate.disable="'required|min:6'"
+          name="password"
+          v-model="password"
+          placeholder="Password"
+          type="password"
+          class="form-input form-inline mx-1"
+        >
+        <button
+          @click="logIn"
+          class="btn btn-primary m-1"
+        >Log In</button>
       </form>
       <!-- </section> -->
     </header>
 
     <!-- Sucess Message Display -->
-    <MessageBar v-show="message.show" type="success">
+    <MessageBar
+      v-show="message.show"
+      type="success"
+    >
       {{ this.message.message }}
     </MessageBar>
 
     <!-- Error Message Display -->
-    <MessageBar @closeMessage="error.show=false" v-show="error.show" type="error">
+    <MessageBar
+      @closeMessage="error.show=false"
+      v-show="error.show"
+      type="error"
+    >
       {{ this.error.message }}
-      <a v-show="error.passPrompt" href="#" style="cursor: pointer" @click="modalActive = true">Forgot Password?</a>
+      <a
+        v-show="error.passPrompt"
+        href="#"
+        style="cursor: pointer"
+        @click="modalActive = true"
+      >Forgot Password?</a>
     </MessageBar>
 
     <!-- Password Reset Modal -->
-    <div v-show="modalActive" class="modal modal-sm active" id="modal-id">
-      <a @click="modalActive = false" href="#" class="modal-overlay" aria-label="Close"></a>
+    <div
+      v-show="modalActive"
+      class="modal modal-sm active"
+      id="modal-id"
+    >
+      <a
+        @click="modalActive = false"
+        href="#"
+        class="modal-overlay"
+        aria-label="Close"
+      ></a>
       <div class="modal-container">
         <div class="modal-header">
-          <a href="#" @click="modalActive = false" class="btn btn-clear float-right" aria-label="Close"></a>
+          <a
+            href="#"
+            @click="modalActive = false"
+            class="btn btn-clear float-right"
+            aria-label="Close"
+          ></a>
           <div class="modal-title h5">Enter your email</div>
         </div>
         <div class="modal-body">
           <div class="content">
             <!-- TODO: Add vvalidate to this. May need to put inside form -->
-            <input @focus="$event.target.select()" value="email" v-model="resetEmail" type="text" class="form-input" autofocus>
+            <input
+              @focus="$event.target.select()"
+              value="email"
+              v-model="resetEmail"
+              type="text"
+              class="form-input"
+              autofocus
+            >
           </div>
         </div>
         <div class="modal-footer">
-          <button @click="sendResetEmail" class="btn btn-primary m-1">Reset</button>
+          <button
+            @click="sendResetEmail"
+            class="btn btn-primary m-1"
+          >Reset</button>
         </div>
       </div>
     </div>
@@ -54,48 +118,134 @@
         <!-- Left Block: Information -->
         <div class="column col-6 col-md-12">
           <div style="margin-left: 20px; margin-right: 20px;">
-            <h1 id="logo" class="hide-sm hide-xs">Social Study</h1>
+            <h1
+              id="logo"
+              class="hide-sm hide-xs"
+            >Social Study</h1>
             <p style="margin-top: 20px;">The <i>free</i> learning tool for all ages.</p>
 
             <div class="columns">
-              <div class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" data-tooltip="Create and study notes and flashcards">
-                <img class="img-responsive undraw-svg" src="../assets/undraw_studying.svg" alt="studying">
+              <div
+                class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+                data-tooltip="Create and study notes and flashcards"
+              >
+                <img
+                  class="img-responsive undraw-svg"
+                  src="../assets/undraw_studying.svg"
+                  alt="studying"
+                >
               </div>
-              <div class=" col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" data-tooltip="Take practice quizzes">
-                <img class="img-responsive  undraw-svg" src="../assets/undraw_exams.svg" alt="quizzes">
+              <div
+                class=" col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+                data-tooltip="Take practice quizzes"
+              >
+                <img
+                  class="img-responsive  undraw-svg"
+                  src="../assets/undraw_exams.svg"
+                  alt="quizzes"
+                >
               </div>
-              <div class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" data-tooltip="Take notes and keep them organized">
-                <img class="img-responsive  undraw-svg" src="../assets/undraw_taking_notes.svg" alt="note taking">
+              <div
+                class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+                data-tooltip="Take notes and keep them organized"
+              >
+                <img
+                  class="img-responsive  undraw-svg"
+                  src="../assets/undraw_taking_notes.svg"
+                  alt="note taking"
+                >
               </div>
-              <div class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" data-tooltip="Create and manage events and assignments">
-                <img class="img-responsive  undraw-svg" src="../assets/undraw_events.svg" alt="schedule management">
+              <div
+                class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+                data-tooltip="Create and manage events and assignments"
+              >
+                <img
+                  class="img-responsive  undraw-svg"
+                  src="../assets/undraw_events.svg"
+                  alt="schedule management"
+                >
               </div>
-              <div class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" data-tooltip="Communicate with classmates">
-                <img class="img-responsive  undraw-svg" src="../assets/undraw_group_chat.svg" alt="communication">
+              <div
+                class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+                data-tooltip="Communicate with classmates"
+              >
+                <img
+                  class="img-responsive  undraw-svg"
+                  src="../assets/undraw_group_chat.svg"
+                  alt="communication"
+                >
               </div>
-              <div class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom" style="top: 40px;" data-tooltip="Improve your academic success!">
-                <img class="img-responsive  undraw-svg" src="../assets/undraw_grad.svg" alt="communication">
+              <div
+                class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+                style="top: 40px;"
+                data-tooltip="Improve your academic success!"
+              >
+                <img
+                  class="img-responsive  undraw-svg"
+                  src="../assets/undraw_grad.svg"
+                  alt="communication"
+                >
               </div>
             </div>
           </div>
         </div>
 
         <!-- Right Block: Sign Up Form -->
-        <div class="column col-6 col-sm-12 col-md-12 hide-xs hide-sm" style="margin-bottom: 30px;">
+        <div
+          class="column col-6 col-sm-12 col-md-12 hide-xs hide-sm"
+          style="margin-bottom: 30px;"
+        >
 
           <div id="right-container form-group">
-            <form @submit.prevent data-vv-scope="signup">
+            <form
+              @submit.prevent
+              data-vv-scope="signup"
+            >
               <h1 style="margin-top: 40px;">Sign Up</h1>
               <span id="name-container">
-                <input v-validate.disable="'required|alpha'" v-model="firstName" class="form-input" type="text" name="firstname" placeholder="First Name">
-                <input v-validate.disable="'required|alpha'" v-model="lastName" class="form-input" type="text" name="lastname" placeholder="Last Name">
+                <input
+                  v-validate.disable="'required|alpha'"
+                  v-model.trim="firstName"
+                  class="form-input"
+                  type="text"
+                  name="firstname"
+                  placeholder="First Name"
+                >
+                <input
+                  v-validate.disable="'required|alpha'"
+                  v-model.trim="lastName"
+                  class="form-input"
+                  type="text"
+                  name="lastname"
+                  placeholder="Last Name"
+                >
               </span>
               <br>
-              <input v-validate.disable="'required|email'" v-model="newEmail" type="text" class="form-input" name="email" placeholder="Email Address"><br>
-              <input v-validate.disable="'required|min:6'" v-model="newPassword" class="form-input" type="password" name="password" placeholder="Password"><br>
-              <button @click="createAccount" class="btn btn-primary mx-1">Sign Up</button>
-              <button @click="googleSignIn" class="btn mx-1">
-                <v-icon name="brands/google" />
+              <input
+                v-validate.disable="'required|email'"
+                v-model="newEmail"
+                type="text"
+                class="form-input"
+                name="email"
+                placeholder="Email Address"
+              ><br>
+              <input
+                v-validate.disable="'required|min:6'"
+                v-model="newPassword"
+                class="form-input"
+                type="password"
+                name="password"
+                placeholder="Password"
+              ><br>
+              <button
+                @click="createAccount"
+                class="btn btn-primary mx-1"
+              >Sign Up</button>
+              <button
+                @click="googleSignIn"
+                class="btn mx-1"
+              >
+                <i class="fab fa-google"></i>
                 Sign in with Google
               </button>
             </form>
@@ -103,7 +253,10 @@
         </div>
       </div>
 
-      <div class="show-xs show-sm" style="margin-top: 80px;">
+      <div
+        class="show-xs show-sm"
+        style="margin-top: 80px;"
+      >
         <p>Unfortunately, <i>Social Study</i> is only available on desktop.</p>
         <p>To sign up, please visit the site on your desktop!</p>
       </div>
@@ -179,7 +332,8 @@ export default {
               firebase
                 .auth()
                 .signInWithEmailAndPassword(this.email, this.password)
-                .then(() => {
+                .then(user => {
+                  this.$store.commit("setUID", user.user.uid);
                   this.$router.replace("dashboard");
                 })
                 .catch(error => {
