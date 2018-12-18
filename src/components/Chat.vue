@@ -83,20 +83,22 @@ export default {
       this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
     },
     sendMessage() {
-      db.collection("study-groups")
-        .doc(this.$route.params.groupID)
-        .collection("messages")
-        .add({
-          date: new Date(),
-          displayName: this.user.displayName,
-          message: this.userMessage,
-          photoURL: this.user.photoURL,
-          sender: this.$store.getters.uid
-        })
-        .then(() => {
-          this.scrollToBottom();
-        });
-      this.userMessage = "";
+      if (this.userMessage !== "") {
+        db.collection("study-groups")
+          .doc(this.$route.params.groupID)
+          .collection("messages")
+          .add({
+            date: new Date(),
+            displayName: this.user.displayName,
+            message: this.userMessage,
+            photoURL: this.user.photoURL,
+            sender: this.$store.getters.uid
+          })
+          .then(() => {
+            this.scrollToBottom();
+          });
+        this.userMessage = "";
+      }
     },
     loadGroupMessages() {
       this.$bind(
