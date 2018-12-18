@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-title>
-      Study Group Members
+      Members
     </page-title>
     <div v-if="!loading">
 
@@ -21,6 +21,7 @@
         > </member-card>
 
         <!-- Show card for each group member -->
+
         <member-card
           v-for="member in memberDetails"
           :key="member.uid"
@@ -171,9 +172,10 @@ export default {
 
 // Flexbox container to hold all member cards
 .content-container {
-  margin: 40px 25px;
+  margin: 40px 40px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 </style>

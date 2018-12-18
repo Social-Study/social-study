@@ -35,11 +35,14 @@
                 class="group-card"
                 :class="index+1 === studyGroups.length ? '' : 'mb-2'"
               >
-                <router-link :to="{ name: 'home', params: { groupID: group.id } }">
-                  <p class="card-text text-ellipsis text-bold text-large text-left">
+                <router-link
+                  class="card-text"
+                  :to="{ name: 'home', params: { groupID: group.id } }"
+                >
+                  <p class="card-text text-ellipsis text-bold text-large">
                     {{ group.className }}
                   </p>
-                  <p class="card-text text-ellipsis text-italic text-left">
+                  <p class="card-text text-ellipsis text-italic">
                     {{ group.instructorName }}
                   </p>
                   <p class="card-text text-ellipsis text-center">
@@ -228,7 +231,14 @@ export default {
   max-width: 250px;
   padding: 5px;
   border-radius: 10px;
-  background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 100%);
+  background-color: white;
+
+  &:hover {
+    background-color: $main-gray;
+    p {
+      color: white;
+    }
+  }
 
   a {
     text-decoration: none;
@@ -238,7 +248,7 @@ export default {
 .card-text {
   user-select: none;
   margin: 0;
-  color: white;
+  color: $main-gray;
 }
 
 .nav-button {
@@ -257,6 +267,7 @@ a.navbar-brand {
   font-size: 1.7em;
   color: white;
   min-width: 200px;
+  margin-right: 25px;
 }
 
 .menu {
@@ -268,7 +279,8 @@ a.navbar-brand {
 }
 
 .group-menu {
-  background-image: $dark-gradient;
+  background-color: rgb(66, 64, 212);
+  box-shadow: none;
   max-width: 250px;
   min-width: 250px;
 }

@@ -25,17 +25,23 @@
 
         </div>
         <div class="divider"></div>
-        <textarea
-          @keydown.ctrl.enter="sendMessage"
+        <!-- <textarea
+          @keydown.enter="sendMessage"
           class="message-input"
           placeholder="Group message"
           v-model="userMessage"
           cols="30"
           rows="2"
-        ></textarea>
-        <!-- TODO: Disable button if field is blank -->
+        ></textarea> -->
+        <input
+          @keydown.enter="sendMessage"
+          type="text"
+          class="form-input message-input"
+          placeholder="Group Message"
+          v-model="userMessage"
+        >
         <button
-          @click="sendMessage()"
+          @click="sendMessage"
           class="btn btn-primary"
           :class="userMessage === '' ? 'disabled' : ''"
         >Send</button>
@@ -90,6 +96,7 @@ export default {
         .then(() => {
           this.scrollToBottom();
         });
+      this.userMessage = "";
     },
     loadGroupMessages() {
       this.$bind(
@@ -130,7 +137,7 @@ export default {
   height: 100%;
   width: 0;
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   top: 0;
   right: 0;
   background-color: #3c3c3c;
@@ -142,6 +149,7 @@ export default {
   .content {
     height: 100%;
     min-width: 300px;
+    max-width: 300px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;

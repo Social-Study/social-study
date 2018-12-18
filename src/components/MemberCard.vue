@@ -69,6 +69,10 @@ export default {
   }
 }
 
+h2 {
+  font-size: 1.5em;
+}
+
 // gradient background around border
 .gradient-border {
   margin: 30px auto;
