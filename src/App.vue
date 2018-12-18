@@ -3,7 +3,15 @@
     <NavBar v-if="$route.name !== 'landing'" />
     <router-view v-if="!$route.params.groupID" />
     <side-bar v-else>
-      <router-view />
+      <router-view :class="chatActive ? 'chat-active' : 'chat-inactive'" />
+      <!-- <button
+        class="btn btn-action s-circle"
+        @click="isActive = !isActive"
+      ><i class="icon icon-arrow-left"></i></button> -->
+      <chat
+        :show="chatActive"
+        :user="user"
+      />
     </side-bar>
   </div>
 </template>
@@ -12,21 +20,35 @@
 <script>
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
+import Chat from "@/components/Chat";
+
+import { mapGetters } from "vuex";
+
 import firebase from "./firebaseConfig";
 export default {
   name: "App",
   components: {
     NavBar,
-    SideBar
+    SideBar,
+    Chat
   },
   data() {
     return {
-      user: null
+      user: null,
+      isActive: true
     };
   },
+  computed: {
+    ...mapGetters(["chatActive"])
+  },
   created() {
+    // Keep track current logged in users
     firebase.auth().onAuthStateChanged(user => {
-      this.user = user;
+      if (user) {
+        this.user = user;
+      } else {
+        user = null;
+      }
     });
   }
 };
@@ -45,9 +67,11 @@ export default {
 
 html,
 body {
-  min-height: 100vh;
-  max-height: 100vh;
+  // min-height: 100vh;
+  // max-height: 100vh;
+  height: 100%;
   background-color: $background-color;
+  overflow: hidden;
 }
 
 #app {
@@ -56,10 +80,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
 }
 
 // Applies to all modal-overlays
 a.modal-overlay {
   background-image: $dark-gradient !important;
+}
+
+.chat-active {
+  margin-right: 300px;
+  transition: 1s;
+}
+
+.chat-inactive {
+  margin-right: 0px;
+  transition: 1s;
 }
 </style>

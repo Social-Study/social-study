@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     uid: "",
+    chatActive: false,
     activeGroup: {
       groupID: "",
       details: null
@@ -22,11 +23,15 @@ export default new Vuex.Store({
     setActiveGroup(state, { details, groupID }) {
       state.activeGroup.details = details;
       state.activeGroup.groupID = groupID;
+    },
+    toggleChatActive(state) {
+      state.chatActive = !state.chatActive;
     }
   },
   actions: {},
   getters: {
     uid: state => state.uid,
+    chatActive: state => state.chatActive,
     activeGroup: state => state.activeGroup
   }
 });

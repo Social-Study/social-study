@@ -15,6 +15,7 @@ Database Design:
   ☐ find new animation library
     - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
+  ☐ Store displayname in firestore so that it updates
 
 Components Needed:
   ☐ Notification popup
@@ -25,10 +26,16 @@ Components Needed:
 Firebase Functions File:
   ☐ Remove expired invite codes
   ☐ Downscale images?
-  ☐ `something I forgot`
+  ☐ Remove messages once size reaches > 1000 messages
+  ☐ Function to increment message counter of the document everytime a new document is created
+
+
+Notifications:
+  ☐ Notification when group not found
 
 Known Bugs:
   ☐ When you click a group in the drop down, there are two bars that appear. Not sure what causes it.
+  ☐ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present
 
 Vuex Store:
   ☐ Only save the uid to local storage
@@ -61,6 +68,10 @@ Create Study Group:
   ☐ Prevent user from clicking create and getting to copy code if they don't do all steps
   ☐ Add transitions to make it look nice
   ☐ Figure out how to center the content without using a fixed page size (94vh)
+  ☐ Put a conditional on the meeting days and times. Ask "Does the have designated meeting days and times?"
+
+Flashcards Collection:
+  ☐ Figure out proper way to get the last row to the left instead of centering it.
 
 Flashcards:
   ☐ Implement navigation animations

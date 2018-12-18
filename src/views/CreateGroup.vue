@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <!-- <h1 class="pageTitle">Create a New Study Group</h1> -->
-    <page-title> Create a new Study Group </page-title>
+  <div style="height: 86%;">
 
+    <page-title> Create a new Study Group </page-title>
     <!-- Notification -->
     <notifications
       group="create"
       position="right bottom"
     />
     <div class="createContent">
+
       <!-- Contains Center Content; Buttons and Content -->
       <div class="navContainer">
         <button
@@ -461,7 +461,6 @@ export default {
       return arr;
     },
     createStudyGroup() {
-      // FIXME: Parse only true days from the meetingDays object, and save them into array
       // Generate random invite code and save it
       this.inviteCode = generateCode();
       // Create new study group in the firestore
@@ -507,7 +506,7 @@ button.s-circle {
 
 // Main container, centers all content on the page
 .createContent {
-  height: 88vh;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -91,6 +91,7 @@
     <div class="off-canvas-content">
       <!-- Slot where all other page content will be inserted -->
       <slot v-if="isMember && !isLoading"></slot>
+
       <!-- If they are not a member, show the generic error message -->
       <div
         v-else-if="!isMember && !isLoading"
@@ -197,9 +198,16 @@ div.off-canvas-sidebar {
   background: #3c3c3c !important;
   width: 200px;
 }
+
+div.off-canvas {
+  // height: 100%;
+  height: calc(100% - 60px);
+}
+
 div.off-canvas-content {
-  min-height: 94vh;
+  // min-height: 100vh;
   // min-height: 100%;
+  overflow: auto;
   padding: 0 !important;
 }
 </style>
