@@ -1,6 +1,12 @@
 <template>
   <div>
     <page-title>Flashcard Collection</page-title>
+    <button 
+      class="btn btn-primary" 
+      id="new-btn"
+      @click="$router.push(`/${$route.params.groupID}/flashcards/create`)"
+    >New Flashcard Deck
+    </button>
     <div
       @click="$router.push(`/${$route.params.groupID}/flashcards/study`)"
       class="content-container"
@@ -65,5 +71,8 @@ export default {
 
 .deck-creator {
   flex: 1;
+}
+#new-btn{
+  margin-top: 25px;
 }
 </style>

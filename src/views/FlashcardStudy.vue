@@ -13,66 +13,43 @@
       > <i class="icon icon-arrow-left"></i>
       </button>
       <div class="flashcard-container">
-        <flashcard
+        <div
           class="flashcard"
           :style="{backgroundColor: cardColor}"
-          :pose="isFlipping ? 'shrink' : 'grow' "
-          @click.native="flipcard"
+          @click="flipcard"
         >
-          <flashcardContent
+          <h1
             class="flashcard-content"
-            :pose="isFlipping ? 'shrinkContent' : 'growContent' "
           >
             {{currentContent}}
-          </flashcardContent>
-        </flashcard>
+          </h1>
+        </div>
       </div>
       <button
         @click="nextCard"
         class="btn btn-action btn-success btn-lg s-circle"
-        :class="cardIndex === 4 ? 'disabled' : ''"
+        :class="cardIndex < termList.length - 1 ? '' : 'disabled'"
       >
         <i class="icon icon-arrow-right"></i>
       </button>
     </div>
-    <h1>{{cardIndex + 1}} / {{termList.length}}</h1>
+    <h1 id="cardIndex">{{cardIndex + 1}} / {{termList.length}}</h1>
   </div>
 
 </template>
 
 <script>
 import PageTitle from "../components/PageTitle";
-import posed from "vue-pose";
 import { setTimeout } from "timers";
+import anime from 'animejs'
 
 export default {
   name: "flashcardStudy",
   components: {
-    PageTitle,
-    flashcard: posed.div({
-      shrink: {
-        height: 0,
-        transition: { duration: 200 }
-      },
-      grow: {
-        height: 300,
-        transition: { duration: 200 }
-      }
-    }),
-    flashcardContent: posed.h1({
-      shrinkContent: {
-        opacity: 0,
-        transition: { duration: 10 }
-      },
-      growContent: {
-        opacity: 1,
-        transition: { delay: 100 }
-      }
-    })
+    PageTitle
   },
   data: function() {
     return {
-      isFlipping: false,
       user: null,
       currentContent: String,
       cardIndex: 0,
@@ -100,10 +77,22 @@ export default {
   methods: {
     //flips the current card
     flipcard() {
-      this.isFlipping = true;
+      anime({
+        targets: '.flashcard',
+        height:[
+          {value: 0, duration: 150},
+          {value: 300, duration: 150}
+        ]
+      });
+      anime({
+        targets: '.flashcard-content',
+        opacity: [
+          {value: 0, duration: 150},
+          {value: 1, duration : 150}
+        ]
+      });
       const self = this;
       setTimeout(function() {
-        self.isFlipping = false;
         //definition side
         if (self.flipped) {
           self.getCurrentContent();
@@ -121,19 +110,68 @@ export default {
     //increments the current card index and updates the displayed content
     nextCard() {
       if (this.cardIndex < this.termList.length - 1) {
+        let nextAnimation = anime.timeline({
+          targets: '.flashcard',
+          easing:'linear',
+          duration: 100
+        });
+        nextAnimation
+          .add({
+            rotate: -10,
+            translateX: -200,
+            opacity: 0
+          })
+          .add({
+            translateX: 200,
+            opacity: 0,
+            duration: 1
+          })
+          .add({
+            translateX: 0,
+            opacity: 1,
+            rotation: 0
+          });
         this.cardIndex++;
-        this.currentContent = this.termList[this.cardIndex];
-        this.flipped = false;
-        this.cardColor = "#E7E7E7";
+        const self = this;
+        setTimeout(function() {
+          self.currentContent = self.termList[self.cardIndex];
+          self.flipped = false;
+          self.cardColor = "#E7E7E7";
+        }, 110);
+
       }
     },
     //decrements the current card index and updates the displayed info
     prevCard() {
       if (this.cardIndex > 0) {
+        let prevAnimation = anime.timeline({
+          targets: '.flashcard',
+          easing:'linear',
+          duration: 100
+        });
+        prevAnimation
+          .add({
+            rotate: 10,
+            translateX: 200,
+            opacity: 0
+          })
+          .add({
+            translateX: -200,
+            opacity: 0,
+            duration: 1
+          })
+          .add({
+            translateX: 0,
+            opacity: 1,
+            rotation: 0
+          });
         this.cardIndex--;
-        this.flipped = false;
-        this.currentContent = this.termList[this.cardIndex];
-        this.cardColor = "#E7E7E7";
+        const self = this;
+        setTimeout(function(){
+          self.flipped = false;
+          self.currentContent = self.termList[self.cardIndex];
+          self.cardColor = "#E7E7E7";
+        }, 110);
       }
     },
     //loads the content that should be shown into the currentContent variable based on flipped variable
@@ -199,13 +237,13 @@ export default {
 }
 
 .flashcard {
-  height: 300;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #c5c5c5;
+  background-color: $light-grey;
   border-radius: 10px;
   width: 500px;
+  height: 300px;
   box-shadow: $shadow-heavy;
 }
 
@@ -220,5 +258,13 @@ export default {
 }
 .btn {
   margin: 10px;
+}
+#cardIndex{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;  
 }
 </style>
