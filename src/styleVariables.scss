@@ -1,5 +1,6 @@
 // Gradients
 $nav-gradient: linear-gradient(-90deg, #5c00fd 0%, #fd007e 100%);
+$nav-gradient-alt: linear-gradient(0deg, #5c00fd 0%, #fd007e 100%);
 $green-gradient: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
 $orange-gradient: linear-gradient(90deg, #ffa404 0%, #ff0479 100%);
 $blue-gradient: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
@@ -9,6 +10,7 @@ $dark-gradient: linear-gradient(
 );
 // Fonts
 $logo-font: "Pacifico", cursive;
+$main-gray: #3c3c3c;
 
 // Shadows
 $shadow: 0 6px 15px rgba(36, 37, 38, 0.08);

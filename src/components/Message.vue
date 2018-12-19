@@ -44,6 +44,7 @@ export default {
 <style lang="scss" scoped>
 .message {
   margin-bottom: 5px;
+  max-width: 300px;
 
   .message-sender {
     text-align: left;
@@ -74,9 +75,11 @@ export default {
       text-align: left;
       margin: 0 4px;
       display: inline-block;
-      padding: 2px 6px;
+      padding: 3px 6px;
       border-radius: 16px;
+      // margin-left: 10px;
       color: black;
+      word-break: break-all;
       background-color: #f1f3f4;
     }
   }

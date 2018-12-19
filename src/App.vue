@@ -67,10 +67,11 @@ export default {
 
 html,
 body {
-  min-height: 100vh;
-  max-height: 100vh;
+  // min-height: 100vh;
+  // max-height: 100vh;
   height: 100%;
   background-color: $background-color;
+  overflow: hidden;
 }
 
 #app {

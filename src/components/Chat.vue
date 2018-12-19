@@ -25,17 +25,23 @@
 
         </div>
         <div class="divider"></div>
-        <textarea
-          @keydown.ctrl.enter="sendMessage"
+        <!-- <textarea
+          @keydown.enter="sendMessage"
           class="message-input"
           placeholder="Group message"
           v-model="userMessage"
           cols="30"
           rows="2"
-        ></textarea>
-        <!-- TODO: Disable button if field is blank -->
+        ></textarea> -->
+        <input
+          @keydown.enter="sendMessage"
+          type="text"
+          class="form-input message-input"
+          placeholder="Group Message"
+          v-model="userMessage"
+        >
         <button
-          @click="sendMessage()"
+          @click="sendMessage"
           class="btn btn-primary"
           :class="userMessage === '' ? 'disabled' : ''"
         >Send</button>
@@ -77,19 +83,22 @@ export default {
       this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
     },
     sendMessage() {
-      db.collection("study-groups")
-        .doc(this.$route.params.groupID)
-        .collection("messages")
-        .add({
-          date: new Date(),
-          displayName: this.user.displayName,
-          message: this.userMessage,
-          photoURL: this.user.photoURL,
-          sender: this.$store.getters.uid
-        })
-        .then(() => {
-          this.scrollToBottom();
-        });
+      if (this.userMessage !== "") {
+        db.collection("study-groups")
+          .doc(this.$route.params.groupID)
+          .collection("messages")
+          .add({
+            date: new Date(),
+            displayName: this.user.displayName,
+            message: this.userMessage,
+            photoURL: this.user.photoURL,
+            sender: this.$store.getters.uid
+          })
+          .then(() => {
+            this.scrollToBottom();
+          });
+        this.userMessage = "";
+      }
     },
     loadGroupMessages() {
       this.$bind(
@@ -108,10 +117,30 @@ export default {
   created() {
     this.loadGroupMessages();
   },
+  computed: {
+    messageLength() {
+      return this.groupMessages.length;
+    }
+  },
   watch: {
     // Reload the group's messages when the user switches groups
     "$route.params.groupID"(id) {
       this.loadGroupMessages();
+    },
+    messageLength(newVal, oldVal) {
+      // console.log("message list changed!");
+      console.log(newVal, " ", oldVal);
+      if (
+        oldVal !== 0 &&
+        newVal !== 0 &&
+        this.groupMessages[this.groupMessages.length - 1].sender !==
+          this.$store.getters.uid
+      ) {
+        let notification = new Audio(
+          "https://notificationsounds.com/soundfiles/4e4b5fbbbb602b6d35bea8460aa8f8e5/file-sounds-1096-light.mp3"
+        );
+        notification.play();
+      }
     }
   }
 };
@@ -130,7 +159,7 @@ export default {
   height: 100%;
   width: 0;
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   top: 0;
   right: 0;
   background-color: #3c3c3c;
@@ -142,6 +171,7 @@ export default {
   .content {
     height: 100%;
     min-width: 300px;
+    max-width: 300px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;

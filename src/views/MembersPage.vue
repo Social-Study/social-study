@@ -1,9 +1,12 @@
 <template>
   <div>
     <page-title>
-      Study Group Members
+      Members
     </page-title>
-    <div v-if="!loading">
+    <div
+      v-if="!loading"
+      style="display: flex; flex-flow: row nowrap; justify-content: center;"
+    >
 
       <!-- Display card for each member of the Study Group -->
       <transition-group
@@ -21,6 +24,7 @@
         > </member-card>
 
         <!-- Show card for each group member -->
+
         <member-card
           v-for="member in memberDetails"
           :key="member.uid"
@@ -171,9 +175,11 @@ export default {
 
 // Flexbox container to hold all member cards
 .content-container {
-  margin: 40px 25px;
+  margin: 40px 40px;
+  max-width: 90%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
