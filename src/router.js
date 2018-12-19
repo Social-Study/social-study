@@ -11,6 +11,7 @@ import NotesCollection from "@/views/NotesCollection";
 import NotePage from "@/views/NotePage";
 import FlashcardCollection from "./views/FlashcardCollection";
 import FlashcardStudy from "./views/FlashcardStudy";
+import FlashcardCreate from "./views/FlashcardCreate";
 
 import firebase from "./firebaseConfig";
 
@@ -97,6 +98,15 @@ let router = new Router({
       component: FlashcardStudy,
       meta: {
         title: "Flashcard | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/:groupID/flashcards/create",
+      name: "createflashcard",
+      component: FlashcardCreate,
+      meta: {
+        title: "Flashcard Create | Social Study",
         requiresAuth: true
       }
     },
