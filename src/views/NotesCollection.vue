@@ -1,0 +1,137 @@
+<template>
+  <div>
+    <page-title>Private Notes Collection</page-title>
+    <!-- In the future this will hold other things like the sort buttons, etc. -->
+    <div class="page-controls">
+      <!-- Show a popover menu when the user chooses to create a new note -->
+      <div class="popover popover-right">
+        <button class="btn btn-primary">New Note <i class="fas fa-plus"></i></button>
+        <div
+          style="margin-top: 20px;"
+          class="popover-container"
+        >
+          <div class="card">
+            <div class="card-header">
+              Enter a title for your new note:
+            </div>
+            <div class="card-body">
+              <input
+                @keydown.enter="createNote"
+                v-model="noteTitle"
+                type="text"
+                class="form-input"
+              >
+            </div>
+            <div class="card-footer">
+              <button
+                @click="createNote"
+                class="btn btn-primary"
+                :class="loadingNewNote ? 'loading' : ''"
+              >Create Note</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="content-container">
+      <note-icon
+        @click.native="$router.push(`/${$route.params.groupID}/notes/${note.id}`)"
+        v-for="note in notesList"
+        :info="note"
+        :key="note.id"
+      />
+    </div>
+  </div>
+</template>
+
+<script>
+import PageTitle from "@/components/PageTitle";
+import NoteIcon from "@/components/NoteIcon";
+
+import { db } from "@/firebaseConfig";
+
+let notesRef;
+
+export default {
+  name: "NotesCollection",
+  components: {
+    PageTitle,
+    NoteIcon
+  },
+  data() {
+    return {
+      notesList: [],
+      noteTitle: "",
+      loadingNewNote: false
+    };
+  },
+  created() {
+    notesRef = db
+      .collection("study-groups")
+      .doc(this.$route.params.groupID)
+      .collection("notes")
+      .doc(this.$store.getters.uid);
+
+    this.$bind("notesList", notesRef.collection("private")).then(notesList => {
+      this.notesList === notesList;
+    });
+  },
+  methods: {
+    createNote() {
+      // Create a new note
+      this.loadingNewNote = true;
+      let initDate = new Date();
+      notesRef
+        .collection("private")
+        .add({
+          title: this.noteTitle,
+          creationDate: initDate,
+          lastUpdated: initDate,
+          content: "# Enter your note here"
+        })
+        .then(note => {
+          // Get the note's ID and save it in the note itself.
+          console.log(note.id);
+          notesRef
+            .collection("private")
+            .doc(note.id)
+            .update({
+              id: note.id
+            })
+            .then(() => {
+              this.loadingNewNote = false;
+              this.$router.push(
+                `/${this.$route.params.groupID}/notes/${note.id}`
+              );
+            });
+        });
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.page-controls {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  .btn.btn-primary {
+    margin: 20px 20px 10px 20px;
+  }
+}
+
+.popover-container {
+  .card {
+    border-radius: 10px !important;
+  }
+}
+
+.content-container {
+  margin: 40px 40px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+</style>

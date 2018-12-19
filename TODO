@@ -4,12 +4,11 @@ Branding:
   ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
   ☐ Find better flashcard sidebar icon
 
-Database Design:
-☐ General:
+General:
   ☐ Not sure why the favicon is not showing???? @low
   ☐ Make sure the build bundle size is not too large. @low
   ☐ Go through an error check all inputs where necessary
-
+  ☐ Figure out how to split the code so the bundle size is not as large...
   ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
     Not exactly sure how to do this.
   ☐ find new animation library
@@ -28,7 +27,29 @@ Firebase Functions File:
   ☐ Downscale images?
   ☐ Remove messages once size reaches > 1000 messages
   ☐ Function to increment message counter of the document everytime a new document is created
+  ☐ Generate a boilerplate note when a new user joins the study group? It should let them know the full functionality of markdown and the syntax
 
+Notes:
+  ☐ Collection should have a loading indicator
+  ☐ Make sure that other users cannot access notes they didn't create
+  ☐ Find more markdown css themes
+    ☐ Dark theme
+  ☐ Figure out what I should limit the title length to
+  ☐ Maybe extract the view component if we want to use it for aiding users in creating their flashcards.
+  ☐ implement a note deletion feature so users can delete notes they don't want
+  ☐ Autoscroll viewing content to match...
+  Maybes:
+    ☐ Allow users to create collections to manage their own notes?
+
+Chat:
+  ☐ Add a date display so that you can tell on what day the notes were sent
+    Only show if I calculate the differences in times and find it to be over a certain threshold
+  Maybes:
+    ☐ Shadow around the edge?
+    ☐ Total number of messages indicator (Could either be total messages or unread messages...)
+       Not sure how I would implement tracking unread messages
+    ☐ Sound when a message is received (Implemented but not sure about it)
+    ☐ Change the sound notifications to only play when the user has the chat sidebar closed
 
 Notifications:
   ☐ Notification when group not found
@@ -37,16 +58,17 @@ Known Bugs:
   ☐ When you click a group in the drop down, there are two bars that appear. Not sure what causes it.
   ☐ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present
 
+
 Vuex Store:
   ☐ Only save the uid to local storage
 
 Homepage:
-  ✔ Add more detail to Study Group cards in dropdown @done(18-12-16 21:51)
   ☐ Figure out what the card backgrounds should look like
 
 Members Page:
   ☐ Add members list page sort filters
     - Joined Date, Alphabetical, etc...
+  ☐ Give the group owner a glow around their card
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
@@ -61,8 +83,8 @@ Side Bar:
   ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
 
 NavBar:
-  ☐ Upgrade navbar dropdown to look more like the figma design. Each class should provide some details @today
   ☐ Redesign navbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility
+  ☐ Style the currently active group based on the route parameters
 
 Create Study Group:
   ☐ Prevent user from clicking create and getting to copy code if they don't do all steps
@@ -84,6 +106,8 @@ Animations / Transitions:
     ☐ Animation when user navigates between cards
 
 Archive:
+  ✔ Add more detail to Study Group cards in dropdown @done(18-12-16 21:51) @project(Homepage)
+  ✔ Upgrade navbar dropdown to look more like the figma design. Each class should provide some details @today @done(18-12-18 13:15) @project(NavBar)
   ✔ Decide if I should store each user's study groups in their profile as well as in the actual study group itself @done(18-12-16 20:15) @project(Database Design)
   ✔ add dark blur effect to modals @done(18-12-16 20:12)
   ✘ Figure out how to delete a code after 24 hours. @cancelled(18-12-16 17:08) @project(Database Design)

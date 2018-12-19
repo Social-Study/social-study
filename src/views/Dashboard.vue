@@ -2,6 +2,10 @@
 
   <!-- TODO: Render loading indicator if firebase has not finished async load -->
   <div v-if="this.user !== null">
+    <notifications
+      group="joinErrors"
+      position="right top"
+    />
 
     <!-- Class Join Confirmation Modal -->
     <div
@@ -65,6 +69,7 @@
             v-model="inviteCode"
             class="form-input"
             type="text"
+            @keydown.enter="queryStudyGroup"
           >
           <button
             @click="queryStudyGroup"
@@ -126,7 +131,6 @@ export default {
             if (querySnapshot.size !== 0) {
               querySnapshot.forEach(doc => {
                 this.newGroupID = doc.id;
-                this.confirmJoin = true;
               });
               return true;
             } else {
@@ -141,14 +145,39 @@ export default {
                 .get()
                 .then(doc => {
                   this.inviteGroup = doc.data();
+                  // Check if the group already contains the user
+                  if (
+                    !this.inviteGroup.members.includes(this.$store.getters.uid)
+                  ) {
+                    this.confirmJoin = true;
+                  } else {
+                    this.$notify({
+                      group: "joinErrors",
+                      type: "warning",
+                      title: "Unable to Join Study Group",
+                      text:
+                        "You are already a member of " +
+                        this.inviteGroup.className
+                    });
+                  }
                 });
             } else {
+              this.$notify({
+                group: "joinErrors",
+                type: "error",
+                title: "Study Group Not Found",
+                text: "A Study Group matching the invite code was not found."
+              });
               console.log("didn't run because group not found");
             }
           });
       } else {
-        // TODO: Show some sort of error notification
-        console.log("You did not enter a code!!");
+        this.$notify({
+          group: "joinErrors",
+          type: "error",
+          title: "Invalid Input",
+          text: "Please enter your Study Group Invite Code"
+        });
       }
     }
   },
@@ -159,7 +188,7 @@ export default {
         this.user = user;
       })
       .catch(error => {
-        console.log(eror);
+        console.log(error);
       });
 
     // Get members list of joined study Groups

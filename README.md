@@ -56,10 +56,10 @@ firebase deploy
 
 # Main Technologies
 
-Vue.js
-Firebase / Vuefire
-Pose
-Vee - Validate
-Animate.css
-vue-pose
-Spectre.css
+- Vue.js
+- Firebase / Vuefire
+- Pose
+- Vee - Validate
+- Animate.css
+- vue-pose
+- Spectre.css
