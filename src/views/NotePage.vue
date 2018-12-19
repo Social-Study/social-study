@@ -3,7 +3,7 @@
 
     <notifications
       group="notes"
-      position="right bottom"
+      position="left top"
     />
     <div class="page-header">
       <input

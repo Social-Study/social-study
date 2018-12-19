@@ -1,7 +1,7 @@
 <template>
   <div class="modal modal-md active">
     <a
-      @click="$emit('closeSettings');"
+      @click="closeAndReset"
       href="#close"
       class="modal-overlay"
       aria-label="Close"
@@ -10,7 +10,7 @@
     <div class="modal-container">
       <div class="modal-header">
         <a
-          @click="$emit('closeSettings');"
+          @click="closeAndReset"
           href="#close"
           class="btn btn-clear float-right"
           aria-label="Close"
@@ -249,6 +249,10 @@ export default {
     }
   },
   methods: {
+    closeAndReset() {
+      this.activeTab = 1;
+      this.$emit('closeSettings');
+    },
     loadGroups() {
       getUserGroups(this.user.uid)
         .then(groupList => {
@@ -319,7 +323,7 @@ export default {
             });
         }
 
-        this.$emit("closeSettings");
+        this.closeAndReset();
       }
     },
     handleFile(event) {

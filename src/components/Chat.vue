@@ -128,7 +128,7 @@ export default {
       this.loadGroupMessages();
     },
     messageLength(newVal, oldVal) {
-      console.log("message list changed!");
+      // console.log("message list changed!");
       console.log(newVal, " ", oldVal);
       if (
         oldVal !== 0 &&

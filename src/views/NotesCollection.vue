@@ -16,6 +16,7 @@
             </div>
             <div class="card-body">
               <input
+                @keydown.enter="createNote"
                 v-model="noteTitle"
                 type="text"
                 class="form-input"
