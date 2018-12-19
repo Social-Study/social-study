@@ -1,33 +1,116 @@
 <template>
   <div>
-    <page-title class="text-left"> TITLE HERE</page-title>
-    <div class="content-container">
+
+    <notifications
+      group="notes"
+      position="right bottom"
+    />
+    <div class="page-header">
+      <input
+        class="note-title"
+        v-model="noteTitle"
+        type="text"
+      >
+      <div class="header-end">
+
+        <div class="dropdown split">
+          <a
+            href="#"
+            class="btn btn-action dropdown-toggle"
+            tabindex="0"
+          >
+            <i
+              style="color: #5755d9"
+              class="fas fa-palette"
+            ></i>
+          </a>
+          <!-- menu component -->
+          <ul class="menu">
+            <li @click="markStyleNum = 1">Social Study</li>
+            <li @click="markStyleNum = 2">Github</li>
+          </ul>
+        </div>
+
+        <a
+          target="_blank"
+          href="https://www.markdownguide.org/cheat-sheet"
+        >
+          <button class="btn btn-action split"><i class="fas fa-info"></i></button>
+        </a>
+        <button
+          @click="saveNote"
+          class="btn btn-action split"
+        ><i class="fas fa-save"></i></button>
+      </div>
+    </div>
+    <div class="
+      content-container">
       <textarea
+        @keydown.ctrl.83.prevent="saveNote"
         v-model="userText"
         class="page-edit"
       >
       </textarea>
       <div
         v-html="render"
-        class="page-view markdown-body"
+        class="page-view"
+        :class="markStyleNum === 1 ? 'markdown-css': '' || markStyleNum === 2 ? 'markdown-body': ''"
       ></div>
     </div>
   </div>
 </template>
 
 <script>
-import PageTitle from "@/components/PageTitle";
+import { db } from "@/firebaseConfig";
+
 let marked = require("marked");
 
 export default {
   name: "NotePage",
-  components: {
-    PageTitle
-  },
+  components: {},
   data() {
     return {
-      userText: ""
+      noteTitle: "",
+      userText: "",
+      markStyleNum: 2
     };
+  },
+  created() {
+    db.collection("study-groups")
+      .doc(this.$route.params.groupID)
+      .collection("notes")
+      .doc(this.$store.getters.uid)
+      .collection("private")
+      .doc(this.$route.params.noteID)
+      .get()
+      .then(doc => {
+        this.noteTitle = doc.data().title;
+        this.userText = doc.data().content;
+      });
+  },
+  methods: {
+    saveNote() {
+      // TODO: Display notification saying that the document has been saved
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("notes")
+        .doc(this.$store.getters.uid)
+        .collection("private")
+        .doc(this.$route.params.noteID)
+        .update({
+          title: this.noteTitle,
+          lastUpdated: new Date(),
+          content: this.userText
+        })
+        .then(() => {
+          this.$notify({
+            group: "notes",
+            type: "success",
+            title: "Note saved!",
+            text: "The note has been saved successfully."
+          });
+        });
+    }
   },
   computed: {
     render() {
@@ -38,7 +121,7 @@ export default {
         breaks: true,
         pedantic: false,
         sanitize: true,
-        smartLists: false,
+        smartLists: true,
         smartypants: false
       });
       return marked(this.userText);
@@ -52,6 +135,51 @@ export default {
 @import "../../node_modules/spectre-markdown.css/dist/markdown.min.css";
 @import "../../node_modules/github-markdown-css/github-markdown.css";
 
+.note-title {
+  border: none;
+  background-color: #f6f6f6;
+  font-size: 20px;
+  min-width: 350px;
+  max-width: 350px;
+  font-weight: bold;
+  padding: 0 4px;
+  font-family: "Inter UI";
+}
+
+.page-header {
+  padding: 8px;
+  background-color: #c4c4c4;
+  width: 100%;
+  margin: 0;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  h1 {
+    font-size: 2em;
+  }
+}
+
+.dropdown > ul.menu {
+  left: -70px;
+  border-radius: 10px;
+
+  li {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px;
+    &:hover {
+      background-image: $orange-gradient;
+      color: white;
+    }
+  }
+}
+
+.split {
+  margin-left: 20px;
+}
+
 .content-container {
   display: inline-block;
   // height: 100%;
@@ -64,7 +192,7 @@ export default {
 
 .page-edit {
   padding: 10px;
-  box-shadow: $shadow;
+  box-shadow: $shadow-hovered;
   border: none;
   display: inline-block;
   min-height: 800px;
@@ -77,8 +205,8 @@ export default {
 }
 
 .page-view {
-  padding: 10px !important;
-  box-shadow: $shadow;
+  padding: 20px 10px !important;
+  box-shadow: $shadow-hovered;
   font-family: "Inter UI";
   background-color: white;
   padding: 0;

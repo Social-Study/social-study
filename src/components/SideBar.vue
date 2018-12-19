@@ -53,7 +53,8 @@
         <li class="menu-item text-left">
           <router-link
             :to="{name: 'notes'}"
-            :class="$route.name === 'notes' ? 'active' : ''"
+            :class="$route.name === 'notes' ? 'active' : '' ||
+               $route.name === 'note' ? 'active' : ''"
           >
             <i class="fas fa-file"></i> Notes
           </router-link>

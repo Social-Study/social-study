@@ -3,7 +3,10 @@
     <page-title>
       Members
     </page-title>
-    <div v-if="!loading">
+    <div
+      v-if="!loading"
+      style="display: flex; flex-flow: row nowrap; justify-content: center;"
+    >
 
       <!-- Display card for each member of the Study Group -->
       <transition-group
@@ -173,6 +176,7 @@ export default {
 // Flexbox container to hold all member cards
 .content-container {
   margin: 40px 40px;
+  max-width: 90%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

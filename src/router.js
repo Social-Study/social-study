@@ -88,9 +88,9 @@ let router = new Router({
       }
     },
 
-    // in the working product this path will have to be /:groupID/flashcards/deckID/study
-    //                                                                             /edit
-    //                                                                             /create
+    // with firebase integration this path will have to be /:groupID/flashcards/deckID/study
+    //                                                                                /edit
+    //                                                                                /create
     {
       path: "/:groupID/flashcards/study",
       name: "study",

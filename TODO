@@ -28,7 +28,19 @@ Firebase Functions File:
   ☐ Downscale images?
   ☐ Remove messages once size reaches > 1000 messages
   ☐ Function to increment message counter of the document everytime a new document is created
+  ☐ Generate a boilerplate note when a new user joins the study group? It should let them know the full functionality of markdown and the syntax
 
+Notes:
+  ☐ Find more markdown css themes
+    ☐ Dark theme
+  ☐ Figure out what I should limit the title length to
+  ☐ Maybe extract the view component if we want to use it for aiding users in creating their flashcards.
+  ☐ implement a note deletion feature so users can delete notes they don't want
+
+Chat:
+  Maybes:
+    ☐ Total number of messages indicator
+    ☐ Sound when a message is received
 
 Notifications:
   ☐ Notification when group not found

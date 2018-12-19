@@ -117,10 +117,30 @@ export default {
   created() {
     this.loadGroupMessages();
   },
+  computed: {
+    messageLength() {
+      return this.groupMessages.length;
+    }
+  },
   watch: {
     // Reload the group's messages when the user switches groups
     "$route.params.groupID"(id) {
       this.loadGroupMessages();
+    },
+    messageLength(newVal, oldVal) {
+      console.log("message list changed!");
+      console.log(newVal, " ", oldVal);
+      if (
+        oldVal !== 0 &&
+        newVal !== 0 &&
+        this.groupMessages[this.groupMessages.length - 1].sender !==
+          this.$store.getters.uid
+      ) {
+        let notification = new Audio(
+          "https://notificationsounds.com/soundfiles/4e4b5fbbbb602b6d35bea8460aa8f8e5/file-sounds-1096-light.mp3"
+        );
+        notification.play();
+      }
     }
   }
 };
