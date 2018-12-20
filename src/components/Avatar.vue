@@ -30,12 +30,12 @@ export default {
       default: "#f6f6f6"
     }
   },
-  data: function() {
+  data() {
     return {
       initials: ""
     };
   },
-  created: function() {
+  created() {
     // Split the username into initials if there is not a photo
     if (this.user.photoURL === null) {
       this.initials = this.user.displayName

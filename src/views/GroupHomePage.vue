@@ -1,9 +1,10 @@
 <template>
   <div>
-    <!-- <page-title v-if=" $store.getters.activeGroup.details.className !== null">
-      {{ $store.getters.activeGroup.details.className }} Home
-    </page-title> -->
-    <page-title>Home</page-title>
+    <page-title>
+      <template slot="center">
+        Home
+      </template>
+    </page-title>
   </div>
 </template>
 

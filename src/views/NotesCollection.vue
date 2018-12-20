@@ -1,6 +1,10 @@
 <template>
   <div>
-    <page-title>Private Notes Collection</page-title>
+    <page-title>
+      <template slot="center">
+        Private Notes Collection
+      </template>
+    </page-title>
     <!-- In the future this will hold other things like the sort buttons, etc. -->
     <div class="page-controls">
       <!-- Show a popover menu when the user chooses to create a new note -->

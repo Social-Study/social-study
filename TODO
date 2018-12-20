@@ -16,13 +16,16 @@ General:
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
   ☐ Store displayname in firestore so that it updates
   ☐ Refactor the components into different subfolders to organize it a bit
+  ☐ Make sure that each page that loads from firebase has error checking
+    ☐ Should display an error message if the firebase load fails
+    ☐ User's should be limited to what they can access...
 
 Components Needed:
   ☐ Notification popup
     Currently using vue-notifications but would be willing to switch to something better.
   ☐ Modal that can be used for all other modals.
   ☐ Custom designed switch component
-  ☐ Update page-title so that it can be used with pages that have buttons in their headers
+  ✔ Update page-title so that it can be used with pages that have buttons in their headers @done(18-12-20 11:54)
   ☐ Create add button card item
 
 Firebase Functions File:

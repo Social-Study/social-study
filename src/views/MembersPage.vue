@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-title>
-      Members
+      <template slot="center">Members</template>
     </page-title>
     <div
       v-if="!loading"

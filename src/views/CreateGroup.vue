@@ -393,6 +393,7 @@ export default {
     PageTitle
   },
   data() {
+    // TODO: refactor these into objects
     return {
       active: 0,
       className: "",
