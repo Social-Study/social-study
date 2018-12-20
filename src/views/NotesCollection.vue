@@ -1,43 +1,44 @@
 <template>
   <div>
     <page-title>
+      <template slot="left">
+        <!-- Show a popover menu when the user chooses to create a new note -->
+        <div class="popover popover-right">
+          <button class="btn btn-primary">New Note <i class="fas fa-plus"></i></button>
+          <div
+            style="margin-top: 20px;"
+            class="popover-container"
+          >
+            <div class="card">
+              <div class="card-header">
+                Enter a title for your new note:
+              </div>
+              <div class="card-body">
+                <input
+                  @keydown.enter="createNote"
+                  v-model="noteTitle"
+                  type="text"
+                  class="form-input"
+                >
+              </div>
+              <div class="card-footer">
+                <button
+                  @click="createNote"
+                  class="btn btn-primary"
+                  :class="loadingNewNote ? 'loading' : ''"
+                >Create Note</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </template>
       <template slot="center">
         Private Notes Collection
       </template>
     </page-title>
     <!-- In the future this will hold other things like the sort buttons, etc. -->
-    <div class="page-controls">
-      <!-- Show a popover menu when the user chooses to create a new note -->
-      <div class="popover popover-right">
-        <button class="btn btn-primary">New Note <i class="fas fa-plus"></i></button>
-        <div
-          style="margin-top: 20px;"
-          class="popover-container"
-        >
-          <div class="card">
-            <div class="card-header">
-              Enter a title for your new note:
-            </div>
-            <div class="card-body">
-              <input
-                @keydown.enter="createNote"
-                v-model="noteTitle"
-                type="text"
-                class="form-input"
-              >
-            </div>
-            <div class="card-footer">
-              <button
-                @click="createNote"
-                class="btn btn-primary"
-                :class="loadingNewNote ? 'loading' : ''"
-              >Create Note</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
-    </div>
     <div class="content-container">
       <note-icon
         @click.native="$router.push(`/${$route.params.groupID}/notes/${note.id}`)"
@@ -121,12 +122,14 @@ export default {
   flex-flow: row nowrap;
   justify-content: space-between;
 
-  .btn.btn-primary {
-    margin: 20px 20px 10px 20px;
-  }
+  // .btn.btn-primary {
+  //   margin: 20px 20px 10px 20px;
+  // }
 }
 
 .popover-container {
+  top: 60px !important;
+
   .card {
     border-radius: 10px !important;
   }

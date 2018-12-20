@@ -96,5 +96,6 @@ a.modal-overlay {
 .chat-inactive {
   margin-right: 0px;
   transition: 1s;
+  height: 100%;
 }
 </style>

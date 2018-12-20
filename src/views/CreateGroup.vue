@@ -1,7 +1,7 @@
 <template>
   <div style="height: 86%;">
 
-    <page-title> Create a new Study Group </page-title>
+    <page-title><template slot="center">Create New Study Group</template> </page-title>
     <!-- Notification -->
     <notifications
       group="create"

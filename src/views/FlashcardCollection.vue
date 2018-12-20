@@ -1,14 +1,16 @@
 <template>
   <div>
     <page-title>
+      <template slot="left">
+        <button
+          class="btn btn-primary"
+          @click="$router.push(`/${$route.params.groupID}/flashcards/create`)"
+        >New Deck <i class="fas fa-plus"></i>
+        </button>
+      </template>
       <template slot="center">Flashcard Collection</template>
     </page-title>
-    <button
-      class="btn btn-primary"
-      id="new-btn"
-      @click="$router.push(`/${$route.params.groupID}/flashcards/create`)"
-    >New Flashcard Deck
-    </button>
+
     <div class="content-container">
       <flashcard-deck
         v-for="(deck,index) in decks"
@@ -85,8 +87,5 @@ export default {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-}
-#new-btn {
-  margin-top: 25px;
 }
 </style>

@@ -116,6 +116,8 @@ Animations / Transitions:
   Create Page:
     ☐ Animation when steps indicator changes
     ☐ Animation when user navigates between cards
+    ☐ Sequential loading animations when list are being displayed for the first time
+      Show the icons appearing one after the other
 
 PageTitle:
   ☐ Make component more robust so that it accepts buttons in the navbar. Would help with page layout looks and functionality
