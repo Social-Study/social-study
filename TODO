@@ -52,18 +52,19 @@ Chat:
     ☐ Change the sound notifications to only play when the user has the chat sidebar closed
 
 Notifications:
-  ☐ Notification when group not found
+  ✔ Notification when group not found @done(18-12-19 20:08)
 
 Known Bugs:
-  ☐ When you click a group in the drop down, there are two bars that appear. Not sure what causes it.
+  ✔ When you click a group in the drop down, there are two bars that appear. Not sure what causes it. @done(18-12-19 20:08)
   ☐ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present
-
+  ☐ Form validation is broken
+    - May have to implement custom validation for the create page
 
 Vuex Store:
   ☐ Only save the uid to local storage
 
 Homepage:
-  ☐ Figure out what the card backgrounds should look like
+  ✔ Figure out what the card backgrounds should look like @done(18-12-19 20:08)
 
 Members Page:
   ☐ Add members list page sort filters

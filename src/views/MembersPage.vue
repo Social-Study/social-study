@@ -24,7 +24,6 @@
         > </member-card>
 
         <!-- Show card for each group member -->
-
         <member-card
           v-for="member in memberDetails"
           :key="member.uid"
@@ -130,7 +129,7 @@ export default {
     copyCode() {
       // When a user copies the code, the code is saved to firebase
       db.collection("study-groups")
-        .doc(this.$store.getters.activeGroup.groupID)
+        .doc(this.$route.params.groupID)
         .update({
           inviteCodes: FirebaseConsts.firestore.FieldValue.arrayUnion(
             this.inviteCode

@@ -1,8 +1,8 @@
 <template>
   <div>
     <page-title>Flashcard Collection</page-title>
-    <button 
-      class="btn btn-primary" 
+    <button
+      class="btn btn-primary"
       id="new-btn"
       @click="$router.push(`/${$route.params.groupID}/flashcards/create`)"
     >New Flashcard Deck
@@ -18,7 +18,7 @@
           :documentID="deck.documentID"
         ></flashcard-deck>
       </div>
-
+    </div>
   </div>
 </template>
 
@@ -78,7 +78,7 @@ export default {
   flex-flow: row wrap;
   justify-content: center;
 }
-#new-btn{
+#new-btn {
   margin-top: 25px;
 }
 </style>

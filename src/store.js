@@ -3,14 +3,20 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+// activeGroup: {
+//   groupID: "",
+//     details: null
+// }
+// setActiveGroup(state, { details, groupID }) {
+//   state.activeGroup.details = details;
+//   state.activeGroup.groupID = groupID;
+// },
+// activeGroup: state => state.activeGroup
+
 export default new Vuex.Store({
   state: {
     uid: "",
-    chatActive: false,
-    activeGroup: {
-      groupID: "",
-      details: null
-    }
+    chatActive: false
   },
   mutations: {
     // Logged in user's identifier
@@ -20,10 +26,7 @@ export default new Vuex.Store({
     // This is to store the currently active group between study group feature pages
     // Prevents having to reload from the firebase firestore on switches
     // the details is just the surface level group data, not the study group subcollections
-    setActiveGroup(state, { details, groupID }) {
-      state.activeGroup.details = details;
-      state.activeGroup.groupID = groupID;
-    },
+
     toggleChatActive(state) {
       state.chatActive = !state.chatActive;
     }
@@ -31,7 +34,6 @@ export default new Vuex.Store({
   actions: {},
   getters: {
     uid: state => state.uid,
-    chatActive: state => state.chatActive,
-    activeGroup: state => state.activeGroup
+    chatActive: state => state.chatActive
   }
 });

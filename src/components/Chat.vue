@@ -57,6 +57,10 @@ import Message from "@/components/Message";
 import firebase, { db } from "@/firebaseConfig";
 import { log } from "util";
 
+let notification = new Audio(
+  "https://notificationsounds.com/soundfiles/4e4b5fbbbb602b6d35bea8460aa8f8e5/file-sounds-1096-light.mp3"
+);
+
 export default {
   name: "Chat",
   components: {
@@ -129,16 +133,13 @@ export default {
     },
     messageLength(newVal, oldVal) {
       // console.log("message list changed!");
-      console.log(newVal, " ", oldVal);
       if (
         oldVal !== 0 &&
         newVal !== 0 &&
         this.groupMessages[this.groupMessages.length - 1].sender !==
-          this.$store.getters.uid
+          this.$store.getters.uid &&
+        !this.$store.getters.chatActive
       ) {
-        let notification = new Audio(
-          "https://notificationsounds.com/soundfiles/4e4b5fbbbb602b6d35bea8460aa8f8e5/file-sounds-1096-light.mp3"
-        );
         notification.play();
       }
     }

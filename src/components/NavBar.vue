@@ -19,13 +19,6 @@
         </a>
         <!-- Your Study Group List Dropdown Items -->
         <ul class="menu group-menu">
-          <!-- <li>
-            <router-link :to="{name:'create'}">Create New Group</router-link>
-          </li>
-          <li
-            style="color: white;"
-            class="divider"
-          ></li> -->
           <div
             v-for="(group, index) in studyGroups"
             :key="index"
@@ -55,14 +48,8 @@
         </ul>
       </div>
 
-      <!-- Create New Study Group Button -->
-      <button
-        @click="$router.push('/dashboard/create');"
-        style="margin: 0 10px;"
-        class="btn btn-link btn-action btn-create"
-      >
-        <i class="icon icon-plus"></i>
-      </button>
+      <create-join-popover></create-join-popover>
+
     </section>
 
     <profile-settings
@@ -88,7 +75,7 @@
         class="menu-container"
       >
         <Avatar
-          style="width: 40px; height: 40px;"
+          style="width: 40px; height: 40px; font-size: 1em;"
           v-if="firestoreUser"
           :user="{
             displayName: this.firestoreUser.displayName,
@@ -148,13 +135,15 @@
 <script>
 import Avatar from "@/components/Avatar";
 import ProfileSettings from "@/components/ProfileSettings";
+import CreateJoinPopover from "@/components/CreateJoinPopover";
 import firebase, { db } from "@/firebaseConfig";
 
 export default {
   name: "NavBar",
   components: {
     Avatar,
-    ProfileSettings
+    ProfileSettings,
+    CreateJoinPopover
   },
   data: function() {
     return {
@@ -226,6 +215,14 @@ export default {
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
 
+.badge::after {
+  top: 25px !important;
+  font-size: 12px !important;
+  vertical-align: center;
+  // padding: 0px !important;
+  width: 10px !important;
+  height: 18px !important;
+}
 .group-card {
   width: 100%;
   max-width: 250px;
@@ -253,6 +250,7 @@ export default {
 
 .nav-button {
   width: 250px;
+  margin-right: 20px;
 }
 
 .navbar {
