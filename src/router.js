@@ -93,11 +93,11 @@ let router = new Router({
     //                                                                                /edit
     //                                                                                /create
     {
-      path: "/:groupID/flashcards/study",
+      path: "/:groupID/flashcards/:deckID/study",
       name: "study",
       component: FlashcardStudy,
       meta: {
-        title: "Flashcard | Social Study",
+        title: "Flashcard Study | Social Study",
         requiresAuth: true
       }
     },

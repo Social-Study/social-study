@@ -1,10 +1,11 @@
 <template>
   <div
+    v-if="dataloaded"
     class="content-container"
     @keyup.space="flipcard()"
   >
 
-    <page-title>Software Engineering Terms</page-title>
+    <page-title>{{deckName}} Flashcards</page-title>
     <div class="page-content">
       <button
         @click="prevCard"
@@ -41,7 +42,8 @@
 <script>
 import PageTitle from "../components/PageTitle";
 import { setTimeout } from "timers";
-import anime from 'animejs'
+import firebase, { db } from "../firebaseConfig";
+import anime from 'animejs';
 
 export default {
   name: "flashcardStudy",
@@ -57,22 +59,32 @@ export default {
       termList: [],
       definitionList: [],
       cardColor: "#E7E7E7",
-
-      // hard-coded flashcard deck for testing
-      flashcardDeck: [
-        { term: "WBS", definition: "Work Breakdown Structure" },
-        {
-          term: "Risk",
-          definition: "Unwanted event that has negative consequences usually"
-        },
-        {
-          term: "Functional Requirements",
-          definition: "Statements of services the system should provide"
-        },
-        { term: "SDLC", definition: "Systems Development Lifecycle" },
-        { term: "<<include>>", definition: "Relationship always required" }
-      ]
+      deckName: '',
+      dataloaded: false
     };
+  },
+  created() {
+    const groupID = this.$route.params.groupID;
+    const deckID = this.$route.params.deckID;
+    const self = this;
+    let flashcardCollection = db.collection('study-groups').doc(groupID).collection('flashcardDecks').doc(deckID); 
+    flashcardCollection
+    .get().then(function(doc) {
+        if (doc.exists) {
+            // console.log("Document data:", doc.data());
+            self.deckName = doc.data().title;
+            self.termList = doc.data().terms;
+            self.definitionList = doc.data().definitions;
+            self.currentContent = self.termList[0];
+            self.dataloaded = true;
+
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
   },
   methods: {
     //flips the current card
@@ -204,15 +216,6 @@ export default {
   //destroys the key event listener
   beforeDestroy() {
     window.removeEventListener("keyup", this.keyPressed);
-  },
-  //load all the data from the flashcard deck into arrays
-  //set the first card's content
-  created() {
-    for (var cards in this.flashcardDeck) {
-      this.termList.push(this.flashcardDeck[cards].term);
-      this.definitionList.push(this.flashcardDeck[cards].definition);
-    }
-    this.currentContent = this.termList[this.cardIndex];
   }
 };
 </script>
