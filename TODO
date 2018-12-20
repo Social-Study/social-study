@@ -15,12 +15,15 @@ General:
     - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
   ☐ Store displayname in firestore so that it updates
+  ☐ Refactor the components into different subfolders to organize it a bit
 
 Components Needed:
   ☐ Notification popup
     Currently using vue-notifications but would be willing to switch to something better.
   ☐ Modal that can be used for all other modals.
   ☐ Custom designed switch component
+  ☐ Update page-title so that it can be used with pages that have buttons in their headers
+  ☐ Create add button card item
 
 Firebase Functions File:
   ☐ Remove expired invite codes
@@ -59,6 +62,7 @@ Known Bugs:
   ☐ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present
   ☐ Form validation is broken
     - May have to implement custom validation for the create page
+  ☐ On the study page, when you select next flashcard with the buttons. the spacebar doesn't work as intended
 
 Vuex Store:
   ☐ Only save the uid to local storage
@@ -99,6 +103,8 @@ Flashcards Collection:
   ✔ link decks to study page @done(18-12-19 20:17)
 
 Flashcards:
+  ☐ Button to restart flashcards when you reach the end
+  ☐ Shuffle button
   ✔ Implement navigation animations @done(18-12-19 20:16)
   ✔ Implement firebase functionality @done(18-12-19 20:16)
   ✔ find a way to better indicate which side of the flashcard is currently displaying @done(18-12-19 20:16)
@@ -107,6 +113,9 @@ Animations / Transitions:
   Create Page:
     ☐ Animation when steps indicator changes
     ☐ Animation when user navigates between cards
+
+PageTitle:
+  ☐ Make component more robust so that it accepts buttons in the navbar. Would help with page layout looks and functionality
 
 Archive:
   ✔ Add more detail to Study Group cards in dropdown @done(18-12-16 21:51) @project(Homepage)

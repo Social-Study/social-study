@@ -88,10 +88,6 @@ let router = new Router({
         requiresAuth: true
       }
     },
-
-    // with firebase integration this path will have to be /:groupID/flashcards/deckID/study
-    //                                                                                /edit
-    //                                                                                /create
     {
       path: "/:groupID/flashcards/:deckID/study",
       name: "study",
@@ -103,7 +99,7 @@ let router = new Router({
     },
     {
       path: "/:groupID/flashcards/create",
-      name: "createflashcard",
+      name: "create",
       component: FlashcardCreate,
       meta: {
         title: "Flashcard Create | Social Study",

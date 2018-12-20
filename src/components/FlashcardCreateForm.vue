@@ -1,32 +1,36 @@
 <template>
-<div id="container">
-  <label class="form-label" id="label-term"> 
-    Term 
-  </label>
-  <input 
-    type="text" 
-    class="form-input" 
-    id="input-term"
-    maxlength="15"
-    v-model="data.term"
-    v-on:input="TermUpdated"
-
-  >
-  <label class="form-label" id="label-def"> 
-    Definition 
-  </label>
-  <textarea 
-    type="text" 
-    class="form-input" 
-    id="input-def"
-    rows="3"
-    maxlength="150"
-    v-model="data.def"
-    v-on:input="DefUpdated"
-
-  > 
+  <div id="container">
+    <label
+      class="form-label"
+      id="label-term"
+    >
+      Term
+    </label>
+    <input
+      type="text"
+      class="form-input"
+      id="input-term"
+      maxlength="15"
+      v-model="data.term"
+      v-on:input="TermUpdated"
+    >
+    <label
+      class="form-label"
+      id="label-def"
+    >
+      Definition
+    </label>
+    <textarea
+      type="text"
+      class="form-input"
+      id="input-def"
+      rows="3"
+      maxlength="150"
+      v-model="data.def"
+      v-on:input="DefUpdated"
+    >
   </textarea>
-</div>
+  </div>
 </template>
 
 <script>
@@ -35,29 +39,26 @@ export default {
   props: {
     index: Number
   },
-  data(){
+  data() {
     return {
-      data:{
+      data: {
         index: 0,
-        term: '',
-        def: ''
+        term: "",
+        def: ""
       }
-
     };
   },
-  created(){
+  created() {
     this.data.index = this.index;
   },
-  methods:{
-    TermUpdated(event){
-      this.$emit('termUpdated', this.data);
+  methods: {
+    TermUpdated(event) {
+      this.$emit("termUpdated", this.data);
     },
-    DefUpdated(event){
-      this.$emit('defUpdated', this.data);
+    DefUpdated(event) {
+      this.$emit("defUpdated", this.data);
     },
-    ErrorCheck(){
-
-    }
+    ErrorCheck() {}
   }
 };
 </script>
@@ -65,34 +66,37 @@ export default {
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
 
-#container{
-  margin: 25px;
-  margin-top: 30px;
+#container {
+  // margin: 25px;
+  // margin-top: 30px;
   background-image: $orange-gradient;
   padding: 10px;
   height: 250px;
-  width: 240px;
+  width: 250px;
   border-radius: 10px;
+  // FIXME: Something is fucked with the alignment. If you put a margin-bottom the add card will never be inline...
+  margin: 0 40px 40px 0;
+  // margin-bottom: 40px;
   box-shadow: $shadow;
   &:hover {
     box-shadow: $shadow-hovered;
   }
 }
-#input-term{
+#input-term {
   text-align: center;
 }
 
-#label-def{
+#label-def {
   margin-top: 10px;
 }
-label{
-  color:white;
+label {
+  color: white;
 }
-textarea{
+textarea {
   resize: none;
   border-radius: 5px;
 }
-input{
+input {
   border-radius: 5px;
 }
 </style>

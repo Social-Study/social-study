@@ -5,7 +5,7 @@
     @keyup.space="flipcard()"
   >
 
-    <page-title>{{deckName}} Flashcards</page-title>
+    <page-title>{{deckName}}</page-title>
     <div class="page-content">
       <button
         @click="prevCard"
@@ -41,7 +41,7 @@
 import PageTitle from "../components/PageTitle";
 import { setTimeout } from "timers";
 import firebase, { db } from "../firebaseConfig";
-import anime from 'animejs';
+import anime from "animejs";
 
 export default {
   name: "flashcardStudy",
@@ -57,7 +57,7 @@ export default {
       termList: [],
       definitionList: [],
       cardColor: "#E7E7E7",
-      deckName: '',
+      deckName: "",
       dataloaded: false
     };
   },
@@ -65,24 +65,29 @@ export default {
     const groupID = this.$route.params.groupID;
     const deckID = this.$route.params.deckID;
     const self = this;
-    let flashcardCollection = db.collection('study-groups').doc(groupID).collection('flashcardDecks').doc(deckID); 
+    let flashcardCollection = db
+      .collection("study-groups")
+      .doc(groupID)
+      .collection("flashcardDecks")
+      .doc(deckID);
     flashcardCollection
-    .get().then(function(doc) {
+      .get()
+      .then(function(doc) {
         if (doc.exists) {
-            // console.log("Document data:", doc.data());
-            self.deckName = doc.data().title;
-            self.termList = doc.data().terms;
-            self.definitionList = doc.data().definitions;
-            self.currentContent = self.termList[0];
-            self.dataloaded = true;
-
+          // console.log("Document data:", doc.data());
+          self.deckName = doc.data().title;
+          self.termList = doc.data().terms;
+          self.definitionList = doc.data().definitions;
+          self.currentContent = self.termList[0];
+          self.dataloaded = true;
         } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
         }
-    }).catch(function(error) {
+      })
+      .catch(function(error) {
         console.log("Error getting document:", error);
-    });
+      });
   },
   methods: {
     //flips the current card

@@ -40,9 +40,12 @@
           <router-link
             :class="
               $route.name === 'flashcards' ? 'active' : '' ||
-               $route.name === 'study' ? 'active' : ''"
+              $route.name === 'study' ? 'active' : '' ||
+              $route.name === 'create' ? 'active' : ''"
             :to="{ name: 'flashcards' }"
-          ><i class="fas fa-sticky-note"></i> Flashcards</router-link>
+          >
+            <i class="fas fa-sticky-note"></i> Flashcards
+          </router-link>
         </li>
         <li class="menu-item text-left">
           <a :class="$route.name === 'quiz' ? 'active' : ''"><i class="fas fa-pencil-alt"></i> Quiz</a>
