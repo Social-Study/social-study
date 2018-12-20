@@ -11,7 +11,7 @@ General:
   ☐ Figure out how to split the code so the bundle size is not as large...
   ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
     Not exactly sure how to do this.
-  ☐ find new animation library
+  ✔ find new animation library @done(18-12-19 20:15)
     - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
   ☐ Store displayname in firestore so that it updates
@@ -94,11 +94,13 @@ Create Study Group:
 
 Flashcards Collection:
   ☐ Figure out proper way to get the last row to the left instead of centering it.
+  ✔ load in decks from firebase @done(18-12-19 20:17)
+  ✔ link decks to study page @done(18-12-19 20:17)
 
 Flashcards:
-  ☐ Implement navigation animations
-  ☐ Implement firebase functionality
-  ☐ find a way to better indicate which side of the flashcard is currently displaying
+  ✔ Implement navigation animations @done(18-12-19 20:16)
+  ✔ Implement firebase functionality @done(18-12-19 20:16)
+  ✔ find a way to better indicate which side of the flashcard is currently displaying @done(18-12-19 20:16)
 
 Animations / Transitions:
   Create Page:

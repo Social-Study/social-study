@@ -1,14 +1,28 @@
 <template>
-  <div class="flashcard-deck">
-    <h1 class="deck-title">Software Engineering Terms</h1>
-    <h3 class="card-count">5 Cards</h3>
-    <h5 class="deck-creator text-gray">Evan Buss</h5>
+  <div 
+  class="flashcard-deck" 
+  @click="goToStudy">
+    <h1 class="deck-title">{{title}}</h1>
+    <h3 class="card-count">{{cardNum}} Cards</h3>
+    <h5 class="deck-creator text-gray">{{creator}}</h5>
   </div>
 </template>
 
 <script>
 export default {
-  name: "FlashcardDeck"
+  name: "FlashcardDeck",
+  props:{
+      title: '',
+      cardNum: Number,
+      creator: '',
+      creatorUid: '',
+      documentID: ''
+  },
+  methods:{
+    goToStudy(){
+      this.$router.push(`/${this.$route.params.groupID}/flashcards/${this.documentID}/study`);
+    }
+  }
 };
 </script>
 
