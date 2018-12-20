@@ -51,6 +51,7 @@
           class="infoContainer"
           v-else-if="active === 1"
         >
+          <!-- TODO: Figure out why validation isn't working... -->
           <h2>What is the course intructor's name?</h2>
           <input
             @keydown.enter="next"
@@ -58,10 +59,10 @@
             type="text"
             v-model="instructorName"
             placeholder="Instructor Name"
-            name="instructorName"
+            name="instructor"
             v-validate="'required'"
           />
-          <span style="color: red;">{{ errors.first("instructorName") }}</span>
+          <span style="color: red;">{{ errors }}</span>
         </div>
 
         <!-- Class Meeting Time Form -->

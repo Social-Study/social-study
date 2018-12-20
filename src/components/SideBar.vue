@@ -144,10 +144,10 @@ export default {
             db.collection("study-groups").doc(groupID)
           ).then(active => {
             this.activeGroup === active;
-            this.$store.commit("setActiveGroup", {
-              groupID: active.id,
-              details: active
-            });
+            // this.$store.commit("setActiveGroup", {
+            //   groupID: active.id,
+            //   details: active
+            // });
           });
 
           this.isMember = true;
