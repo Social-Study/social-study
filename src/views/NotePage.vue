@@ -1,6 +1,5 @@
 <template>
-  <div>
-
+  <div style="height: 85%;">
     <notifications
       group="notes"
       position="left top"
@@ -51,6 +50,7 @@
         class="page-edit"
       >
       </textarea>
+      <!-- TODO: Use a computed property for the styling when I add more styles -->
       <div
         v-html="render"
         class="page-view"
@@ -188,6 +188,7 @@ export default {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: flex-start;
+  height: 100%;
 }
 
 .page-edit {
@@ -195,7 +196,8 @@ export default {
   box-shadow: $shadow-hovered;
   border: none;
   display: inline-block;
-  min-height: 800px;
+  // min-height: 800px;
+  height: 100%;
   width: 50%;
   margin-right: 40px;
   background-color: white;
@@ -212,8 +214,9 @@ export default {
   padding: 0;
   overflow-y: auto;
   text-align: left;
-  min-height: 800px;
-  max-height: 800px;
+  height: 100%;
+  // min-height: 800px;
+  // max-height: 800px;
   width: 50%;
 }
 </style>

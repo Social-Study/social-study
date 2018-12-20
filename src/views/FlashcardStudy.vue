@@ -18,9 +18,7 @@
           :style="{backgroundColor: cardColor}"
           @click="flipcard"
         >
-          <h1
-            class="flashcard-content"
-          >
+          <h1 class="flashcard-content">
             {{currentContent}}
           </h1>
         </div>
@@ -41,7 +39,7 @@
 <script>
 import PageTitle from "../components/PageTitle";
 import { setTimeout } from "timers";
-import anime from 'animejs'
+import anime from "animejs";
 
 export default {
   name: "flashcardStudy",
@@ -78,18 +76,12 @@ export default {
     //flips the current card
     flipcard() {
       anime({
-        targets: '.flashcard',
-        height:[
-          {value: 0, duration: 150},
-          {value: 300, duration: 150}
-        ]
+        targets: ".flashcard",
+        height: [{ value: 0, duration: 150 }, { value: 300, duration: 150 }]
       });
       anime({
-        targets: '.flashcard-content',
-        opacity: [
-          {value: 0, duration: 150},
-          {value: 1, duration : 150}
-        ]
+        targets: ".flashcard-content",
+        opacity: [{ value: 0, duration: 150 }, { value: 1, duration: 150 }]
       });
       const self = this;
       setTimeout(function() {
@@ -111,8 +103,8 @@ export default {
     nextCard() {
       if (this.cardIndex < this.termList.length - 1) {
         let nextAnimation = anime.timeline({
-          targets: '.flashcard',
-          easing:'linear',
+          targets: ".flashcard",
+          easing: "linear",
           duration: 100
         });
         nextAnimation
@@ -138,15 +130,14 @@ export default {
           self.flipped = false;
           self.cardColor = "#E7E7E7";
         }, 110);
-
       }
     },
     //decrements the current card index and updates the displayed info
     prevCard() {
       if (this.cardIndex > 0) {
         let prevAnimation = anime.timeline({
-          targets: '.flashcard',
-          easing:'linear',
+          targets: ".flashcard",
+          easing: "linear",
           duration: 100
         });
         prevAnimation
@@ -167,7 +158,7 @@ export default {
           });
         this.cardIndex--;
         const self = this;
-        setTimeout(function(){
+        setTimeout(function() {
           self.flipped = false;
           self.currentContent = self.termList[self.cardIndex];
           self.cardColor = "#E7E7E7";
@@ -187,6 +178,9 @@ export default {
       switch (event.which) {
         case 32:
           this.flipcard();
+          break;
+        case 38:
+          this.flipCard();
           break;
         case 37:
           this.prevCard();
@@ -259,12 +253,12 @@ export default {
 .btn {
   margin: 10px;
 }
-#cardIndex{
+#cardIndex {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;  
+  user-select: none;
 }
 </style>

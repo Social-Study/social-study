@@ -204,7 +204,7 @@ div.off-canvas {
 }
 
 div.off-canvas-content {
-  // min-height: 100%;
+  min-height: 100%;
   overflow: auto;
   padding: 0 !important;
 }

@@ -1,8 +1,8 @@
 <template>
   <div>
     <page-title>Flashcard Collection</page-title>
-    <button 
-      class="btn btn-primary" 
+    <button
+      class="btn btn-primary"
       id="new-btn"
       @click="$router.push(`/${$route.params.groupID}/flashcards/create`)"
     >New Flashcard Deck
@@ -11,23 +11,24 @@
       @click="$router.push(`/${$route.params.groupID}/flashcards/study`)"
       class="content-container"
     >
-    <div class="outer-container">
-      <div class="content-container">
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
-        <flashcard-deck></flashcard-deck>
+      <div class="outer-container">
+        <div class="content-container">
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+          <flashcard-deck></flashcard-deck>
+        </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </template>
 
@@ -56,7 +57,7 @@ export default {
   flex-flow: row wrap;
   justify-content: center;
 }
-#new-btn{
+#new-btn {
   margin-top: 25px;
 }
 </style>

@@ -6,41 +6,6 @@
       group="joinErrors"
       position="right top"
     />
-
-    <!-- Class Join Confirmation Modal -->
-    <div
-      v-if="confirmJoin && inviteGroup !== null"
-      class="modal modal-sm active"
-    >
-      <a
-        @click="confirmJoin = false"
-        href="#close"
-        class="modal-overlay"
-        aria-label="Close"
-      ></a>
-      <div class="modal-container">
-        <div class="modal-header">
-          <div class="modal-title h5">Join {{inviteGroup.className}}?</div>
-        </div>
-        <div class="modal-body">
-          <div class="text-uppercase text-left text-dark">Instructor</div>
-          <div class="text-center text-primary">{{inviteGroup.instructorName}}</div>
-          <div class="text-uppercase text-left text-dark"># of Members</div>
-          <div class="text-center text-primary">{{inviteGroup.members.length}}</div>
-        </div>
-        <div class="modal-footer">
-          <button
-            @click="confirmJoin=false"
-            class="btn modal-btn"
-          >Cancel</button>
-          <button
-            @click="joinStudyGroup"
-            class="btn btn-primary modal-btn"
-          >Join</button>
-        </div>
-      </div>
-    </div>
-
     <div class="dashboardBody">
       <div class="empty">
         <div class="empty-icon">
@@ -55,7 +20,9 @@
           v-if="this.studyGroups && this.studyGroups.length === 0"
           class="empty-title h5"
         >You don't have any Study Groups!</p>
-        <p class="empty-subtitle">Create a brand new Study Group</p>
+        <p class="empty-subtitle text-large text-bold">Welcome to your Dashboard</p>
+        <p class="empty-subtitle">It is currently in development.</p>
+        <!-- <p class="empty-subtitle">Create a brand new Study Group</p>
         <div class="empty-action">
           <button
             @click="$router.push('/dashboard/create')"
@@ -74,8 +41,8 @@
           <button
             @click="queryStudyGroup"
             class="btn btn-primary input-group-btn"
-          >Join</button>
-        </div>
+          >Join</button> -->
+        <!-- </div> -->
       </div>
     </div>
   </div>
@@ -95,91 +62,9 @@ export default {
       user: null,
       // List user's study groups
       studyGroups: [],
-      // Show/Hide the confirmation modal
-      confirmJoin: false,
-      // The user entered group invite code
-      inviteCode: "",
       // The returned id of the group
-      newGroupID: "",
-      // The returned group's detail data
-      inviteGroup: null
+      newGroupID: ""
     };
-  },
-  methods: {
-    // Add the current user's id to the new Study Group
-    joinStudyGroup() {
-      db.collection("study-groups")
-        .doc(this.newGroupID)
-        .update({
-          members: FirebaseConsts.firestore.FieldValue.arrayUnion(
-            this.$store.getters.uid
-          )
-        })
-        .then(() => {
-          this.confirmJoin = false;
-          this.$router.push(`/${this.newGroupID}/home`);
-        });
-    },
-    // Search all study groups to find a matching group for the invite code
-    queryStudyGroup() {
-      if (this.inviteCode !== "") {
-        db.collection("study-groups")
-          .where("inviteCodes", "array-contains", this.inviteCode)
-          .limit(1)
-          .get()
-          .then(querySnapshot => {
-            if (querySnapshot.size !== 0) {
-              querySnapshot.forEach(doc => {
-                this.newGroupID = doc.id;
-              });
-              return true;
-            } else {
-              console.log("Study Group Not Found!");
-              return false;
-            }
-          })
-          .then(groupFound => {
-            if (groupFound) {
-              db.collection("study-groups")
-                .doc(this.newGroupID)
-                .get()
-                .then(doc => {
-                  this.inviteGroup = doc.data();
-                  // Check if the group already contains the user
-                  if (
-                    !this.inviteGroup.members.includes(this.$store.getters.uid)
-                  ) {
-                    this.confirmJoin = true;
-                  } else {
-                    this.$notify({
-                      group: "joinErrors",
-                      type: "warning",
-                      title: "Unable to Join Study Group",
-                      text:
-                        "You are already a member of " +
-                        this.inviteGroup.className
-                    });
-                  }
-                });
-            } else {
-              this.$notify({
-                group: "joinErrors",
-                type: "error",
-                title: "Study Group Not Found",
-                text: "A Study Group matching the invite code was not found."
-              });
-              console.log("didn't run because group not found");
-            }
-          });
-      } else {
-        this.$notify({
-          group: "joinErrors",
-          type: "error",
-          title: "Invalid Input",
-          text: "Please enter your Study Group Invite Code"
-        });
-      }
-    }
   },
   created() {
     // Load user data from firebase using the stored uid
