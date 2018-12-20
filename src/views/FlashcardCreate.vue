@@ -46,7 +46,6 @@ import PageTitle from "../components/PageTitle";
 import flashcardCreateForm from "../components/FlashcardCreateForm";
 import firebase, { db } from "../firebaseConfig";
 
-
 export default {
     name: "flashcardCreate",
     components: {
@@ -93,16 +92,23 @@ export default {
             if(this.deckTitle !== '' && this.contentFilled){
                 const self = this;
                 const groupID = this.$route.params.groupID;
-                let flashcardCollection = db.collection('study-groups').doc(groupID).collection('flashcardDecks'); 
+                const flashcardCollection = db.collection('study-groups').doc(groupID).collection('flashcardDecks');
+                let user = firebase.auth().currentUser;
                 flashcardCollection.add({
                     title: this.deckTitle,
                     terms: this.terms,
                     definitions: this.definitions,
-                    creator: this.$store.getters.uid
+                    creatorUID: this.$store.getters.uid,
+                    creatorName: user.displayName
                 })
                 .then(function(docRef) {
-                    console.log("Document written with ID: ", docRef.id);
-                    self.$router.push(`/${self.$route.params.groupID}/flashcards`);
+                    console.log("Flashcard Deck created with doc id: ", docRef.id);
+                    db.collection('study-groups').doc(groupID).collection('flashcardDecks').doc(docRef.id).update({
+                        documentID: docRef.id
+                    })
+                    .then(function(){
+                        self.$router.push(`/${self.$route.params.groupID}/flashcards`);
+                    })
                 })
                 .catch(function(error) {
                     console.error("Error adding document: ", error);
