@@ -57,9 +57,11 @@ firebase deploy
 # Main Technologies
 
 - Vue.js
+- Vuex
 - Firebase / Vuefire
-- Pose
+- Marked (markdown renderer)
+- UUID
 - Vee - Validate
 - Animate.css
-- vue-pose
+- Anime.js
 - Spectre.css

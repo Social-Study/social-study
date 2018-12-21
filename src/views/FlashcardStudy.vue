@@ -2,7 +2,7 @@
   <div
     v-if="dataloaded"
     class="content-container"
-    @keyup.space="flipcard()"
+    @keyup.space="flipCard()"
   >
 
     <page-title>{{deckName}}</page-title>
@@ -17,7 +17,7 @@
         <div
           class="flashcard"
           :style="{backgroundColor: cardColor}"
-          @click="flipcard"
+          @click="flipCard"
         >
           <h1 class="flashcard-content">
             {{currentContent}}
@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     //flips the current card
-    flipcard() {
+    flipCard() {
       anime({
         targets: ".flashcard",
         height: [{ value: 0, duration: 150 }, { value: 300, duration: 150 }]
@@ -194,9 +194,6 @@ export default {
     keyPressed(event) {
       switch (event.which) {
         case 32:
-          this.flipcard();
-          break;
-        case 38:
           this.flipCard();
           break;
         case 37:
@@ -204,6 +201,9 @@ export default {
           break;
         case 39:
           this.nextCard();
+          break;
+        case 38:
+          this.flipCard();
           break;
       }
     }
