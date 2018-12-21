@@ -65,6 +65,7 @@ Known Bugs:
   ☐ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present
   ☐ Form validation is broken
     - May have to implement custom validation for the create page
+    - Might be caused by not using a form. I'm just using vee-validate to validate input fields...
   ☐ On the study page, when you select next flashcard with the buttons. the spacebar doesn't work as intended
 
 Vuex Store:
@@ -72,6 +73,7 @@ Vuex Store:
 
 Homepage:
   ✔ Figure out what the card backgrounds should look like @done(18-12-19 20:08)
+  ☐ Display an empty placeholder if the user doesn't have any recent notes or books.
 
 Members Page:
   ☐ Add members list page sort filters
