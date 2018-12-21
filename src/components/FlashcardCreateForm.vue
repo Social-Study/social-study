@@ -74,9 +74,7 @@ export default {
   height: 250px;
   width: 250px;
   border-radius: 10px;
-  // FIXME: Something is fucked with the alignment. If you put a margin-bottom the add card will never be inline...
   margin: 0 40px 40px 0;
-  // margin-bottom: 40px;
   box-shadow: $shadow;
   &:hover {
     box-shadow: $shadow-hovered;

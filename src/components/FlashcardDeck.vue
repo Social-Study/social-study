@@ -1,7 +1,8 @@
 <template>
-  <div 
-  class="flashcard-deck" 
-  @click="goToStudy">
+  <div
+    class="flashcard-deck"
+    @click="goToStudy"
+  >
     <h1 class="deck-title">{{title}}</h1>
     <h3 class="card-count">{{cardNum}} Cards</h3>
     <h5 class="deck-creator text-gray">{{creator}}</h5>
@@ -11,16 +12,18 @@
 <script>
 export default {
   name: "FlashcardDeck",
-  props:{
-      title: '',
-      cardNum: Number,
-      creator: '',
-      creatorUid: '',
-      documentID: ''
+  props: {
+    title: "",
+    cardNum: Number,
+    creator: "",
+    creatorUid: "",
+    documentID: ""
   },
-  methods:{
-    goToStudy(){
-      this.$router.push(`/${this.$route.params.groupID}/flashcards/${this.documentID}/study`);
+  methods: {
+    goToStudy() {
+      this.$router.push(
+        `/${this.$route.params.groupID}/flashcards/${this.documentID}/study`
+      );
     }
   }
 };
@@ -47,14 +50,18 @@ export default {
 }
 
 .deck-title {
-  flex: 8;
+  flex: 6;
+  font-size: 2em;
+  margin: 0;
 }
 
 .card-count {
   flex: 1;
+  font-size: 1.5em;
 }
 
 .deck-creator {
   flex: 1;
+  font-size: 1.2em;
 }
 </style>

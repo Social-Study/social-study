@@ -1,14 +1,26 @@
 <template>
   <div class="content-container">
-    <page-title>New Flashcard Deck</page-title>
-    <input
-      class="form-input"
-      type="text"
-      id="deck-title"
-      v-model="deckTitle"
-      maxlength="30"
-      placeholder="Untitled Flashcard Deck"
-    >
+    <page-title>
+      <template slot="left">
+        <input
+          class="name-input"
+          type="text"
+          v-model="deckTitle"
+          maxlength="30"
+          placeholder="Untitled Flashcard Deck"
+        >
+      </template>
+
+      <template slot="right">
+        <button
+          @click="saveDeck"
+          class="btn btn-action split"
+        >
+          <i class="fas fa-save"></i>
+        </button>
+      </template>
+    </page-title>
+
     <div
       class="toast toast-error"
       v-if="noTitle"
@@ -29,15 +41,14 @@
       ></button>
       Please Enter term and definition for each flashcard
     </div>
-    <div class="divider"></div>
     <div class="page-content">
-      <flashcardCreateForm
+      <flashcard-create-form
         v-for="(term, index) in terms"
         :key="index"
         :index="index"
         maxlength="100"
-        v-on:termUpdated="termUpdated"
-        v-on:defUpdated="defUpdated"
+        @termUpdated="termUpdated"
+        @defUpdated="defUpdated"
       />
       <div
         class="addCard"
@@ -51,28 +62,22 @@
         </div>
       </div>
     </div>
-    <div class="saveDeck">
-      <button
-        @click="saveDeck"
-        class="save-deck-button"
-      > Save Deck</button>
-    </div>
 
   </div>
 </template>
 
 <script>
 import PageTitle from "../components/PageTitle";
-import flashcardCreateForm from "../components/FlashcardCreateForm";
+import FlashcardCreateForm from "../components/FlashcardCreateForm";
 import firebase, { db } from "../firebaseConfig";
 
 export default {
   name: "flashcardCreate",
   components: {
     PageTitle,
-    flashcardCreateForm
+    FlashcardCreateForm
   },
-  data: function() {
+  data() {
     return {
       terms: [null],
       definitions: [null],
@@ -123,7 +128,7 @@ export default {
             creatorUID: this.$store.getters.uid,
             creatorName: user.displayName
           })
-          .then(function(docRef) {
+          .then(docRef => {
             console.log("Flashcard Deck created with doc id: ", docRef.id);
             db.collection("study-groups")
               .doc(groupID)
@@ -132,11 +137,11 @@ export default {
               .update({
                 documentID: docRef.id
               })
-              .then(function() {
+              .then(() => {
                 self.$router.push(`/${self.$route.params.groupID}/flashcards`);
               });
           })
-          .catch(function(error) {
+          .catch(error => {
             console.error("Error adding document: ", error);
           });
       } else {
@@ -157,31 +162,18 @@ export default {
   flex-flow: row wrap;
   justify-content: left;
   align-items: center;
+  margin: 40px;
 }
-// .form-title {
-//   margin-top: 2%;
-// }
 
-#deck-title {
-  width: 30%;
-  height: 60%;
-  font-size: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-radius: 5px;
-  margin-top: 30px;
-}
 .addCard {
-  //   position: relative;
   box-shadow: $shadow;
-  //   top: 10px;
-  //   left: 10px;
   width: 250px;
   height: 250px;
   border-radius: 10px;
   background-color: $light-grey;
   user-select: none;
   padding-top: 10px;
+  margin: 0 40px 40px 0;
 
   &:hover {
     box-shadow: $shadow-hovered;
@@ -201,10 +193,6 @@ export default {
   text-align: center;
   font-size: 144px;
   font-weight: 600;
-  // TODO: Add gradient button later, not working on chrome because the -webkit-text-fill-color
-  // background: $nav-gradient;
-  // color: transparent;
-  // -webkit-text-fill-color: transparent;
   background-clip: text;
   bottom: 25px;
   position: relative;

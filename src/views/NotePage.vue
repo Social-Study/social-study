@@ -4,14 +4,17 @@
       group="notes"
       position="left top"
     />
-    <div class="page-header">
-      <input
-        class="note-title"
-        v-model="noteTitle"
-        type="text"
-      >
-      <div class="header-end">
 
+    <!-- New Header Component -->
+    <page-title>
+      <template slot="left">
+        <input
+          class="name-input"
+          v-model="noteTitle"
+          type="text"
+        >
+      </template>
+      <template slot="right">
         <div class="dropdown split">
           <a
             href="#"
@@ -40,8 +43,10 @@
           @click="saveNote"
           class="btn btn-action split"
         ><i class="fas fa-save"></i></button>
-      </div>
-    </div>
+
+      </template>
+    </page-title>
+
     <div class="
       content-container">
       <textarea
@@ -61,13 +66,16 @@
 </template>
 
 <script>
+import PageTitle from "@/components/PageTitle";
 import { db } from "@/firebaseConfig";
 
 let marked = require("marked");
 
 export default {
   name: "NotePage",
-  components: {},
+  components: {
+    PageTitle
+  },
   data() {
     return {
       noteTitle: "",
@@ -135,32 +143,6 @@ export default {
 @import "../../node_modules/spectre-markdown.css/dist/markdown.min.css";
 @import "../../node_modules/github-markdown-css/github-markdown.css";
 
-.note-title {
-  border: none;
-  background-color: #f6f6f6;
-  font-size: 20px;
-  min-width: 350px;
-  max-width: 350px;
-  font-weight: bold;
-  padding: 0 4px;
-  font-family: "Inter UI";
-}
-
-.page-header {
-  padding: 8px;
-  background-color: #c4c4c4;
-  width: 100%;
-  margin: 0;
-
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-
-  h1 {
-    font-size: 2em;
-  }
-}
-
 .dropdown > ul.menu {
   left: -70px;
   border-radius: 10px;
@@ -174,10 +156,6 @@ export default {
       color: white;
     }
   }
-}
-
-.split {
-  margin-left: 20px;
 }
 
 .content-container {

@@ -4,8 +4,12 @@
     class="content-container"
     @keyup.space="flipCard()"
   >
+    <page-title>
+      <template slot="center">
+        {{deckName}}
+      </template>
+    </page-title>
 
-    <page-title>{{deckName}}</page-title>
     <div class="page-content">
       <button
         @click="prevCard"
@@ -48,7 +52,7 @@ export default {
   components: {
     PageTitle
   },
-  data: function() {
+  data() {
     return {
       user: null,
       currentContent: String,
@@ -72,7 +76,7 @@ export default {
       .doc(deckID);
     flashcardCollection
       .get()
-      .then(function(doc) {
+      .then(doc => {
         if (doc.exists) {
           // console.log("Document data:", doc.data());
           self.deckName = doc.data().title;
@@ -85,7 +89,7 @@ export default {
           console.log("No such document!");
         }
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log("Error getting document:", error);
       });
   },
@@ -101,7 +105,7 @@ export default {
         opacity: [{ value: 0, duration: 150 }, { value: 1, duration: 150 }]
       });
       const self = this;
-      setTimeout(function() {
+      setTimeout(() => {
         //definition side
         if (self.flipped) {
           self.getCurrentContent();
@@ -142,7 +146,7 @@ export default {
           });
         this.cardIndex++;
         const self = this;
-        setTimeout(function() {
+        setTimeout(() => {
           self.currentContent = self.termList[self.cardIndex];
           self.flipped = false;
           self.cardColor = "#E7E7E7";
@@ -175,7 +179,7 @@ export default {
           });
         this.cardIndex--;
         const self = this;
-        setTimeout(function() {
+        setTimeout(() => {
           self.flipped = false;
           self.currentContent = self.termList[self.cardIndex];
           self.cardColor = "#E7E7E7";

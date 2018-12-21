@@ -274,7 +274,7 @@ export default {
   components: {
     MessageBar
   },
-  data: function() {
+  data() {
     return {
       // user: null,
       // Login Variables
@@ -304,7 +304,7 @@ export default {
   },
   computed: {
     // Only runs on page reload. Used to center logo on mobile
-    centerTitle: function() {
+    centerTitle() {
       if (window.innerWidth <= 600) {
         return { width: "100%" };
       }

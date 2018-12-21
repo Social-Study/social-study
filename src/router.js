@@ -45,7 +45,7 @@ let router = new Router({
     },
     {
       path: "/dashboard/create",
-      name: "create",
+      name: "createGroup",
       component: CreateGroup,
       meta: {
         title: "Create | Social Study",
@@ -57,7 +57,7 @@ let router = new Router({
       name: "home",
       component: GroupHomePage,
       meta: {
-        title: "Homepage | Social Study",
+        title: "Home | Social Study",
         requiresAuth: true
       }
     },
@@ -141,22 +141,5 @@ router.beforeEach((to, from, next) => {
     }
   });
 });
-// router.beforeEach((to, from, next) => {
-//   document.title = to.meta.title;
-//   console.log(to);
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     firebase.auth().onAuthStateChanged(user => {
-//       if (!user) {
-//         next({
-//           path: "/landing"
-//         });
-//       } else {
-//         next();
-//       }
-//     });
-//   } else {
-//     next();
-//   }
-// });
 
 export default router;

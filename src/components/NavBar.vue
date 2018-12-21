@@ -145,7 +145,7 @@ export default {
     ProfileSettings,
     CreateJoinPopover
   },
-  data: function() {
+  data() {
     return {
       menuActive: false,
       isSettingsActive: false,
@@ -201,7 +201,7 @@ export default {
       });
       return string;
     },
-    logOut: function() {
+    logOut() {
       firebase.auth().signOut();
       this.$router.push("/");
     },

@@ -57,7 +57,7 @@ import { getUserData } from "@/scripts/userFuncs";
 
 export default {
   name: "dashboard",
-  data: function() {
+  data() {
     return {
       user: null,
       // List user's study groups
