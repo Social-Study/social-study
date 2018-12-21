@@ -5,7 +5,7 @@
       @click="sidebarActive = true;"
       class="off-canvas-toggle btn btn-primary btn-action"
     >
-      <i class="icon icon-menu"></i>
+      <i class="fas fa-bars"></i>
     </a>
 
     <div
@@ -136,8 +136,6 @@ export default {
   },
   methods: {
     loadGroupData(groupID) {
-      // console.log("Sidebar: Loading Group Data function...");
-
       // Make sure the user is part of the group
       checkAccess(this.$store.getters.uid, this.$route.params.groupID)
         .then(() => {
@@ -147,26 +145,18 @@ export default {
             db.collection("study-groups").doc(groupID)
           ).then(active => {
             this.activeGroup === active;
-            // this.$store.commit("setActiveGroup", {
-            //   groupID: active.id,
-            //   details: active
-            // });
           });
 
           this.isMember = true;
           this.isLoading = false;
         })
         .catch(() => {
-          // console.log("You are not a member!");
           this.isLoading = false;
         });
     }
   },
   watch: {
     "$route.params.groupID"(id) {
-      // console.log(
-      //   "Sidebar: Active Group Changed - Getting new data from firestore"
-      // );
       this.loadGroupData(id);
     }
   }
@@ -177,6 +167,10 @@ export default {
 // Must be global styling not scoped to take affect
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
+
+a.off-canvas-toggle {
+  margin-top: 100%;
+}
 
 .sidebar {
   box-shadow: none;

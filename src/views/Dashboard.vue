@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import firebase, { db, FirebaseConsts } from "@/firebaseConfig";
+import { db } from "@/firebaseConfig";
 import { getUserData } from "@/scripts/userFuncs";
 
 export default {

@@ -241,7 +241,7 @@ export default {
     // db.collection("study-groups").where();
   },
   watch: {
-    activeTab(newVal, oldVal) {
+    activeTab(newVal) {
       if (newVal === 3) {
         // console.log("reloading groups");
         this.loadGroups();
@@ -251,7 +251,7 @@ export default {
   methods: {
     closeAndReset() {
       this.activeTab = 1;
-      this.$emit('closeSettings');
+      this.$emit("closeSettings");
     },
     loadGroups() {
       getUserGroups(this.user.uid)

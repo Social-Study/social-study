@@ -1,9 +1,9 @@
 <template>
   <div class="calendar">
     <div class="calendar-nav navbar">
-      <button class="btn btn-action btn-link btn-lg"><i class="icon icon-arrow-left"></i></button>
+      <button class="btn btn-action btn-link btn-lg"><i class="fas fa-arrow-left"></i></button>
       <div class="navbar-primary">March 2017</div>
-      <button class="btn btn-action btn-link btn-lg"><i class="icon icon-arrow-right"></i></button>
+      <button class="btn btn-action btn-link btn-lg"><i class="fas fa-arrow-right"></i></button>
     </div>
     <div class="calendar-container">
       <div class="calendar-header">

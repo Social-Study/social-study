@@ -131,7 +131,7 @@ export default {
   },
   watch: {
     // reload the group data when route changes
-    "$route.params.groupID"(newVal, oldVal) {
+    "$route.params.groupID"() {
       this.loadData();
     }
   }
@@ -190,7 +190,6 @@ export default {
     width: 250px;
     margin: 0px 0px 20px 20px;
     h1.deck-title {
-      // font-size: 5px !important;
       color: white;
     }
   }

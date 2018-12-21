@@ -16,7 +16,7 @@
           class="btn btn-action btn-success btn-lg s-circle"
           :class="active === 0 ? 'disabled c-not-allowed' : ''"
         >
-          <i class="icon icon-arrow-left"></i>
+          <i class="fas fa-arrow-left"></i>
         </button>
 
         <!-- Class Name Form -->
@@ -299,7 +299,7 @@
           class="btn btn-action btn-success btn-lg s-circle"
           :class="active === 7 ? 'disabled' : ''"
         >
-          <i class="icon icon-arrow-right"></i>
+          <i class="fas fa-arrow-right"></i>
         </button>
       </div>
 
