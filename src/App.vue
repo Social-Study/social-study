@@ -84,6 +84,7 @@ a.modal-overlay {
   background-image: $dark-gradient !important;
 }
 
+// Chat Sidebar Styles for Visible / Hidden
 .chat-active {
   margin-right: 300px;
   transition: 1s;

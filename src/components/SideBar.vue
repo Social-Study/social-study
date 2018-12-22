@@ -157,6 +157,8 @@ export default {
           this.isLoading = false;
         })
         .catch(() => {
+          console.log("load error!");
+
           this.isLoading = false;
         });
     }

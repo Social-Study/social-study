@@ -1,223 +1,3 @@
-<template>
-  <div v-if="userAuthorized && !isLoading">
-    <page-title>
-      <template slot="center">Study Group Admin Settings</template>
-      <template slot="right"><button
-          class="btn btn-action"
-          @click="saveData"
-        ><i class="fas fa-save"></i></button></template>
-    </page-title>
-    <div class="container">
-      <div class="columns">
-        <div class="column col-md-12">
-          <h2>Edit Group Details</h2>
-          <form
-            action=""
-            class="col-12 form-horizontal"
-          >
-            <!-- Class Name Input -->
-            <div class="form-group">
-              <label
-                class=" col-3 form-label"
-                for="input-example-1"
-              >Class Name</label>
-              <input
-                class="col-9 form-input"
-                type="text"
-                v-model="details.className"
-                placeholder="Class Name"
-              >
-            </div>
-
-            <!-- Course Code Input (Optional) -->
-            <div class="form-group">
-              <label
-                class=" col-3 form-label"
-                for="input-example-1"
-              >Course Code</label>
-              <input
-                class="col-9 form-input"
-                type="text"
-                v-model="details.courseCode"
-                placeholder="Course Code"
-              >
-            </div>
-
-            <!-- Class Instructor Input -->
-            <div class="form-group">
-              <label
-                class=" col-3 form-label"
-                for="input-example-1"
-              >Instructor Name</label>
-              <input
-                class="col-9 form-input"
-                type="text"
-                v-model="details.instructorName"
-                placeholder="Instructor Name"
-              >
-            </div>
-
-            <!-- Class Meeting Location Input -->
-            <div class="form-group">
-              <label
-                class=" col-3 form-label"
-                for="input-example-1"
-              >Meeting Location</label>
-              <input
-                class="col-9 form-input"
-                type="text"
-                v-model="details.location"
-                placeholder="Meeting Location"
-              >
-            </div>
-
-            <!-- Class Meeting Time Input -->
-            <div class="form-group">
-              <label
-                class=" col-3 form-label"
-                for="input-example-1"
-              >Meeting Time</label>
-              <span class="col-2"></span>
-              <input
-                class="col-2 form-input"
-                type="time"
-                v-model="details.meetingTime[0]"
-                placeholder="Instructor Name"
-              >
-              <span class="col-1"> to </span>
-              <input
-                class="col-2 form-input"
-                type="time"
-                v-model="details.meetingTime[1]"
-                placeholder="Instructor Name"
-              >
-            </div>
-
-            <!-- Meeting Days -->
-            <div class="form-group">
-              <label
-                class=" col-3 form-label"
-                for="input-example-1"
-              >Meeting Days</label>
-              <div class="col-9 btn-group btn-group-block">
-                <button
-                  @click.prevent="toggle('monday');"
-                  :class="details.meetingDays.monday ? 'active' : ''"
-                  class="btn"
-                >
-                  Monday
-                </button>
-                <button
-                  @click.prevent="toggle('tuesday');"
-                  :class="details.meetingDays.tuesday ? 'active' : ''"
-                  class="btn"
-                >
-                  Tuesday
-                </button>
-                <button
-                  @click.prevent="toggle('wednesday');"
-                  :class="details.meetingDays.wednesday ? 'active' : ''"
-                  class="btn"
-                >
-                  Wednesday
-                </button>
-                <button
-                  @click.prevent="toggle('thursday');"
-                  :class="details.meetingDays.thursday ? 'active' : ''"
-                  class="btn"
-                >
-                  Thursday
-                </button>
-                <button
-                  @click.prevent="toggle('friday');"
-                  :class="details.meetingDays.friday ? 'active' : ''"
-                  class="btn"
-                >
-                  Friday
-                </button>
-              </div>
-            </div>
-
-            <!-- Website URL (Optional) -->
-            <div class="form-group">
-              <label
-                class=" col-3 form-label"
-                for="input-example-1"
-              >Course Website</label>
-              <input
-                class="col-9 form-input"
-                type="url"
-                v-model="details.url"
-                placeholder="Optional Website URL"
-              >
-            </div>
-
-            <!-- Study Group Description (Optional-->
-            <div class="form-group">
-              <label
-                class=" col-3 form-label"
-                for="input-example-1"
-              >Group Description</label>
-              <textarea
-                class="col-9 form-input"
-                type="url"
-                v-model="details.description"
-                placeholder="Optional Description"
-                style="resize: none;"
-              />
-              </div>
-          </form>
-
-           <!-- <div class="column col-12"> -->
-              <h2>Active Invite Codes</h2>
-              <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th>Code</th>
-                    <th class="text-center">Revoke?</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="code in inviteCodes" :key="code">
-                    <td>{{code}}</td>
-                    <td>
-                      <button @click="removeCode(code)" class="btn btn-block btn-error">
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            <!-- </div> -->
-        </div>
-        <div class="column">
-
-            <div class="column col-12">
-              <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th class="text-center">Remove?</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="member in memberDetails" :key="member.uid ">
-                    <td>{{member.displayName}}</td>
-                    <td><button @click="removeMember(member.uid)" class="btn btn-block btn-error"><i class="fas fa-times"></i></button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TODO: Craft error landing page -->
-  <h1  v-else-if="!isLoading && !userAuthorized"> WTF ARE YOU DOING HERE</h1>
-  <div v-else class="loading loading-lg"></div>
-</template>
-
 <script>
 /**
  *  Owner Group Priveledges
@@ -281,6 +61,14 @@ export default {
           meetingDays: this.getDaysArray(this.details.meetingDays),
           websiteURL: this.details.url,
           extraInfo: this.details.description
+        })
+        .then(() => {
+          this.$notify({
+            group: "save",
+            type: "success",
+            title: "Changes Saved",
+            text: "All details successfully saved!"
+          });
         });
     },
     getDaysArray() {
@@ -388,8 +176,299 @@ export default {
 };
 </script>
 
+<template>
+  <div v-if="userAuthorized && !isLoading">
+    <page-title>
+      <template slot="center">Study Group Admin Settings</template>
+    </page-title>
+    <notifications
+      group="save"
+      position="left top"
+    />
+    <div class="container">
+      <div class="columns">
+        <div class="column col-5 col-mx-auto col-xl-10">
+          <div class="group-details">
+            <h2>Edit Group Details</h2>
+
+            <form
+              action=""
+              class="col-12 form-horizontal"
+            >
+              <!-- Class Name Input -->
+              <div class="form-group">
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Class Name</label>
+                <input
+                  class="col-9 form-input"
+                  type="text"
+                  v-model="details.className"
+                  placeholder="Class Name"
+                >
+              </div>
+
+              <!-- Course Code Input (Optional) -->
+              <div class="form-group">
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Course Code</label>
+                <input
+                  class="col-9 form-input"
+                  type="text"
+                  v-model="details.courseCode"
+                  placeholder="Course Code"
+                >
+              </div>
+
+              <!-- Class Instructor Input -->
+              <div class="form-group">
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Instructor Name</label>
+                <input
+                  class="col-9 form-input"
+                  type="text"
+                  v-model="details.instructorName"
+                  placeholder="Instructor Name"
+                >
+              </div>
+
+              <!-- Class Meeting Location Input -->
+              <div class="form-group">
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Meeting Location</label>
+                <input
+                  class="col-9 form-input"
+                  type="text"
+                  v-model="details.location"
+                  placeholder="Meeting Location"
+                >
+              </div>
+
+              <!-- Class Meeting Time Input -->
+              <div class="form-group">
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Meeting Time</label>
+                <div
+                  class="col-9"
+                  id="time-group"
+                >
+                  <input
+                    class="form-input"
+                    type="time"
+                    placeholder="Instructor Name"
+                    v-model="details.meetingTime[0]"
+                    required
+                  >
+                  -
+                  <input
+                    class="form-input"
+                    type="time"
+                    v-model="details.meetingTime[1]"
+                    placeholder="Instructor Name"
+                    required
+                  >
+                </div>
+              </div>
+
+              <!-- Meeting Days -->
+              <div class="form-group day-selector">
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Meeting Days</label>
+                <div class="col-9 btn-group btn-group-block">
+                  <button
+                    @click.prevent="toggle('monday');"
+                    :class="details.meetingDays.monday ? 'active' : ''"
+                    class="btn btn-block"
+                  >
+                    Mon
+                  </button>
+                  <button
+                    @click.prevent="toggle('tuesday');"
+                    :class="details.meetingDays.tuesday ? 'active' : ''"
+                    class="btn btn-block"
+                  >
+                    Tue
+                  </button>
+                  <button
+                    @click.prevent="toggle('wednesday');"
+                    :class="details.meetingDays.wednesday ? 'active' : ''"
+                    class="btn btn-block"
+                  >
+                    Wed
+                  </button>
+                  <button
+                    @click.prevent="toggle('thursday');"
+                    :class="details.meetingDays.thursday ? 'active' : ''"
+                    class="btn btn-block"
+                  >
+                    Thu
+                  </button>
+                  <button
+                    @click.prevent="toggle('friday');"
+                    :class="details.meetingDays.friday ? 'active' : ''"
+                    class="btn btn-block"
+                  >
+                    Fri
+                  </button>
+                </div>
+              </div>
+
+              <!-- Website URL (Optional) -->
+              <div class="form-group">
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Course Website</label>
+                <input
+                  class="col-9 form-input"
+                  type="url"
+                  v-model="details.url"
+                  placeholder="Optional Website URL"
+                >
+              </div>
+
+              <!-- Study Group Description (Optional-->
+              <div class="form-group">
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Group Description</label>
+                <textarea
+                  class="col-9 form-input"
+                  type="url"
+                  v-model="details.description"
+                  placeholder="Optional Description"
+                  style="resize: none;"
+                />
+                </div>
+          </form>
+          <button
+              class="btn"
+              id="save-btn"
+              @click="saveData"
+            >Save Changes <i class="fas fa-save"></i>
+            </button>
+            </div>
+        </div>
+        <div class="column col-6 col-xl-12">
+
+          <div class="columns">
+            <div class="group-details column col-10 col-mx-auto">
+              <h2>Active Invite Codes</h2>
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th style="width: 95%;">Code</th>
+                    <th class="text-center">Revoke?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="code in inviteCodes" :key="code">
+                    <td style="width: 95%;">{{code}}</td>
+                    <td class="button-td">
+                      <button @click="removeCode(code)" class="btn btn-action btn-error">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="group-details column col-10  col-mx-auto">
+              <h2>Study Group Members</h2>
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th style="width: 95%;">Name</th>
+                    <th class="text-center">Remove?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Show all members but you; the admin -->
+                  <tr v-if="member.uid !== $store.getters.uid" v-for="member in memberDetails" :key="member.uid ">
+                    <td style="width: 95%;">{{member.displayName}}</td>
+                    <td class="button-td">
+                      <button @click="removeMember(member.uid)" class="btn btn-action btn-error">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TODO: Craft error landing page -->
+  <h1  v-else-if="!isLoading && !userAuthorized"> WTF ARE YOU DOING HERE</h1>
+  <div v-else class="loading loading-lg"></div>
+</template>
+
 <style lang="scss" scoped>
+@import "../styleVariables";
+
+#save-btn {
+  margin: 10px 0 20px 0;
+}
+
+#time-group {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+}
+
 input[type="time"] {
   width: 120px;
+}
+
+.container {
+  margin-top: 40px;
+}
+
+.button-td {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.group-details {
+  padding: 0;
+  box-shadow: $shadow-heavy;
+  border-radius: 16px;
+  background-color: whitesmoke;
+  margin-bottom: 40px;
+  h2 {
+    border-radius: 16px 16px 0 0;
+    // background-image: $nav-gradient;
+    background-color: #4b48d6;
+    color: white;
+    padding: 5px;
+  }
+
+  form {
+    padding: 10px;
+  }
+  table {
+    margin: auto;
+    width: 95%;
+    margin: auto;
+    margin: auto;
+    border-radius: 16px;
+  }
 }
 </style>

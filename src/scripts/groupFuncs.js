@@ -40,6 +40,9 @@ function checkAccess(userID, groupID) {
         } else {
           reject();
         }
+      })
+      .catch(() => {
+        reject();
       });
   });
 }
@@ -60,6 +63,9 @@ function checkOwner(userID, groupID) {
         } else {
           reject();
         }
+      })
+      .catch(() => {
+        reject();
       });
   });
 }

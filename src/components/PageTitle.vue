@@ -28,7 +28,10 @@ export default {
 .header-container {
   padding: 8px 8px;
   background-color: #c4c4c4;
-  width: 100%;
+  // @HACK: Used to compensate for the scrollbar's width.
+  //  Otherwise, there is white space when the content requires a
+  //  scrollbar and the chat is visible
+  width: calc(100% + 20px);
 
   display: flex;
   flex-flow: row nowrap;

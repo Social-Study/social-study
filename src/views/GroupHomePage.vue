@@ -39,6 +39,8 @@
 
         <div class="divider"></div>
 
+        <!-- Displays the group's most popular flashcards -->
+        <!-- Decide metric (Study Count, Recently Created, Favorited) -->
         <div class="flashcards-container">
           <div class="tile-header">
             <h4>Recent Flashcards</h4>
@@ -150,7 +152,9 @@ export default {
 
     .calendar {
       flex: 1;
-      margin: 40px;
+      margin: 40px auto;
+      max-height: 300px;
+      max-width: 280px;
     }
 
     .date-details {

@@ -279,9 +279,17 @@ export default {
           this.profileDetails.newName !== this.user.displayName &&
           this.profileDetails.newName !== ""
         ) {
+          // Update the user's auth account
           this.user.updateProfile({
             displayName: this.profileDetails.newName
           });
+
+          // Update the firestore doc for the user
+          db.collection("users")
+            .doc(this.$store.getters.uid)
+            .update({
+              displayName: this.profileDetails.newName
+            });
         }
 
         if (this.profileDetails.newPhoto !== null) {
