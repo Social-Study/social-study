@@ -1,19 +1,33 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Dashboard from "./views/Dashboard.vue";
+import firebase from "./firebaseConfig";
 
+// User login and signup page
 import Landing from "./views/Landing.vue";
 
-import GroupHomePage from "./views/GroupHomePage";
+// User Specific Homepage
+import Dashboard from "./views/Dashboard.vue";
+
+// Create a New Group
 import CreateGroup from "./views/CreateGroup";
-import MembersPage from "./views/MembersPage";
-import NotesCollection from "@/views/NotesCollection";
-import NotePage from "@/views/NotePage";
+
+// Group Specific Homepage
+import GroupHomePage from "./views/GroupHomePage";
+
+// Flashcard Functionality Pages
 import FlashcardCollection from "./views/FlashcardCollection";
 import FlashcardStudy from "./views/FlashcardStudy";
 import FlashcardCreate from "./views/FlashcardCreate";
 
-import firebase from "./firebaseConfig";
+// Note Functionality Pages
+import NotesCollection from "@/views/NotesCollection";
+import NotePage from "@/views/NotePage";
+
+// Group Members Listing
+import MembersPage from "./views/MembersPage";
+
+// Group Settings Page (Only the Group Owner can access)
+import GroupSettings from "./views/GroupSettings";
 
 Vue.use(Router);
 
@@ -112,6 +126,15 @@ let router = new Router({
       component: MembersPage,
       meta: {
         title: "Members | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/:groupID/settings",
+      name: "settings",
+      component: GroupSettings,
+      meta: {
+        title: "Group Settings | Social Study",
         requiresAuth: true
       }
     }

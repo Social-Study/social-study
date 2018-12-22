@@ -51,25 +51,6 @@ export default {
     this.$bind("decks", flashcardCollection).then(flashcardDecks => {
       this.decks === flashcardDecks;
     });
-
-    // FIXME: You can probably use the vuefire this.$bind instead of manually setting all the object fields yourself
-    // flashcardCollection.get().then(querySnapshot => {
-    //   querySnapshot.forEach(doc => {
-    //     // doc.data() is never undefined for query doc snapshots
-    //     // console.log(doc.id, " => ", doc.data());
-    //     const length = doc.data().terms.length;
-    //     const user = doc.data().creator;
-    //     let newCard = {
-    //       title: doc.data().title,
-    //       creatorUID: doc.data().creatorUID,
-    //       cardNum: length,
-    //       uid: doc.data().creatorUID,
-    //       creatorName: doc.data().creatorName,
-    //       documentID: doc.data().documentID
-    //     };
-    //     self.decks.push(newCard);
-    //   });
-    // });
   }
 };
 </script>

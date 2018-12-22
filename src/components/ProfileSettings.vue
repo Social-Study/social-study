@@ -180,7 +180,7 @@
                     @click="leaveGroup(group.groupID);"
                     class="btn btn-error btn-block"
                   >
-                    <i class="icon icon-cross"></i>
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
               </tr>

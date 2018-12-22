@@ -77,7 +77,13 @@
           v-if="activeGroup.owner === $store.getters.uid"
           class="menu-item text-left"
         >
-          <a><i class="fas fa-cog"></i> Group Settings</a>
+          <router-link
+            :to="{name: 'settings'}"
+            :class="$route.name === 'settings' ? 'active' : ''"
+          >
+            <i class="fas fa-cog"></i> Settings
+          </router-link>
+          <!-- <a><i class="fas fa-cog"></i> Group Settings</a> -->
         </li>
       </ul>
     </div>
@@ -163,8 +169,6 @@ export default {
 };
 </script>
 
-// @HACK: Have to set !important on certain styling to override spectre defaults
-// Must be global styling not scoped to take affect
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
 

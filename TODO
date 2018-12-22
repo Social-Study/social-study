@@ -48,6 +48,9 @@ Notes:
     ☐ Allow users to create collections to manage their own notes?
 
 Chat:
+  ☐ Make chat scroll when another user sends a message
+    - Watch the messages length.
+  ☐ Word breaking looks fucked up. Splits in the middle of words even when there are other places to break it
   ☐ Add a date display so that you can tell on what day the notes were sent
     Only show if I calculate the differences in times and find it to be over a certain threshold
   Maybes:
