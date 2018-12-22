@@ -9,10 +9,21 @@
         </button>
       </template>
       <template slot="center">Flashcard Collection</template>
+      <template slot="right">
+        <div class="has-icon-left">
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Search by Title"
+            v-model="searchQuery"
+          >
+          <i class="form-icon fas fa-search"></i>
+        </div>
+      </template>
     </page-title>
     <div class="card-container">
       <flashcard-deck
-        v-for="(deck,index) in decks"
+        v-for="(deck,index) in filteredDecks"
         :key="index"
         :title="deck.title"
         :cardNum="deck.cardNum"
@@ -37,7 +48,8 @@ export default {
   },
   data() {
     return {
-      decks: []
+      decks: [],
+      searchQuery: ""
     };
   },
   created() {
@@ -51,6 +63,17 @@ export default {
     this.$bind("decks", flashcardCollection).then(flashcardDecks => {
       this.decks === flashcardDecks;
     });
+  },
+  computed: {
+    filteredDecks() {
+      // Filter the note list by the query string. Including partial matches.
+      // Converted to lowercase to avoid capitalization enforcement
+      return this.decks.filter(deck => {
+        return deck.title
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+      });
+    }
   }
 };
 </script>

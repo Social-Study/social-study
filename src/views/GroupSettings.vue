@@ -1,180 +1,3 @@
-<script>
-/**
- *  Owner Group Priveledges
- *
- *  Change Group Information Data
- *  Manage Group Member List
- *  Manage active invite codes
- *  Transfer Ownership ?
- */
-
-import { checkOwner } from "@/scripts/groupFuncs";
-import { db, FirebaseConsts } from "@/firebaseConfig";
-import PageTitle from "@/components/PageTitle";
-
-// TODO: Form validation, loading indicators, transfer ownership?
-
-export default {
-  name: "GroupSettings",
-  components: {
-    PageTitle
-  },
-  created() {
-    this.checkAuth();
-    this.loadData();
-  },
-  data() {
-    return {
-      isLoading: true,
-      userAuthorized: false,
-      details: {
-        className: "",
-        courseCode: "",
-        instructorName: "",
-        location: "",
-        meetingTime: [],
-        meetingDays: {
-          monday: false,
-          tuesday: false,
-          wednesday: false,
-          thursday: false,
-          friday: false
-        },
-        url: "",
-        description: ""
-      },
-      inviteCodes: [],
-      memberUID: [],
-      memberDetails: []
-    };
-  },
-  methods: {
-    saveData() {
-      db.collection("study-groups")
-        .doc(this.$route.params.groupID)
-        .update({
-          className: this.details.className,
-          courseCode: this.details.courseCode,
-          instructorName: this.details.instructorName,
-          location: this.details.location,
-          meetingTime: this.details.meetingTime,
-          meetingDays: this.getDaysArray(this.details.meetingDays),
-          websiteURL: this.details.url,
-          extraInfo: this.details.description
-        })
-        .then(() => {
-          this.$notify({
-            group: "save",
-            type: "success",
-            title: "Changes Saved",
-            text: "All details successfully saved!"
-          });
-        });
-    },
-    getDaysArray() {
-      let arr = [];
-      Object.keys(this.details.meetingDays).forEach(key => {
-        if (this.details.meetingDays[key] === true) {
-          arr.push(key.charAt(0).toUpperCase() + key.slice(1));
-        }
-      });
-      return arr;
-    },
-    loadData() {
-      // Get all data from firestore to populate the form
-      db.collection("study-groups")
-        .doc(this.$route.params.groupID)
-        .get()
-        .then(doc => {
-          let data = doc.data();
-          this.details = {
-            className: data.className,
-            courseCode: data.courseCode,
-            instructorName: data.instructorName,
-            location: data.location,
-            meetingTime: data.meetingTime,
-            url: data.websiteURL,
-            description: data.extraInfo,
-            meetingDays: this.parseDays(data.meetingDays)
-          };
-          this.memberUID = data.members;
-          this.inviteCodes = data.inviteCodes;
-        })
-        .then(() => {
-          let counter = this.memberUID.length;
-          this.memberDetails = [];
-          this.memberUID.forEach(uid => {
-            db.collection("users")
-              .where("uid", "==", uid)
-              .limit(1)
-              .get()
-              .then(docSnapshot => {
-                if (docSnapshot.size == 1) {
-                  counter--;
-                  this.memberDetails.push(docSnapshot.docs[0].data());
-                  if (counter == 0) {
-                    // this.loading = false;
-                  }
-                }
-              });
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    // Generate date object for the day picker from an array of day names
-    parseDays(days) {
-      let parsedDays = {};
-      days.forEach(element => {
-        parsedDays[element.toLowerCase()] = true;
-      });
-      return { ...this.details.meetingDays, ...parsedDays };
-    },
-    // Remove a member from the study group
-    removeMember(uid) {
-      db.collection("study-groups")
-        .doc(this.$route.params.groupID)
-        .update({
-          members: FirebaseConsts.firestore.FieldValue.arrayRemove(uid)
-        });
-      this.memberDetails = this.memberDetails.filter(obj => {
-        return obj.uid !== uid;
-      });
-    },
-    // Deactivate a study group invite code
-    removeCode(code) {
-      db.collection("study-groups")
-        .doc(this.$route.params.groupID)
-        .update({
-          inviteCodes: FirebaseConsts.firestore.FieldValue.arrayRemove(code)
-        });
-      this.inviteCodes = this.inviteCodes.filter(obj => {
-        return obj !== code;
-      });
-    },
-    // Toggle the day on or off
-    toggle(key) {
-      this.details.meetingDays[key] = !this.details.meetingDays[key];
-    },
-    daysChanged(days) {
-      // Update the state everytime a day button is pressed
-      this.details.meetingDays = days;
-    },
-    // Verify that the user is the owner before showing admin settings
-    checkAuth() {
-      checkOwner(this.$store.getters.uid, this.$route.params.groupID)
-        .then(() => {
-          this.userAuthorized = true;
-          this.isLoading = false;
-        })
-        .catch(() => {
-          this.isLoading = false;
-        });
-    }
-  }
-};
-</script>
 
 <template>
   <div v-if="userAuthorized && !isLoading">
@@ -192,6 +15,7 @@ export default {
             <h2>Edit Group Details</h2>
 
             <form
+              v-if="!loading.details"
               action=""
               class="col-12 form-horizontal"
             >
@@ -353,7 +177,8 @@ export default {
                 />
                 </div>
           </form>
-          <button
+          <div v-else class="loading loading-lg"></div>
+          <button v-if="!loading.details"
               class="btn"
               id="save-btn"
               @click="saveData"
@@ -366,7 +191,7 @@ export default {
           <div class="columns">
             <div class="group-details column col-10 col-mx-auto">
               <h2>Active Invite Codes</h2>
-              <table class="table table-striped table-hover">
+              <table v-if="!loading.codes" class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th style="width: 95%;">Code</th>
@@ -384,10 +209,11 @@ export default {
                   </tr>
                 </tbody>
               </table>
+              <div v-else class="loading loading-lg"></div>
             </div>
             <div class="group-details column col-10  col-mx-auto">
               <h2>Study Group Members</h2>
-              <table class="table table-striped table-hover">
+              <table v-if="!loading.members" class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th style="width: 95%;">Name</th>
@@ -406,6 +232,7 @@ export default {
                   </tr>
                 </tbody>
               </table>
+              <div v-else class="loading loading-lg"></div>
             </div>
           </div>
 
@@ -418,6 +245,190 @@ export default {
   <h1  v-else-if="!isLoading && !userAuthorized"> WTF ARE YOU DOING HERE</h1>
   <div v-else class="loading loading-lg"></div>
 </template>
+
+<script>
+/**
+ *  Owner Group Priveledges
+ *
+ *  Change Group Information Data
+ *  Manage Group Member List
+ *  Manage active invite codes
+ *  Transfer Ownership ?
+ */
+
+import { checkOwner } from "@/scripts/groupFuncs";
+import { db, FirebaseConsts } from "@/firebaseConfig";
+import PageTitle from "@/components/PageTitle";
+
+// TODO: Form validation, loading indicators, transfer ownership?
+
+export default {
+  name: "GroupSettings",
+  components: {
+    PageTitle
+  },
+  created() {
+    this.checkAuth();
+    this.loadData();
+  },
+  data() {
+    return {
+      isLoading: true,
+      userAuthorized: false,
+      loading: {
+        details: true,
+        codes: true,
+        members: true
+      },
+      // Group Details Bindings
+      details: {
+        className: "",
+        courseCode: "",
+        instructorName: "",
+        location: "",
+        meetingTime: [],
+        meetingDays: {
+          monday: false,
+          tuesday: false,
+          wednesday: false,
+          thursday: false,
+          friday: false
+        },
+        url: "",
+        description: ""
+      },
+      inviteCodes: [],
+      memberUID: [],
+      memberDetails: []
+    };
+  },
+  methods: {
+    // Verify that the user is the owner before showing admin settings
+    checkAuth() {
+      checkOwner(this.$store.getters.uid, this.$route.params.groupID)
+        .then(() => {
+          this.userAuthorized = true;
+          this.isLoading = false;
+        })
+        .catch(() => {
+          this.isLoading = false;
+        });
+    },
+    saveData() {
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .update({
+          className: this.details.className,
+          courseCode: this.details.courseCode,
+          instructorName: this.details.instructorName,
+          location: this.details.location,
+          meetingTime: this.details.meetingTime,
+          meetingDays: this.getDaysArray(this.details.meetingDays),
+          websiteURL: this.details.url,
+          extraInfo: this.details.description
+        })
+        .then(() => {
+          this.$notify({
+            group: "save",
+            type: "success",
+            title: "Changes Saved",
+            text: "All details successfully saved!"
+          });
+        });
+    },
+    getDaysArray() {
+      let arr = [];
+      Object.keys(this.details.meetingDays).forEach(key => {
+        if (this.details.meetingDays[key] === true) {
+          arr.push(key.charAt(0).toUpperCase() + key.slice(1));
+        }
+      });
+      return arr;
+    },
+    loadData() {
+      // Get all data from firestore to populate the form
+      this.loading;
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .get()
+        .then(doc => {
+          this.loading.codes = false;
+          this.loading.details = false;
+          let data = doc.data();
+          this.details = {
+            className: data.className,
+            courseCode: data.courseCode,
+            instructorName: data.instructorName,
+            location: data.location,
+            meetingTime: data.meetingTime,
+            url: data.websiteURL,
+            description: data.extraInfo,
+            meetingDays: this.parseDays(data.meetingDays)
+          };
+          this.memberUID = data.members;
+          this.inviteCodes = data.inviteCodes;
+        })
+        .then(() => {
+          let counter = this.memberUID.length;
+          this.memberDetails = [];
+          this.memberUID.forEach(uid => {
+            db.collection("users")
+              .where("uid", "==", uid)
+              .limit(1)
+              .get()
+              .then(docSnapshot => {
+                if (docSnapshot.size == 1) {
+                  counter--;
+                  this.memberDetails.push(docSnapshot.docs[0].data());
+                  if (counter == 0) {
+                    this.loading.members = false;
+                  }
+                }
+              });
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    parseDays(days) {
+      // Generate date object for the day picker from an array of day names
+      let parsedDays = {};
+      days.forEach(element => {
+        parsedDays[element.toLowerCase()] = true;
+      });
+      return { ...this.details.meetingDays, ...parsedDays };
+    },
+    removeMember(uid) {
+      // Remove a member from the study group
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .update({
+          members: FirebaseConsts.firestore.FieldValue.arrayRemove(uid)
+        });
+      this.memberDetails = this.memberDetails.filter(obj => {
+        return obj.uid !== uid;
+      });
+    },
+    // Deactivate a study group invite code
+    removeCode(code) {
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .update({
+          inviteCodes: FirebaseConsts.firestore.FieldValue.arrayRemove(code)
+        });
+      this.inviteCodes = this.inviteCodes.filter(obj => {
+        return obj !== code;
+      });
+    },
+    // Toggle the day on or off (day selector buttons)
+    toggle(key) {
+      this.details.meetingDays[key] = !this.details.meetingDays[key];
+    }
+  }
+};
+</script>
+
 
 <style lang="scss" scoped>
 @import "../styleVariables";

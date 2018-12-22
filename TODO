@@ -4,7 +4,7 @@ Branding:
   ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
   ☐ Find better flashcard sidebar icon
 
-Possible Features:
+Possible Features (Time Permitting):
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
   ☐ Video/Audio Chat with WebRTC
 
@@ -16,7 +16,6 @@ General:
   ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
     Not exactly sure how to do this.
     - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
-  ✔ Store displayname in firestore so that it updates @done(18-12-21 21:37)
   ☐ REFACTOR the components into different subfolders to organize it a bit
   ☐ Make sure that each page that loads from firebase has error checking
     ☐ Should display an error message if the firebase load fails
@@ -39,7 +38,6 @@ Firebase Functions File:
 
 Landing:
   ☐ Improve form validation
-  ✔ Make svg's smaller @done(18-12-21 23:15)
 
 Notes:
   ☐ Collection should have a loading indicator
@@ -54,18 +52,15 @@ Notes:
     ☐ Allow users to create collections to manage their own notes?
 
 Chat:
-  ✔ Word breaking looks fucked up. Splits in the middle of words even when there are other places to break it @done(18-12-21 21:39)
   ☐ Add a date display so that you can tell on what day the messages were sent
     Only show if I calculate the differences in times and find it to be over a certain threshold
   Maybes:
     ☐ Shadow around the left edge of chat sidebar
     ☐ Total number of messages indicator (Could either be total messages or unread messages...)
        Not sure how I would implement tracking unread messages
-    ✔ Sound when a message is received (Implemented but not sure about it) @done(18-12-21 21:39)
-    ✔ Change the sound notifications to only play when the user has the chat sidebar closed @done(18-12-21 21:39)
 
 Known Bugs:
-  ☐ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present
+  ✔ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present @done(18-12-22 14:17)
   ☐ Form validation is broken
     - May have to implement custom validation for the create page
     - Might be caused by not using a form. I'm just using vee-validate to validate input fields...
@@ -85,7 +80,8 @@ Homepage:
 Members Page:
   ☐ Add members list page sort filters
     - Joined Date, Alphabetical, etc...
-  ☐ Give the group owner a glow around their card
+  ✘ Give the group owner a glow around their card @cancelled(18-12-22 14:17)
+  ✔ Differentiate the owner from the other members @done(18-12-22 14:17)
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
@@ -112,6 +108,8 @@ Flashcards:
   ☐ Shuffle button
 
 Animations / Transitions:
+  Flashcard Study:
+    ☐ Animations feel too fast and snappy.
   Create Page:
     ☐ Animation when steps indicator changes
     ☐ Animation when user navigates between cards
@@ -119,6 +117,12 @@ Animations / Transitions:
       Show the icons appearing one after the other
 
 Archive:
+  ✔ Store displayname in firestore so that it updates @done(18-12-21 21:37) @project(General)
+  ✔ Make svg's smaller @done(18-12-21 23:15) @project(Landing)
+  ✔ Word breaking looks fucked up. Splits in the middle of words even when there are other places to break it @done(18-12-21 21:39) @project(Chat)
+  ✔ Sound when a message is received (Implemented but not sure about it) @done(18-12-21 21:39) @project(Chat.Maybes)
+  ✔ Change the sound notifications to only play when the user has the chat sidebar closed @done(18-12-21 21:39) @project(Chat.Maybes)
+  ✔ Create search that filters the results using the JS filter method. @done(18-12-22 13:49) @project(Collection Pages)
   ✔ find new animation library @done(18-12-19 20:15) @project(General)
   ✔ Update page-title so that it can be used with pages that have buttons in their headers @done(18-12-20 11:54) @project(Components Needed)
   ✔ Make chat scroll when another user sends a message @started(18-12-21 21:01) @done(18-12-21 21:08) @lasted(7m42s) @project(Chat)
