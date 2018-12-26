@@ -14,6 +14,11 @@
       class="off-canvas-sidebar"
       :class="{ active: sidebarActive }"
     >
+      <li
+        style="margin: 0"
+        class="divider"
+      ></li>
+
       <ul class="menu sidebar">
         <li
           class="menu-item"
@@ -180,7 +185,8 @@ a.off-canvas-toggle {
 
 .sidebar {
   box-shadow: none;
-  background: #3c3c3c;
+  background: $dark;
+  // background: #3c3c3c;
 }
 
 .member-num {
@@ -197,7 +203,8 @@ a.off-canvas-toggle {
   color: white !important;
 }
 div.off-canvas-sidebar {
-  background: #3c3c3c !important;
+  background: $dark !important;
+  // background: #3c3c3c !important;
   width: 200px;
 }
 

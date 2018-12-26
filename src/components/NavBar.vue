@@ -254,7 +254,9 @@ export default {
 }
 
 .navbar {
-  background-image: $nav-gradient;
+  // background-image: $nav-gradient;
+  background-color: $dark;
+  // background-color: $dark;
   padding: 0px 10px 0px 0px;
   max-height: 6vh;
   min-height: 60px;
@@ -277,7 +279,8 @@ a.navbar-brand {
 }
 
 .group-menu {
-  background-color: rgb(66, 64, 212);
+  // background-color: rgb(66, 64, 212);
+  background-color: lighten($primary, 5%);
   box-shadow: none;
   max-width: 250px;
   min-width: 250px;

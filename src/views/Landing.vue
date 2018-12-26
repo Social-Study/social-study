@@ -12,7 +12,6 @@
       </section>
 
       <!-- Login Form -->
-      <!-- <section class="navbar-section"> -->
       <form
         class="hide-sm hide-xs navbar-section login-container form-group"
         @submit.prevent
@@ -28,6 +27,7 @@
           type="text"
           class="form-input form-inline mx-1"
           autofocus
+          autocomplete="off"
         >
         <input
           v-validate.disable="'required|min:6'"
@@ -36,6 +36,7 @@
           placeholder="Password"
           type="password"
           class="form-input form-inline mx-1"
+          autocomplete="off"
         >
         <button
           @click="logIn"

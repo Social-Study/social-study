@@ -6,7 +6,7 @@
     >
       <div class="content">
         <h3 id="header">Study Group Chat</h3>
-        <div class="divider"></div>
+        <div class="divider-gradient"></div>
         <div
           class="messages"
           ref="messages"
@@ -155,10 +155,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styleVariables.scss";
+
 // Chat sidebar header
 #header {
   display: block;
   transition: 1s;
+  margin-bottom: 9px;
   // flex: 0;
 }
 
@@ -170,7 +173,9 @@ export default {
   z-index: 0;
   top: 0;
   right: 0;
-  background-color: #3c3c3c;
+  border-top: 1px solid black;
+  background-color: $dark;
+  // background-color: #3c3c3c;
   overflow-x: hidden;
   transition: 1s;
   padding-top: 10px;
@@ -184,6 +189,12 @@ export default {
     flex-direction: column;
     flex-wrap: nowrap;
   }
+}
+
+.divider-gradient {
+  background-image: $orange-gradient;
+  height: 1px;
+  margin-bottom: 10px;
 }
 
 // Messages container

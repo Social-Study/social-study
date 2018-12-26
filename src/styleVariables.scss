@@ -1,6 +1,5 @@
 // Gradients
 $nav-gradient: linear-gradient(-90deg, #5c00fd 0%, #fd007e 100%);
-$nav-gradient-alt: linear-gradient(0deg, #5c00fd 0%, #fd007e 100%);
 $green-gradient: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
 $orange-gradient: linear-gradient(90deg, #ffa404 0%, #ff0479 100%);
 $blue-gradient: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
@@ -10,7 +9,6 @@ $dark-gradient: linear-gradient(
 );
 // Fonts
 $logo-font: "Pacifico", cursive;
-$main-gray: #3c3c3c;
 
 // Shadows
 $shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
@@ -22,6 +20,26 @@ $background-color: #f6f6f6;
 $dark-grey: #c5c5c5;
 $light-grey: #e7e7e7;
 
+$main-gray: #3c3c3c;
+
+/* HSL */
+// New theme pallete
+$primary: hsla(241%, 63%, 59%, 1);
+$dark: hsla(224%, 14%, 22%, 1);
+$light: hsla(240%, 100%, 99%, 1);
+$secondary: hsla(235%, 18%, 36%, 1);
+$secondary-light: hsla(236%, 11%, 71%, 1);
+// $secondary: hsla(209%, 64%, 18%, 1);
+// $secondary-light: hsla(184%, 80%, 43%, 1);
+
+/**
+$color1: hsla(241%, 63%, 59%, 1);
+$color2: hsla(224%, 14%, 22%, 1);
+$color3: hsla(240%, 100%, 99%, 1);
+$color4: hsla(236%, 11%, 71%, 1);
+$color5: hsla(235%, 18%, 36%, 1);
+*/
+
 // Border Radius Presets
-// $rounded: 10px;
-// $rounder: 16px;
+$border-round: 10px;
+$border-rounder: 16px;

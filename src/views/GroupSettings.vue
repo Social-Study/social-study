@@ -465,9 +465,8 @@ input[type="time"] {
   margin-bottom: 40px;
   h2 {
     border-radius: 16px 16px 0 0;
-    // background-image: $nav-gradient;
-    background-color: #4b48d6;
-    color: white;
+    background-color: $primary;
+    color: $light;
     padding: 5px;
   }
 

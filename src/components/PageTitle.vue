@@ -28,6 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styleVariables.scss";
 .chat-active {
   // @HACK: Used to compensate for the scrollbar's width.
   //  Otherwise, there is white space when the content requires a
@@ -37,7 +38,8 @@ export default {
 
 .header-container {
   padding: 8px 8px;
-  background-color: #c4c4c4;
+  background-color: $secondary-light;
+  // background-color: #c4c4c4;
 
   display: flex;
   flex-flow: row nowrap;
@@ -66,7 +68,7 @@ export default {
   }
 
   h1 {
-    flex: 1;
+    flex: 8;
     user-select: none;
     font-size: 2em;
     margin: 0;
