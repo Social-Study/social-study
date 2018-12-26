@@ -16,7 +16,7 @@
           class="btn btn-action btn-success btn-lg s-circle"
           :class="active === 0 ? 'disabled c-not-allowed' : ''"
         >
-          <i class="icon icon-arrow-left"></i>
+          <i class="fas fa-arrow-left"></i>
         </button>
 
         <!-- Class Name Form -->
@@ -25,16 +25,24 @@
           class="infoContainer"
         >
           <h2>What is the name of the class?</h2>
-          <input
-            @keydown.enter="next"
-            class="form-input"
-            type="text"
-            v-model="className"
-            placeholder="Class Name"
-            name="className"
-            v-validate="'required'"
-          />
-          <span style="color: red;">{{ errors.first("className") }}</span>
+
+          <div
+            class="form-group"
+            :class="errors.first('className') ?  'has-error' : '' || !errors.first('className') && className ? 'has-success' : ''"
+          >
+            <input
+              @keydown.enter="next"
+              class="form-input"
+              type="text"
+              v-model="className"
+              placeholder="Class Name"
+              name="className"
+              v-validate="'required'"
+              required
+            />
+            <p class="form-input-hint">{{ errors.first("className") }}</p>
+          </div>
+          <!-- <span style="color: red;">{{ errors.first("className") }}</span> -->
           <h3 style="margin-top: 20px;">Course Code? (Optional)</h3>
           <input
             @keydown.enter="next"
@@ -53,16 +61,22 @@
         >
           <!-- TODO: Figure out why validation isn't working... -->
           <h2>What is the course intructor's name?</h2>
-          <input
-            @keydown.enter="next"
-            class="form-input"
-            type="text"
-            v-model="instructorName"
-            placeholder="Instructor Name"
-            name="instructor"
-            v-validate="'required'"
-          />
-          <span style="color: red;">{{ errors }}</span>
+          <div
+            class="form-group"
+            :class="errors.first('instructorName') ?  'has-error' : '' || !errors.first('instructorName') && instructorName ? 'has-success' : ''"
+          >
+            <input
+              @keydown.enter="next"
+              class="form-input"
+              type="text"
+              v-model="instructorName"
+              placeholder="Instructor Name"
+              name="instructor"
+              v-validate="'required|alpha_spaces'"
+              required
+            />
+            <p class="form-input-hint">{{ errors.first("instructorName") }}</p>
+          </div>
         </div>
 
         <!-- Class Meeting Time Form -->
@@ -116,11 +130,13 @@
               type="time"
               class="time-picker form-input"
               v-model="meetingTime[0]"
+              required
             />
             <input
               type="time"
               class="time-picker form-input"
               v-model="meetingTime[1]"
+              required
             />
           </div>
         </div>
@@ -299,7 +315,7 @@
           class="btn btn-action btn-success btn-lg s-circle"
           :class="active === 7 ? 'disabled' : ''"
         >
-          <i class="icon icon-arrow-right"></i>
+          <i class="fas fa-arrow-right"></i>
         </button>
       </div>
 
@@ -394,6 +410,7 @@ export default {
   },
   data() {
     // TODO: refactor these into objects
+    // TODO: Finish updating validation...
     return {
       active: 0,
       className: "",

@@ -177,13 +177,12 @@
               </div>
               <div
                 class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
-                style="top: 40px;"
                 data-tooltip="Improve your academic success!"
               >
                 <img
                   class="img-responsive  undraw-svg"
                   src="../assets/undraw_grad.svg"
-                  alt="communication"
+                  alt="success"
                 >
               </div>
             </div>
@@ -461,9 +460,13 @@ p {
   font-size: 1.5em;
 }
 
+div.tooltip {
+  margin-bottom: 20px;
+}
+
 // Images should be centered in their column
 .undraw-svg {
-  width: 14em;
+  width: 12em;
   margin: auto;
 }
 
@@ -471,7 +474,7 @@ p {
 .undraw-svg:hover {
   transform: scale(1.25);
   top: 5px;
-  z-index: 999;
+  z-index: 28;
 }
 
 // Aligns all content vertically on the screen

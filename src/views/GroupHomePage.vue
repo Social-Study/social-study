@@ -39,6 +39,8 @@
 
         <div class="divider"></div>
 
+        <!-- Displays the group's most popular flashcards -->
+        <!-- Decide metric (Study Count, Recently Created, Favorited) -->
         <div class="flashcards-container">
           <div class="tile-header">
             <h4>Recent Flashcards</h4>
@@ -131,7 +133,7 @@ export default {
   },
   watch: {
     // reload the group data when route changes
-    "$route.params.groupID"(newVal, oldVal) {
+    "$route.params.groupID"() {
       this.loadData();
     }
   }
@@ -150,7 +152,9 @@ export default {
 
     .calendar {
       flex: 1;
-      margin: 40px;
+      margin: 40px auto;
+      max-height: 300px;
+      max-width: 280px;
     }
 
     .date-details {
@@ -190,7 +194,6 @@ export default {
     width: 250px;
     margin: 0px 0px 20px 20px;
     h1.deck-title {
-      // font-size: 5px !important;
       color: white;
     }
   }

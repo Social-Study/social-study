@@ -180,7 +180,7 @@
                     @click="leaveGroup(group.groupID);"
                     class="btn btn-error btn-block"
                   >
-                    <i class="icon icon-cross"></i>
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
               </tr>
@@ -241,7 +241,7 @@ export default {
     // db.collection("study-groups").where();
   },
   watch: {
-    activeTab(newVal, oldVal) {
+    activeTab(newVal) {
       if (newVal === 3) {
         // console.log("reloading groups");
         this.loadGroups();
@@ -251,7 +251,7 @@ export default {
   methods: {
     closeAndReset() {
       this.activeTab = 1;
-      this.$emit('closeSettings');
+      this.$emit("closeSettings");
     },
     loadGroups() {
       getUserGroups(this.user.uid)
@@ -279,9 +279,17 @@ export default {
           this.profileDetails.newName !== this.user.displayName &&
           this.profileDetails.newName !== ""
         ) {
+          // Update the user's auth account
           this.user.updateProfile({
             displayName: this.profileDetails.newName
           });
+
+          // Update the firestore doc for the user
+          db.collection("users")
+            .doc(this.$store.getters.uid)
+            .update({
+              displayName: this.profileDetails.newName
+            });
         }
 
         if (this.profileDetails.newPhoto !== null) {

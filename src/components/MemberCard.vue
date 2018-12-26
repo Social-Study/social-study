@@ -2,7 +2,7 @@
   <!-- Add Member Card -->
   <div
     v-if="add"
-    class="profile-card c-hand"
+    class="profile-card c-hand hoverable"
   >
     <div class="gradient-border add">
       <div class="add-button">
@@ -26,7 +26,15 @@
     <h2
       style="width: 100%;"
       class="text-ellipsis"
-    >{{ displayName }}</h2>
+    >{{ displayName }}
+      <!-- Show crown icon on the owner's card -->
+      <i
+        v-if="owner"
+        style="color: gold; z-index: 999;"
+        class="fas fa-crown"
+      ></i>
+    </h2>
+
   </div>
 </template>
 
@@ -45,6 +53,10 @@ export default {
       type: Boolean,
       default: false,
       required: false
+    },
+    owner: {
+      type: Boolean,
+      default: false
     }
   }
 };
@@ -63,7 +75,9 @@ export default {
   background-color: white;
   box-shadow: $shadow;
   user-select: none;
+}
 
+.hoverable {
   &:hover {
     box-shadow: $shadow-hovered;
   }

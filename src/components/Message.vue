@@ -79,7 +79,8 @@ export default {
       border-radius: 16px;
       // margin-left: 10px;
       color: black;
-      word-break: break-all;
+      // TODO: If the word is over a certain number of characters, enable break all...
+      word-break: normal;
       background-color: #f1f3f4;
     }
   }

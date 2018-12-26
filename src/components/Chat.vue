@@ -54,8 +54,7 @@
 
 <script>
 import Message from "@/components/Message";
-import firebase, { db } from "@/firebaseConfig";
-import { log } from "util";
+import { db } from "@/firebaseConfig";
 
 let notification = new Audio(
   "https://notificationsounds.com/soundfiles/4e4b5fbbbb602b6d35bea8460aa8f8e5/file-sounds-1096-light.mp3"
@@ -128,19 +127,27 @@ export default {
   },
   watch: {
     // Reload the group's messages when the user switches groups
-    "$route.params.groupID"(id) {
+    "$route.params.groupID"() {
       this.loadGroupMessages();
     },
     messageLength(newVal, oldVal) {
-      // console.log("message list changed!");
+      // Only play notification when message is from another person
+      // Only play notification when the chat sidebar is closed
+      // Only play notification when the user gets a new message, not when the messages are loaded
       if (
         oldVal !== 0 &&
         newVal !== 0 &&
         this.groupMessages[this.groupMessages.length - 1].sender !==
-          this.$store.getters.uid &&
-        !this.$store.getters.chatActive
+          this.$store.getters.uid
       ) {
-        notification.play();
+        if (!this.$store.getters.chatActive) {
+          notification.play();
+        } else {
+          // Have to adjust the time depending on the speed of message animation
+          setTimeout(() => {
+            this.scrollToBottom(); //Always scroll to bottom when a new message comes in
+          }, 500);
+        }
       }
     }
   }

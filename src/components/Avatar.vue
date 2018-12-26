@@ -2,7 +2,7 @@
   <figure
     v-if="this.user.photoURL === null"
     :style="{backgroundColor: color}"
-    :data-initial="initials"
+    :data-initial="computedInitials"
     class="avatar avatar-lg"
   >
     <!--  avatar-lg -->
@@ -30,15 +30,9 @@ export default {
       default: "#f6f6f6"
     }
   },
-  data() {
-    return {
-      initials: ""
-    };
-  },
-  created() {
-    // Split the username into initials if there is not a photo
-    if (this.user.photoURL === null) {
-      this.initials = this.user.displayName
+  computed: {
+    computedInitials() {
+      return this.user.displayName
         .split(" ")
         .map(word => {
           return word[0];

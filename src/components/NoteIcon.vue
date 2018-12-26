@@ -3,11 +3,9 @@
     <h1>{{info.title}}</h1>
     <div class="details">
       <h2>Last Updated:</h2>
-      <h3>{{info.lastUpdated.toDate().toDateString()}} - {{info.lastUpdated.toDate().toLocaleTimeString('en-US')}}</h3>
-      <!-- <h3>{{info.lastUpdated.toDate().toLocaleTimeString('en-US')}}</h3> -->
+      <h3>{{info.lastUpdated.toDate().toLocaleDateString()}} - {{info.lastUpdated.toDate().toLocaleTimeString('en-US')}}</h3>
       <h2>Created:</h2>
-      <h3>{{info.creationDate.toDate().toDateString()}} - {{info.creationDate.toDate().toLocaleTimeString('en-US')}}</h3>
-      <!-- <h3>{{info.creationDate.toDate().toLocaleTimeString('en-US')}}</h3> -->
+      <h3>{{info.creationDate.toDate().toLocaleDateString()}} - {{info.creationDate.toDate().toLocaleTimeString('en-US')}}</h3>
     </div>
   </div>
 </template>
@@ -54,16 +52,17 @@ export default {
   }
 
   .details {
-    align-self: center;
-
     h2 {
       text-align: left;
       font-size: 1.1em;
       font-weight: bold;
+      align-self: flex-start;
     }
 
     h3 {
       font-size: 0.8em;
+      align-self: flex-end;
+      text-align: center;
     }
   }
 }

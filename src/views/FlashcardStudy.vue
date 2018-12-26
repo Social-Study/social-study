@@ -12,16 +12,16 @@
 
     <div class="page-content">
       <button
-        @click="prevCard"
-        class="btn btn-action btn-success btn-lg s-circle"
+        @click.prevent="prevCard"
+        class="btn btn-action btn-primary btn-lg s-circle"
         :class="cardIndex === 0 ? 'disabled' : ''"
-      > <i class="icon icon-arrow-left"></i>
+      > <i class="fas fa-arrow-left"></i>
       </button>
       <div class="flashcard-container">
         <div
           class="flashcard"
           :style="{backgroundColor: cardColor}"
-          @click="flipCard"
+          @click.prevent="flipCard"
         >
           <h1 class="flashcard-content">
             {{currentContent}}
@@ -29,11 +29,11 @@
         </div>
       </div>
       <button
-        @click="nextCard"
-        class="btn btn-action btn-success btn-lg s-circle"
+        @click.prevent="nextCard"
+        class="btn btn-action btn-primary btn-lg s-circle"
         :class="cardIndex < termList.length - 1 ? '' : 'disabled'"
       >
-        <i class="icon icon-arrow-right"></i>
+        <i class="fas fa-arrow-right"></i>
       </button>
     </div>
     <h1 id="cardIndex">{{cardIndex + 1}} / {{termList.length}}</h1>
@@ -44,7 +44,7 @@
 <script>
 import PageTitle from "../components/PageTitle";
 import { setTimeout } from "timers";
-import firebase, { db } from "../firebaseConfig";
+import { db } from "../firebaseConfig";
 import anime from "animejs";
 
 export default {

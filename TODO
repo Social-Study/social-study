@@ -3,29 +3,32 @@ Branding:
   ☐ Think of better slogan.
   ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
   ☐ Find better flashcard sidebar icon
+  ☐ Improve color design. Not sure about the gradients the more I work with it.
+    - Seems to glaring and random. We need a simpler color pallete of a few select colors...
+
+Possible Features (Time Permitting):
+  ☐ Maybe allow users to upload pdfs and save notes to their own documents
+  ☐ Video/Audio Chat with WebRTC
 
 General:
   ☐ Not sure why the favicon is not showing???? @low
   ☐ Make sure the build bundle size is not too large. @low
-  ☐ Go through an error check all inputs where necessary
-  ☐ Figure out how to split the code so the bundle size is not as large...
+    ☐ Figure out how to split the code so the bundle size is not as large...
+  ☐ Go through and error check all inputs where necessary
   ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
     Not exactly sure how to do this.
-  ✔ find new animation library @done(18-12-19 20:15)
     - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
-  ☐ Maybe allow users to upload pdfs and save notes to their own documents
-  ☐ Store displayname in firestore so that it updates
-  ☐ Refactor the components into different subfolders to organize it a bit
+  ☐ REFACTOR the components into different subfolders to organize it a bit
   ☐ Make sure that each page that loads from firebase has error checking
     ☐ Should display an error message if the firebase load fails
-    ☐ User's should be limited to what they can access...
+    ☐ User's should be limited to what they are permitted to access..
+  ☐ Go through and improve the colors and design as we go. There are some things that I think are ugly, design wise.
 
 Components Needed:
   ☐ Notification popup
     Currently using vue-notifications but would be willing to switch to something better.
   ☐ Modal that can be used for all other modals.
   ☐ Custom designed switch component
-  ✔ Update page-title so that it can be used with pages that have buttons in their headers @done(18-12-20 11:54)
   ☐ Create add button card item
 
 Firebase Functions File:
@@ -34,6 +37,9 @@ Firebase Functions File:
   ☐ Remove messages once size reaches > 1000 messages
   ☐ Function to increment message counter of the document everytime a new document is created
   ☐ Generate a boilerplate note when a new user joins the study group? It should let them know the full functionality of markdown and the syntax
+
+Landing:
+  ☐ Improve form validation
 
 Notes:
   ☐ Collection should have a loading indicator
@@ -48,46 +54,40 @@ Notes:
     ☐ Allow users to create collections to manage their own notes?
 
 Chat:
-  ☐ Add a date display so that you can tell on what day the notes were sent
+  ☐ Add a date display so that you can tell on what day the messages were sent
     Only show if I calculate the differences in times and find it to be over a certain threshold
   Maybes:
-    ☐ Shadow around the edge?
+    ☐ Shadow around the left edge of chat sidebar
     ☐ Total number of messages indicator (Could either be total messages or unread messages...)
        Not sure how I would implement tracking unread messages
-    ☐ Sound when a message is received (Implemented but not sure about it)
-    ☐ Change the sound notifications to only play when the user has the chat sidebar closed
-
-Notifications:
-  ✔ Notification when group not found @done(18-12-19 20:08)
 
 Known Bugs:
-  ✔ When you click a group in the drop down, there are two bars that appear. Not sure what causes it. @done(18-12-19 20:08)
-  ☐ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present
+  ✔ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present @done(18-12-22 14:17)
   ☐ Form validation is broken
     - May have to implement custom validation for the create page
     - Might be caused by not using a form. I'm just using vee-validate to validate input fields...
   ☐ On the study page, when you select next flashcard with the buttons. the spacebar doesn't work as intended
 
+Collection Pages:
+  ☐ Figure out how to make these pages more responsive so that the cards scale better and don't break apart as much...
+    - Will probably have to use some media queries or something
+
 Vuex Store:
-  ☐ Only save the uid to local storage
+  ☐ Save the number of unread messages to the store.
+    Reset the number when the user opens the chat sidebar
 
 Homepage:
-  ✔ Figure out what the card backgrounds should look like @done(18-12-19 20:08)
   ☐ Display an empty placeholder if the user doesn't have any recent notes or books.
 
 Members Page:
   ☐ Add members list page sort filters
     - Joined Date, Alphabetical, etc...
-  ☐ Give the group owner a glow around their card
+  ✘ Give the group owner a glow around their card @cancelled(18-12-22 14:17)
+  ✔ Differentiate the owner from the other members @done(18-12-22 14:17)
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
   ☐ Automatically update to the file picker's picture so user can preview what it will look like
-
-Study Group Settings:
-  ☐ Add homepage option to list and remove active invite codes.
-  ☐ Allow option to remove members from group
-  ☐ Show a study group settings page only to the group owner to allow them to change the details after creation
 
 Side Bar:
   ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
@@ -104,27 +104,43 @@ Create Study Group:
 
 Flashcards Collection:
   ☐ Figure out proper way to get the last row to the left instead of centering it.
-  ✔ load in decks from firebase @done(18-12-19 20:17)
-  ✔ link decks to study page @done(18-12-19 20:17)
 
 Flashcards:
   ☐ Button to restart flashcards when you reach the end
   ☐ Shuffle button
-  ✔ Implement navigation animations @done(18-12-19 20:16)
-  ✔ Implement firebase functionality @done(18-12-19 20:16)
-  ✔ find a way to better indicate which side of the flashcard is currently displaying @done(18-12-19 20:16)
 
 Animations / Transitions:
+  Flashcard Study:
+    ☐ Animations feel too fast and snappy.
   Create Page:
     ☐ Animation when steps indicator changes
     ☐ Animation when user navigates between cards
     ☐ Sequential loading animations when list are being displayed for the first time
       Show the icons appearing one after the other
 
-PageTitle:
-  ☐ Make component more robust so that it accepts buttons in the navbar. Would help with page layout looks and functionality
-
 Archive:
+  ✔ Store displayname in firestore so that it updates @done(18-12-21 21:37) @project(General)
+  ✔ Make svg's smaller @done(18-12-21 23:15) @project(Landing)
+  ✔ Word breaking looks fucked up. Splits in the middle of words even when there are other places to break it @done(18-12-21 21:39) @project(Chat)
+  ✔ Sound when a message is received (Implemented but not sure about it) @done(18-12-21 21:39) @project(Chat.Maybes)
+  ✔ Change the sound notifications to only play when the user has the chat sidebar closed @done(18-12-21 21:39) @project(Chat.Maybes)
+  ✔ Create search that filters the results using the JS filter method. @done(18-12-22 13:49) @project(Collection Pages)
+  ✔ find new animation library @done(18-12-19 20:15) @project(General)
+  ✔ Update page-title so that it can be used with pages that have buttons in their headers @done(18-12-20 11:54) @project(Components Needed)
+  ✔ Make chat scroll when another user sends a message @started(18-12-21 21:01) @done(18-12-21 21:08) @lasted(7m42s) @project(Chat)
+  ✔ Notification when group not found @done(18-12-19 20:08) @project(Notifications)
+  ✔ When you click a group in the drop down, there are two bars that appear. Not sure what causes it. @done(18-12-19 20:08) @project(Known Bugs)
+  ✔ Only save the uid to local storage @done(18-12-21 11:29) @project(Vuex Store)
+  ✔ Figure out what the card backgrounds should look like @done(18-12-19 20:08) @project(Homepage)
+  ✔ Add homepage option to list and remove active invite codes. @done(18-12-21 21:10) @project(Study Group Settings)
+  ✔ Allow option to remove members from group @done(18-12-21 21:10) @project(Study Group Settings)
+  ✔ Show a study group settings page only to the group owner to allow them to change the details after creation @done(18-12-21 21:10) @project(Study Group Settings)
+  ✔ load in decks from firebase @done(18-12-19 20:17) @project(Flashcards Collection)
+  ✔ link decks to study page @done(18-12-19 20:17) @project(Flashcards Collection)
+  ✔ Implement navigation animations @done(18-12-19 20:16) @project(Flashcards)
+  ✔ Implement firebase functionality @done(18-12-19 20:16) @project(Flashcards)
+  ✔ find a way to better indicate which side of the flashcard is currently displaying @done(18-12-19 20:16) @project(Flashcards)
+  ✔ Make component more robust so that it accepts buttons in the navbar. Would help with page layout looks and functionality @done(18-12-21 21:19) @project(PageTitle)
   ✔ Add more detail to Study Group cards in dropdown @done(18-12-16 21:51) @project(Homepage)
   ✔ Upgrade navbar dropdown to look more like the figma design. Each class should provide some details @today @done(18-12-18 13:15) @project(NavBar)
   ✔ Decide if I should store each user's study groups in their profile as well as in the actual study group itself @done(18-12-16 20:15) @project(Database Design)

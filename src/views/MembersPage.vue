@@ -29,6 +29,7 @@
           :key="member.uid"
           :photoURL="member.photoURL"
           :displayName="member.displayName"
+          :owner="member.uid === studyGroup.owner"
         >
         </member-card>
       </transition-group>

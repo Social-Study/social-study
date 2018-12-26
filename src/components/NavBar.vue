@@ -15,7 +15,7 @@
           class="nav-button btn btn-primary dropdown-toggle"
           tabindex="0"
         >
-          Study Groups<i class="icon icon-caret"></i>
+          Study Groups <i class="fas fa-caret-down"></i>
         </a>
         <!-- Your Study Group List Dropdown Items -->
         <ul class="menu group-menu">

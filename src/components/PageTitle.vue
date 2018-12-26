@@ -2,7 +2,10 @@
 // name-input: Used for input boxes that allow the user to change the name of their content
 // split: Used to apply spacing between buttons in the title bar
 <template>
-  <div class="header-container">
+  <div
+    class="header-container"
+    :class="$store.getters.chatActive ? 'chat-active' : ''"
+  >
     <slot
       class="left"
       name="left"
@@ -25,10 +28,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.chat-active {
+  // @HACK: Used to compensate for the scrollbar's width.
+  //  Otherwise, there is white space when the content requires a
+  //  scrollbar and the chat is visible
+  width: calc(100% + 20px);
+}
+
 .header-container {
   padding: 8px 8px;
   background-color: #c4c4c4;
-  width: 100%;
 
   display: flex;
   flex-flow: row nowrap;

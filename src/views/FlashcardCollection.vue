@@ -9,11 +9,21 @@
         </button>
       </template>
       <template slot="center">Flashcard Collection</template>
+      <template slot="right">
+        <div class="has-icon-left">
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Search by Title"
+            v-model="searchQuery"
+          >
+          <i class="form-icon fas fa-search"></i>
+        </div>
+      </template>
     </page-title>
-
-    <div class="content-container">
+    <div class="card-container">
       <flashcard-deck
-        v-for="(deck,index) in decks"
+        v-for="(deck,index) in filteredDecks"
         :key="index"
         :title="deck.title"
         :cardNum="deck.cardNum"
@@ -27,25 +37,23 @@
 
 <script>
 import FlashcardDeck from "@/components/FlashcardDeck";
-import SideBar from "../components/SideBar";
 import PageTitle from "../components/PageTitle";
-import firebase, { db } from "../firebaseConfig";
+import { db } from "../firebaseConfig";
 
 export default {
   name: "FlashcardCollection",
   components: {
-    SideBar,
     PageTitle,
     FlashcardDeck
   },
   data() {
     return {
-      decks: []
+      decks: [],
+      searchQuery: ""
     };
   },
   created() {
     const groupID = this.$route.params.groupID;
-    const self = this;
     let flashcardCollection = db
       .collection("study-groups")
       .doc(groupID)
@@ -55,25 +63,17 @@ export default {
     this.$bind("decks", flashcardCollection).then(flashcardDecks => {
       this.decks === flashcardDecks;
     });
-
-    // FIXME: You can probably use the vuefire this.$bind instead of manually setting all the object fields yourself
-    // flashcardCollection.get().then(querySnapshot => {
-    //   querySnapshot.forEach(doc => {
-    //     // doc.data() is never undefined for query doc snapshots
-    //     // console.log(doc.id, " => ", doc.data());
-    //     const length = doc.data().terms.length;
-    //     const user = doc.data().creator;
-    //     let newCard = {
-    //       title: doc.data().title,
-    //       creatorUID: doc.data().creatorUID,
-    //       cardNum: length,
-    //       uid: doc.data().creatorUID,
-    //       creatorName: doc.data().creatorName,
-    //       documentID: doc.data().documentID
-    //     };
-    //     self.decks.push(newCard);
-    //   });
-    // });
+  },
+  computed: {
+    filteredDecks() {
+      // Filter the note list by the query string. Including partial matches.
+      // Converted to lowercase to avoid capitalization enforcement
+      return this.decks.filter(deck => {
+        return deck.title
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+      });
+    }
   }
 };
 </script>
@@ -82,10 +82,13 @@ export default {
 @import "../styleVariables.scss";
 
 // Flexbox container to hold all member cards
-.content-container {
+.card-container {
+  margin: auto;
+  width: 82%;
   margin-top: 40px;
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
 }
 </style>

@@ -4,10 +4,6 @@
     <router-view v-if="!$route.params.groupID" />
     <side-bar v-else>
       <router-view :class="chatActive ? 'chat-active' : 'chat-inactive'" />
-      <!-- <button
-        class="btn btn-action s-circle"
-        @click="isActive = !isActive"
-      ><i class="icon icon-arrow-left"></i></button> -->
       <chat
         :show="chatActive"
         :user="user"
@@ -60,8 +56,8 @@ export default {
 @import "./styleVariables.scss";
 @import "node_modules/animate.css/animate";
 @import "node_modules/spectre.css/src/spectre.scss";
-@import "node_modules/spectre.css/src/spectre-icons.scss";
 @import "node_modules/spectre.css/src/spectre-exp.scss";
+// @import "node_modules/spectre.css/src/spectre-icons.scss";
 @import url("https://fonts.googleapis.com/css?family=Pacifico");
 @import url("https://rsms.me/inter/inter-ui.css");
 
@@ -88,6 +84,7 @@ a.modal-overlay {
   background-image: $dark-gradient !important;
 }
 
+// Chat Sidebar Styles for Visible / Hidden
 .chat-active {
   margin-right: 300px;
   transition: 1s;

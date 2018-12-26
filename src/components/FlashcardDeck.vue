@@ -13,11 +13,11 @@
 export default {
   name: "FlashcardDeck",
   props: {
-    title: "",
+    title: String,
     cardNum: Number,
-    creator: "",
-    creatorUid: "",
-    documentID: ""
+    creator: String,
+    creatorUid: String,
+    documentID: String
   },
   methods: {
     goToStudy() {
@@ -35,7 +35,7 @@ export default {
 .flashcard-deck {
   cursor: pointer;
   padding: 40px 0px;
-  margin: 0 40px 40px 0;
+  margin: 0 0 40px 40px;
   border-radius: 10px;
   width: 400px;
   height: 240px;

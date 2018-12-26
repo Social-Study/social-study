@@ -5,7 +5,7 @@
       @click="sidebarActive = true;"
       class="off-canvas-toggle btn btn-primary btn-action"
     >
-      <i class="icon icon-menu"></i>
+      <i class="fas fa-bars"></i>
     </a>
 
     <div
@@ -77,7 +77,13 @@
           v-if="activeGroup.owner === $store.getters.uid"
           class="menu-item text-left"
         >
-          <a><i class="fas fa-cog"></i> Group Settings</a>
+          <router-link
+            :to="{name: 'settings'}"
+            :class="$route.name === 'settings' ? 'active' : ''"
+          >
+            <i class="fas fa-cog"></i> Settings
+          </router-link>
+          <!-- <a><i class="fas fa-cog"></i> Group Settings</a> -->
         </li>
       </ul>
     </div>
@@ -136,8 +142,6 @@ export default {
   },
   methods: {
     loadGroupData(groupID) {
-      // console.log("Sidebar: Loading Group Data function...");
-
       // Make sure the user is part of the group
       checkAccess(this.$store.getters.uid, this.$route.params.groupID)
         .then(() => {
@@ -147,36 +151,32 @@ export default {
             db.collection("study-groups").doc(groupID)
           ).then(active => {
             this.activeGroup === active;
-            // this.$store.commit("setActiveGroup", {
-            //   groupID: active.id,
-            //   details: active
-            // });
           });
 
           this.isMember = true;
           this.isLoading = false;
         })
         .catch(() => {
-          // console.log("You are not a member!");
+          console.log("load error!");
+
           this.isLoading = false;
         });
     }
   },
   watch: {
     "$route.params.groupID"(id) {
-      // console.log(
-      //   "Sidebar: Active Group Changed - Getting new data from firestore"
-      // );
       this.loadGroupData(id);
     }
   }
 };
 </script>
 
-// @HACK: Have to set !important on certain styling to override spectre defaults
-// Must be global styling not scoped to take affect
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
+
+a.off-canvas-toggle {
+  margin-top: 100%;
+}
 
 .sidebar {
   box-shadow: none;

@@ -31,10 +31,20 @@
             </div>
           </div>
         </div>
-
       </template>
       <template slot="center">
         Private Notes Collection
+      </template>
+      <template slot="right">
+        <div class="has-icon-left">
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Search by Title"
+            v-model="searchQuery"
+          >
+          <i class="form-icon fas fa-search"></i>
+        </div>
       </template>
     </page-title>
     <!-- In the future this will hold other things like the sort buttons, etc. -->
@@ -42,7 +52,7 @@
     <div class="content-container">
       <note-icon
         @click.native="$router.push(`/${$route.params.groupID}/notes/${note.id}`)"
-        v-for="note in notesList"
+        v-for="note in filteredNotes"
         :info="note"
         :key="note.id"
       />
@@ -68,6 +78,7 @@ export default {
     return {
       notesList: [],
       noteTitle: "",
+      searchQuery: "",
       loadingNewNote: false
     };
   },
@@ -81,6 +92,17 @@ export default {
     this.$bind("notesList", notesRef.collection("private")).then(notesList => {
       this.notesList === notesList;
     });
+  },
+  computed: {
+    filteredNotes() {
+      // Filter the note list by the query string. Including partial matches.
+      // Converted to lowercase to avoid capitalization enforcement
+      return this.notesList.filter(note => {
+        return note.title
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+      });
+    }
   },
   methods: {
     createNote() {
