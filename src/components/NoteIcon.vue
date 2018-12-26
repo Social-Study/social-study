@@ -23,8 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
-
+@import "@/styleVariables.scss";
 .note {
   cursor: pointer;
   width: 200px;

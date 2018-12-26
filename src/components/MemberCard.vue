@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import Avatar from "./Avatar";
+import Avatar from "@/components/Avatar";
 
 export default {
   name: "MemberCard",
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styleVariables.scss";
 
 // Individual info card
 .profile-card {

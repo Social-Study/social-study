@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import Message from "@/components/Message";
+import Message from "@/components/chat/Message";
 import { db } from "@/firebaseConfig";
 
 let notification = new Audio(
@@ -155,7 +155,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styleVariables.scss";
 
 // Chat sidebar header
 #header {

@@ -113,7 +113,7 @@
         <img
           style="width: 10em;"
           class="undraw-svg"
-          src="../assets/undraw_warning.svg"
+          src="@/assets/undraw_warning.svg"
           alt="Error Loading Group"
         />
         <h1>Error loading group data...</h1>
@@ -128,8 +128,8 @@
 </template>
 
 <script>
-import { checkAccess } from "../scripts/groupFuncs";
-import { db } from "../firebaseConfig";
+import { checkAccess } from "@/scripts/groupFuncs";
+import { db } from "@/firebaseConfig";
 
 // The sidebar is in charge of managing the group's initial load state.
 export default {
@@ -177,7 +177,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styleVariables.scss";
 
 a.off-canvas-toggle {
   margin-top: 100%;

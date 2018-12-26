@@ -135,7 +135,7 @@
 <script>
 import Avatar from "@/components/Avatar";
 import ProfileSettings from "@/components/ProfileSettings";
-import CreateJoinPopover from "@/components/CreateJoinPopover";
+import CreateJoinPopover from "@/components/navigation/CreateJoinPopover";
 import firebase, { db } from "@/firebaseConfig";
 
 export default {
@@ -213,7 +213,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styleVariables.scss";
 
 .badge::after {
   top: 25px !important;

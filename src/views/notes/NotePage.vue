@@ -66,8 +66,7 @@
 </template>
 
 <script>
-import PageTitle from "@/components/PageTitle";
-import { db } from "@/firebaseConfig";
+import PageTitle from "@/components/navigation/PageTitle";import { db } from "@/firebaseConfig";
 
 let marked = require("marked");
 
@@ -139,9 +138,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables";
-@import "../../node_modules/spectre-markdown.css/dist/markdown.min.css";
-@import "../../node_modules/github-markdown-css/github-markdown.css";
+@import "@/styleVariables.scss";
+@import "../../../node_modules/spectre-markdown.css/dist/markdown.min.css";
+@import "../../../node_modules/github-markdown-css/github-markdown.css";
 
 .dropdown > ul.menu {
   left: -70px;

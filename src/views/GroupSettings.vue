@@ -258,8 +258,7 @@
 
 import { checkOwner } from "@/scripts/groupFuncs";
 import { db, FirebaseConsts } from "@/firebaseConfig";
-import PageTitle from "@/components/PageTitle";
-
+import PageTitle from "@/components/navigation/PageTitle";
 // TODO: Form validation, loading indicators, transfer ownership?
 
 export default {

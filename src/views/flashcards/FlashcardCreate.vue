@@ -67,9 +67,8 @@
 </template>
 
 <script>
-import PageTitle from "../components/PageTitle";
-import FlashcardCreateForm from "../components/FlashcardCreateForm";
-import firebase, { db } from "../firebaseConfig";
+import PageTitle from "@/components/navigation/PageTitle";import FlashcardCreateForm from "@/components/flashcards/FlashcardCreateForm";
+import firebase, { db } from "@/firebaseConfig";
 
 export default {
   name: "flashcardCreate",
@@ -155,7 +154,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styleVariables.scss";
 
 .page-content {
   display: flex;

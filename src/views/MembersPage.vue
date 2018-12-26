@@ -85,12 +85,11 @@
 </template>
 
 <script>
-import PageTitle from "../components/PageTitle";
-import MemberCard from "../components/MemberCard";
+import PageTitle from "@/components/navigation/PageTitle";import MemberCard from "@/components/MemberCard";
 
-import { db, FirebaseConsts } from "../firebaseConfig";
-import { getGroupData } from "../scripts/groupFuncs";
-import generateCode from "../scripts/generateCode";
+import { db, FirebaseConsts } from "@/firebaseConfig";
+import { getGroupData } from "@/scripts/groupFuncs";
+import generateCode from "@/scripts/generateCode";
 
 export default {
   name: "MembersPage",
@@ -167,8 +166,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
-
+@import "@/styleVariables.scss";
 .modal-container {
   border-radius: 10px;
 }

@@ -61,8 +61,7 @@
 </template>
 
 <script>
-import PageTitle from "@/components/PageTitle";
-import NoteIcon from "@/components/NoteIcon";
+import PageTitle from "@/components/navigation/PageTitle";import NoteIcon from "@/components/NoteIcon";
 
 import { db } from "@/firebaseConfig";
 

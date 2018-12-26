@@ -203,7 +203,7 @@
 </template>
 
 <script>
-import { getUserData, getUserGroups } from "../scripts/userFuncs";
+import { getUserData, getUserGroups } from "@/scripts/userFuncs";
 import { FirebaseConsts, Storage, db } from "@/firebaseConfig";
 
 let picRef = Storage.ref();

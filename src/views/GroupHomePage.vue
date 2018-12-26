@@ -72,10 +72,9 @@
 </template>
 
 <script>
-import PageTitle from "@/components/PageTitle";
-import Calendar from "@/components/Calendar";
+import PageTitle from "@/components/navigation/PageTitle";import Calendar from "@/components/Calendar";
 import NoteIcon from "@/components/NoteIcon";
-import FlashcardDeck from "@/components/FlashcardDeck";
+import FlashcardDeck from "@/components/flashcards/FlashcardDeck";
 
 import { db } from "@/firebaseConfig";
 

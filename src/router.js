@@ -1,33 +1,33 @@
 import Vue from "vue";
 import Router from "vue-router";
-import firebase from "./firebaseConfig";
+import firebase from "@/firebaseConfig";
 
 // User login and signup page
-import Landing from "./views/Landing.vue";
+import Landing from "@/views/Landing.vue";
 
 // User Specific Homepage
-import Dashboard from "./views/Dashboard.vue";
+import Dashboard from "@/views/Dashboard.vue";
 
 // Create a New Group
-import CreateGroup from "./views/CreateGroup";
+import CreateGroup from "@/views/CreateGroup";
 
 // Group Specific Homepage
-import GroupHomePage from "./views/GroupHomePage";
+import GroupHomePage from "@/views/GroupHomePage";
 
 // Flashcard Functionality Pages
-import FlashcardCollection from "./views/FlashcardCollection";
-import FlashcardStudy from "./views/FlashcardStudy";
-import FlashcardCreate from "./views/FlashcardCreate";
+import FlashcardCollection from "@/views/flashcards/FlashcardCollection";
+import FlashcardStudy from "@/views/flashcards/FlashcardStudy";
+import FlashcardCreate from "@/views/flashcards/FlashcardCreate";
 
 // Note Functionality Pages
-import NotesCollection from "@/views/NotesCollection";
-import NotePage from "@/views/NotePage";
+import NotesCollection from "@/views/notes/NotesCollection";
+import NotePage from "@/views/notes/NotePage";
 
 // Group Members Listing
-import MembersPage from "./views/MembersPage";
+import MembersPage from "@/views/MembersPage";
 
 // Group Settings Page (Only the Group Owner can access)
-import GroupSettings from "./views/GroupSettings";
+import GroupSettings from "@/views/GroupSettings";
 
 Vue.use(Router);
 

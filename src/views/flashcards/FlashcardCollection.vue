@@ -36,9 +36,9 @@
 </template>
 
 <script>
-import FlashcardDeck from "@/components/FlashcardDeck";
-import PageTitle from "../components/PageTitle";
-import { db } from "../firebaseConfig";
+import FlashcardDeck from "@/components/flashcards/FlashcardDeck";
+import PageTitle from "@/components/navigation/PageTitle";
+import { db } from "@/firebaseConfig";
 
 export default {
   name: "FlashcardCollection",
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styleVariables.scss";
 
 // Flexbox container to hold all member cards
 .card-container {

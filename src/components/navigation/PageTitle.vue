@@ -28,7 +28,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styleVariables.scss";
+
 .chat-active {
   // @HACK: Used to compensate for the scrollbar's width.
   //  Otherwise, there is white space when the content requires a

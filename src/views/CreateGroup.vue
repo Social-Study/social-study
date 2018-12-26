@@ -399,9 +399,9 @@
 </template>
 
 <script>
-import firebase, { db } from "../firebaseConfig";
-import generateCode from "../scripts/generateCode";
-import PageTitle from "../components/PageTitle";
+import firebase, { db } from "@/firebaseConfig";
+import generateCode from "@/scripts/generateCode";
+import PageTitle from "@/components/navigation/PageTitle";
 
 export default {
   name: "CreateGroup",
@@ -517,7 +517,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styleVariables.scss";
 
 button.s-circle {
   margin: 15px;

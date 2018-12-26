@@ -42,9 +42,8 @@
 </template>
 
 <script>
-import PageTitle from "../components/PageTitle";
-import { setTimeout } from "timers";
-import { db } from "../firebaseConfig";
+import PageTitle from "@/components/navigation/PageTitle";import { setTimeout } from "timers";
+import { db } from "@/firebaseConfig";
 import anime from "animejs";
 
 export default {
@@ -224,7 +223,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styleVariables.scss";
 
 .page-content {
   display: flex;

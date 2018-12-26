@@ -14,13 +14,13 @@
 
 
 <script>
-import NavBar from "@/components/NavBar";
-import SideBar from "@/components/SideBar";
-import Chat from "@/components/Chat";
+import NavBar from "@/components/navigation/NavBar";
+import SideBar from "@/components/navigation/SideBar";
+import Chat from "@/components/chat/Chat";
 
 import { mapGetters } from "vuex";
 
-import firebase from "./firebaseConfig";
+import firebase from "@/firebaseConfig";
 export default {
   name: "App",
   components: {
@@ -66,7 +66,8 @@ body {
   // min-height: 100vh;
   // max-height: 100vh;
   height: 100%;
-  background-color: $background-color;
+  // background-color: $background-color;
+  background-color: $light;
   overflow: hidden;
 }
 
