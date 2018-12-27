@@ -42,7 +42,8 @@
 </template>
 
 <script>
-import PageTitle from "@/components/navigation/PageTitle";import { setTimeout } from "timers";
+import PageTitle from "@/components/navigation/PageTitle";
+import { setTimeout } from "timers";
 import { db } from "@/firebaseConfig";
 import anime from "animejs";
 
@@ -71,7 +72,7 @@ export default {
     let flashcardCollection = db
       .collection("study-groups")
       .doc(groupID)
-      .collection("flashcardDecks")
+      .collection("flashcards")
       .doc(deckID);
     flashcardCollection
       .get()

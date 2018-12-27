@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 85%;">
+  <div style="height: 84%;">
     <notifications
       group="notes"
       position="left top"
@@ -47,8 +47,7 @@
       </template>
     </page-title>
 
-    <div class="
-      content-container">
+    <div class="content-container">
       <textarea
         @keydown.ctrl.83.prevent="saveNote"
         v-model="userText"
@@ -66,7 +65,8 @@
 </template>
 
 <script>
-import PageTitle from "@/components/navigation/PageTitle";import { db } from "@/firebaseConfig";
+import PageTitle from "@/components/navigation/PageTitle";
+import { db } from "@/firebaseConfig";
 
 let marked = require("marked");
 
@@ -160,7 +160,7 @@ export default {
 .content-container {
   display: inline-block;
   // height: 100%;
-  margin: 40px;
+  margin: 30px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;

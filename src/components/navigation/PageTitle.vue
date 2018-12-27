@@ -69,7 +69,7 @@ export default {
   }
 
   h1 {
-    flex: 8;
+    flex: 1;
     user-select: none;
     font-size: 2em;
     margin: 0;

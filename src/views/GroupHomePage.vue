@@ -72,7 +72,8 @@
 </template>
 
 <script>
-import PageTitle from "@/components/navigation/PageTitle";import Calendar from "@/components/Calendar";
+import PageTitle from "@/components/navigation/PageTitle";
+import Calendar from "@/components/Calendar";
 import NoteIcon from "@/components/NoteIcon";
 import FlashcardDeck from "@/components/flashcards/FlashcardDeck";
 
@@ -122,7 +123,7 @@ export default {
         db
           .collection("study-groups")
           .doc(this.$route.params.groupID)
-          .collection("flashcardDecks")
+          .collection("flashcards")
           .limit(4)
       ).then(flashcards => {
         this.recentFlashcards = flashcards;

@@ -49,6 +49,7 @@
         maxlength="100"
         @termUpdated="termUpdated"
         @defUpdated="defUpdated"
+        @addNew="addCard"
       />
       <div
         class="addCard"
@@ -67,7 +68,8 @@
 </template>
 
 <script>
-import PageTitle from "@/components/navigation/PageTitle";import FlashcardCreateForm from "@/components/flashcards/FlashcardCreateForm";
+import PageTitle from "@/components/navigation/PageTitle";
+import FlashcardCreateForm from "@/components/flashcards/FlashcardCreateForm";
 import firebase, { db } from "@/firebaseConfig";
 
 export default {
@@ -117,7 +119,7 @@ export default {
         const flashcardCollection = db
           .collection("study-groups")
           .doc(groupID)
-          .collection("flashcardDecks");
+          .collection("flashcards");
         let user = firebase.auth().currentUser;
         flashcardCollection
           .add({
@@ -131,7 +133,7 @@ export default {
             console.log("Flashcard Deck created with doc id: ", docRef.id);
             db.collection("study-groups")
               .doc(groupID)
-              .collection("flashcardDecks")
+              .collection("flashcards")
               .doc(docRef.id)
               .update({
                 documentID: docRef.id

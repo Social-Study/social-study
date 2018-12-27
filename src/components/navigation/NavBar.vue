@@ -254,9 +254,8 @@ export default {
 }
 
 .navbar {
-  // background-image: $nav-gradient;
+  // background-image: $dark-gradient;
   background-color: $dark;
-  // background-color: $dark;
   padding: 0px 10px 0px 0px;
   max-height: 6vh;
   min-height: 60px;

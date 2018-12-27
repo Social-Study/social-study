@@ -3,6 +3,28 @@
   <div v-if="userAuthorized && !isLoading">
     <page-title>
       <template slot="center">Study Group Admin Settings</template>
+      <template slot="right">
+        <div class="popover popover-left">
+          <button class="btn btn-action btn-error"><i class="fas fa-trash-alt"></i></button>
+          <div class="popover-container">
+            <div class="card">
+              <div class="card-header">
+                <h5>Delete Group?</h5>
+              </div>
+              <div class="card-body">
+                This will delete the group and all of its content.
+                Consider transferring ownership instead.
+              </div>
+              <div class="card-footer">
+                <button
+                  @click="deleteGroup"
+                  class="btn"
+                >Yes, Delete the Group</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
     </page-title>
     <notifications
       group="save"
@@ -234,6 +256,22 @@
               </table>
               <div v-else class="loading loading-lg"></div>
             </div>
+            <div class="group-details column col-10  col-mx-auto">
+              <h2>Transfer Group Ownership</h2>
+              <p>Choose another member to manage the Study Group.</p>
+              <div v-if="!loading.members" class="transfer-group input-group">
+                <select class="form-select" v-model="selected">
+                  <option
+                    v-if="member.uid !== $store.getters.uid"
+                    v-for="member in memberDetails"
+                    :key="member.uid"
+                    :value="member.uid">{{member.displayName}}
+                  </option>
+                </select>
+                <button @click="changeOwner" class="btn btn-error input-group-btn">Transfer</button>
+              </div>
+              <div v-else class="loading loading-lg"></div>
+            </div>
           </div>
 
         </div>
@@ -254,6 +292,7 @@
  *  Manage Group Member List
  *  Manage active invite codes
  *  Transfer Ownership ?
+ *  Delete Group
  */
 
 import { checkOwner } from "@/scripts/groupFuncs";
@@ -298,10 +337,27 @@ export default {
       },
       inviteCodes: [],
       memberUID: [],
-      memberDetails: []
+      memberDetails: [],
+      selected: ""
     };
   },
   methods: {
+    deleteGroup() {
+      // db.collection("study-groups").doc(this.$route.params.groupID).delete();
+      // TODO: Work out deletion logic to delete group and all subcollections
+      // Have to manually find and delete subcollections
+    },
+    changeOwner() {
+      console.log(this.selected);
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .update({
+          owner: this.selected
+        })
+        .then(() => {
+          this.$router.go(-1);
+        });
+    },
     // Verify that the user is the owner before showing admin settings
     checkAuth() {
       checkOwner(this.$store.getters.uid, this.$route.params.groupID)
@@ -478,6 +534,19 @@ input[type="time"] {
     margin: auto;
     margin: auto;
     border-radius: 16px;
+  }
+}
+
+.transfer-group {
+  width: 50%;
+  margin: 0 auto 40px auto;
+}
+
+.popover-container {
+  top: 100px !important;
+
+  .card {
+    border-radius: $border-round;
   }
 }
 </style>

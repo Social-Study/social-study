@@ -93,7 +93,8 @@ export default {
 @import "../styleVariables.scss";
 
 .empty {
-  background-color: $background-color;
+  // background-color: $background-color;
+  background-color: $light;
 }
 
 .modal-container {

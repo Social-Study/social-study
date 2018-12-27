@@ -21,7 +21,10 @@
         </div>
       </template>
     </page-title>
-    <div class="card-container">
+    <div
+      v-if="!isLoading"
+      class="card-container"
+    >
       <flashcard-deck
         v-for="(deck,index) in filteredDecks"
         :key="index"
@@ -32,6 +35,10 @@
         :documentID="deck.documentID"
       ></flashcard-deck>
     </div>
+    <div
+      v-else
+      class="loading loading-lg"
+    ></div>
   </div>
 </template>
 
@@ -48,6 +55,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       decks: [],
       searchQuery: ""
     };
@@ -57,11 +65,12 @@ export default {
     let flashcardCollection = db
       .collection("study-groups")
       .doc(groupID)
-      .collection("flashcardDecks");
+      .collection("flashcards");
 
     // This allows it to auto update
     this.$bind("decks", flashcardCollection).then(flashcardDecks => {
       this.decks === flashcardDecks;
+      this.isLoading = false;
     });
   },
   computed: {

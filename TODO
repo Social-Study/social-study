@@ -4,7 +4,7 @@ Branding:
   ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
   ☐ Find better flashcard sidebar icon
   ☐ Improve color design. Not sure about the gradients the more I work with it.
-    - Seems to glaring and random. We need a simpler color pallete of a few select colors...
+    - Seems too glaring and random. We need a simpler color pallete of a few select colors...
 
 Possible Features (Time Permitting):
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
@@ -42,7 +42,7 @@ Landing:
   ☐ Improve form validation
 
 Notes:
-  ☐ Collection should have a loading indicator
+  ✔ Collection should have a loading indicator @done(18-12-26 20:53)
   ☐ Make sure that other users cannot access notes they didn't create
   ☐ Find more markdown css themes
     ☐ Dark theme
@@ -108,6 +108,7 @@ Flashcards Collection:
 Flashcards:
   ☐ Button to restart flashcards when you reach the end
   ☐ Shuffle button
+  ☐ Autofocus after using keybind to create a new flashcard
 
 Animations / Transitions:
   Flashcard Study:
