@@ -14,7 +14,12 @@
           @click="shuffleDeck"
           class="btn"
           :class="isShuffled ? 'btn-primary': 'btn-action'"
-        ><i class="fas fa-random"></i></button>
+        >
+          <!-- Icon flashes when shuffle enabled -->
+          <i
+            :class="isShuffled ? 'animated flash' : ''"
+            class="fas fa-random"
+          ></i></button>
       </template>
     </page-title>
 

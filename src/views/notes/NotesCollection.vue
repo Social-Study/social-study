@@ -166,10 +166,22 @@ export default {
   }
 }
 
+// .content-container {
+//   margin: 40px 40px;
+//   display: flex;
+//   flex-flow: row wrap;
+//   justify-content: flex-start;
+// }
+
 .content-container {
-  margin: 40px 40px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
+  grid-auto-rows: 250px;
+  justify-content: center;
+  padding: 20px;
+  transition: all 350ms ease-in;
 }
 </style>

@@ -165,7 +165,7 @@ export default {
   z-index: 0;
   top: 0;
   right: 0;
-  border-top: 1px solid black;
+  border-top: 1px solid white;
   background-color: $dark;
   // background-color: #3c3c3c;
   overflow-x: hidden;

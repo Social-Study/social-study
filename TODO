@@ -11,7 +11,6 @@ Possible Features (Time Permitting):
   ☐ Video/Audio Chat with WebRTC
 
 General:
-  ☐ Not sure why the favicon is not showing???? @low
   ☐ Go through and error check all inputs where necessary
     - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
   ☐ Make sure that each page that loads from firebase has error checking
@@ -61,10 +60,6 @@ Known Bugs:
     - Might be caused by not using a form. I'm just using vee-validate to validate input fields...
   ☐ On the study page, when you select next flashcard with the buttons. the spacebar doesn't work as intended
 
-Collection Pages:
-  ☐ Figure out how to make these pages more responsive so that the cards scale better and don't break apart as much...
-    - Will probably have to use some media queries or something
-
 Vuex Store:
   ☐ Save the number of unread messages to the store.
     Reset the number when the user opens the chat sidebar
@@ -97,8 +92,6 @@ Flashcards Collection:
   ☐ Figure out proper way to get the last row to the left instead of centering it.
 
 Flashcards:
-  ☐ Button to restart flashcards when you reach the end
-  ☐ Shuffle button
   ☐ Autofocus after using keybind to create a new flashcard
 
 Animations / Transitions:
@@ -111,6 +104,10 @@ Animations / Transitions:
       Show the icons appearing one after the other
 
 Archive:
+  ✔ Figure out how to make these pages more responsive so that the cards scale better and don't break apart as much... @done(19-01-04 14:43) @project(Collection Pages)
+  ✔ Not sure why the favicon is not showing???? @low @done(19-01-04 13:56) @project(General)
+  ✔ Button to restart flashcards when you reach the end @done(19-01-04 13:50) @project(Flashcards)
+  ✔ Shuffle button @done(19-01-04 13:50) @project(Flashcards)
   ✔ Make sure the build bundle size is not too large. @low @done(19-01-04 12:35) @project(General)
   ✔ Figure out how to split the code so the bundle size is not as large... @done(19-01-04 12:35) @project(General)
   ✔ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high @done(19-01-04 12:34) @project(General)

@@ -14,10 +14,11 @@
       class="off-canvas-sidebar"
       :class="{ active: sidebarActive }"
     >
-      <li
+      <div
+        v-show="!sidebarActive"
         style="margin: 0"
         class="divider"
-      ></li>
+      ></div>
 
       <ul class="menu sidebar">
         <li
@@ -180,7 +181,11 @@ export default {
 @import "@/styleVariables.scss";
 
 a.off-canvas-toggle {
-  margin-top: 100%;
+  position: fixed;
+  left: 0;
+  top: 120px;
+  bottom: 0;
+  margin-left: 8px;
 }
 
 .sidebar {

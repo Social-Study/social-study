@@ -25,6 +25,7 @@
       v-if="!isLoading"
       class="card-container"
     >
+      <!-- Make this take a single object. No need to assign each individually... -->
       <flashcard-deck
         v-for="(deck,index) in filteredDecks"
         :key="index"
@@ -90,14 +91,26 @@ export default {
 <style lang="scss" scoped>
 @import "@/styleVariables.scss";
 
-// Flexbox container to hold all member cards
+// // Flexbox container to hold all member cards
+// .card-container {
+//   margin: auto;
+//   width: 82%;
+//   margin-top: 40px;
+//   display: flex;
+//   flex-flow: row wrap;
+//   justify-content: flex-start;
+//   align-items: center;
+// }
+
 .card-container {
-  margin: auto;
-  width: 82%;
-  margin-top: 40px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
+  grid-auto-rows: 240px;
+  justify-content: center;
+  padding: 20px;
+  transition: all 350ms ease-in;
 }
 </style>

@@ -173,12 +173,24 @@ export default {
 }
 
 // Flexbox container to hold all member cards
+// .content-container {
+//   margin: 40px 40px;
+//   max-width: 90%;
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: wrap;
+//   justify-content: center;
+// }
+
 .content-container {
-  margin: 40px 40px;
-  max-width: 90%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 300px));
+  grid-auto-rows: 300px;
   justify-content: center;
+  padding: 20px;
+  transition: all 350ms ease-in;
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
-  <div style="height: 84%;">
+  <div
+    v-if="!isLoading && !isError"
+    id="page-content"
+  >
     <notifications
       group="notes"
       position="left top"
@@ -15,10 +18,12 @@
         >
       </template>
       <template slot="right">
+        <switch />
         <div class="dropdown split">
           <a
             href="#"
-            class="btn btn-action dropdown-toggle"
+            class="btn btn-action dropdown-toggle tooltip tooltip-bottom"
+            data-tooltip="Preview Style"
             tabindex="0"
           >
             <i
@@ -62,6 +67,22 @@
       ></div>
     </div>
   </div>
+  <div
+    v-else-if="!isLoading && isError"
+    id="error-container"
+  >
+    <img
+      style="width: 10em;"
+      class="undraw-svg"
+      src="@/assets/undraw_warning.svg"
+      alt="Error Loading Group"
+    />
+    <h1>Error loading note...</h1>
+  </div>
+  <div
+    v-else
+    class="loading loading-lg"
+  ></div>
 </template>
 
 <script>
@@ -77,6 +98,10 @@ export default {
   },
   data() {
     return {
+      // Set to false when firebase query returns
+      isLoading: true,
+      // If firebase returns with error, set to true
+      isError: false,
       noteTitle: "",
       userText: "",
       markStyleNum: 2
@@ -93,6 +118,11 @@ export default {
       .then(doc => {
         this.noteTitle = doc.data().title;
         this.userText = doc.data().content;
+        this.isLoading = false;
+      })
+      .catch(err => {
+        this.isLoading = false;
+        this.isError = true;
       });
   },
   methods: {
@@ -141,6 +171,16 @@ export default {
 @import "@/styleVariables.scss";
 @import "../../../node_modules/spectre-markdown.css/dist/markdown.min.css";
 @import "../../../node_modules/github-markdown-css/github-markdown.css";
+
+#page-content {
+  position: relative;
+  max-height: 86%;
+}
+
+#error-container {
+  max-height: 75%;
+  margin-top: 200px;
+}
 
 .dropdown > ul.menu {
   left: -70px;
