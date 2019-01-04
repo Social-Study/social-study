@@ -158,16 +158,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page-controls {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-
-  // .btn.btn-primary {
-  //   margin: 20px 20px 10px 20px;
-  // }
-}
-
 .popover-container {
   top: 60px !important;
 

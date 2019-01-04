@@ -6,7 +6,7 @@
     >
       <div class="content">
         <h3 id="header">Study Group Chat</h3>
-        <div class="divider-gradient"></div>
+        <div class="divider-gradient mb-2"></div>
         <div
           class="messages"
           ref="messages"
@@ -24,15 +24,7 @@
           </transition-group>
 
         </div>
-        <div class="divider"></div>
-        <!-- <textarea
-          @keydown.enter="sendMessage"
-          class="message-input"
-          placeholder="Group message"
-          v-model="userMessage"
-          cols="30"
-          rows="2"
-        ></textarea> -->
+        <div class="divider-gradient my-2"></div>
         <input
           @keydown.enter="sendMessage"
           type="text"
@@ -194,7 +186,7 @@ export default {
 .divider-gradient {
   background-image: $orange-gradient;
   height: 1px;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
 }
 
 // Messages container

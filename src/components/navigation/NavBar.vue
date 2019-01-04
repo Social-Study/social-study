@@ -265,6 +265,12 @@ a.navbar-brand {
   font-family: $logo-font;
   font-size: 1.7em;
   color: white;
+  // Maybe make the color a gradient
+  // background: $orange-gradient;
+  // background-clip: text;
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent;
+
   min-width: 200px;
   margin-right: 25px;
 }

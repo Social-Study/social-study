@@ -31,10 +31,8 @@ export default {
 @import "@/styleVariables.scss";
 
 .chat-active {
-  // @HACK: Used to compensate for the scrollbar's width.
-  //  Otherwise, there is white space when the content requires a
-  //  scrollbar and the chat is visible
-  width: calc(100% + 20px);
+  // width: calc(100% + 20px);
+  width: 100%;
 }
 
 .header-container {
@@ -57,6 +55,10 @@ export default {
     font-weight: bold;
     padding: 0 4px;
     font-family: "Inter UI";
+  }
+
+  button {
+    margin: 0;
   }
 
   // Applied to buttons are split apart in the header

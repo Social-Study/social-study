@@ -85,7 +85,8 @@
 </template>
 
 <script>
-import PageTitle from "@/components/navigation/PageTitle";import MemberCard from "@/components/MemberCard";
+import PageTitle from "@/components/navigation/PageTitle";
+import MemberCard from "@/components/MemberCard";
 
 import { db, FirebaseConsts } from "@/firebaseConfig";
 import { getGroupData } from "@/scripts/groupFuncs";

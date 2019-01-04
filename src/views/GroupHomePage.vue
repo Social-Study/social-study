@@ -2,7 +2,7 @@
   <div style="min-height: 800px;">
     <page-title>
       <template slot="center">
-        Home
+        Overview
       </template>
     </page-title>
     <div class="page-content">
@@ -12,10 +12,10 @@
           The selected day's details will appear here
         </div>
       </div>
-      <div
+      <!-- <div
         class="divider-vert"
         style="padding: 0;"
-      ></div>
+      ></div> -->
       <div class="recent-container">
         <div class="notes-container">
           <div class="tile-header">
@@ -37,7 +37,7 @@
           </div>
         </div>
 
-        <div class="divider"></div>
+        <!-- <div class="divider"></div> -->
 
         <!-- Displays the group's most popular flashcards -->
         <!-- Decide metric (Study Count, Recently Created, Favorited) -->

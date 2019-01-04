@@ -12,13 +12,8 @@ Possible Features (Time Permitting):
 
 General:
   ☐ Not sure why the favicon is not showing???? @low
-  ☐ Make sure the build bundle size is not too large. @low
-    ☐ Figure out how to split the code so the bundle size is not as large...
   ☐ Go through and error check all inputs where necessary
-  ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
-    Not exactly sure how to do this.
     - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
-  ☐ REFACTOR the components into different subfolders to organize it a bit
   ☐ Make sure that each page that loads from firebase has error checking
     ☐ Should display an error message if the firebase load fails
     ☐ User's should be limited to what they are permitted to access..
@@ -42,7 +37,6 @@ Landing:
   ☐ Improve form validation
 
 Notes:
-  ✔ Collection should have a loading indicator @done(18-12-26 20:53)
   ☐ Make sure that other users cannot access notes they didn't create
   ☐ Find more markdown css themes
     ☐ Dark theme
@@ -62,7 +56,6 @@ Chat:
        Not sure how I would implement tracking unread messages
 
 Known Bugs:
-  ✔ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present @done(18-12-22 14:17)
   ☐ Form validation is broken
     - May have to implement custom validation for the create page
     - Might be caused by not using a form. I'm just using vee-validate to validate input fields...
@@ -82,8 +75,6 @@ Homepage:
 Members Page:
   ☐ Add members list page sort filters
     - Joined Date, Alphabetical, etc...
-  ✘ Give the group owner a glow around their card @cancelled(18-12-22 14:17)
-  ✔ Differentiate the owner from the other members @done(18-12-22 14:17)
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
@@ -120,6 +111,15 @@ Animations / Transitions:
       Show the icons appearing one after the other
 
 Archive:
+  ✔ Make sure the build bundle size is not too large. @low @done(19-01-04 12:35) @project(General)
+  ✔ Figure out how to split the code so the bundle size is not as large... @done(19-01-04 12:35) @project(General)
+  ✔ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high @done(19-01-04 12:34) @project(General)
+    Not exactly sure how to do this.
+  ✔ REFACTOR the components into different subfolders to organize it a bit @done(19-01-04 12:35) @project(General)
+  ✔ Collection should have a loading indicator @done(18-12-26 20:53) @project(Notes)
+  ✔ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present @done(18-12-22 14:17) @project(Known Bugs)
+  ✘ Give the group owner a glow around their card @cancelled(18-12-22 14:17) @project(Members Page)
+  ✔ Differentiate the owner from the other members @done(18-12-22 14:17) @project(Members Page)
   ✔ Store displayname in firestore so that it updates @done(18-12-21 21:37) @project(General)
   ✔ Make svg's smaller @done(18-12-21 23:15) @project(Landing)
   ✔ Word breaking looks fucked up. Splits in the middle of words even when there are other places to break it @done(18-12-21 21:39) @project(Chat)
