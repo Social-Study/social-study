@@ -1,32 +1,24 @@
 <template>
-  <div class="note">
-    <div
-      @click.prevent="$emit('viewNote')"
-      class="content"
-    >
-      <h1>{{info.title}}</h1>
-      <div class="details">
-        <h2>Last Updated:</h2>
-        <h3>{{info.lastUpdated.toDate().toLocaleDateString()}} - {{info.lastUpdated.toDate().toLocaleTimeString('en-US')}}</h3>
-        <h2>Created:</h2>
-        <h3>{{info.creationDate.toDate().toLocaleDateString()}} - {{info.creationDate.toDate().toLocaleTimeString('en-US')}}</h3>
+  <!-- Note Icon -->
+  <div id="note">
+    <!-- Title -->
+    <h2 id="title">{{info.title}}</h2>
+    <div>
+      <!-- Created -->
+      <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
+      <!-- Modified -->
+      <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p>
+      <div id="button-container">
+        <button
+          @click="$emit('delete')"
+          id="deleteBtn"
+        >Delete</button>
+        <button
+          @click="$emit('viewNote')"
+          id="editBtn"
+        >Edit</button>
       </div>
     </div>
-    <div class="button-group">
-      <button
-        @click="$emit('viewNote')"
-        class="note-btn edit"
-      >
-        <i class="fas fa-edit"></i>
-      </button>
-      <button
-        @click="$emit('delete')"
-        class="note-btn delete"
-      >
-        <i class="btn-delete fas fa-trash-alt"></i>
-      </button>
-    </div>
-
   </div>
 </template>
 
@@ -45,72 +37,91 @@ export default {
 <style lang="scss" scoped>
 @import "@/styleVariables.scss";
 
-.button-group {
-  min-width: 100%;
-  padding: 0;
-  align-self: flex-start;
-
-  .note-btn {
-    width: 50%;
-    height: 40px;
-    background-color: #e7e7e7;
-    border: none;
-
-    &:hover {
-      background-color: $primary;
-      color: $light;
-    }
-  }
-
-  .note-btn.edit {
-    border-bottom-left-radius: 2px;
-    border-top: 1px solid $dark;
-    border-right: 1px solid $dark;
-  }
-
-  .note-btn.delete {
-    border-bottom-right-radius: 2px;
-    border-top: 1px solid $dark;
-    color: red;
-  }
+/* Center note on page */
+#page-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5fa;
 }
 
-.note {
-  cursor: pointer;
-  width: 200px;
-  height: 250px;
-  background-color: #e7e7e7;
-  color: #3c3c3c;
-  box-shadow: $shadow-heavy;
-  border-radius: 2px;
-  margin: 0 40px 40px 0;
+/* Icon itself */
+#note {
+  background-color: white;
+  height: 288px;
+  width: 216px;
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+
   display: flex;
-  flex-flow: column nowrap;
+  flex-direction: column;
   justify-content: space-between;
-  word-break: break-all;
+}
 
-  h1 {
-    padding: 8px 4px 0 4px;
-    font-size: 1.4em;
-    font-weight: bold;
-    word-break: normal;
-  }
+#title {
+  font-family: "Montserrat";
+  font-weight: 600;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /* white-space: ; */
+  max-width: 10em;
+  max-height: 5em;
+}
 
-  .details {
-    padding: 5px;
+#created,
+#modified {
+  padding: 0.3em 0 0.3em 0;
+  border-radius: 20px;
+  border: 1px solid $secondary;
+  margin: 10px;
+  text-align: center;
+  color: $dark;
+  font-size: 0.8em;
+  font-weight: 500;
+}
 
-    h2 {
-      text-align: left;
-      font-size: 1.1em;
-      font-weight: bold;
-      align-self: flex-start;
-    }
+// Date labels
+p > i {
+  font-style: normal;
+  color: $secondary-light;
+  font-weight: 400;
+}
 
-    h3 {
-      font-size: 0.8em;
-      align-self: flex-end;
-      text-align: center;
-    }
-  }
+#button-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#deleteBtn {
+  cursor: pointer;
+  border: none;
+  padding: 0.3em;
+  background-color: transparent;
+  // color: red;
+  color: $secondary;
+  font-weight: 500;
+}
+
+#deleteBtn:hover {
+  color: hsl(0, 100%, 85%);
+}
+
+#editBtn {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  /* padding: 0.3em 0.5em 0.3em 0.5em; */
+  padding: 4px 8px 4px 8px;
+  background-color: $primary;
+  color: white;
+  font-weight: 400;
+}
+
+#editBtn:hover {
+  background-color: lighten($primary, 10);
 }
 </style>

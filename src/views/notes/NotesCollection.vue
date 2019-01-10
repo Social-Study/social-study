@@ -178,8 +178,8 @@ export default {
   width: 100%;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
-  grid-auto-rows: 250px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 216px));
+  grid-auto-rows: 288px;
   justify-content: center;
   padding: 20px;
   transition: all 350ms ease-in;

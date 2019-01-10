@@ -59,16 +59,18 @@ export default {
 @import "node_modules/spectre.css/src/spectre-exp.scss";
 // @import "node_modules/spectre.css/src/spectre-icons.scss";
 @import url("https://fonts.googleapis.com/css?family=Pacifico");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500");
 @import url("https://rsms.me/inter/inter-ui.css");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600");
 
 html,
 body {
   // min-height: 100vh;
   // max-height: 100vh;
-  height: 100%;
   // background-color: $background-color;
+  // overflow: hidden;
+  height: 100%;
   background-color: $light;
-  overflow: hidden;
 }
 
 #app {
@@ -76,7 +78,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   height: 100%;
 }
 

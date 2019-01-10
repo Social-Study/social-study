@@ -12,10 +12,8 @@
           The selected day's details will appear here
         </div>
       </div>
-      <!-- <div
-        class="divider-vert"
-        style="padding: 0;"
-      ></div> -->
+
+      <!-- Displays recent notes and flashcards -->
       <div class="recent-container">
         <div class="notes-container">
           <div class="tile-header">
@@ -36,8 +34,6 @@
             />
           </div>
         </div>
-
-        <!-- <div class="divider"></div> -->
 
         <!-- Displays the group's most popular flashcards -->
         <!-- Decide metric (Study Count, Recently Created, Favorited) -->
@@ -184,8 +180,8 @@ export default {
   justify-content: flex-start;
   align-items: center;
 
-  .note {
-    margin: 40px 0px 40px 40px;
+  #note {
+    margin-left: 20px;
   }
 
   .flashcard-deck {

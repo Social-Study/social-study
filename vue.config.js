@@ -1,6 +1,6 @@
 module.exports = {
   pwa: {
-    themeColor: "#fd007e",
+    themeColor: "#303440",
     iconPaths: {
       favicon32: "public/favicon.ico"
     }

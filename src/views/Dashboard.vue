@@ -1,6 +1,5 @@
 <template>
 
-  <!-- TODO: Render loading indicator if firebase has not finished async load -->
   <div v-if="this.user !== null">
     <notifications
       group="joinErrors"
@@ -22,27 +21,6 @@
         >You don't have any Study Groups!</p>
         <p class="empty-subtitle text-large text-bold">Welcome to your Dashboard</p>
         <p class="empty-subtitle">It is currently in development.</p>
-        <!-- <p class="empty-subtitle">Create a brand new Study Group</p>
-        <div class="empty-action">
-          <button
-            @click="$router.push('/dashboard/create')"
-            class="btn btn-primary"
-          >Create</button>
-        </div>
-        <p class="empty-subtitle">or</p>
-        <p class="empty-subtitle ">Join an existing Study Group.</p>
-        <div class="empty-action input-group input-inline">
-          <input
-            v-model="inviteCode"
-            class="form-input"
-            type="text"
-            @keydown.enter="queryStudyGroup"
-          >
-          <button
-            @click="queryStudyGroup"
-            class="btn btn-primary input-group-btn"
-          >Join</button> -->
-        <!-- </div> -->
       </div>
     </div>
   </div>
@@ -92,6 +70,10 @@ export default {
 <style lang="scss" scoped>
 @import "../styleVariables.scss";
 
+#undraw {
+  width: 10em;
+}
+
 .empty {
   // background-color: $background-color;
   background-color: $light;
@@ -107,14 +89,11 @@ export default {
 }
 
 .dashboardBody {
-  min-height: 94vh;
+  min-height: 92vh;
+  // min-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-#undraw {
-  width: 10em;
 }
 </style>

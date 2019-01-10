@@ -1,6 +1,6 @@
 <template>
   <div class="off-canvas off-canvas-sidebar-show">
-    <!-- Sidebar Toggle Button; Only shows when screen is too small -->
+    <!-- Sidebar Toggle Button; Shows when width < 768px -->
     <a
       @click="sidebarActive = true;"
       class="off-canvas-toggle btn btn-primary btn-action"
@@ -8,18 +8,21 @@
       <i class="fas fa-bars"></i>
     </a>
 
+    <!-- Sidebar Display Controls -->
     <div
       v-if="activeGroup"
       id="sidebar-id"
       class="off-canvas-sidebar"
       :class="{ active: sidebarActive }"
     >
+      <!-- Top Divider; Only shows when sidebar not collapsed -->
       <div
         v-show="!sidebarActive"
         style="margin: 0"
         class="divider"
       ></div>
 
+      <!-- Sidebar Content -->
       <ul class="menu sidebar">
         <li
           class="menu-item"
@@ -33,15 +36,18 @@
           </div>
         </li>
         <li class="divider"></li>
-        <li class="menu-item"></li>
 
-        <!-- Change the active highlight depending on the current page name -->
+        <!-- Menu highlight based on current route -->
+
+        <!-- Home -->
         <li class="menu-item text-left">
           <router-link
             :class="$route.name === 'home' ? 'active' : ''"
             :to="{ name: 'home' }"
           ><i class="fas fa-home"></i> Home</router-link>
         </li>
+
+        <!-- Flashcards -->
         <li class="menu-item text-left">
           <router-link
             :class="
@@ -53,12 +59,15 @@
             <i class="fas fa-sticky-note"></i> Flashcards
           </router-link>
         </li>
+        <!-- Quizzes -->
         <li class="menu-item text-left">
           <a :class="$route.name === 'quiz' ? 'active' : ''"><i class="fas fa-pencil-alt"></i> Quiz</a>
         </li>
+        <!-- Agenda -->
         <li class="menu-item text-left">
           <a :class="$route.name === 'agenda' ? 'active' : ''"><i class="fas fa-calendar-alt"></i> Agenda</a>
         </li>
+        <!-- Notes -->
         <li class="menu-item text-left">
           <router-link
             :to="{name: 'notes'}"
@@ -68,6 +77,7 @@
             <i class="fas fa-file"></i> Notes
           </router-link>
         </li>
+        <!-- Group Members -->
         <li class="menu-item text-left">
           <div class="menu-badge">
             <label class="member-num label label-primary">{{
@@ -79,6 +89,7 @@
             :to="{ name: 'members' }"
           ><i class="fas fa-user-circle"></i> Members</router-link>
         </li>
+        <!-- Group Settings -->
         <li
           v-if="activeGroup.owner === $store.getters.uid"
           class="menu-item text-left"
@@ -89,14 +100,11 @@
           >
             <i class="fas fa-cog"></i> Settings
           </router-link>
-          <!-- <a><i class="fas fa-cog"></i> Group Settings</a> -->
         </li>
       </ul>
     </div>
 
-    <!--
-      Overlay that shows when screen is too small. Clicking hides the sidebar
-    -->
+    <!-- Overlay when collapsed sidebar is open -->
     <a
       @click="sidebarActive = false;"
       class="off-canvas-overlay"
@@ -169,6 +177,7 @@ export default {
         });
     }
   },
+  // Reload group data if the group's url changes
   watch: {
     "$route.params.groupID"(id) {
       this.loadGroupData(id);
@@ -188,10 +197,30 @@ a.off-canvas-toggle {
   margin-left: 8px;
 }
 
+.tile-content {
+  color: white;
+}
+
 .sidebar {
   box-shadow: none;
   background: $dark;
-  // background: #3c3c3c;
+}
+
+.sidebar > li.menu-item {
+  color: $secondary-light;
+
+  i.fas {
+    color: darken($secondary-light, 30);
+  }
+}
+
+.sidebar > li > a.active {
+  background-image: $orange-gradient !important;
+  color: white !important;
+
+  i.fas {
+    color: white;
+  }
 }
 
 .member-num {
@@ -199,14 +228,6 @@ a.off-canvas-toggle {
   padding-right: 8px;
 }
 
-.sidebar > li.menu-item {
-  color: white;
-}
-
-.sidebar > li > a.active {
-  background-image: $orange-gradient !important;
-  color: white !important;
-}
 div.off-canvas-sidebar {
   background: $dark !important;
   // background: #3c3c3c !important;
@@ -219,7 +240,8 @@ div.off-canvas {
 }
 
 div.off-canvas-content {
-  min-height: 100%;
+  // min-height: 100%;
+  height: calc(100% - 60px);
   overflow: auto;
   padding: 0 !important;
 }

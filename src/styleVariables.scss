@@ -9,6 +9,8 @@ $dark-gradient: linear-gradient(
 );
 // Fonts
 $logo-font: "Pacifico", cursive;
+$primary-font: "Inter UI";
+$secondary-font: "Montserrat";
 
 // Shadows
 $shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
@@ -29,16 +31,6 @@ $dark: hsla(224%, 14%, 22%, 1);
 $light: hsla(240%, 100%, 99%, 1);
 $secondary: hsla(235%, 18%, 36%, 1);
 $secondary-light: hsla(236%, 11%, 71%, 1);
-// $secondary: hsla(209%, 64%, 18%, 1);
-// $secondary-light: hsla(184%, 80%, 43%, 1);
-
-/**
-$color1: hsla(241%, 63%, 59%, 1);
-$color2: hsla(224%, 14%, 22%, 1);
-$color3: hsla(240%, 100%, 99%, 1);
-$color4: hsla(236%, 11%, 71%, 1);
-$color5: hsla(235%, 18%, 36%, 1);
-*/
 
 // Border Radius Presets
 $border-round: 10px;

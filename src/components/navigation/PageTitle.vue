@@ -38,7 +38,7 @@ export default {
 .header-container {
   padding: 8px 8px;
   background-color: $secondary-light;
-  // background-color: #c4c4c4;
+  font-family: Montserrat;
 
   display: flex;
   flex-flow: row nowrap;
@@ -61,7 +61,7 @@ export default {
     margin: 0;
   }
 
-  // Applied to buttons are split apart in the header
+  // Applied to buttons that are split apart in the header
   .split {
     margin-left: 20px;
   }
@@ -71,10 +71,12 @@ export default {
   }
 
   h1 {
-    flex: 1;
+    // Removing this allows the title to shift right if there is no other left content
+    // flex: 1;
     user-select: none;
     font-size: 2em;
     margin: 0;
+    font-weight: 500;
   }
 
   .right {

@@ -15,6 +15,7 @@
           class="name-input"
           v-model="noteTitle"
           type="text"
+          maxlength="40"
         >
       </template>
       <template slot="right">
