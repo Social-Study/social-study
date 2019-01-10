@@ -13,7 +13,7 @@
               </div>
               <div class="card-body">
                 This will delete the group and all of its content.
-                Consider transferring ownership instead.
+                Consider transferring ownership and leaving instead.
               </div>
               <div class="card-footer">
                 <button
@@ -500,6 +500,10 @@ export default {
 
 input[type="time"] {
   width: 120px;
+}
+
+.card-body {
+  font-family: "Roboto";
 }
 
 .container {

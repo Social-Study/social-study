@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="!isLoading && !isError"
-    id="page-content"
-  >
+  <div v-if="!isLoading && !isError">
     <notifications
       group="notes"
       position="left top"
@@ -173,11 +170,6 @@ export default {
 @import "../../../node_modules/spectre-markdown.css/dist/markdown.min.css";
 @import "../../../node_modules/github-markdown-css/github-markdown.css";
 
-#page-content {
-  position: relative;
-  max-height: 86%;
-}
-
 #error-container {
   max-height: 75%;
   margin-top: 200px;
@@ -200,8 +192,9 @@ export default {
 
 .content-container {
   display: inline-block;
-  // height: 100%;
-  margin: 30px;
+  min-height: 844px;
+  max-height: 844px;
+  padding: 30px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -214,7 +207,6 @@ export default {
   box-shadow: $shadow-hovered;
   border: none;
   display: inline-block;
-  // min-height: 800px;
   height: 100%;
   width: 50%;
   margin-right: 40px;
@@ -233,8 +225,6 @@ export default {
   overflow-y: auto;
   text-align: left;
   height: 100%;
-  // min-height: 800px;
-  // max-height: 800px;
   width: 50%;
 }
 </style>

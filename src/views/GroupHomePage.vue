@@ -1,11 +1,15 @@
 <template>
-  <div style="min-height: 800px;">
+  <div id="full-page">
+    <!-- Title Bar -->
     <page-title>
       <template slot="center">
         Overview
       </template>
     </page-title>
+
     <div class="page-content">
+
+      <!-- Calendar Component: Will be replaced -->
       <div class="calendar-container">
         <calendar />
         <div class="date-details">
@@ -33,6 +37,8 @@
             />
           </div>
         </div>
+
+        <div class="divider-vert"></div>
 
         <!-- Displays the group's most popular flashcards -->
         <!-- Decide metric (Study Count, Recently Created, Favorited) -->
@@ -132,19 +138,27 @@ export default {
 </script>
 <style lang="scss" scoped>
 // TODO: Make css more readable
+
+// #full-page {
+//   min-height: 92vh;
+// }
+
 .page-content {
   display: flex;
-  flex-flow: row nowrap;
-  height: 94%;
+  flex-flow: column nowrap;
+  // height: 100%;
+  // min-height: calc(100%-54px);
+  // max-height: 844px;
+  min-height: 844px;
 
   .calendar-container {
     flex: 1;
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
 
     .calendar {
       flex: 1;
-      margin: 40px auto;
+      margin: 40px;
       max-height: 300px;
       max-width: 280px;
     }
@@ -156,7 +170,7 @@ export default {
 
   .recent-container {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     flex: 1;
     text-align: left;
 
@@ -180,14 +194,8 @@ export default {
     margin-left: 20px;
   }
 
-  .flashcard-deck {
-    padding: 4px;
-    height: 150px;
-    width: 250px;
-    margin: 0px 0px 20px 20px;
-    h1.deck-title {
-      color: white;
-    }
+  #flashcard {
+    margin-left: 20px;
   }
 }
 

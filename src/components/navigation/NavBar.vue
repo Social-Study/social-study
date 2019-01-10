@@ -78,8 +78,8 @@
           style="width: 40px; height: 40px; font-size: 1em;"
           v-if="firestoreUser"
           :user="{
-            displayName: this.firestoreUser.displayName,
-                   photoURL: this.firestoreUser.photoURL
+                  displayName: this.firestoreUser.displayName,
+                  photoURL: this.firestoreUser.photoURL
                  }"
         />
         <div

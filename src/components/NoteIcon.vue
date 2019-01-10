@@ -8,16 +8,17 @@
       <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
       <!-- Modified -->
       <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p>
-      <div id="button-container">
-        <button
-          @click="deleteNote(info.id)"
-          id="deleteBtn"
-        >Delete</button>
-        <button
-          @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
-          id="editBtn"
-        >Edit</button>
-      </div>
+    </div>
+
+    <div id="button-container">
+      <button
+        @click="deleteNote(info.id)"
+        id="deleteBtn"
+      >Delete</button>
+      <button
+        @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
+        id="editBtn"
+      >Edit</button>
     </div>
   </div>
 </template>
@@ -77,20 +78,17 @@ export default {
 
 #created,
 #modified {
-  padding: 0.3em 0 0.3em 0;
-  border-radius: 20px;
-  border: 1px solid lighten($secondary, 50);
-  margin: 10px;
+  // padding: 0.3em 0 0.3em 0;
+  margin: 4px;
   text-align: center;
-  color: $dark;
+  color: $secondary;
   font-size: 0.8em;
   font-weight: 500;
 }
 
-// Date labels
 p > i {
-  font-style: normal;
   color: $secondary-light;
+  font-style: normal;
   font-weight: 400;
 }
 

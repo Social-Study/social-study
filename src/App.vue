@@ -65,10 +65,6 @@ export default {
 
 html,
 body {
-  // min-height: 100vh;
-  // max-height: 100vh;
-  // background-color: $background-color;
-  // overflow: hidden;
   height: 100%;
   background-color: $light;
 }

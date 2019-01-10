@@ -76,7 +76,6 @@ $card-height: 218px;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: $card-width;
-  // TODO: Get long deck titles to display properly
   max-height: 100px;
   text-align: center;
 }
@@ -100,7 +99,7 @@ p > i {
 .chip {
   padding: 15px;
   margin: auto;
-  min-width: 50%;
+  text-align: center;
 }
 
 #button-container {

@@ -234,14 +234,15 @@ div.off-canvas-sidebar {
   width: 200px;
 }
 
-div.off-canvas {
+div.off-canvas.off-canvas-sidebar-show {
   // height: 100%;
-  height: calc(100% - 60px);
+  max-height: calc(100% - 60px);
 }
 
 div.off-canvas-content {
   // min-height: 100%;
-  height: calc(100% - 60px);
+  // height: calc(100% - 60px);
+  height: 100%;
   overflow: auto;
   padding: 0 !important;
 }

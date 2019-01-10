@@ -50,6 +50,8 @@ Notes:
   ☐ implement a note deletion feature so users can delete notes they don't want
   ☐ Autoscroll viewing content to match...
   ☐ Alert user when they try to leave without saving their notes.
+  Note Collection:
+    ☐ Reduce whitespace on icon. Maybe flex center that part?
   Maybes:
     ☐ Allow users to create collections to manage their own notes?
 
@@ -103,6 +105,7 @@ Flashcards Collection:
 
 Flashcards:
   ☐ Autofocus after using keybind to create a new flashcard
+  ☐ Public and private flashcard sets @critical
 
 Animations / Transitions:
   Flashcard Study:
