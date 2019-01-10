@@ -160,7 +160,6 @@ export default {
       if (user) {
         this.user = user;
         this.$store.commit("setUID", user.uid);
-
         this.$bind(
           "studyGroups",
           db
@@ -173,6 +172,7 @@ export default {
         this.$bind("firestoreUser", db.collection("users").doc(user.uid)).then(
           user => {
             this.firestoreUser === user;
+            this.$store.commit("setPhoto", user.photoURL);
           }
         );
       } else {

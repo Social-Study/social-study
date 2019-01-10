@@ -25,16 +25,12 @@
       v-if="!isLoading"
       class="card-container"
     >
-      <!-- Make this take a single object. No need to assign each individually... -->
-      <flashcard-deck
+      <flashcard-icon
         v-for="(deck,index) in filteredDecks"
         :key="index"
-        :title="deck.title"
-        :cardNum="deck.cardNum"
-        :creator="deck.creatorName"
-        :creatorUid="deck.uid"
-        :documentID="deck.documentID"
-      ></flashcard-deck>
+        :info="deck"
+      >
+      </flashcard-icon>
     </div>
     <div
       v-else
@@ -44,7 +40,7 @@
 </template>
 
 <script>
-import FlashcardDeck from "@/components/flashcards/FlashcardDeck";
+import FlashcardIcon from "@/components/flashcards/FlashcardIcon";
 import PageTitle from "@/components/navigation/PageTitle";
 import { db } from "@/firebaseConfig";
 
@@ -52,7 +48,7 @@ export default {
   name: "FlashcardCollection",
   components: {
     PageTitle,
-    FlashcardDeck
+    FlashcardIcon
   },
   data() {
     return {
@@ -91,24 +87,13 @@ export default {
 <style lang="scss" scoped>
 @import "@/styleVariables.scss";
 
-// // Flexbox container to hold all member cards
-// .card-container {
-//   margin: auto;
-//   width: 82%;
-//   margin-top: 40px;
-//   display: flex;
-//   flex-flow: row wrap;
-//   justify-content: flex-start;
-//   align-items: center;
-// }
-
 .card-container {
   margin: 0 auto;
   width: 100%;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
-  grid-auto-rows: 240px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 288px));
+  grid-auto-rows: 218px;
   justify-content: center;
   padding: 20px;
   transition: all 350ms ease-in;

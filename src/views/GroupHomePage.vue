@@ -27,7 +27,6 @@
             ></div>
             <note-icon
               v-else
-              @click.native="$router.push(`/${$route.params.groupID}/notes/${note.id}`)"
               v-for="note in recentNotes"
               :info="note"
               :key="note.id"
@@ -49,16 +48,12 @@
               v-if="flashcardsLoading"
               class="loading loading-lg"
             ></div>
-            <flashcard-deck
+            <flashcard-icon
               v-else
-              v-for="(deck,index) in recentFlashcards"
-              :key="index"
-              :title="deck.title"
-              :cardNum="deck.cardNum"
-              :creator="deck.creatorName"
-              :creatorUid="deck.uid"
-              :documentID="deck.documentID"
-            ></flashcard-deck>
+              v-for="deck in recentFlashcards"
+              :key="deck.id"
+              :info="deck"
+            ></flashcard-icon>
           </div>
 
         </div>
@@ -71,7 +66,7 @@
 import PageTitle from "@/components/navigation/PageTitle";
 import Calendar from "@/components/Calendar";
 import NoteIcon from "@/components/NoteIcon";
-import FlashcardDeck from "@/components/flashcards/FlashcardDeck";
+import FlashcardIcon from "@/components/flashcards/FlashcardIcon";
 
 import { db } from "@/firebaseConfig";
 
@@ -81,7 +76,7 @@ export default {
     Calendar,
     PageTitle,
     NoteIcon,
-    FlashcardDeck
+    FlashcardIcon
   },
   data() {
     return {
@@ -136,6 +131,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+// TODO: Make css more readable
 .page-content {
   display: flex;
   flex-flow: row nowrap;

@@ -10,11 +10,11 @@
       <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p>
       <div id="button-container">
         <button
-          @click="$emit('delete')"
+          @click="deleteNote(info.id)"
           id="deleteBtn"
         >Delete</button>
         <button
-          @click="$emit('viewNote')"
+          @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
           id="editBtn"
         >Edit</button>
       </div>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { db } from "@/firebaseConfig";
+
 export default {
   name: "NoteIcon",
   props: {
@@ -30,21 +32,24 @@ export default {
       type: Object,
       required: true
     }
+  },
+  methods: {
+    deleteNote(id) {
+      // TODO: Add some sort of confirmation before deleting
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("notes")
+        .doc(this.$store.getters.uid)
+        .collection("private")
+        .doc(id)
+        .delete();
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/styleVariables.scss";
-
-/* Center note on page */
-#page-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f5f5fa;
-}
 
 /* Icon itself */
 #note {
@@ -74,7 +79,7 @@ export default {
 #modified {
   padding: 0.3em 0 0.3em 0;
   border-radius: 20px;
-  border: 1px solid $secondary;
+  border: 1px solid lighten($secondary, 50);
   margin: 10px;
   text-align: center;
   color: $dark;
@@ -102,12 +107,12 @@ p > i {
   padding: 0.3em;
   background-color: transparent;
   // color: red;
-  color: $secondary;
+  color: lighten($secondary, 30);
   font-weight: 500;
 }
 
 #deleteBtn:hover {
-  color: hsl(0, 100%, 85%);
+  color: hsl(0, 100%, 55%);
 }
 
 #editBtn {
@@ -115,7 +120,7 @@ p > i {
   border: none;
   border-radius: 5px;
   /* padding: 0.3em 0.5em 0.3em 0.5em; */
-  padding: 4px 8px 4px 8px;
+  padding: 4px 16px 4px 16px;
   background-color: $primary;
   color: white;
   font-weight: 400;

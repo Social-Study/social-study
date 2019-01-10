@@ -16,6 +16,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     uid: "",
+    photoURL: "",
+    // user: null,
     chatActive: false
   },
   mutations: {
@@ -23,17 +25,21 @@ export default new Vuex.Store({
     setUID(state, uid) {
       state.uid = uid;
     },
-    // This is to store the currently active group between study group feature pages
-    // Prevents having to reload from the firebase firestore on switches
-    // the details is just the surface level group data, not the study group subcollections
-
+    setPhoto(state, url) {
+      state.photoURL = url;
+    },
     toggleChatActive(state) {
       state.chatActive = !state.chatActive;
     }
+    // setUser(state, user) {
+    //   state.user = user;
+    // },
   },
   actions: {},
   getters: {
     uid: state => state.uid,
+    photoURL: state => state.photoURL,
     chatActive: state => state.chatActive
+    // user: state => state.user,
   }
 });

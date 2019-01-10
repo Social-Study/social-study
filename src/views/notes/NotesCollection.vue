@@ -57,9 +57,9 @@
         v-for="note in filteredNotes"
         :info="note"
         :key="note.id"
-        @delete="deleteNote(note.id)"
-        @viewNote="$router.push(`/${$route.params.groupID}/notes/${note.id}`)"
       />
+      <!-- @delete="deleteNote(note.id)"
+        @viewNote="$router.push(`/${$route.params.groupID}/notes/${note.id}`)" -->
     </div>
     <div
       v-else
@@ -92,6 +92,7 @@ export default {
     };
   },
   created() {
+    // Load all user's notes on page load
     notesRef = db
       .collection("study-groups")
       .doc(this.$route.params.groupID)
@@ -142,16 +143,6 @@ export default {
               );
             });
         });
-    },
-    deleteNote(id) {
-      // TODO: Add some sort of confirmation before deleting
-      db.collection("study-groups")
-        .doc(this.$route.params.groupID)
-        .collection("notes")
-        .doc(this.$store.getters.uid)
-        .collection("private")
-        .doc(id)
-        .delete();
     }
   }
 };
@@ -165,13 +156,6 @@ export default {
     border-radius: 10px !important;
   }
 }
-
-// .content-container {
-//   margin: 40px 40px;
-//   display: flex;
-//   flex-flow: row wrap;
-//   justify-content: flex-start;
-// }
 
 .content-container {
   margin: 0 auto;

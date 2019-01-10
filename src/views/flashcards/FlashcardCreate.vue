@@ -106,28 +106,37 @@ export default {
           console.log("term null Term Found");
           this.contentFilled = false;
         }
-      }
-      for (let i = 0; i < this.definitions.length; i++) {
         if (this.definitions[i] === null) {
           console.log("def null Term Found");
           this.contentFilled = false;
         }
       }
+      // for (let i = 0; i < this.definitions.length; i++) {
+      //   if (this.definitions[i] === null) {
+      //     console.log("def null Term Found");
+      //     this.contentFilled = false;
+      //   }
+      // }
+
+      // Confirm that all fields are filled
       if (this.deckTitle !== "" && this.contentFilled) {
-        const self = this;
         const groupID = this.$route.params.groupID;
         const flashcardCollection = db
           .collection("study-groups")
           .doc(groupID)
           .collection("flashcards");
-        let user = firebase.auth().currentUser;
+        let user = firebase.auth().currentUser; // Used to get user's name
+        let initDate = new Date(); //Date object for creation and modified fields
         flashcardCollection
           .add({
             title: this.deckTitle,
             terms: this.terms,
             definitions: this.definitions,
             creatorUID: this.$store.getters.uid,
-            creatorName: user.displayName
+            creatorName: user.displayName,
+            creationDate: initDate,
+            lastUpdated: initDate,
+            creatorPhoto: this.$store.getters.photoURL
           })
           .then(docRef => {
             console.log("Flashcard Deck created with doc id: ", docRef.id);
@@ -139,7 +148,7 @@ export default {
                 documentID: docRef.id
               })
               .then(() => {
-                self.$router.push(`/${self.$route.params.groupID}/flashcards`);
+                this.$router.push(`/${this.$route.params.groupID}/flashcards`);
               });
           })
           .catch(error => {

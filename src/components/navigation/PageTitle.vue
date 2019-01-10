@@ -71,8 +71,7 @@ export default {
   }
 
   h1 {
-    // Removing this allows the title to shift right if there is no other left content
-    // flex: 1;
+    flex: 1;
     user-select: none;
     font-size: 2em;
     margin: 0;

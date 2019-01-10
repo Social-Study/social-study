@@ -17,6 +17,9 @@ General:
     ☐ Should display an error message if the firebase load fails
     ☐ User's should be limited to what they are permitted to access..
   ☐ Go through and improve the colors and design as we go. There are some things that I think are ugly, design wise.
+  ☐ Clean up the css
+    ☐ Remove unused styles
+    ☐ Make more readable (remove deeply nested styles)
 
 Components Needed:
   ☐ Notification popup
@@ -35,6 +38,9 @@ Firebase Functions File:
 Landing:
   ☐ Improve form validation
 
+Modals:
+  ☐ Improve modals with new design...
+
 Notes:
   ☐ Make sure that other users cannot access notes they didn't create
   ☐ Find more markdown css themes
@@ -43,8 +49,10 @@ Notes:
   ☐ Maybe extract the view component if we want to use it for aiding users in creating their flashcards.
   ☐ implement a note deletion feature so users can delete notes they don't want
   ☐ Autoscroll viewing content to match...
+  ☐ Alert user when they try to leave without saving their notes.
   Maybes:
     ☐ Allow users to create collections to manage their own notes?
+
 
 Chat:
   ☐ Add a date display so that you can tell on what day the messages were sent
@@ -74,6 +82,7 @@ Members Page:
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
   ☐ Automatically update to the file picker's picture so user can preview what it will look like
+  ☐ Create a placeholder for when the user doesn't have any study groups. Don't just show an empty table
 
 Side Bar:
   ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
@@ -90,13 +99,14 @@ Create Study Group:
 
 Flashcards Collection:
   ☐ Figure out proper way to get the last row to the left instead of centering it.
+  ☐ Display a "deck standing" color indicator to show whether the flashcard deck is good or bad
 
 Flashcards:
   ☐ Autofocus after using keybind to create a new flashcard
 
 Animations / Transitions:
   Flashcard Study:
-    ☐ Animations feel too fast and snappy.
+    ☐ Animations feel too fast
   Create Page:
     ☐ Animation when steps indicator changes
     ☐ Animation when user navigates between cards
