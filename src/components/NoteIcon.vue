@@ -7,7 +7,8 @@
       <!-- Created -->
       <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
       <!-- Modified -->
-      <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p>
+      <!-- <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p> -->
+      <p id="modified"><i>Modified</i> {{calcDays(info.lastUpdated.toDate())}}</p>
     </div>
 
     <div id="button-container">
@@ -44,6 +45,17 @@ export default {
         .collection("private")
         .doc(id)
         .delete();
+    },
+    calcDays(modDate) {
+      let currentDate = new Date();
+      modDate = new Date(modDate);
+      if (currentDate.toDateString() === modDate.toDateString()) {
+        return "today";
+      }
+      let timeDiff = Math.abs(currentDate.getTime() - modDate.getTime());
+      let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      let retString = days > 1 ? days + " days ago" : days + " day ago";
+      return retString;
     }
   }
 };
@@ -104,7 +116,6 @@ p > i {
   border: none;
   padding: 0.3em;
   background-color: transparent;
-  // color: red;
   color: lighten($secondary, 30);
   font-weight: 500;
 }

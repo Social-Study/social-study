@@ -1,10 +1,7 @@
 Branding:
   ☐ Design a logo / titlebar icon
   ☐ Think of better slogan.
-  ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
   ☐ Find better flashcard sidebar icon
-  ☐ Improve color design. Not sure about the gradients the more I work with it.
-    - Seems too glaring and random. We need a simpler color pallete of a few select colors...
 
 Possible Features (Time Permitting):
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
@@ -20,13 +17,14 @@ General:
   ☐ Clean up the css
     ☐ Remove unused styles
     ☐ Make more readable (remove deeply nested styles)
+  ☐ Look into lazy loading to reduce initial load times. @low
 
 Components Needed:
   ☐ Notification popup
     Currently using vue-notifications but would be willing to switch to something better.
   ☐ Modal that can be used for all other modals.
   ☐ Custom designed switch component
-  ☐ Create add button card item
+  ✘ Create add button card item @cancelled(19-01-10 14:45)
 
 Firebase Functions File:
   ☐ Remove expired invite codes
@@ -42,19 +40,18 @@ Modals:
   ☐ Improve modals with new design...
 
 Notes:
-  ☐ Make sure that other users cannot access notes they didn't create
+  ✔ Make sure that other users cannot access notes they didn't create @done(19-01-10 13:30)
   ☐ Find more markdown css themes
     ☐ Dark theme
-  ☐ Figure out what I should limit the title length to
+  ✔ Figure out what I should limit the title length to @done(19-01-10 13:30)
   ☐ Maybe extract the view component if we want to use it for aiding users in creating their flashcards.
-  ☐ implement a note deletion feature so users can delete notes they don't want
+  ✔ implement a note deletion feature so users can delete notes they don't want @done(19-01-10 13:30)
   ☐ Autoscroll viewing content to match...
   ☐ Alert user when they try to leave without saving their notes.
   Note Collection:
     ☐ Reduce whitespace on icon. Maybe flex center that part?
   Maybes:
     ☐ Allow users to create collections to manage their own notes?
-
 
 Chat:
   ☐ Add a date display so that you can tell on what day the messages were sent
@@ -117,6 +114,8 @@ Animations / Transitions:
       Show the icons appearing one after the other
 
 Archive:
+  ✔ The new titlebar icon only apply to the google redirect popup window but now the title bar? @done(19-01-10 13:30) @project(Branding)
+  ✔ Improve color design. Not sure about the gradients the more I work with it. @done(19-01-10 13:30) @project(Branding)
   ✔ Figure out how to make these pages more responsive so that the cards scale better and don't break apart as much... @done(19-01-04 14:43) @project(Collection Pages)
   ✔ Not sure why the favicon is not showing???? @low @done(19-01-04 13:56) @project(General)
   ✔ Button to restart flashcards when you reach the end @done(19-01-04 13:50) @project(Flashcards)

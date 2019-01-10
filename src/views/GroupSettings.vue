@@ -110,6 +110,7 @@
                   <input
                     class="form-input"
                     type="time"
+                    style="margin-right: 10px;"
                     placeholder="Instructor Name"
                     v-model="details.meetingTime[0]"
                     required
@@ -118,6 +119,7 @@
                   <input
                     class="form-input"
                     type="time"
+                    style="margin-left: 10px;"
                     v-model="details.meetingTime[1]"
                     placeholder="Instructor Name"
                     required
@@ -200,20 +202,22 @@
                 </div>
           </form>
           <div v-else class="loading loading-lg"></div>
-          <button v-if="!loading.details"
-              class="btn"
-              id="save-btn"
-              @click="saveData"
-            >Save Changes <i class="fas fa-save"></i>
+          <div id="btn-container">
+            <button v-if="!loading.details"
+                class="btn btn-primary "
+                id="save-btn"
+                @click="saveData"
+              >Save Changes <i class="fas fa-save"></i>
             </button>
-            </div>
+          </div>
+        </div>
         </div>
         <div class="column col-6 col-xl-12">
 
           <div class="columns">
             <div class="group-details column col-10 col-mx-auto">
               <h2>Active Invite Codes</h2>
-              <table v-if="!loading.codes" class="table table-striped table-hover">
+              <table v-if="!loading.codes" class="table table-hover">
                 <thead>
                   <tr>
                     <th style="width: 95%;">Code</th>
@@ -235,7 +239,7 @@
             </div>
             <div class="group-details column col-10  col-mx-auto">
               <h2>Study Group Members</h2>
-              <table v-if="!loading.members" class="table table-striped table-hover">
+              <table v-if="!loading.members" class="table table-hover">
                 <thead>
                   <tr>
                     <th style="width: 95%;">Name</th>
@@ -244,7 +248,7 @@
                 </thead>
                 <tbody>
                   <!-- Show all members but you; the admin -->
-                  <tr v-if="member.uid !== $store.getters.uid" v-for="member in memberDetails" :key="member.uid ">
+                  <tr v-for="member in membersWithoutYou" :key="member.uid ">
                     <td style="width: 95%;">{{member.displayName}}</td>
                     <td class="button-td">
                       <button @click="removeMember(member.uid)" class="btn btn-action btn-error">
@@ -258,12 +262,11 @@
             </div>
             <div class="group-details column col-10  col-mx-auto">
               <h2>Transfer Group Ownership</h2>
-              <p>Choose another member to manage the Study Group.</p>
+              <p id="info">Choose another member to manage the Study Group.</p>
               <div v-if="!loading.members" class="transfer-group input-group">
                 <select class="form-select" v-model="selected">
                   <option
-                    v-if="member.uid !== $store.getters.uid"
-                    v-for="member in memberDetails"
+                    v-for="member in membersWithoutYou"
                     :key="member.uid"
                     :value="member.uid">{{member.displayName}}
                   </option>
@@ -298,7 +301,7 @@
 import { checkOwner } from "@/scripts/groupFuncs";
 import { db, FirebaseConsts } from "@/firebaseConfig";
 import PageTitle from "@/components/navigation/PageTitle";
-// TODO: Form validation, loading indicators, transfer ownership?
+// TODO: Form validation
 
 export default {
   name: "GroupSettings",
@@ -480,6 +483,14 @@ export default {
     toggle(key) {
       this.details.meetingDays[key] = !this.details.meetingDays[key];
     }
+  },
+  computed: {
+    // Returns the member's list without you
+    membersWithoutYou() {
+      return this.memberDetails.filter(member => {
+        return member.uid !== this.$store.getters.uid;
+      });
+    }
   }
 };
 </script>
@@ -489,21 +500,25 @@ export default {
 @import "../styleVariables";
 
 #save-btn {
-  margin: 10px 0 20px 0;
+  margin: 20px 0 20px 0;
+  i {
+    color: $secondary-light;
+  }
 }
 
 #time-group {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  justify-content: center;
+}
+
+#btn-container {
+  background-color: $background-color;
+  border-radius: 0 0 16px 16px;
 }
 
 input[type="time"] {
   width: 120px;
-}
-
-.card-body {
-  font-family: "Roboto";
 }
 
 .container {
@@ -520,24 +535,30 @@ input[type="time"] {
   padding: 0;
   box-shadow: $shadow-heavy;
   border-radius: 16px;
-  background-color: whitesmoke;
+  background-color: white;
   margin-bottom: 40px;
   h2 {
     border-radius: 16px 16px 0 0;
-    background-color: $primary;
+    font-family: "Montserrat";
+    font-weight: 600;
+    background-color: $secondary;
     color: $light;
     padding: 5px;
+    font-size: 32px;
   }
 
   form {
-    padding: 10px;
+    padding: 0 30px 16px 30px;
   }
   table {
     margin: auto;
     width: 95%;
-    margin: auto;
-    margin: auto;
+    margin: 0 auto 10px auto;
     border-radius: 16px;
+  }
+
+  #info {
+    color: $secondary-light;
   }
 }
 
@@ -548,9 +569,17 @@ input[type="time"] {
 
 .popover-container {
   top: 100px !important;
-
   .card {
     border-radius: $border-round;
+  }
+  .card-body {
+    font-family: "Roboto";
+  }
+
+  .card-header {
+    h5 {
+      font-weight: 600;
+    }
   }
 }
 </style>

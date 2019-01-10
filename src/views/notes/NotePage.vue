@@ -9,6 +9,7 @@
     <page-title>
       <template slot="left">
         <input
+          @input="handleChange()"
           class="name-input"
           v-model="noteTitle"
           type="text"
@@ -52,6 +53,7 @@
 
     <div class="content-container">
       <textarea
+        @input="handleChange()"
         @keydown.ctrl.83.prevent="saveNote"
         v-model="userText"
         class="page-edit"
@@ -94,12 +96,24 @@ export default {
   components: {
     PageTitle
   },
+  beforeRouteLeave(to, from, next) {
+    if (!this.isSaved) {
+      if (confirm("Note is note saved! Are you sure you want to leave?")) {
+        next();
+      } else {
+        // Do nothing
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       // Set to false when firebase query returns
       isLoading: true,
       // If firebase returns with error, set to true
       isError: false,
+      isSaved: true,
       noteTitle: "",
       userText: "",
       markStyleNum: 2
@@ -124,6 +138,9 @@ export default {
       });
   },
   methods: {
+    handleChange() {
+      this.isSaved = false;
+    },
     saveNote() {
       // TODO: Display notification saying that the document has been saved
       db.collection("study-groups")
@@ -138,6 +155,7 @@ export default {
           content: this.userText
         })
         .then(() => {
+          this.isSaved = true;
           this.$notify({
             group: "notes",
             type: "success",

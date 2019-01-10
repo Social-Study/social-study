@@ -10,6 +10,7 @@
       </div>
     </div>
     <h2>Invite Member</h2>
+    <div class="gradient-underline"></div>
   </div>
 
   <!-- Member Display Card -->
@@ -75,11 +76,31 @@ export default {
   background-color: white;
   box-shadow: $shadow;
   user-select: none;
+
+  .gradient-underline {
+    display: none;
+    height: 4px;
+    width: 60%;
+    margin: auto;
+    margin-top: -15px;
+    background-image: $orange-gradient;
+  }
 }
 
 .hoverable {
   &:hover {
     box-shadow: $shadow-hovered;
+    h2 {
+      font-weight: 600;
+    }
+    .gradient-underline {
+      display: block;
+    }
+
+    .add-button > .button-icon {
+      transform: scale(1.1);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
   }
 }
 

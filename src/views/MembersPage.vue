@@ -60,7 +60,7 @@
             class="btn btn-clear float-right"
             aria-label="Close"
           ></a>
-          <div class="modal-title h5">Activate New Invite Code</div>
+          <div class="modal-title h5">Generate New Invite</div>
 
         </div>
         <div class="modal-body">
@@ -75,7 +75,7 @@
               <button
                 @click="copyCode"
                 class="btn btn-primary input-group-btn"
-              >Copy Code</button>
+              >Generate</button>
             </div>
           </div>
         </div>
@@ -170,18 +170,11 @@ export default {
 @import "@/styleVariables.scss";
 .modal-container {
   border-radius: 10px;
+  .modal-title {
+    font-family: "Montserrat";
+    font-weight: 600;
+  }
 }
-
-// Flexbox container to hold all member cards
-// .content-container {
-//   margin: 40px 40px;
-//   max-width: 90%;
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: wrap;
-//   justify-content: center;
-// }
-
 .content-container {
   margin: 0 auto;
   width: 100%;

@@ -61,7 +61,6 @@
               :info="deck"
             ></flashcard-icon>
           </div>
-
         </div>
       </div>
     </div>
@@ -137,18 +136,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "@/styleVariables.scss";
 // TODO: Make css more readable
-
-// #full-page {
-//   min-height: 92vh;
-// }
 
 .page-content {
   display: flex;
   flex-flow: column nowrap;
-  // height: 100%;
-  // min-height: calc(100%-54px);
-  // max-height: 844px;
   min-height: 844px;
 
   .calendar-container {
@@ -186,7 +179,7 @@ export default {
 
 .icon-container {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
 
@@ -205,6 +198,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 8px;
+
+  h4 {
+    font-family: "Montserrat";
+    font-weight: 600;
+  }
 }
 
 .loading.loading-lg {

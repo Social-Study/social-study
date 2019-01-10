@@ -7,7 +7,8 @@
     <!-- Created -->
     <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
     <!-- Last Updated -->
-    <p id="modified"><i>Updated:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p>
+    <!-- <p id="modified"><i>Updated:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p> -->
+    <p id="modified"><i>Updated</i> {{calcDays(info.lastUpdated.toDate())}}</p>
     <!-- Creator Avatar and Name Chip -->
     <!-- TODO: Figure out how to use my existing avatar component -->
     <div class="chip text-ellipsis">
@@ -44,6 +45,19 @@ export default {
     info: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    calcDays(modDate) {
+      let currentDate = new Date();
+      modDate = new Date(modDate);
+      if (currentDate.toDateString() === modDate.toDateString()) {
+        return "today";
+      }
+      let timeDiff = Math.abs(currentDate.getTime() - modDate.getTime());
+      let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      let retString = days > 1 ? days + " days ago" : days + " day ago";
+      return retString;
     }
   }
 };
@@ -120,7 +134,8 @@ p > i {
 }
 
 #editBtn:hover {
-  color: $primary;
+  // color: $primary;
+  color: $success-color;
 }
 
 #studyBtn {
