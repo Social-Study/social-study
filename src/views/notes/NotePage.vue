@@ -17,7 +17,7 @@
         >
       </template>
       <template slot="right">
-        <switch />
+        <!-- Change preview theme css -->
         <div class="dropdown split">
           <a
             href="#"
@@ -37,12 +37,14 @@
           </ul>
         </div>
 
+        <!-- Open link to markdown cheatsheet in new browser tab -->
         <a
           target="_blank"
           href="https://www.markdownguide.org/cheat-sheet"
         >
           <button class="btn btn-action split"><i class="fas fa-info"></i></button>
         </a>
+        <!-- Save the markdown to database -->
         <button
           @click="saveNote"
           class="btn btn-action split"
@@ -100,8 +102,6 @@ export default {
     if (!this.isSaved) {
       if (confirm("Note is note saved! Are you sure you want to leave?")) {
         next();
-      } else {
-        // Do nothing
       }
     } else {
       next();
