@@ -47,28 +47,39 @@
     </header>
 
     <!-- Sucess Message Display -->
-    <MessageBar
-      v-show="message.show"
-      type="success"
+    <transition
+      name="transition"
+      enter-active-class="animated fadeInRight"
+      leave-active-class="animated fadeOutRight"
     >
-      {{ this.message.message }}
-    </MessageBar>
+      <MessageBar
+        v-show="message.show"
+        type="success"
+      >
+        {{ this.message.message }}
+      </MessageBar>
+    </transition>
 
     <!-- Error Message Display -->
-    <MessageBar
-      @closeMessage="error.show=false"
-      v-show="error.show"
-      type="error"
+    <transition
+      name="transition"
+      enter-active-class="animated fadeInRight"
+      leave-active-class="animated fadeOutRight"
     >
-      {{ this.error.message }}
-      <a
-        v-show="error.passPrompt"
-        href="#"
-        style="cursor: pointer"
-        @click="modalActive = true"
-      >Forgot Password?</a>
-    </MessageBar>
-
+      <MessageBar
+        @closeMessage="error.show=false"
+        v-show="error.show"
+        type="error"
+      >
+        {{ this.error.message }}
+        <a
+          v-show="error.passPrompt"
+          href="#"
+          style="cursor: pointer"
+          @click="modalActive = true"
+        >Forgot Password?</a>
+      </MessageBar>
+    </transition>
     <!-- Password Reset Modal -->
     <div
       v-show="modalActive"
@@ -520,7 +531,7 @@ div.tooltip {
 
 // Set navbar color to main gradient
 .navbar {
-  background-image: $nav-gradient;
+  background-color: $dark;
   padding: 0px 10px;
   // max-height: 8vh;
 }
@@ -539,5 +550,6 @@ div.tooltip {
 #logo {
   font-family: "Pacifico", cursive;
   font-size: 6vw;
+  font-size: 100px;
 }
 </style>
