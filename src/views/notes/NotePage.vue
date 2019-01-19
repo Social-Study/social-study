@@ -184,7 +184,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styleVariables.scss";
+@import "@/styles.scss";
 @import "../../../node_modules/spectre-markdown.css/dist/markdown.min.css";
 @import "../../../node_modules/github-markdown-css/github-markdown.css";
 

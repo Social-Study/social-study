@@ -6,47 +6,7 @@
         to="/dashboard"
       >Social Study</router-link>
 
-      <!-- Study Group Switcher -->
-      <div
-        v-if="studyGroups.length > 0"
-        class="dropdown"
-      >
-        <a
-          class="nav-button btn btn-primary dropdown-toggle"
-          tabindex="0"
-        >
-          Study Groups <i class="fas fa-caret-down"></i>
-        </a>
-        <!-- Your Study Group List Dropdown Items -->
-        <ul class="menu group-menu">
-          <div
-            v-for="(group, index) in studyGroups"
-            :key="index"
-          >
-            <li>
-              <div
-                class="group-card"
-                :class="index+1 === studyGroups.length ? '' : 'mb-2'"
-              >
-                <router-link
-                  class="card-text"
-                  :to="{ name: 'home', params: { groupID: group.id } }"
-                >
-                  <p class="card-text text-ellipsis text-bold text-large">
-                    {{ group.className }}
-                  </p>
-                  <p class="card-text text-ellipsis text-italic">
-                    {{ group.instructorName }}
-                  </p>
-                  <p class="card-text text-ellipsis text-center">
-                    {{ getAbrev(group.meetingDays) }} | {{ getTime(group.meetingTime[0])}}-{{ getTime(group.meetingTime[1]) }}
-                  </p>
-                </router-link>
-              </div>
-            </li>
-          </div>
-        </ul>
-      </div>
+      <group-dropdown :studyGroups="studyGroups" />
 
       <create-join-popover></create-join-popover>
 
@@ -113,6 +73,7 @@
               ></i> Settings
             </a>
           </li>
+
           <!-- Log Out Button -->
           <li class="menu-item text-left">
             <a
@@ -136,6 +97,7 @@
 import Avatar from "@/components/Avatar";
 import ProfileSettings from "@/components/ProfileSettings";
 import CreateJoinPopover from "@/components/navigation/CreateJoinPopover";
+import GroupDropdown from "@/components/navigation/GroupDropdown";
 import firebase, { db } from "@/firebaseConfig";
 
 export default {
@@ -143,7 +105,8 @@ export default {
   components: {
     Avatar,
     ProfileSettings,
-    CreateJoinPopover
+    CreateJoinPopover,
+    GroupDropdown
   },
   data() {
     return {
@@ -181,39 +144,16 @@ export default {
     });
   },
   methods: {
-    getTime(time) {
-      try {
-        let hour = parseInt(time.split(":")[0]);
-        let minutes = time.split(":")[1];
-        return ((hour + 11) % 12) + 1 + ":" + minutes;
-      } catch (err) {
-        // console.log(err);
-      }
-    },
-    getAbrev(days) {
-      let string = "";
-      days.forEach(day => {
-        if (day === "Thursday") {
-          string += day.slice(0, 2) + " ";
-        } else {
-          string += day.charAt(0).toUpperCase() + " ";
-        }
-      });
-      return string;
-    },
     logOut() {
       firebase.auth().signOut();
       this.$router.push("/");
-    },
-    switchGroup(id) {
-      this.$router.push(`/${id}/home`);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/styleVariables.scss";
+@import "@/styles.scss";
 
 .badge::after {
   top: 25px !important;
@@ -223,38 +163,8 @@ export default {
   width: 10px !important;
   height: 18px !important;
 }
-.group-card {
-  width: 100%;
-  max-width: 250px;
-  padding: 5px;
-  border-radius: 10px;
-  background-color: white;
-
-  &:hover {
-    background-color: $main-gray;
-    p {
-      color: white;
-    }
-  }
-
-  a {
-    text-decoration: none;
-  }
-}
-
-.card-text {
-  user-select: none;
-  margin: 0;
-  color: $main-gray;
-}
-
-.nav-button {
-  width: 250px;
-  margin-right: 20px;
-}
 
 .navbar {
-  // background-image: $dark-gradient;
   background-color: $dark;
   padding: 0px 10px 0px 0px;
   max-height: 6vh;
@@ -265,12 +175,6 @@ a.navbar-brand {
   font-family: $logo-font;
   font-size: 1.7em;
   color: white;
-  // Maybe make the color a gradient
-  // background: $orange-gradient;
-  // background-clip: text;
-  // -webkit-background-clip: text;
-  // -webkit-text-fill-color: transparent;
-
   min-width: 200px;
   margin-right: 25px;
 }
@@ -281,14 +185,6 @@ a.navbar-brand {
   li {
     margin-top: 0;
   }
-}
-
-.group-menu {
-  // background-color: rgb(66, 64, 212);
-  background-color: lighten($primary, 5%);
-  box-shadow: none;
-  max-width: 250px;
-  min-width: 250px;
 }
 
 .menu-container {

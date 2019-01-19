@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "../styles.scss";
 
 #undraw {
   width: 10em;

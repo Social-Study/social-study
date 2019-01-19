@@ -165,7 +165,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "@/styleVariables.scss";
+@import "@/styles.scss";
 
 .page-content {
   display: flex;

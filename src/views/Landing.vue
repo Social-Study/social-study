@@ -463,7 +463,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styleVariables.scss";
+@import "@/styles.scss";
 h1 {
   font-size: 4em;
 }

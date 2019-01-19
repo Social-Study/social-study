@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styleVariables.scss";
+@import "@/styles.scss";
 
 .chat-active {
   // width: calc(100% + 20px);
@@ -38,7 +38,7 @@ export default {
 .header-container {
   padding: 8px 8px;
   background-color: $secondary-light;
-  font-family: Montserrat;
+  font-family: "Montserrat";
 
   display: flex;
   flex-flow: row nowrap;
@@ -77,7 +77,7 @@ export default {
     user-select: none;
     font-size: 2em;
     margin: 0;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .right {

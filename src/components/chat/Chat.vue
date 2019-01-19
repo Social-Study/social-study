@@ -147,7 +147,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styleVariables.scss";
+@import "@/styles.scss";
 
 // Chat sidebar header
 #header {

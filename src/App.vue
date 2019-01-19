@@ -53,7 +53,7 @@ export default {
 
 // Global Styles
 <style lang="scss">
-@import "./styleVariables.scss";
+@import "./styles.scss";
 @import "node_modules/animate.css/animate";
 @import "node_modules/spectre.css/src/spectre.scss";
 @import "node_modules/spectre.css/src/spectre-exp.scss";

@@ -167,7 +167,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styleVariables.scss";
+@import "@/styles.scss";
 .modal-container {
   border-radius: 10px;
   .modal-title {

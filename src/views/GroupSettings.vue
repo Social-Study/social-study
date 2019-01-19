@@ -497,7 +497,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../styleVariables";
+@import "../styles";
 
 #save-btn {
   margin: 20px 0 20px 0;

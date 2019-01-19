@@ -7,7 +7,6 @@
     <!-- Created -->
     <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
     <!-- Last Updated -->
-    <!-- <p id="modified"><i>Updated:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p> -->
     <p id="modified"><i>Updated</i> {{calcDays(info.lastUpdated.toDate())}}</p>
     <!-- Creator Avatar and Name Chip -->
     <!-- TODO: Figure out how to use my existing avatar component -->
@@ -64,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styleVariables.scss";
+@import "@/styles.scss";
 
 $card-width: 288px;
 $card-height: 218px;

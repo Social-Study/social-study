@@ -187,7 +187,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styleVariables.scss";
+@import "@/styles.scss";
 
 a.off-canvas-toggle {
   position: fixed;
@@ -236,12 +236,12 @@ div.off-canvas-sidebar {
 
 div.off-canvas.off-canvas-sidebar-show {
   // height: 100%;
-  max-height: calc(100% - 60px);
+  max-height: calc(100vh - 60px);
 }
 
 div.off-canvas-content {
   // min-height: 100%;
-  // height: calc(100% - 60px);
+  // max-height: calc(100vh - 60px);
   height: 100%;
   overflow: auto;
   padding: 0 !important;
