@@ -12,6 +12,7 @@
           ref="messages"
         >
           <transition-group
+            name="chatTransition"
             enter-active-class="animated fadeInDown"
             leave-active-class="animated fadeOutUp"
           >

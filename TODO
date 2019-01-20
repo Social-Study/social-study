@@ -1,5 +1,6 @@
 Branding:
   ☐ Design a logo / titlebar icon
+    - My brother is working on a design
   ☐ Think of better slogan.
   ☐ Find better flashcard sidebar icon
 
@@ -13,18 +14,18 @@ General:
   ☐ Make sure that each page that loads from firebase has error checking
     ☐ Should display an error message if the firebase load fails
     ☐ User's should be limited to what they are permitted to access..
-  ☐ Go through and improve the colors and design as we go. There are some things that I think are ugly, design wise.
-  ☐ Clean up the css
-    ☐ Remove unused styles
-    ☐ Make more readable (remove deeply nested styles)
   ☐ Look into lazy loading to reduce initial load times. @low
+  ☐ Fix the scrolling error @critical
+    -Setting a page content to 100% should not show a scrollbar
+    -May need to completely change how the sidebar works. I will probably end up doing that anyway because the current sidebar doesn't work well when collapsed.
+      -The sidebar toggle button is in a bad location.
+  ☐ Find a better alternate font to go with Roboto. Change from Inter UI to Roboto
 
 Components Needed:
   ☐ Notification popup
     Currently using vue-notifications but would be willing to switch to something better.
   ☐ Modal that can be used for all other modals.
   ☐ Custom designed switch component
-  ✘ Create add button card item @cancelled(19-01-10 14:45)
 
 Firebase Functions File:
   ☐ Remove expired invite codes
@@ -40,12 +41,9 @@ Modals:
   ☐ Improve modals with new design...
 
 Notes:
-  ✔ Make sure that other users cannot access notes they didn't create @done(19-01-10 13:30)
   ☐ Find more markdown css themes
     ☐ Dark theme
-  ✔ Figure out what I should limit the title length to @done(19-01-10 13:30)
   ☐ Maybe extract the view component if we want to use it for aiding users in creating their flashcards.
-  ✔ implement a note deletion feature so users can delete notes they don't want @done(19-01-10 13:30)
   ☐ Autoscroll viewing content to match...
   ☐ Alert user when they try to leave without saving their notes.
   Note Collection:
@@ -54,8 +52,6 @@ Notes:
     ☐ Allow users to create collections to manage their own notes?
 
 Chat:
-  ☐ Add a date display so that you can tell on what day the messages were sent
-    Only show if I calculate the differences in times and find it to be over a certain threshold
   Maybes:
     ☐ Shadow around the left edge of chat sidebar
     ☐ Total number of messages indicator (Could either be total messages or unread messages...)
@@ -73,6 +69,8 @@ Vuex Store:
 
 Homepage:
   ☐ Display an empty placeholder if the user doesn't have any recent notes or books.
+  ☐ Think of better design for dashboard and homepage
+    - The current design feels cluttered and useless.
 
 Members Page:
   ☐ Add members list page sort filters
@@ -114,6 +112,16 @@ Animations / Transitions:
       Show the icons appearing one after the other
 
 Archive:
+  ✔ Add a date display so that you can tell on what day the messages were sent @done(19-01-20 01:03) @project(Chat)
+  ✔ Going to make it so that when you click a message a date is shown, maybe slide down the message. @done(19-01-20 01:03) @project(Chat)
+  ✔ Go through and improve the colors and design as we go. There are some things that I think are ugly, design wise. @done(19-01-19 15:55) @project(General)
+  ✔ Clean up the css @done(19-01-19 15:55) @project(General)
+  ✔ Remove unused styles @done(19-01-19 15:55) @project(General)
+  ✔ Make more readable (remove deeply nested styles) @done(19-01-19 15:55) @project(General)
+  ✘ Create add button card item @cancelled(19-01-10 14:45) @project(Components Needed)
+  ✔ Make sure that other users cannot access notes they didn't create @done(19-01-10 13:30) @project(Notes)
+  ✔ Figure out what I should limit the title length to @done(19-01-10 13:30) @project(Notes)
+  ✔ implement a note deletion feature so users can delete notes they don't want @done(19-01-10 13:30) @project(Notes)
   ✔ The new titlebar icon only apply to the google redirect popup window but now the title bar? @done(19-01-10 13:30) @project(Branding)
   ✔ Improve color design. Not sure about the gradients the more I work with it. @done(19-01-10 13:30) @project(Branding)
   ✔ Figure out how to make these pages more responsive so that the cards scale better and don't break apart as much... @done(19-01-04 14:43) @project(Collection Pages)

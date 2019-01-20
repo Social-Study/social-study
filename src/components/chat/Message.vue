@@ -2,8 +2,23 @@
   <div
     v-if="!sender"
     class="message"
+    @click="showDate = !showDate"
   >
-    <p class="message-sender">{{details.displayName}}</p>
+    <div id="details-container">
+      <div class="message-sender">{{details.displayName}}</div>
+      <transition
+        name="dateTransition"
+        enter-active-class="animated fadeIn slow"
+        leave-active-class="animated fadeOut"
+      >
+        >
+        <div
+          class="message-date"
+          v-show="showDate"
+        >{{getSent}}
+        </div>
+      </transition>
+    </div>
     <div class="message-inline">
       <div class="message-profile">
         <Avatar :user="{photoURL: details.photoURL, displayName: details.displayName}" />
@@ -14,7 +29,20 @@
   <div
     v-else
     class="message sent"
+    @click="showDate = !showDate"
   >
+    <div id="details-container">
+      <transition
+        name="dateTransition"
+        enter-active-class="animated fadeIn slow"
+        leave-active-class="animated fadeOut"
+      >
+        <div
+          class="message-date"
+          v-show="showDate"
+        >{{getSent}}</div>
+      </transition>
+    </div>
     <div class="message-inline">
       <p class="message-content">{{details.message}}</p>
     </div>
@@ -30,12 +58,48 @@ export default {
   components: {
     Avatar
   },
+  data() {
+    return {
+      showDate: false
+    };
+  },
   props: {
     sender: {
       type: Boolean,
       default: false
     },
     details: Object
+  },
+  computed: {
+    getSent() {
+      const monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ];
+      let messageDate = this.details.date.toDate();
+      let month = monthNames[messageDate.getMonth()];
+      return (
+        month +
+        " " +
+        messageDate.getDate() +
+        ", " +
+        messageDate.toLocaleString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true
+        })
+      );
+    }
   }
 };
 </script>
@@ -43,14 +107,25 @@ export default {
 
 <style lang="scss" scoped>
 .message {
+  cursor: pointer;
   margin-bottom: 5px;
   max-width: 300px;
 
-  .message-sender {
-    text-align: left;
+  #details-container {
     color: darkgrey;
-    margin: 0 45px;
     font-size: 12px;
+    display: flex;
+    flex-flow: row nowrap;
+
+    .message-sender {
+      margin-left: 40px;
+    }
+
+    .message-date {
+      margin-right: 10px;
+      margin-left: auto;
+      text-align: right;
+    }
   }
 
   .message-inline {

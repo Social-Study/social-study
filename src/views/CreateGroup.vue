@@ -557,7 +557,7 @@ button.s-circle {
 
 .createBtn {
   cursor: pointer;
-  background-image: $nav-gradient;
+  background-image: $blue-gradient;
   width: 300px;
   padding: 20px;
   font-family: $logo-font;
