@@ -20,6 +20,10 @@ General:
     -May need to completely change how the sidebar works. I will probably end up doing that anyway because the current sidebar doesn't work well when collapsed.
       -The sidebar toggle button is in a bad location.
   ☐ Find a better alternate font to go with Roboto. Change from Inter UI to Roboto
+  ☐ Lazy loading of subpages.
+    - Sub-pages are pages that you are taken to after clicking a main page
+    - Ex) Study-flashcard, take-quiz
+  ☐ Paginate collection pages so they scale when more information is added.
 
 Components Needed:
   ☐ Notification popup

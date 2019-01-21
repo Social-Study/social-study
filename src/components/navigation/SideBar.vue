@@ -61,11 +61,17 @@
         </li>
         <!-- Quizzes -->
         <li class="menu-item text-left">
-          <a :class="$route.name === 'quiz' ? 'active' : ''"><i class="fas fa-pencil-alt"></i> Quiz</a>
+          <router-link
+            :to="{name: 'createQuiz'}"
+            :class="$route.name === 'createQuiz' ? 'active' : ''"
+          ><i class="fas fa-pencil-alt"></i> Quizzes</router-link>
         </li>
         <!-- Agenda -->
         <li class="menu-item text-left">
-          <a :class="$route.name === 'agenda' ? 'active' : ''"><i class="fas fa-calendar-alt"></i> Agenda</a>
+          <router-link
+            :to="{name: 'agenda'}"
+            :class="$route.name === 'agenda' ? 'active' : ''"
+          ><i class="fas fa-calendar-alt"></i> Agenda</router-link>
         </li>
         <!-- Notes -->
         <li class="menu-item text-left">
@@ -241,8 +247,8 @@ div.off-canvas.off-canvas-sidebar-show {
 
 div.off-canvas-content {
   // min-height: 100%;
-  // max-height: calc(100vh - 60px);
-  height: 100%;
+  max-height: calc(100vh - 60px);
+  // max-height: 100%;
   overflow: auto;
   padding: 0 !important;
 }

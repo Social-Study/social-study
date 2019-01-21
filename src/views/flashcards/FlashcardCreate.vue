@@ -73,7 +73,7 @@ import FlashcardCreateForm from "@/components/flashcards/FlashcardCreateForm";
 import firebase, { db } from "@/firebaseConfig";
 
 export default {
-  name: "flashcardCreate",
+  name: "FlashcardCreate",
   components: {
     PageTitle,
     FlashcardCreateForm
