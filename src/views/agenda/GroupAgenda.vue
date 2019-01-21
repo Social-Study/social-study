@@ -7,3 +7,6 @@ export default {
   name: "GroupAgenda"
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

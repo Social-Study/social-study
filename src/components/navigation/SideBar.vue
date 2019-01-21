@@ -147,7 +147,7 @@
           :class="show ? 'fa-arrow-left': 'fa-arrow-right'"
         ></i></a>
     </div>
-    <div style="height: 100%">
+    <div id="sidebar-page-content">
       <!-- Slot where all other page content will be inserted -->
       <slot v-if="isMember && !isLoading"></slot>
 
@@ -245,12 +245,18 @@ export default {
   height: $content-height;
 }
 
+#sidebar-page-content {
+  height: 100%;
+  overflow: auto;
+}
+
 #sidebar {
   color: white;
   height: $content-height;
   width: 200px;
   position: absolute;
   z-index: 200;
+  top: $nav-height;
   left: 0;
   border-top: 1px solid white;
   background-color: $dark;
@@ -259,10 +265,6 @@ export default {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-
-  .page-content {
-    height: $content-height;
-  }
 
   .menu {
     background: $dark;

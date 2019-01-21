@@ -101,6 +101,7 @@ body {
 
 #router-view {
   height: 100%;
+  margin-bottom: 0;
 }
 
 // Applies to all modal-overlays

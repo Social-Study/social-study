@@ -167,7 +167,6 @@ export default {
   right: 0;
   border-top: 1px solid white;
   background-color: $dark;
-  // background-color: #3c3c3c;
   overflow-x: hidden;
   transition: 1s;
   padding-top: 10px;

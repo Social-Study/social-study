@@ -17,10 +17,6 @@ General:
     ☐ Should display an error message if the firebase load fails
     ☐ User's should be limited to what they are permitted to access..
   ☐ Look into lazy loading to reduce initial load times. @low
-  ✔ Fix the scrolling error @critical @done(19-01-21 01:06)
-    -Setting a page content to 100% should not show a scrollbar
-    -May need to completely change how the sidebar works. I will probably end up doing that anyway because the current sidebar doesn't work well when collapsed.
-      -The sidebar toggle button is in a bad location.
   ☐ Find a better alternate font to go with Roboto. Change from Inter UI to Roboto
   ☐ Lazy loading of subpages.
     - Sub-pages are pages that you are taken to after clicking a main page
@@ -126,6 +122,10 @@ Animations / Transitions:
       Show the icons appearing one after the other
 
 Archive:
+  ✔ Fix the scrolling error @critical @done(19-01-21 01:06) @project(General)
+    -Setting a page content to 100% should not show a scrollbar
+    -May need to completely change how the sidebar works. I will probably end up doing that anyway because the current sidebar doesn't work well when collapsed.
+    -The sidebar toggle button is in a bad location.
   ✔ Add a date display so that you can tell on what day the messages were sent @done(19-01-20 01:03) @project(Chat)
   ✔ Going to make it so that when you click a message a date is shown, maybe slide down the message. @done(19-01-20 01:03) @project(Chat)
   ✔ Go through and improve the colors and design as we go. There are some things that I think are ugly, design wise. @done(19-01-19 15:55) @project(General)
