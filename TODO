@@ -7,6 +7,8 @@ Branding:
 Possible Features (Time Permitting):
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
   ☐ Video/Audio Chat with WebRTC
+  ☐ Make the site mobile friendly.
+    Hardest part is making the navbar change into a mobile form.
 
 General:
   ☐ Go through and error check all inputs where necessary
@@ -15,7 +17,7 @@ General:
     ☐ Should display an error message if the firebase load fails
     ☐ User's should be limited to what they are permitted to access..
   ☐ Look into lazy loading to reduce initial load times. @low
-  ☐ Fix the scrolling error @critical
+  ✔ Fix the scrolling error @critical @done(19-01-21 01:06)
     -Setting a page content to 100% should not show a scrollbar
     -May need to completely change how the sidebar works. I will probably end up doing that anyway because the current sidebar doesn't work well when collapsed.
       -The sidebar toggle button is in a bad location.
@@ -43,6 +45,14 @@ Landing:
 
 Modals:
   ☐ Improve modals with new design...
+
+New Sidebar:
+  ☐ Create a smooth transition between collapsed and visible states
+    Right now the text pops around as the transition plays
+    May have to do something like "inline-block" so that elements don't break
+
+Page Header:
+  ☐ Figure out how to always center the text, right now it is pushed left and right by other header content...
 
 Notes:
   ☐ Find more markdown css themes

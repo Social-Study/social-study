@@ -18,7 +18,8 @@ export default new Vuex.Store({
     uid: "",
     photoURL: "",
     // user: null,
-    chatActive: false
+    chatActive: false,
+    sidebarActive: true
   },
   mutations: {
     // Logged in user's identifier
@@ -30,16 +31,16 @@ export default new Vuex.Store({
     },
     toggleChatActive(state) {
       state.chatActive = !state.chatActive;
+    },
+    toggleSidebarActive(state) {
+      state.sidebarActive = !state.sidebarActive;
     }
-    // setUser(state, user) {
-    //   state.user = user;
-    // },
   },
   actions: {},
   getters: {
     uid: state => state.uid,
     photoURL: state => state.photoURL,
-    chatActive: state => state.chatActive
-    // user: state => state.user,
+    chatActive: state => state.chatActive,
+    sidebarActive: state => state.sidebarActive
   }
 });

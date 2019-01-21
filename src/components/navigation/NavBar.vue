@@ -167,8 +167,9 @@ export default {
 .navbar {
   background-color: $dark;
   padding: 0px 10px 0px 0px;
-  max-height: 6vh;
-  min-height: 60px;
+  // max-height: 6vh;
+  // min-height: 60px;
+  height: $nav-height;
 }
 
 a.navbar-brand {

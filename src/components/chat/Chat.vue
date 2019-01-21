@@ -14,7 +14,6 @@
           <transition-group
             name="chatTransition"
             enter-active-class="animated fadeInDown"
-            leave-active-class="animated fadeOutUp"
           >
             <message
               v-for="message in groupMessages"
@@ -160,11 +159,11 @@ export default {
 
 .sidebar {
   color: white;
-  height: 100%;
+  height: $content-height;
   width: 0;
   position: absolute;
   z-index: 0;
-  top: 0;
+  top: 60px;
   right: 0;
   border-top: 1px solid white;
   background-color: $dark;

@@ -210,14 +210,14 @@ export default {
 
 .content-container {
   display: inline-block;
-  min-height: 844px;
-  max-height: 844px;
+  // min-height: 844px;
+  // max-height: 844px;
   padding: 30px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: flex-start;
-  height: 100%;
+  height: $content-height;
 }
 
 .page-edit {

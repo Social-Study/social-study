@@ -137,12 +137,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/styles.scss";
-// TODO: Make css more readable
 
 .page-content {
   display: flex;
   flex-flow: column nowrap;
-  min-height: 844px;
+  height: $content-height;
 
   .calendar-container {
     flex: 1;

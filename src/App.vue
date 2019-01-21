@@ -2,8 +2,14 @@
   <div id="app">
     <NavBar v-if="$route.name !== 'landing'" />
     <router-view v-if="!$route.params.groupID" />
-    <side-bar v-else>
-      <router-view :class="chatActive ? 'chat-active' : 'chat-inactive'" />
+    <side-bar
+      :show="sidebarActive"
+      v-else
+    >
+      <router-view
+        id="router-view"
+        :class="getActive"
+      />
       <chat
         :show="chatActive"
         :user="user"
@@ -35,7 +41,23 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["chatActive"])
+    ...mapGetters(["chatActive", "sidebarActive"]),
+    // Compute what sidebar are active and set the proper class
+    getActive() {
+      let classString = "";
+      if (this.chatActive) {
+        classString = "chat-active";
+      } else {
+        classString = "chat-inactive";
+      }
+
+      if (this.sidebarActive) {
+        classString += " sidebar-active";
+      } else {
+        classString += " sidebar-inactive";
+      }
+      return classString;
+    }
   },
   created() {
     // Keep track current logged in users
@@ -77,9 +99,24 @@ body {
   height: 100%;
 }
 
+#router-view {
+  height: 100%;
+}
+
 // Applies to all modal-overlays
 a.modal-overlay {
   background-image: $dark-gradient !important;
+}
+
+// Sidebar Styles for Visible /
+.sidebar-active {
+  margin-left: 200px;
+  transition: 1s;
+}
+
+.sidebar-inactive {
+  margin-left: 50px;
+  transition: 1s;
 }
 
 // Chat Sidebar Styles for Visible / Hidden
@@ -91,6 +128,6 @@ a.modal-overlay {
 .chat-inactive {
   margin-right: 0px;
   transition: 1s;
-  height: 100%;
+  // height: 100%;
 }
 </style>

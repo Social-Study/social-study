@@ -1,13 +1,30 @@
 <template>
-  <div class="full-height">
-    <div
-      id="sidebar"
-      v-if="activeGroup"
-      :class="show ? 'active' : 'collapsed'"
+  <div class="off-canvas off-canvas-sidebar-show">
+    <!-- Sidebar Toggle Button; Shows when width < 768px -->
+    <a
+      @click="sidebarActive = true;"
+      class="off-canvas-toggle btn btn-primary btn-action"
     >
-      <ul class="menu">
+      <i class="fas fa-bars"></i>
+    </a>
+
+    <!-- Sidebar Display Controls -->
+    <div
+      v-if="activeGroup"
+      id="sidebar-id"
+      class="off-canvas-sidebar"
+      :class="{ active: sidebarActive }"
+    >
+      <!-- Top Divider; Only shows when sidebar not collapsed -->
+      <div
+        v-show="!sidebarActive"
+        style="margin: 0"
+        class="divider"
+      ></div>
+
+      <!-- Sidebar Content -->
+      <ul class="menu sidebar">
         <li
-          v-show="show"
           class="menu-item"
           style="padding-top: 10px;"
         >
@@ -18,34 +35,20 @@
             </div>
           </div>
         </li>
-        <li
-          v-show="show"
-          class="divider"
-        ></li>
+        <li class="divider"></li>
 
         <!-- Menu highlight based on current route -->
 
         <!-- Home -->
-        <li
-          class="menu-item"
-          :class="show ? 'text-left' : 'text-center'"
-        >
+        <li class="menu-item text-left">
           <router-link
             :class="$route.name === 'home' ? 'active' : ''"
             :to="{ name: 'home' }"
-          >
-            <i
-              :class="{'large-icon':!show}"
-              class="fas fa-home"
-            ></i><span v-show="show"> Home </span>
-          </router-link>
+          ><i class="fas fa-home"></i> Home</router-link>
         </li>
 
         <!-- Flashcards -->
-        <li
-          class="menu-item"
-          :class="show ? 'text-left' : 'text-center'"
-        >
+        <li class="menu-item text-left">
           <router-link
             :class="
               $route.name === 'flashcards' ? 'active' : '' ||
@@ -53,63 +56,36 @@
               $route.name === 'create' ? 'active' : ''"
             :to="{ name: 'flashcards' }"
           >
-            <i
-              :class="{'large-icon': !show}"
-              class="fas fa-sticky-note"
-            ></i><span v-show="show"> Flashcards</span>
+            <i class="fas fa-sticky-note"></i> Flashcards
           </router-link>
         </li>
         <!-- Quizzes -->
-        <li
-          class="menu-item"
-          :class="show ? 'text-left' : 'text-center'"
-        >
+        <li class="menu-item text-left">
           <router-link
             :to="{name: 'createQuiz'}"
             :class="$route.name === 'createQuiz' ? 'active' : ''"
-          ><i
-              :class="{'large-icon': !show}"
-              class="fas fa-pencil-alt"
-            ></i><span v-show="show"> Quizzes</span></router-link>
+          ><i class="fas fa-pencil-alt"></i> Quizzes</router-link>
         </li>
         <!-- Agenda -->
-        <li
-          class="menu-item"
-          :class="show ? 'text-left' : 'text-center'"
-        >
+        <li class="menu-item text-left">
           <router-link
             :to="{name: 'agenda'}"
             :class="$route.name === 'agenda' ? 'active' : ''"
-          ><i
-              :class="{'large-icon': !show}"
-              class="fas fa-calendar-alt"
-            ></i><span v-show="show"> Agenda</span></router-link>
+          ><i class="fas fa-calendar-alt"></i> Agenda</router-link>
         </li>
         <!-- Notes -->
-        <li
-          class="menu-item"
-          :class="show ? 'text-left' : 'text-center'"
-        >
+        <li class="menu-item text-left">
           <router-link
             :to="{name: 'notes'}"
             :class="$route.name === 'notes' ? 'active' : '' ||
                $route.name === 'note' ? 'active' : ''"
           >
-            <i
-              :class="{'large-icon': !show}"
-              class="fas fa-file"
-            ></i><span v-show="show"> Notes</span>
+            <i class="fas fa-file"></i> Notes
           </router-link>
         </li>
         <!-- Group Members -->
-        <li
-          class="menu-item"
-          :class="show ? 'text-left' : 'text-center'"
-        >
-          <div
-            v-show="show"
-            class="menu-badge"
-          >
+        <li class="menu-item text-left">
+          <div class="menu-badge">
             <label class="member-num label label-primary">{{
               activeGroup.members.length
               }}</label>
@@ -117,37 +93,30 @@
           <router-link
             :class="$route.name === 'members' ? 'active' : ''"
             :to="{ name: 'members' }"
-          ><i
-              :class="{'large-icon': !show}"
-              class="fas fa-user-circle"
-            ></i><span v-show="show"> Members</span></router-link>
+          ><i class="fas fa-user-circle"></i> Members</router-link>
         </li>
         <!-- Group Settings -->
         <li
           v-if="activeGroup.owner === $store.getters.uid"
-          class="menu-item"
-          :class="show ? 'text-left' : 'text-center'"
+          class="menu-item text-left"
         >
           <router-link
             :to="{name: 'settings'}"
             :class="$route.name === 'settings' ? 'active' : ''"
           >
-            <i
-              :class="{'large-icon': !show}"
-              class="fas fa-cog"
-            ></i><span v-show="show"> Settings</span>
+            <i class="fas fa-cog"></i> Settings
           </router-link>
         </li>
       </ul>
-      <a
-        id="toggle-button"
-        @click="$store.commit('toggleSidebarActive')"
-      ><i
-          class="fas"
-          :class="show ? 'fa-arrow-left': 'fa-arrow-right'"
-        ></i></a>
     </div>
-    <div style="height: 100%">
+
+    <!-- Overlay when collapsed sidebar is open -->
+    <a
+      @click="sidebarActive = false;"
+      class="off-canvas-overlay"
+    ></a>
+
+    <div class="off-canvas-content">
       <!-- Slot where all other page content will be inserted -->
       <slot v-if="isMember && !isLoading"></slot>
 
@@ -172,18 +141,14 @@
     </div>
   </div>
 </template>
+
 <script>
 import { checkAccess } from "@/scripts/groupFuncs";
 import { db } from "@/firebaseConfig";
 
+// The sidebar is in charge of managing the group's initial load state.
 export default {
   name: "SideBar",
-  props: {
-    show: {
-      type: Boolean,
-      default: true
-    }
-  },
   data() {
     return {
       sidebarActive: false,
@@ -230,93 +195,61 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles.scss";
 
-#toggle-button {
-  cursor: pointer;
-  padding: 10px;
-  color: $secondary-light;
-  text-align: center;
-
-  &:hover {
-    color: $light;
-  }
-}
-
-.full-height {
-  height: $content-height;
-}
-
-#sidebar {
-  color: white;
-  height: $content-height;
-  width: 200px;
-  position: absolute;
-  z-index: 200;
+a.off-canvas-toggle {
+  position: fixed;
   left: 0;
-  border-top: 1px solid white;
-  background-color: $dark;
-  transition: 1s;
+  top: 120px;
+  bottom: 0;
+  margin-left: 8px;
+}
 
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-between;
+.tile-content {
+  color: white;
+}
 
-  .page-content {
-    height: $content-height;
+.sidebar {
+  box-shadow: none;
+  background: $dark;
+}
+
+.sidebar > li.menu-item {
+  color: $secondary-light;
+
+  i.fas {
+    color: darken($secondary-light, 30);
   }
+}
 
-  .menu {
-    background: $dark;
-    box-shadow: none;
-    min-width: 0;
+.sidebar > li > a.active {
+  background-image: $orange-gradient !important;
+  color: white !important;
 
-    // Group Info Text
-    .tile-content {
-      color: white;
-    }
-
-    // Sidebar Menu Items
-    li.menu-item {
-      color: $secondary-light;
-
-      i.fas {
-        color: darken($secondary-light, 30);
-      }
-
-      i.large-icon {
-        text-align: center;
-        font-size: 30px;
-      }
-    }
-
-    // Sidebar Menu Active Item
-    li > a.active {
-      background-image: $orange-gradient !important;
-      color: white !important;
-
-      i.fas {
-        color: white;
-      }
-    }
-
-    // .member-num {
-    //   padding-left: 8px;
-    //   padding-right: 8px;
-    // }
+  i.fas {
+    color: white;
   }
+}
 
-  &.collapsed {
-    width: 50px;
-    transition: 1s;
-    // margin-right: 50px;
-    .menu {
-      padding: 0;
-    }
-  }
+.member-num {
+  padding-left: 8px;
+  padding-right: 8px;
+}
 
-  &.active {
-    width: 200px;
-    transition: 1s;
-    // margin-right: 200px;
-  }
+div.off-canvas-sidebar {
+  background: $dark !important;
+  // background: #3c3c3c !important;
+  width: 200px;
+}
+
+div.off-canvas.off-canvas-sidebar-show {
+  // height: 100%;
+  max-height: calc(100vh - 60px);
+}
+
+div.off-canvas-content {
+  // min-height: 100%;
+  max-height: calc(100vh - 60px);
+  // max-height: 100%;
+  overflow: auto;
+  padding: 0 !important;
 }
 </style>
