@@ -6,6 +6,8 @@
       :class="show ? 'active' : 'collapsed'"
     >
       <ul class="menu">
+
+        <!-- Group Details -->
         <li
           v-show="show"
           class="menu-item"
@@ -23,9 +25,7 @@
           class="divider"
         ></li>
 
-        <!-- Menu highlight based on current route -->
-
-        <!-- Home -->
+        <!-- Home Link -->
         <li
           class="menu-item"
           :class="show ? 'text-left' : 'text-center'"
@@ -37,11 +37,12 @@
             <i
               :class="{'large-icon':!show}"
               class="fas fa-home"
-            ></i><span v-show="show"> Home </span>
+            ></i>
+            <span v-show="show"> Home </span>
           </router-link>
         </li>
 
-        <!-- Flashcards -->
+        <!-- Flashcards Link -->
         <li
           class="menu-item"
           :class="show ? 'text-left' : 'text-center'"
@@ -56,10 +57,12 @@
             <i
               :class="{'large-icon': !show}"
               class="fas fa-sticky-note"
-            ></i><span v-show="show"> Flashcards</span>
+            ></i>
+            <span v-show="show"> Flashcards</span>
           </router-link>
         </li>
-        <!-- Quizzes -->
+
+        <!-- Quizzes Link-->
         <li
           class="menu-item"
           :class="show ? 'text-left' : 'text-center'"
@@ -70,9 +73,12 @@
           ><i
               :class="{'large-icon': !show}"
               class="fas fa-pencil-alt"
-            ></i><span v-show="show"> Quizzes</span></router-link>
+            ></i>
+            <span v-show="show"> Quizzes</span>
+          </router-link>
         </li>
-        <!-- Agenda -->
+
+        <!-- Agenda Link-->
         <li
           class="menu-item"
           :class="show ? 'text-left' : 'text-center'"
@@ -83,9 +89,12 @@
           ><i
               :class="{'large-icon': !show}"
               class="fas fa-calendar-alt"
-            ></i><span v-show="show"> Agenda</span></router-link>
+            ></i>
+            <span v-show="show"> Agenda</span>
+          </router-link>
         </li>
-        <!-- Notes -->
+
+        <!-- Notes Link -->
         <li
           class="menu-item"
           :class="show ? 'text-left' : 'text-center'"
@@ -98,10 +107,12 @@
             <i
               :class="{'large-icon': !show}"
               class="fas fa-file"
-            ></i><span v-show="show"> Notes</span>
+            ></i>
+            <span v-show="show"> Notes</span>
           </router-link>
         </li>
-        <!-- Group Members -->
+
+        <!-- Group Members Link -->
         <li
           class="menu-item"
           :class="show ? 'text-left' : 'text-center'"
@@ -110,9 +121,9 @@
             v-show="show"
             class="menu-badge"
           >
-            <label class="member-num label label-primary">{{
-              activeGroup.members.length
-              }}</label>
+            <label class="member-num label label-primary">
+              {{activeGroup.members.length}}
+            </label>
           </div>
           <router-link
             :class="$route.name === 'members' ? 'active' : ''"
@@ -120,9 +131,12 @@
           ><i
               :class="{'large-icon': !show}"
               class="fas fa-user-circle"
-            ></i><span v-show="show"> Members</span></router-link>
+            ></i>
+            <span v-show="show"> Members</span>
+          </router-link>
         </li>
-        <!-- Group Settings -->
+
+        <!-- Group Settings Link-->
         <li
           v-if="activeGroup.owner === $store.getters.uid"
           class="menu-item"
@@ -135,18 +149,25 @@
             <i
               :class="{'large-icon': !show}"
               class="fas fa-cog"
-            ></i><span v-show="show"> Settings</span>
+            ></i>
+            <span v-show="show"> Settings</span>
           </router-link>
         </li>
       </ul>
+
+      <!-- Sidebar Toggle Button -->
       <a
         id="toggle-button"
         @click="$store.commit('toggleSidebarActive')"
-      ><i
+      >
+        <i
           class="fas"
           :class="show ? 'fa-arrow-left': 'fa-arrow-right'"
-        ></i></a>
+        ></i>
+      </a>
     </div>
+
+    <!-- Page Content Slot / Error Handling -->
     <div id="sidebar-page-content">
       <!-- Slot where all other page content will be inserted -->
       <slot v-if="isMember && !isLoading"></slot>
@@ -172,6 +193,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { checkAccess } from "@/scripts/groupFuncs";
 import { db } from "@/firebaseConfig";

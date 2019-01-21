@@ -1,5 +1,5 @@
 <template>
-  <div id="full-page">
+  <div>
     <!-- Title Bar -->
     <page-title>
       <template slot="center">
@@ -141,7 +141,7 @@ export default {
 .page-content {
   display: flex;
   flex-flow: column nowrap;
-  height: $content-height;
+  height: $page-with-header-height;
 
   .calendar-container {
     flex: 1;

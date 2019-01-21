@@ -9,6 +9,7 @@ Possible Features (Time Permitting):
   ☐ Video/Audio Chat with WebRTC
   ☐ Make the site mobile friendly.
     Hardest part is making the navbar change into a mobile form.
+  ☐ Indicators that show online group members in the sidebar
 
 General:
   ☐ Go through and error check all inputs where necessary

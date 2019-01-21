@@ -44,8 +44,7 @@ export default {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  max-height: 54px;
-  min-height: 54px;
+  height: $header-height;
 
   .name-input {
     border: none;

@@ -38,7 +38,9 @@ $border-rounder: 16px;
 
 // COMMON SIZING
 $nav-height: 60px;
+$header-height: 54px;
 $content-height: calc(100% - #{$nav-height});
+$page-with-header-height: calc(100% - #{$header-height});
 
 /*
   SPECTRE CSS COLOR OVERRIDES

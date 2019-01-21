@@ -217,7 +217,7 @@ export default {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: flex-start;
-  height: $content-height;
+  height: $page-with-header-height;
 }
 
 .page-edit {

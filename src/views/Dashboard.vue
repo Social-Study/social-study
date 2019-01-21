@@ -1,11 +1,15 @@
 <template>
 
-  <div v-if="this.user !== null">
+  <div
+    id="full-screen"
+    v-if="this.user !== null"
+  >
     <notifications
       group="joinErrors"
       position="right top"
     />
-    <div class="dashboardBody">
+    <!-- Centered Empty Dashboard Placeholder -->
+    <div>
       <div class="empty">
         <div class="empty-icon">
           <img
@@ -74,6 +78,14 @@ export default {
   width: 10em;
 }
 
+#full-screen {
+  height: $content-height;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .empty {
   // background-color: $background-color;
   background-color: $light;
@@ -86,14 +98,5 @@ export default {
 .modal-btn {
   margin: 4px;
   min-width: 80px;
-}
-
-.dashboardBody {
-  min-height: 92vh;
-  // min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 </style>
