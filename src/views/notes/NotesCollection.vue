@@ -149,11 +149,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles.scss";
+
 .popover-container {
   top: 60px !important;
 
   .card {
     border-radius: 10px !important;
+
+    .card-header {
+      font-family: $secondary-font;
+      font-weight: 700;
+    }
   }
 }
 

@@ -47,7 +47,7 @@
         <!-- Save the markdown to database -->
         <button
           @click="saveNote"
-          class="btn btn-action split"
+          class="btn btn-success btn-action split"
         ><i class="fas fa-save"></i></button>
 
       </template>
