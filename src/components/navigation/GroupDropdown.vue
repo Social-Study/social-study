@@ -85,7 +85,7 @@ export default {
 @import "@/styles.scss";
 
 #groupNameText {
-  font-family: "Montserrat", sans-serif;
+  font-family: $secondary-font;
 }
 
 #instructorText {

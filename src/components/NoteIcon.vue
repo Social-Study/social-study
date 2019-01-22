@@ -79,8 +79,8 @@ export default {
 }
 
 #title {
-  font-family: "Montserrat";
-  font-weight: 600;
+  font-family: $secondary-font;
+  font-weight: 700;
   text-overflow: ellipsis;
   overflow: hidden;
   /* white-space: ; */

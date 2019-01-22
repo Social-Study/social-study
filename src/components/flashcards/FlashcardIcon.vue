@@ -83,10 +83,10 @@ $card-height: 218px;
 }
 
 #title {
-  font-family: "Montserrat";
-  font-weight: 600;
+  font-family: $secondary-font;
+  font-weight: 700;
   white-space: nowrap;
-  overflow: hidden;
+  // overflow: hidden;
   text-overflow: ellipsis;
   max-width: $card-width;
   max-height: 100px;

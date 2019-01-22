@@ -91,7 +91,7 @@ export default {
   &:hover {
     box-shadow: $shadow-hovered;
     h2 {
-      font-weight: 600;
+      font-weight: 700;
     }
     .gradient-underline {
       display: block;
@@ -126,11 +126,7 @@ h2 {
 .button-icon {
   text-align: center;
   font-size: 144px;
-  font-weight: 600;
-  // TODO: Add gradient button later, not working on chrome because the -webkit-text-fill-color
-  // background: $nav-gradient;
-  // color: transparent;
-  // -webkit-text-fill-color: transparent;
+  font-weight: 700;
   background-clip: text;
   bottom: 25px;
   position: relative;

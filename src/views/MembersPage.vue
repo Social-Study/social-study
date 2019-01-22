@@ -171,8 +171,8 @@ export default {
 .modal-container {
   border-radius: 10px;
   .modal-title {
-    font-family: "Montserrat";
-    font-weight: 600;
+    font-family: $secondary-font;
+    font-weight: 700;
   }
 }
 .content-container {

@@ -18,7 +18,7 @@
               <div class="card-footer">
                 <button
                   @click="deleteGroup"
-                  class="btn"
+                  class="btn btn-error"
                 >Yes, Delete the Group</button>
               </div>
             </div>
@@ -289,7 +289,7 @@
 
 <script>
 /**
- *  Owner Group Priveledges
+ *  Owner - Group Privledges
  *
  *  Change Group Information Data
  *  Manage Group Member List
@@ -539,8 +539,8 @@ input[type="time"] {
   margin-bottom: 40px;
   h2 {
     border-radius: 16px 16px 0 0;
-    font-family: "Montserrat";
-    font-weight: 600;
+    font-family: $secondary-font;
+    font-weight: 700;
     background-color: $secondary;
     color: $light;
     padding: 5px;
@@ -573,13 +573,17 @@ input[type="time"] {
     border-radius: $border-round;
   }
   .card-body {
-    font-family: "Roboto";
+    font-family: $primary-font;
   }
 
   .card-header {
     h5 {
-      font-weight: 600;
+      font-weight: 700;
     }
+  }
+
+  .card-footer > button {
+    font-family: $primary-font;
   }
 }
 </style>

@@ -154,7 +154,6 @@ export default {
   display: block;
   transition: 1s;
   margin-bottom: 9px;
-  // flex: 0;
 }
 
 .sidebar {
@@ -185,7 +184,6 @@ export default {
 .divider-gradient {
   background-image: $orange-gradient;
   height: 1px;
-  // margin-bottom: 10px;
 }
 
 // Messages container
@@ -195,7 +193,6 @@ export default {
 }
 
 .message-input {
-  // margin: 10px;
   resize: none;
 }
 

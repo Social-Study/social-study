@@ -6,17 +6,15 @@
     class="header-container"
     :class="$store.getters.chatActive ? 'chat-active' : ''"
   >
-    <slot
-      class="left"
-      name="left"
-    ></slot>
-    <h1 class="text-ellipsis">
+    <div class="left">
+      <slot name="left"></slot>
+    </div>
+    <h1 class="center text-ellipsis">
       <slot name="center"></slot>
     </h1>
-    <slot
-      class="right"
-      name="right"
-    ></slot>
+    <div class="right">
+      <slot name="right"></slot>
+    </div>
   </div>
 
 </template>
@@ -36,9 +34,9 @@ export default {
 }
 
 .header-container {
-  padding: 8px 8px;
+  padding: 4px 8px 4px 8px;
   background-color: $secondary-light;
-  font-family: "Montserrat";
+  font-family: $secondary-font;
 
   display: flex;
   flex-flow: row nowrap;
@@ -55,7 +53,7 @@ export default {
     height: 36px;
     font-weight: bold;
     padding: 0 4px;
-    font-family: "Inter UI";
+    font-family: $primary-font;
   }
 
   button {
@@ -69,18 +67,33 @@ export default {
 
   .left {
     flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    // width: 300px;
   }
 
-  h1 {
+  // H1 Page Title
+  .center {
     flex: 1;
     user-select: none;
-    font-size: 2em;
+    font-size: 1.8em;
     margin: 0;
-    font-weight: 600;
+    font-weight: 700;
+    line-height: normal;
+    // max-width: 32%;
   }
 
   .right {
     flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    // width: 300px;
+
+    .form-input {
+      width: 250px;
+    }
   }
 }
 </style>

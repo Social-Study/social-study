@@ -370,15 +370,15 @@ export default {
 }
 
 .modal-title {
-  font-family: "Montserrat";
-  font-weight: 600;
+  font-family: $secondary-font;
+  font-weight: 700;
 }
 
 .tile-title {
   // padding: 5px;
   margin-top: 15px;
   margin-bottom: 5px;
-  font-family: "Montserrat";
+  font-family: $secondary-font;
 }
 
 .tab-item {
@@ -388,7 +388,7 @@ export default {
     color: $secondary !important;
   }
   &.active {
-    font-weight: 600;
+    font-weight: 700;
   }
 }
 

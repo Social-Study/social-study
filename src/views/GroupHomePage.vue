@@ -199,8 +199,8 @@ export default {
   padding: 8px;
 
   h4 {
-    font-family: "Montserrat";
-    font-weight: 600;
+    font-family: $secondary-font;
+    font-weight: 700;
   }
 }
 

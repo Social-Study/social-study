@@ -202,7 +202,7 @@ export default {
 .button-icon {
   text-align: center;
   font-size: 144px;
-  font-weight: 600;
+  font-weight: 700;
   background-clip: text;
   bottom: 25px;
   position: relative;
