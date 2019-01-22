@@ -10,6 +10,7 @@ Possible Features (Time Permitting):
   ☐ Make the site mobile friendly.
     Hardest part is making the navbar change into a mobile form.
   ☐ Indicators that show online group members in the sidebar
+  ☐ User chooses a gradient for their specific study group during creation
 
 General:
   ☐ Go through and error check all inputs where necessary
@@ -17,12 +18,14 @@ General:
   ☐ Make sure that each page that loads from firebase has error checking
     ☐ Should display an error message if the firebase load fails
     ☐ User's should be limited to what they are permitted to access..
-  ☐ Look into lazy loading to reduce initial load times. @low
-  ☐ Find a better alternate font to go with Roboto. Change from Inter UI to Roboto
-  ☐ Lazy loading of subpages.
+  ☐ Lazy loading of subpages. @high
     - Sub-pages are pages that you are taken to after clicking a main page
     - Ex) Study-flashcard, take-quiz
   ☐ Paginate collection pages so they scale when more information is added.
+  ☐ Not sure if I should save some things about the user's preferences to firebase
+    - Collapsed or Open Sidebar
+    - Collapsed or Open Chat
+    - Chat notifications on. etc...
 
 Components Needed:
   ☐ Notification popup
@@ -57,22 +60,24 @@ Notes:
   ☐ Maybe extract the view component if we want to use it for aiding users in creating their flashcards.
   ☐ Autoscroll viewing content to match...
   ☐ Alert user when they try to leave without saving their notes.
-  Note Collection:
-    ☐ Reduce whitespace on icon. Maybe flex center that part?
+  ☐ Scale the views to be on top of eachother when window width is too small
+  ☐ Add a switch to show preview vs edit views...
   Maybes:
     ☐ Allow users to create collections to manage their own notes?
 
 Chat:
   Maybes:
-    ☐ Shadow around the left edge of chat sidebar
     ☐ Total number of messages indicator (Could either be total messages or unread messages...)
        Not sure how I would implement tracking unread messages
+    ☐ Local desktop notifications if there is a new message.
 
 Known Bugs:
   ☐ Form validation is broken
     - May have to implement custom validation for the create page
     - Might be caused by not using a form. I'm just using vee-validate to validate input fields...
-  ☐ On the study page, when you select next flashcard with the buttons. the spacebar doesn't work as intended
+  FlashCard Study:
+      ☐ Select the next flashcard by clicking the button. Then try using spacebar to flip the card. The next card is shown.
+        This is due to the button capturing focus and the spacebar is pressing it instead of flipping the card.
 
 Vuex Store:
   ☐ Save the number of unread messages to the store.
@@ -81,7 +86,7 @@ Vuex Store:
 Homepage:
   ☐ Display an empty placeholder if the user doesn't have any recent notes or books.
   ☐ Think of better design for dashboard and homepage
-    - The current design feels cluttered and useless.
+    - The current design feels cluttered not very useful.
 
 Members Page:
   ☐ Add members list page sort filters
@@ -89,25 +94,26 @@ Members Page:
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
-  ☐ Automatically update to the file picker's picture so user can preview what it will look like
+  ☐ Automatically update to the file picker's picture so user can preview what it will look like @low
   ☐ Create a placeholder for when the user doesn't have any study groups. Don't just show an empty table
 
 Side Bar:
-  ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
+  ☐ Add more Study Group information (meeting time, location, extra info) possibly do this in a modal
 
 NavBar:
   ☐ Redesign navbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility
-  ☐ Style the currently active group based on the route parameters
+    Maybe a complete redesign or maybe just some improvements
+  ☐ Style the currently active group dropdown based on the route parameters
 
 Create Study Group:
-  ☐ Prevent user from clicking create and getting to copy code if they don't do all steps
   ☐ Add transitions to make it look nice
-  ☐ Figure out how to center the content without using a fixed page size (94vh)
   ☐ Put a conditional on the meeting days and times. Ask "Does the have designated meeting days and times?"
+  ☐ Maybe split the code into pieces to make it more manageble...
 
 Flashcards Collection:
   ☐ Figure out proper way to get the last row to the left instead of centering it.
   ☐ Display a "deck standing" color indicator to show whether the flashcard deck is good or bad
+  ☐ Use the avatar component or show the user's initials if they don't have a profile picture.
 
 Flashcards:
   ☐ Autofocus after using keybind to create a new flashcard
@@ -123,6 +129,11 @@ Animations / Transitions:
       Show the icons appearing one after the other
 
 Archive:
+  ✔ Reduce whitespace on icon. Maybe flex center that part? @done(19-01-21 22:00) @project(Notes.Note Collection)
+  ✔ Find a better alternate font to go with Roboto. Change from Inter UI to Roboto @done(19-01-21 21:43) @project(General)
+  ✘ Shadow around the left edge of chat sidebar @cancelled(19-01-21 21:44) @project(Chat.Maybes)
+  ✔ Prevent user from clicking create and getting to copy code if they don't do all steps @done(19-01-21 21:48) @project(Create Study Group)
+  ✔ Figure out how to center the content without using a fixed page size (94vh) @done(19-01-21 21:48) @project(Create Study Group)
   ✔ Fix the scrolling error @critical @done(19-01-21 01:06) @project(General)
     -Setting a page content to 100% should not show a scrollbar
     -May need to completely change how the sidebar works. I will probably end up doing that anyway because the current sidebar doesn't work well when collapsed.
