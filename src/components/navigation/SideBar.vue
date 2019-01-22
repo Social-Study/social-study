@@ -280,9 +280,9 @@ export default {
   z-index: 200;
   top: $nav-height;
   left: 0;
-  border-top: 1px solid white;
+  border-top: 2px solid $secondary;
   background-color: $dark;
-  transition: 1s;
+  // transition: 1s;
 
   display: flex;
   flex-flow: column nowrap;
@@ -322,10 +322,10 @@ export default {
       }
     }
 
-    // .member-num {
-    //   padding-left: 8px;
-    //   padding-right: 8px;
-    // }
+    .member-num {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
   }
 
   &.collapsed {

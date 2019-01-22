@@ -7,12 +7,13 @@ $dark-gradient: linear-gradient(
   rgba(22, 22, 22, 0.75) 0%,
   rgba(22, 22, 22, 0.5625) 100%
 );
+
 // Fonts
 $logo-font: "Pacifico", cursive;
-// $primary-font: "Inter UI";
 $primary-font: "Roboto", serif;
-// $secondary-font: "Montserrat";
 $secondary-font: "Open Sans", sans-serif;
+// $secondary-font: "Montserrat";
+// $primary-font: "Inter UI";
 
 // Shadows
 $shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
@@ -20,12 +21,7 @@ $shadow-hovered: 5px 12px 20px rgba(36, 37, 38, 0.13);
 $shadow-heavy: 0 6px 15px rgba(36, 37, 38, 0.5);
 
 // Colors
-$background-color: #f6f6f6;
-$dark-grey: #c5c5c5;
-$light-grey: #e7e7e7;
-
-$main-gray: #3c3c3c;
-
+$light-grey: #e7e7e7; // Used for flashcard backgrounds
 /* HSL */
 // New theme pallete
 $primary: hsla(241%, 63%, 59%, 1);

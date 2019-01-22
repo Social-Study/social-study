@@ -88,14 +88,15 @@ export default {
 @import "@/styles.scss";
 
 .card-container {
-  margin: 0 auto;
-  width: 100%;
+  // margin: 0 auto;
+  // width: 100%;
+  // padding: 20px;
+  margin: 20px;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(100px, 288px));
   grid-auto-rows: 218px;
   justify-content: center;
-  padding: 20px;
   transition: all 350ms ease-in;
 }
 </style>

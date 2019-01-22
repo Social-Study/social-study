@@ -127,6 +127,6 @@ export default {
 .card-text {
   user-select: none;
   margin: 0;
-  color: $main-gray;
+  color: $secondary;
 }
 </style>

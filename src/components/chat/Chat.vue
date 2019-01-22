@@ -164,7 +164,8 @@ export default {
   z-index: 0;
   top: 60px;
   right: 0;
-  border-top: 1px solid white;
+  border-top: 2px solid $secondary;
+  border-bottom: 2px solid white;
   background-color: $dark;
   overflow-x: hidden;
   transition: 1s;

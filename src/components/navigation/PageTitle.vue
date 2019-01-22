@@ -75,7 +75,7 @@ export default {
 
   // H1 Page Title
   .center {
-    flex: 1;
+    flex: 2;
     user-select: none;
     font-size: 1.8em;
     margin: 0;

@@ -55,10 +55,10 @@
         class="addCard"
         @click="addCard"
       >
-        <h2>Add Card</h2>
+        <!-- <h2>Add Card</h2> -->
         <div class="gradient-border add">
           <div class="add-button">
-            <h1 class="button-icon">+</h1>
+            <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
           </div>
         </div>
       </div>
@@ -168,14 +168,17 @@ export default {
 @import "@/styles.scss";
 
 .page-content {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: left;
-  align-items: center;
-  margin: 40px;
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 250px));
+  grid-auto-rows: 250px;
+  justify-content: center;
+  margin: 20px;
 }
 
 .addCard {
+  cursor: pointer;
   box-shadow: $shadow;
   width: 250px;
   height: 250px;
@@ -198,13 +201,10 @@ export default {
   background-image: $nav-gradient;
 }
 
-// Icon on the new members button
 .button-icon {
   text-align: center;
-  font-size: 144px;
-  font-weight: 700;
-  background-clip: text;
-  bottom: 25px;
+  font-size: 8em;
+  bottom: 2px;
   position: relative;
   vertical-align: center;
 }

@@ -6,7 +6,8 @@
   >
     <div class="gradient-border add">
       <div class="add-button">
-        <h1 class="button-icon">+</h1>
+        <!-- <h1 class="button-icon">+</h1> -->
+        <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
       </div>
     </div>
     <h2>Invite Member</h2>
@@ -125,10 +126,8 @@ h2 {
 // Icon on the new members button
 .button-icon {
   text-align: center;
-  font-size: 144px;
-  font-weight: 700;
-  background-clip: text;
-  bottom: 25px;
+  font-size: 8em;
+  bottom: 2px;
   position: relative;
   vertical-align: center;
 }

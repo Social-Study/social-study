@@ -87,7 +87,6 @@ export default {
 }
 
 .empty {
-  // background-color: $background-color;
   background-color: $light;
 }
 

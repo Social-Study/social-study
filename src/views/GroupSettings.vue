@@ -513,7 +513,7 @@ export default {
 }
 
 #btn-container {
-  background-color: $background-color;
+  background-color: $light;
   border-radius: 0 0 16px 16px;
 }
 
