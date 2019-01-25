@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!user"
-    class="loading loading-lg loading-indicator"
+    class="avatar loading loading-indicator"
     :class="getLoadingSize"
   ></div>
   <figure
@@ -37,7 +37,7 @@ export default {
     },
     size: {
       type: String,
-      default: "none"
+      default: ""
     }
   },
   computed: {
@@ -56,8 +56,6 @@ export default {
           return "";
         case "sm":
           return "avatar-sm";
-        case "md":
-          return "";
         case "lg":
           return "avatar-lg";
         case "xl":
@@ -71,13 +69,11 @@ export default {
         case "":
           return "load";
         case "sm":
-          return "load-sm";
-        case "md":
-          return "load";
+          return " load-sm";
         case "lg":
-          return "load-lg";
+          return "loading-lg load-lg";
         case "xl":
-          return "load-xl";
+          return "loading-lg load-xl";
       }
       return "";
     }
@@ -86,10 +82,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// Avatar placeholder
+// Avatar placeholder settings
 .loading-indicator {
   background-color: #3c3c3c;
-  border-radius: 50%;
 }
 
 // Set the sizing of the placeholder loading indicator

@@ -34,10 +34,7 @@
         @mouseout="menuActive = false;"
         class="menu-container"
       >
-        <Avatar
-          size="md"
-          :user="firestoreUser"
-        />
+        <Avatar :user="firestoreUser" />
 
         <ul
           v-show="menuActive == true"
