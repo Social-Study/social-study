@@ -140,7 +140,8 @@ h2 {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background-color: #bebebe;
+  background-color: $light;
+  // background-color: #bebebe;
   user-select: none;
 }
 

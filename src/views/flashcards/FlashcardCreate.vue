@@ -217,7 +217,8 @@ export default {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background-color: #bebebe;
+  // background-color: #bebebe;
+  background-color: $light;
   user-select: none;
 }
 </style>

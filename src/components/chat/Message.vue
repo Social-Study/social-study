@@ -1,4 +1,6 @@
 <template>
+
+  <!-- Messages from other members -->
   <div
     v-if="!sender"
     class="message"
@@ -26,6 +28,7 @@
       <p class="message-content">{{details.message}}</p>
     </div>
   </div>
+  <!-- Messages from logged-in user -->
   <div
     v-else
     class="message sent"
@@ -88,6 +91,7 @@ export default {
       ];
       let messageDate = this.details.date.toDate();
       let month = monthNames[messageDate.getMonth()];
+
       return (
         month +
         " " +
@@ -132,11 +136,12 @@ export default {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-items: center;
 
     .message-profile {
       align-self: flex-end;
       display: inline-block;
-      margin-left: 2px;
+      margin-left: 4px;
       margin-bottom: 2px;
 
       .avatar.avatar-lg {
