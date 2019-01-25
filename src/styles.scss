@@ -35,8 +35,8 @@ $border-round: 10px;
 $border-rounder: 16px;
 
 // COMMON SIZING
-$nav-height: 60px;
-$header-height: 54px;
+$nav-height: 50px;
+$header-height: 50px;
 $content-height: calc(100% - #{$nav-height});
 $page-with-header-height: calc(100% - #{$header-height});
 

@@ -25,8 +25,8 @@
     <section class="navbar-section">
       <button
         v-if="$route.params.groupID"
-        style="width: 34px; height: 34px;margin-right: 20px; border: none"
-        class="btn s-circle"
+        style="width: 32px; height: 32px;margin-right: 20px; border: none"
+        class="btn btn-action"
         @click="$store.commit('toggleChatActive')"
       ><i class="fas fa-comment-alt"></i></button>
       <div
@@ -35,18 +35,9 @@
         class="menu-container"
       >
         <Avatar
-          style="width: 40px; height: 40px; font-size: 1em;"
-          v-if="firestoreUser"
-          :user="{
-                  displayName: this.firestoreUser.displayName,
-                  photoURL: this.firestoreUser.photoURL
-                 }"
+          size="md"
+          :user="firestoreUser"
         />
-        <div
-          v-else
-          style="background-color: #3c3c3c; border-radius: 50%; height: 40px; width: 40px;"
-          class="loading loading-lg"
-        ></div>
 
         <ul
           v-show="menuActive == true"

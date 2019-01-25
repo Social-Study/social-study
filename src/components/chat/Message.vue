@@ -149,10 +149,9 @@ export default {
     .message-content {
       text-align: left;
       margin: 0 4px;
-      display: inline-block;
+      // display: inline-block;
       padding: 3px 6px;
-      border-radius: 16px;
-      // margin-left: 10px;
+      border-radius: 18px;
       color: black;
       // TODO: If the word is over a certain number of characters, enable break all...
       word-break: normal;
@@ -167,7 +166,7 @@ export default {
   .message-inline {
     flex-direction: row-reverse;
     .message-content {
-      margin-left: 35px;
+      margin-left: 25%;
       background-color: #d2e3fc;
     }
   }

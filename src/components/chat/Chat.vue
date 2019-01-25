@@ -162,10 +162,10 @@ export default {
   width: 0;
   position: absolute;
   z-index: 0;
-  top: 60px;
+  top: $nav-height;
   right: 0;
   border-top: 2px solid $secondary;
-  border-bottom: 2px solid white;
+  // border-bottom: 2px solid white;
   background-color: $dark;
   overflow-x: hidden;
   transition: 1s;
