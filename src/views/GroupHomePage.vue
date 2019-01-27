@@ -1,21 +1,23 @@
 <template>
-  <div style="min-height: 800px;">
+  <div>
+    <!-- Title Bar -->
     <page-title>
       <template slot="center">
-        Home
+        Overview
       </template>
     </page-title>
+
     <div class="page-content">
+
+      <!-- Calendar Component: Will be replaced -->
       <div class="calendar-container">
         <calendar />
         <div class="date-details">
           The selected day's details will appear here
         </div>
       </div>
-      <div
-        class="divider-vert"
-        style="padding: 0;"
-      ></div>
+
+      <!-- Displays recent notes and flashcards -->
       <div class="recent-container">
         <div class="notes-container">
           <div class="tile-header">
@@ -29,7 +31,6 @@
             ></div>
             <note-icon
               v-else
-              @click.native="$router.push(`/${$route.params.groupID}/notes/${note.id}`)"
               v-for="note in recentNotes"
               :info="note"
               :key="note.id"
@@ -37,7 +38,7 @@
           </div>
         </div>
 
-        <div class="divider"></div>
+        <div class="divider-vert"></div>
 
         <!-- Displays the group's most popular flashcards -->
         <!-- Decide metric (Study Count, Recently Created, Favorited) -->
@@ -53,18 +54,13 @@
               v-if="flashcardsLoading"
               class="loading loading-lg"
             ></div>
-            <flashcard-deck
+            <flashcard-icon
               v-else
-              v-for="(deck,index) in recentFlashcards"
-              :key="index"
-              :title="deck.title"
-              :cardNum="deck.cardNum"
-              :creator="deck.creatorName"
-              :creatorUid="deck.uid"
-              :documentID="deck.documentID"
-            ></flashcard-deck>
+              v-for="deck in recentFlashcards"
+              :key="deck.id"
+              :info="deck"
+            ></flashcard-icon>
           </div>
-
         </div>
       </div>
     </div>
@@ -72,10 +68,10 @@
 </template>
 
 <script>
-import PageTitle from "@/components/PageTitle";
+import PageTitle from "@/components/navigation/PageTitle";
 import Calendar from "@/components/Calendar";
 import NoteIcon from "@/components/NoteIcon";
-import FlashcardDeck from "@/components/FlashcardDeck";
+import FlashcardIcon from "@/components/flashcards/FlashcardIcon";
 
 import { db } from "@/firebaseConfig";
 
@@ -85,7 +81,7 @@ export default {
     Calendar,
     PageTitle,
     NoteIcon,
-    FlashcardDeck
+    FlashcardIcon
   },
   data() {
     return {
@@ -123,7 +119,7 @@ export default {
         db
           .collection("study-groups")
           .doc(this.$route.params.groupID)
-          .collection("flashcardDecks")
+          .collection("flashcards")
           .limit(4)
       ).then(flashcards => {
         this.recentFlashcards = flashcards;
@@ -140,19 +136,21 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "@/styles.scss";
+
 .page-content {
   display: flex;
-  flex-flow: row nowrap;
-  height: 94%;
+  flex-flow: column nowrap;
+  height: $page-with-header-height;
 
   .calendar-container {
     flex: 1;
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
 
     .calendar {
       flex: 1;
-      margin: 40px auto;
+      margin: 40px;
       max-height: 300px;
       max-width: 280px;
     }
@@ -164,7 +162,7 @@ export default {
 
   .recent-container {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     flex: 1;
     text-align: left;
 
@@ -180,22 +178,16 @@ export default {
 
 .icon-container {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
 
-  .note {
-    margin: 40px 0px 40px 40px;
+  #note {
+    margin-left: 20px;
   }
 
-  .flashcard-deck {
-    padding: 4px;
-    height: 150px;
-    width: 250px;
-    margin: 0px 0px 20px 20px;
-    h1.deck-title {
-      color: white;
-    }
+  #flashcard {
+    margin-left: 20px;
   }
 }
 
@@ -205,6 +197,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 8px;
+
+  h4 {
+    font-family: $secondary-font;
+    font-weight: 700;
+  }
 }
 
 .loading.loading-lg {

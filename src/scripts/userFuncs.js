@@ -1,4 +1,4 @@
-import { db } from "../firebaseConfig";
+import { db } from "@/firebaseConfig";
 
 // These functions all relate to loading firebase data for a specific user.
 

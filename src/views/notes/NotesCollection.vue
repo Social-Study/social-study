@@ -49,19 +49,27 @@
     </page-title>
     <!-- In the future this will hold other things like the sort buttons, etc. -->
 
-    <div class="content-container">
+    <div
+      v-if="!isLoading"
+      class="content-container"
+    >
       <note-icon
-        @click.native="$router.push(`/${$route.params.groupID}/notes/${note.id}`)"
         v-for="note in filteredNotes"
         :info="note"
         :key="note.id"
       />
+      <!-- @delete="deleteNote(note.id)"
+        @viewNote="$router.push(`/${$route.params.groupID}/notes/${note.id}`)" -->
     </div>
+    <div
+      v-else
+      class="loading loading-lg"
+    ></div>
   </div>
 </template>
 
 <script>
-import PageTitle from "@/components/PageTitle";
+import PageTitle from "@/components/navigation/PageTitle";
 import NoteIcon from "@/components/NoteIcon";
 
 import { db } from "@/firebaseConfig";
@@ -76,6 +84,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       notesList: [],
       noteTitle: "",
       searchQuery: "",
@@ -83,6 +92,7 @@ export default {
     };
   },
   created() {
+    // Load all user's notes on page load
     notesRef = db
       .collection("study-groups")
       .doc(this.$route.params.groupID)
@@ -91,6 +101,7 @@ export default {
 
     this.$bind("notesList", notesRef.collection("private")).then(notesList => {
       this.notesList === notesList;
+      this.isLoading = false;
     });
   },
   computed: {
@@ -119,7 +130,6 @@ export default {
         })
         .then(note => {
           // Get the note's ID and save it in the note itself.
-          console.log(note.id);
           notesRef
             .collection("private")
             .doc(note.id)
@@ -139,28 +149,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page-controls {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-
-  // .btn.btn-primary {
-  //   margin: 20px 20px 10px 20px;
-  // }
-}
+@import "@/styles.scss";
 
 .popover-container {
   top: 60px !important;
 
   .card {
     border-radius: 10px !important;
+
+    .card-header {
+      font-family: $secondary-font;
+      font-weight: 700;
+    }
   }
 }
 
 .content-container {
-  margin: 40px 40px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
+  // width: 100%;
+  // padding: 20px;
+  // margin: 0 auto;
+  margin: 20px;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 216px));
+  grid-auto-rows: 288px;
+  justify-content: center;
+  transition: all 350ms ease-in;
 }
 </style>

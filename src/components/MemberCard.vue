@@ -6,10 +6,12 @@
   >
     <div class="gradient-border add">
       <div class="add-button">
-        <h1 class="button-icon">+</h1>
+        <!-- <h1 class="button-icon">+</h1> -->
+        <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
       </div>
     </div>
     <h2>Invite Member</h2>
+    <div class="gradient-underline"></div>
   </div>
 
   <!-- Member Display Card -->
@@ -39,7 +41,7 @@
 </template>
 
 <script>
-import Avatar from "./Avatar";
+import Avatar from "@/components/Avatar";
 
 export default {
   name: "MemberCard",
@@ -63,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styles.scss";
 
 // Individual info card
 .profile-card {
@@ -75,11 +77,31 @@ export default {
   background-color: white;
   box-shadow: $shadow;
   user-select: none;
+
+  .gradient-underline {
+    display: none;
+    height: 4px;
+    width: 60%;
+    margin: auto;
+    margin-top: -15px;
+    background-image: $orange-gradient;
+  }
 }
 
 .hoverable {
   &:hover {
     box-shadow: $shadow-hovered;
+    h2 {
+      font-weight: 700;
+    }
+    .gradient-underline {
+      display: block;
+    }
+
+    .add-button > .button-icon {
+      transform: scale(1.1);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
   }
 }
 
@@ -104,14 +126,8 @@ h2 {
 // Icon on the new members button
 .button-icon {
   text-align: center;
-  font-size: 144px;
-  font-weight: 600;
-  // TODO: Add gradient button later, not working on chrome because the -webkit-text-fill-color
-  // background: $nav-gradient;
-  // color: transparent;
-  // -webkit-text-fill-color: transparent;
-  background-clip: text;
-  bottom: 25px;
+  font-size: 8em;
+  bottom: 2px;
   position: relative;
   vertical-align: center;
 }
@@ -124,7 +140,8 @@ h2 {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background-color: #bebebe;
+  background-color: $light;
+  // background-color: #bebebe;
   user-select: none;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 85%;">
+  <div v-if="!isLoading && !isError">
     <notifications
       group="notes"
       position="left top"
@@ -9,16 +9,20 @@
     <page-title>
       <template slot="left">
         <input
+          @input="handleChange()"
           class="name-input"
           v-model="noteTitle"
           type="text"
+          maxlength="40"
         >
       </template>
       <template slot="right">
+        <!-- Change preview theme css -->
         <div class="dropdown split">
           <a
             href="#"
-            class="btn btn-action dropdown-toggle"
+            class="btn btn-action dropdown-toggle tooltip tooltip-bottom"
+            data-tooltip="Preview Style"
             tabindex="0"
           >
             <i
@@ -33,23 +37,25 @@
           </ul>
         </div>
 
+        <!-- Open link to markdown cheatsheet in new browser tab -->
         <a
           target="_blank"
           href="https://www.markdownguide.org/cheat-sheet"
         >
           <button class="btn btn-action split"><i class="fas fa-info"></i></button>
         </a>
+        <!-- Save the markdown to database -->
         <button
           @click="saveNote"
-          class="btn btn-action split"
+          class="btn btn-success btn-action split"
         ><i class="fas fa-save"></i></button>
 
       </template>
     </page-title>
 
-    <div class="
-      content-container">
+    <div class="content-container">
       <textarea
+        @input="handleChange()"
         @keydown.ctrl.83.prevent="saveNote"
         v-model="userText"
         class="page-edit"
@@ -63,10 +69,26 @@
       ></div>
     </div>
   </div>
+  <div
+    v-else-if="!isLoading && isError"
+    id="error-container"
+  >
+    <img
+      style="width: 10em;"
+      class="undraw-svg"
+      src="@/assets/undraw_warning.svg"
+      alt="Error Loading Group"
+    />
+    <h1>Error loading note...</h1>
+  </div>
+  <div
+    v-else
+    class="loading loading-lg"
+  ></div>
 </template>
 
 <script>
-import PageTitle from "@/components/PageTitle";
+import PageTitle from "@/components/navigation/PageTitle";
 import { db } from "@/firebaseConfig";
 
 let marked = require("marked");
@@ -76,8 +98,22 @@ export default {
   components: {
     PageTitle
   },
+  beforeRouteLeave(to, from, next) {
+    if (!this.isSaved) {
+      if (confirm("Note is note saved! Are you sure you want to leave?")) {
+        next();
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
+      // Set to false when firebase query returns
+      isLoading: true,
+      // If firebase returns with error, set to true
+      isError: false,
+      isSaved: true,
       noteTitle: "",
       userText: "",
       markStyleNum: 2
@@ -94,9 +130,17 @@ export default {
       .then(doc => {
         this.noteTitle = doc.data().title;
         this.userText = doc.data().content;
+        this.isLoading = false;
+      })
+      .catch(err => {
+        this.isLoading = false;
+        this.isError = true;
       });
   },
   methods: {
+    handleChange() {
+      this.isSaved = false;
+    },
     saveNote() {
       // TODO: Display notification saying that the document has been saved
       db.collection("study-groups")
@@ -111,6 +155,7 @@ export default {
           content: this.userText
         })
         .then(() => {
+          this.isSaved = true;
           this.$notify({
             group: "notes",
             type: "success",
@@ -139,9 +184,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables";
-@import "../../node_modules/spectre-markdown.css/dist/markdown.min.css";
-@import "../../node_modules/github-markdown-css/github-markdown.css";
+@import "@/styles.scss";
+@import "../../../node_modules/spectre-markdown.css/dist/markdown.min.css";
+@import "../../../node_modules/github-markdown-css/github-markdown.css";
+
+#error-container {
+  max-height: 75%;
+  margin-top: 200px;
+}
 
 .dropdown > ul.menu {
   left: -70px;
@@ -160,13 +210,14 @@ export default {
 
 .content-container {
   display: inline-block;
-  // height: 100%;
-  margin: 40px;
+  // min-height: 844px;
+  // max-height: 844px;
+  padding: 30px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: flex-start;
-  height: 100%;
+  height: $page-with-header-height;
 }
 
 .page-edit {
@@ -174,7 +225,6 @@ export default {
   box-shadow: $shadow-hovered;
   border: none;
   display: inline-block;
-  // min-height: 800px;
   height: 100%;
   width: 50%;
   margin-right: 40px;
@@ -187,14 +237,13 @@ export default {
 .page-view {
   padding: 20px 10px !important;
   box-shadow: $shadow-hovered;
-  font-family: "Inter UI";
+  font-family: $primary-font;
+  // font-family: "Inter UI";
   background-color: white;
   padding: 0;
   overflow-y: auto;
   text-align: left;
   height: 100%;
-  // min-height: 800px;
-  // max-height: 800px;
   width: 50%;
 }
 </style>

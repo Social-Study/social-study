@@ -1,34 +1,45 @@
 <template>
-  <!-- Note Icon -->
-  <div id="note">
+  <!-- Flashcard Icon -->
+  <div id="flashcard">
+
     <!-- Title -->
     <h2 id="title">{{info.title}}</h2>
-    <div>
-      <!-- Created -->
-      <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
-      <!-- Modified -->
-      <!-- <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p> -->
-      <p id="modified"><i>Modified</i> {{calcDays(info.lastUpdated.toDate())}}</p>
+    <!-- Created -->
+    <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
+    <!-- Last Updated -->
+    <p id="modified"><i>Updated</i> {{calcDays(info.lastUpdated.toDate())}}</p>
+    <!-- Creator Avatar and Name Chip -->
+    <!-- TODO: Figure out how to use my existing avatar component -->
+    <div class="chip text-ellipsis">
+      <img
+        :src="info.creatorPhoto"
+        class="avatar avatar-sm"
+      >
+      {{info.creatorName}}
     </div>
-
+    <!-- Edit and Study Buttons -->
     <div id="button-container">
+      <!-- Edit only shows if you are the deck creator -->
       <button
-        @click="deleteNote(info.id)"
-        id="deleteBtn"
-      >Delete</button>
-      <button
-        @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
+        v-if="$store.getters.uid === info.creatorUID"
         id="editBtn"
       >Edit</button>
+      <button
+        @click="$router.push(`/${$route.params.groupID}/flashcards/${info.id}/study`)"
+        id="studyBtn"
+      >Study</button>
     </div>
   </div>
 </template>
 
 <script>
-import { db } from "@/firebaseConfig";
+import Avatar from "@/components/Avatar";
 
 export default {
-  name: "NoteIcon",
+  name: "FlashcardIcon",
+  components: {
+    Avatar
+  },
   props: {
     info: {
       type: Object,
@@ -36,16 +47,6 @@ export default {
     }
   },
   methods: {
-    deleteNote(id) {
-      // TODO: Add some sort of confirmation before deleting
-      db.collection("study-groups")
-        .doc(this.$route.params.groupID)
-        .collection("notes")
-        .doc(this.$store.getters.uid)
-        .collection("private")
-        .doc(id)
-        .delete();
-    },
     calcDays(modDate) {
       let currentDate = new Date();
       modDate = new Date(modDate);
@@ -64,11 +65,14 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles.scss";
 
+$card-width: 288px;
+$card-height: 218px;
+
 /* Icon itself */
-#note {
+#flashcard {
   background-color: white;
-  height: 288px;
-  width: 216px;
+  height: $card-height;
+  width: $card-width;
   padding: 1em;
   border-radius: 10px;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
@@ -81,17 +85,18 @@ export default {
 #title {
   font-family: $secondary-font;
   font-weight: 700;
+  white-space: nowrap;
+  // overflow: hidden;
   text-overflow: ellipsis;
-  overflow: hidden;
-  /* white-space: ; */
-  max-width: 10em;
-  max-height: 5em;
+  max-width: $card-width;
+  max-height: 100px;
+  text-align: center;
 }
 
 #created,
 #modified {
   // padding: 0.3em 0 0.3em 0;
-  margin: 4px;
+  margin-bottom: 4px;
   text-align: center;
   color: $secondary;
   font-size: 0.8em;
@@ -104,14 +109,21 @@ p > i {
   font-weight: 400;
 }
 
+.chip {
+  padding: 15px;
+  margin: auto;
+  text-align: center;
+}
+
 #button-container {
+  margin-top: 8px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
   align-items: center;
 }
 
-#deleteBtn {
+#editBtn {
   cursor: pointer;
   border: none;
   padding: 0.3em;
@@ -120,22 +132,23 @@ p > i {
   font-weight: 500;
 }
 
-#deleteBtn:hover {
-  color: hsl(0, 100%, 55%);
+#editBtn:hover {
+  // color: $primary;
+  color: $success-color;
 }
 
-#editBtn {
+#studyBtn {
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  /* padding: 0.3em 0.5em 0.3em 0.5em; */
-  padding: 4px 16px 4px 16px;
+  padding: 4px 8px 4px 8px;
   background-color: $primary;
   color: white;
   font-weight: 400;
 }
 
-#editBtn:hover {
+#studyBtn:hover {
+  /* color: hsl(0, 0%, 85%); */
   background-color: lighten($primary, 10);
 }
 </style>

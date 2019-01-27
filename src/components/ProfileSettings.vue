@@ -12,9 +12,12 @@
         <a
           @click="closeAndReset"
           href="#close"
-          class="btn btn-clear float-right"
+          id="close"
+          class="float-right"
           aria-label="Close"
-        ></a>
+        >
+          <i class="fas fa-times"></i>
+        </a>
 
         <div class="modal-title h4">Settings</div>
       </div>
@@ -175,10 +178,11 @@
               >
                 <td>{{ group.className }}</td>
                 <td>{{ group.membersLength }}</td>
-                <td>
+                <td class="button-td">
+
                   <button
                     @click="leaveGroup(group.groupID);"
-                    class="btn btn-error btn-block"
+                    class="btn btn-error"
                   >
                     <i class="fas fa-times"></i>
                   </button>
@@ -203,7 +207,7 @@
 </template>
 
 <script>
-import { getUserData, getUserGroups } from "../scripts/userFuncs";
+import { getUserData, getUserGroups } from "@/scripts/userFuncs";
 import { FirebaseConsts, Storage, db } from "@/firebaseConfig";
 
 let picRef = Storage.ref();
@@ -342,15 +346,58 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles.scss";
+
 .modal-container {
   border-radius: 10px;
+
+  #close {
+    color: $secondary;
+    i {
+      font-size: 24px;
+    }
+    &:hover {
+      color: darken($secondary, 5);
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.modal-header {
+  margin: 15px 15px 0 15px;
+}
+
+.modal-title {
+  font-family: $secondary-font;
+  font-weight: 700;
+}
+
+.tile-title {
+  // padding: 5px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-family: $secondary-font;
 }
 
 .tab-item {
   cursor: pointer;
+  color: $secondary-light;
+  a:hover {
+    color: $secondary !important;
+  }
+  &.active {
+    font-weight: 700;
+  }
 }
 
-.tile-title {
-  padding: 5px;
+.button-td {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  .btn {
+    width: 40px;
+  }
 }
 </style>

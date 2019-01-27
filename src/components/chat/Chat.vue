@@ -6,14 +6,14 @@
     >
       <div class="content">
         <h3 id="header">Study Group Chat</h3>
-        <div class="divider"></div>
+        <div class="divider-gradient mb-2"></div>
         <div
           class="messages"
           ref="messages"
         >
           <transition-group
+            name="chatTransition"
             enter-active-class="animated fadeInDown"
-            leave-active-class="animated fadeOutUp"
           >
             <message
               v-for="message in groupMessages"
@@ -24,15 +24,7 @@
           </transition-group>
 
         </div>
-        <div class="divider"></div>
-        <!-- <textarea
-          @keydown.enter="sendMessage"
-          class="message-input"
-          placeholder="Group message"
-          v-model="userMessage"
-          cols="30"
-          rows="2"
-        ></textarea> -->
+        <div class="divider-gradient my-2"></div>
         <input
           @keydown.enter="sendMessage"
           type="text"
@@ -53,7 +45,7 @@
 </template>
 
 <script>
-import Message from "@/components/Message";
+import Message from "@/components/chat/Message";
 import { db } from "@/firebaseConfig";
 
 let notification = new Audio(
@@ -155,22 +147,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles.scss";
+
 // Chat sidebar header
 #header {
   display: block;
   transition: 1s;
-  // flex: 0;
+  margin-bottom: 9px;
 }
 
 .sidebar {
   color: white;
-  height: 100%;
+  height: $content-height;
   width: 0;
   position: absolute;
   z-index: 0;
-  top: 0;
+  top: $nav-height;
   right: 0;
-  background-color: #3c3c3c;
+  border-top: 2px solid $secondary;
+  // border-bottom: 2px solid white;
+  background-color: $dark;
   overflow-x: hidden;
   transition: 1s;
   padding-top: 10px;
@@ -186,6 +182,11 @@ export default {
   }
 }
 
+.divider-gradient {
+  background-image: $orange-gradient;
+  height: 1px;
+}
+
 // Messages container
 .messages {
   flex: 5;
@@ -193,7 +194,6 @@ export default {
 }
 
 .message-input {
-  // margin: 10px;
   resize: none;
 }
 

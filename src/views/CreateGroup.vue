@@ -1,16 +1,21 @@
 <template>
-  <div style="height: 86%;">
+  <div id="full-screen">
 
-    <page-title><template slot="center">Create New Study Group</template> </page-title>
+    <!-- Page Title -->
+    <page-title>
+      <template slot="center">Create New Study Group</template>
+    </page-title>
+
     <!-- Notification -->
     <notifications
       group="create"
       position="right bottom"
     />
-    <div class="createContent">
+
+    <div class="create-content">
 
       <!-- Contains Center Content; Buttons and Content -->
-      <div class="navContainer">
+      <div class="nav-container">
         <button
           @click="back"
           class="btn btn-action btn-success btn-lg s-circle"
@@ -86,6 +91,7 @@
         >
           <h2>When does your class meet?</h2>
 
+          <!-- Day Selector Button Block -->
           <div class="btn-group btn-group-block">
             <button
               @click="toggle('monday');"
@@ -399,9 +405,9 @@
 </template>
 
 <script>
-import firebase, { db } from "../firebaseConfig";
-import generateCode from "../scripts/generateCode";
-import PageTitle from "../components/PageTitle";
+import firebase, { db } from "@/firebaseConfig";
+import generateCode from "@/scripts/generateCode";
+import PageTitle from "@/components/navigation/PageTitle";
 
 export default {
   name: "CreateGroup",
@@ -517,15 +523,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styles.scss";
+
+#full-screen {
+  height: $content-height;
+}
 
 button.s-circle {
   margin: 15px;
 }
 
 // Main container, centers all content on the page
-.createContent {
-  min-height: 100%;
+.create-content {
+  height: $page-with-header-height;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -533,9 +543,10 @@ button.s-circle {
 }
 
 // Aligns the card into a row between the two traversal buttons.
-.navContainer {
+.nav-container {
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
+  place-content: center;
   justify-content: center;
   align-items: center;
 }
@@ -557,7 +568,7 @@ button.s-circle {
 
 .createBtn {
   cursor: pointer;
-  background-image: $nav-gradient;
+  background-image: $blue-gradient;
   width: 300px;
   padding: 20px;
   font-family: $logo-font;

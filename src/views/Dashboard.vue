@@ -1,12 +1,15 @@
 <template>
 
-  <!-- TODO: Render loading indicator if firebase has not finished async load -->
-  <div v-if="this.user !== null">
+  <div
+    id="full-screen"
+    v-if="this.user !== null"
+  >
     <notifications
       group="joinErrors"
       position="right top"
     />
-    <div class="dashboardBody">
+    <!-- Centered Empty Dashboard Placeholder -->
+    <div>
       <div class="empty">
         <div class="empty-icon">
           <img
@@ -22,27 +25,6 @@
         >You don't have any Study Groups!</p>
         <p class="empty-subtitle text-large text-bold">Welcome to your Dashboard</p>
         <p class="empty-subtitle">It is currently in development.</p>
-        <!-- <p class="empty-subtitle">Create a brand new Study Group</p>
-        <div class="empty-action">
-          <button
-            @click="$router.push('/dashboard/create')"
-            class="btn btn-primary"
-          >Create</button>
-        </div>
-        <p class="empty-subtitle">or</p>
-        <p class="empty-subtitle ">Join an existing Study Group.</p>
-        <div class="empty-action input-group input-inline">
-          <input
-            v-model="inviteCode"
-            class="form-input"
-            type="text"
-            @keydown.enter="queryStudyGroup"
-          >
-          <button
-            @click="queryStudyGroup"
-            class="btn btn-primary input-group-btn"
-          >Join</button> -->
-        <!-- </div> -->
       </div>
     </div>
   </div>
@@ -90,10 +72,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "../styles.scss";
+
+#undraw {
+  width: 10em;
+}
+
+#full-screen {
+  height: $content-height;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
 
 .empty {
-  background-color: $background-color;
+  background-color: $light;
 }
 
 .modal-container {
@@ -103,17 +97,5 @@ export default {
 .modal-btn {
   margin: 4px;
   min-width: 80px;
-}
-
-.dashboardBody {
-  min-height: 94vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#undraw {
-  width: 10em;
 }
 </style>

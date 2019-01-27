@@ -3,6 +3,28 @@
   <div v-if="userAuthorized && !isLoading">
     <page-title>
       <template slot="center">Study Group Admin Settings</template>
+      <template slot="right">
+        <div class="popover popover-left">
+          <button class="btn btn-action btn-error"><i class="fas fa-trash-alt"></i></button>
+          <div class="popover-container">
+            <div class="card">
+              <div class="card-header">
+                <h5>Delete Group?</h5>
+              </div>
+              <div class="card-body">
+                This will delete the group and all of its content.
+                Consider transferring ownership and leaving instead.
+              </div>
+              <div class="card-footer">
+                <button
+                  @click="deleteGroup"
+                  class="btn btn-error"
+                >Yes, Delete the Group</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
     </page-title>
     <notifications
       group="save"
@@ -88,6 +110,7 @@
                   <input
                     class="form-input"
                     type="time"
+                    style="margin-right: 10px;"
                     placeholder="Instructor Name"
                     v-model="details.meetingTime[0]"
                     required
@@ -96,6 +119,7 @@
                   <input
                     class="form-input"
                     type="time"
+                    style="margin-left: 10px;"
                     v-model="details.meetingTime[1]"
                     placeholder="Instructor Name"
                     required
@@ -178,20 +202,22 @@
                 </div>
           </form>
           <div v-else class="loading loading-lg"></div>
-          <button v-if="!loading.details"
-              class="btn"
-              id="save-btn"
-              @click="saveData"
-            >Save Changes <i class="fas fa-save"></i>
+          <div id="btn-container">
+            <button v-if="!loading.details"
+                class="btn btn-primary "
+                id="save-btn"
+                @click="saveData"
+              >Save Changes <i class="fas fa-save"></i>
             </button>
-            </div>
+          </div>
+        </div>
         </div>
         <div class="column col-6 col-xl-12">
 
           <div class="columns">
             <div class="group-details column col-10 col-mx-auto">
               <h2>Active Invite Codes</h2>
-              <table v-if="!loading.codes" class="table table-striped table-hover">
+              <table v-if="!loading.codes" class="table table-hover">
                 <thead>
                   <tr>
                     <th style="width: 95%;">Code</th>
@@ -213,7 +239,7 @@
             </div>
             <div class="group-details column col-10  col-mx-auto">
               <h2>Study Group Members</h2>
-              <table v-if="!loading.members" class="table table-striped table-hover">
+              <table v-if="!loading.members" class="table table-hover">
                 <thead>
                   <tr>
                     <th style="width: 95%;">Name</th>
@@ -222,7 +248,7 @@
                 </thead>
                 <tbody>
                   <!-- Show all members but you; the admin -->
-                  <tr v-if="member.uid !== $store.getters.uid" v-for="member in memberDetails" :key="member.uid ">
+                  <tr v-for="member in membersWithoutYou" :key="member.uid ">
                     <td style="width: 95%;">{{member.displayName}}</td>
                     <td class="button-td">
                       <button @click="removeMember(member.uid)" class="btn btn-action btn-error">
@@ -232,6 +258,21 @@
                   </tr>
                 </tbody>
               </table>
+              <div v-else class="loading loading-lg"></div>
+            </div>
+            <div class="group-details column col-10  col-mx-auto">
+              <h2>Transfer Group Ownership</h2>
+              <p id="info">Choose another member to manage the Study Group.</p>
+              <div v-if="!loading.members" class="transfer-group input-group">
+                <select class="form-select" v-model="selected">
+                  <option
+                    v-for="member in membersWithoutYou"
+                    :key="member.uid"
+                    :value="member.uid">{{member.displayName}}
+                  </option>
+                </select>
+                <button @click="changeOwner" class="btn btn-error input-group-btn">Transfer</button>
+              </div>
               <div v-else class="loading loading-lg"></div>
             </div>
           </div>
@@ -248,19 +289,19 @@
 
 <script>
 /**
- *  Owner Group Priveledges
+ *  Owner - Group Privledges
  *
  *  Change Group Information Data
  *  Manage Group Member List
  *  Manage active invite codes
  *  Transfer Ownership ?
+ *  Delete Group
  */
 
 import { checkOwner } from "@/scripts/groupFuncs";
 import { db, FirebaseConsts } from "@/firebaseConfig";
-import PageTitle from "@/components/PageTitle";
-
-// TODO: Form validation, loading indicators, transfer ownership?
+import PageTitle from "@/components/navigation/PageTitle";
+// TODO: Form validation
 
 export default {
   name: "GroupSettings",
@@ -299,10 +340,27 @@ export default {
       },
       inviteCodes: [],
       memberUID: [],
-      memberDetails: []
+      memberDetails: [],
+      selected: ""
     };
   },
   methods: {
+    deleteGroup() {
+      // db.collection("study-groups").doc(this.$route.params.groupID).delete();
+      // TODO: Work out deletion logic to delete group and all subcollections
+      // Have to manually find and delete subcollections
+    },
+    changeOwner() {
+      console.log(this.selected);
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .update({
+          owner: this.selected
+        })
+        .then(() => {
+          this.$router.go(-1);
+        });
+    },
     // Verify that the user is the owner before showing admin settings
     checkAuth() {
       checkOwner(this.$store.getters.uid, this.$route.params.groupID)
@@ -425,22 +483,38 @@ export default {
     toggle(key) {
       this.details.meetingDays[key] = !this.details.meetingDays[key];
     }
+  },
+  computed: {
+    // Returns the member's list without you
+    membersWithoutYou() {
+      return this.memberDetails.filter(member => {
+        return member.uid !== this.$store.getters.uid;
+      });
+    }
   }
 };
 </script>
 
 
 <style lang="scss" scoped>
-@import "../styleVariables";
+@import "../styles";
 
 #save-btn {
-  margin: 10px 0 20px 0;
+  margin: 20px 0 20px 0;
+  i {
+    color: $secondary-light;
+  }
 }
 
 #time-group {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  justify-content: center;
+}
+
+#btn-container {
+  background-color: $light;
+  border-radius: 0 0 16px 16px;
 }
 
 input[type="time"] {
@@ -461,25 +535,55 @@ input[type="time"] {
   padding: 0;
   box-shadow: $shadow-heavy;
   border-radius: 16px;
-  background-color: whitesmoke;
+  background-color: white;
   margin-bottom: 40px;
   h2 {
     border-radius: 16px 16px 0 0;
-    // background-image: $nav-gradient;
-    background-color: #4b48d6;
-    color: white;
+    font-family: $secondary-font;
+    font-weight: 700;
+    background-color: $secondary;
+    color: $light;
     padding: 5px;
+    font-size: 32px;
   }
 
   form {
-    padding: 10px;
+    padding: 0 30px 16px 30px;
   }
   table {
     margin: auto;
     width: 95%;
-    margin: auto;
-    margin: auto;
+    margin: 0 auto 10px auto;
     border-radius: 16px;
+  }
+
+  #info {
+    color: $secondary-light;
+  }
+}
+
+.transfer-group {
+  width: 50%;
+  margin: 0 auto 40px auto;
+}
+
+.popover-container {
+  top: 100px !important;
+  .card {
+    border-radius: $border-round;
+  }
+  .card-body {
+    font-family: $primary-font;
+  }
+
+  .card-header {
+    h5 {
+      font-weight: 700;
+    }
+  }
+
+  .card-footer > button {
+    font-family: $primary-font;
   }
 }
 </style>

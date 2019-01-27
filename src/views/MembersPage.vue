@@ -60,7 +60,7 @@
             class="btn btn-clear float-right"
             aria-label="Close"
           ></a>
-          <div class="modal-title h5">Activate New Invite Code</div>
+          <div class="modal-title h5">Generate New Invite</div>
 
         </div>
         <div class="modal-body">
@@ -75,7 +75,7 @@
               <button
                 @click="copyCode"
                 class="btn btn-primary input-group-btn"
-              >Copy Code</button>
+              >Generate</button>
             </div>
           </div>
         </div>
@@ -85,12 +85,12 @@
 </template>
 
 <script>
-import PageTitle from "../components/PageTitle";
-import MemberCard from "../components/MemberCard";
+import PageTitle from "@/components/navigation/PageTitle";
+import MemberCard from "@/components/MemberCard";
 
-import { db, FirebaseConsts } from "../firebaseConfig";
-import { getGroupData } from "../scripts/groupFuncs";
-import generateCode from "../scripts/generateCode";
+import { db, FirebaseConsts } from "@/firebaseConfig";
+import { getGroupData } from "@/scripts/groupFuncs";
+import generateCode from "@/scripts/generateCode";
 
 export default {
   name: "MembersPage",
@@ -167,19 +167,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
-
+@import "@/styles.scss";
 .modal-container {
   border-radius: 10px;
+  .modal-title {
+    font-family: $secondary-font;
+    font-weight: 700;
+  }
 }
-
-// Flexbox container to hold all member cards
 .content-container {
-  margin: 40px 40px;
-  max-width: 90%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 300px));
+  grid-auto-rows: 300px;
   justify-content: center;
+  padding: 20px;
+  transition: all 350ms ease-in;
 }
 </style>

@@ -21,33 +21,38 @@
         </div>
       </template>
     </page-title>
-    <div class="card-container">
-      <flashcard-deck
+    <div
+      v-if="!isLoading"
+      class="card-container"
+    >
+      <flashcard-icon
         v-for="(deck,index) in filteredDecks"
         :key="index"
-        :title="deck.title"
-        :cardNum="deck.cardNum"
-        :creator="deck.creatorName"
-        :creatorUid="deck.uid"
-        :documentID="deck.documentID"
-      ></flashcard-deck>
+        :info="deck"
+      >
+      </flashcard-icon>
     </div>
+    <div
+      v-else
+      class="loading loading-lg"
+    ></div>
   </div>
 </template>
 
 <script>
-import FlashcardDeck from "@/components/FlashcardDeck";
-import PageTitle from "../components/PageTitle";
-import { db } from "../firebaseConfig";
+import FlashcardIcon from "@/components/flashcards/FlashcardIcon";
+import PageTitle from "@/components/navigation/PageTitle";
+import { db } from "@/firebaseConfig";
 
 export default {
   name: "FlashcardCollection",
   components: {
     PageTitle,
-    FlashcardDeck
+    FlashcardIcon
   },
   data() {
     return {
+      isLoading: true,
       decks: [],
       searchQuery: ""
     };
@@ -57,11 +62,12 @@ export default {
     let flashcardCollection = db
       .collection("study-groups")
       .doc(groupID)
-      .collection("flashcardDecks");
+      .collection("flashcards");
 
     // This allows it to auto update
     this.$bind("decks", flashcardCollection).then(flashcardDecks => {
       this.decks === flashcardDecks;
+      this.isLoading = false;
     });
   },
   computed: {
@@ -79,16 +85,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styles.scss";
 
-// Flexbox container to hold all member cards
 .card-container {
-  margin: auto;
-  width: 82%;
-  margin-top: 40px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: center;
+  // margin: 0 auto;
+  // width: 100%;
+  // padding: 20px;
+  margin: 20px;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 288px));
+  grid-auto-rows: 218px;
+  justify-content: center;
+  transition: all 350ms ease-in;
 }
 </style>

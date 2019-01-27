@@ -1,6 +1,6 @@
 // These functions all relate to loading firebase data for a specific Study Group
 
-import { db } from "../firebaseConfig";
+import { db } from "@/firebaseConfig";
 
 /**
  * Load all group data for the given groupID

@@ -6,17 +6,15 @@
     class="header-container"
     :class="$store.getters.chatActive ? 'chat-active' : ''"
   >
-    <slot
-      class="left"
-      name="left"
-    ></slot>
-    <h1 class="text-ellipsis">
+    <div class="left">
+      <slot name="left"></slot>
+    </div>
+    <h1 class="center text-ellipsis">
       <slot name="center"></slot>
     </h1>
-    <slot
-      class="right"
-      name="right"
-    ></slot>
+    <div class="right">
+      <slot name="right"></slot>
+    </div>
   </div>
 
 </template>
@@ -28,21 +26,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles.scss";
+
 .chat-active {
-  // @HACK: Used to compensate for the scrollbar's width.
-  //  Otherwise, there is white space when the content requires a
-  //  scrollbar and the chat is visible
-  width: calc(100% + 20px);
+  // width: calc(100% + 20px);
+  width: 100%;
 }
 
 .header-container {
-  padding: 8px 8px;
-  background-color: #c4c4c4;
+  padding: 4px 8px 4px 8px;
+  background-color: $secondary-light;
+  font-family: $secondary-font;
 
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+  height: $header-height;
 
   .name-input {
     border: none;
@@ -53,27 +53,47 @@ export default {
     height: 36px;
     font-weight: bold;
     padding: 0 4px;
-    font-family: "Inter UI";
+    font-family: $primary-font;
   }
 
-  // Applied to buttons are split apart in the header
+  button {
+    margin: 0;
+  }
+
+  // Applied to buttons that are split apart in the header
   .split {
     margin-left: 20px;
   }
 
   .left {
     flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    // width: 300px;
   }
 
-  h1 {
-    flex: 1;
+  // H1 Page Title
+  .center {
+    flex: 2;
     user-select: none;
-    font-size: 2em;
+    font-size: 1.8em;
     margin: 0;
+    font-weight: 700;
+    line-height: normal;
+    // max-width: 32%;
   }
 
   .right {
     flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    // width: 300px;
+
+    .form-input {
+      width: 250px;
+    }
   }
 }
 </style>

@@ -13,6 +13,7 @@
       maxlength="15"
       v-model="data.term"
       v-on:input="TermUpdated"
+      autofocus
     >
     <label
       class="form-label"
@@ -28,6 +29,7 @@
       maxlength="150"
       v-model="data.def"
       v-on:input="DefUpdated"
+      @keydown.ctrl.enter="$emit('addNew')"
     >
   </textarea>
   </div>
@@ -64,7 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styles.scss";
 
 #container {
   // margin: 25px;

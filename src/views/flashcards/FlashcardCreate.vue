@@ -49,15 +49,16 @@
         maxlength="100"
         @termUpdated="termUpdated"
         @defUpdated="defUpdated"
+        @addNew="addCard"
       />
       <div
         class="addCard"
         @click="addCard"
       >
-        <h2>Add Card</h2>
+        <!-- <h2>Add Card</h2> -->
         <div class="gradient-border add">
           <div class="add-button">
-            <h1 class="button-icon">+</h1>
+            <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
           </div>
         </div>
       </div>
@@ -67,12 +68,12 @@
 </template>
 
 <script>
-import PageTitle from "../components/PageTitle";
-import FlashcardCreateForm from "../components/FlashcardCreateForm";
-import firebase, { db } from "../firebaseConfig";
+import PageTitle from "@/components/navigation/PageTitle";
+import FlashcardCreateForm from "@/components/flashcards/FlashcardCreateForm";
+import firebase, { db } from "@/firebaseConfig";
 
 export default {
-  name: "flashcardCreate",
+  name: "FlashcardCreate",
   components: {
     PageTitle,
     FlashcardCreateForm
@@ -105,40 +106,49 @@ export default {
           console.log("term null Term Found");
           this.contentFilled = false;
         }
-      }
-      for (let i = 0; i < this.definitions.length; i++) {
         if (this.definitions[i] === null) {
           console.log("def null Term Found");
           this.contentFilled = false;
         }
       }
+      // for (let i = 0; i < this.definitions.length; i++) {
+      //   if (this.definitions[i] === null) {
+      //     console.log("def null Term Found");
+      //     this.contentFilled = false;
+      //   }
+      // }
+
+      // Confirm that all fields are filled
       if (this.deckTitle !== "" && this.contentFilled) {
-        const self = this;
         const groupID = this.$route.params.groupID;
         const flashcardCollection = db
           .collection("study-groups")
           .doc(groupID)
-          .collection("flashcardDecks");
-        let user = firebase.auth().currentUser;
+          .collection("flashcards");
+        let user = firebase.auth().currentUser; // Used to get user's name
+        let initDate = new Date(); //Date object for creation and modified fields
         flashcardCollection
           .add({
             title: this.deckTitle,
             terms: this.terms,
             definitions: this.definitions,
             creatorUID: this.$store.getters.uid,
-            creatorName: user.displayName
+            creatorName: user.displayName,
+            creationDate: initDate,
+            lastUpdated: initDate,
+            creatorPhoto: this.$store.getters.photoURL
           })
           .then(docRef => {
             console.log("Flashcard Deck created with doc id: ", docRef.id);
             db.collection("study-groups")
               .doc(groupID)
-              .collection("flashcardDecks")
+              .collection("flashcards")
               .doc(docRef.id)
               .update({
                 documentID: docRef.id
               })
               .then(() => {
-                self.$router.push(`/${self.$route.params.groupID}/flashcards`);
+                this.$router.push(`/${this.$route.params.groupID}/flashcards`);
               });
           })
           .catch(error => {
@@ -155,17 +165,20 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styles.scss";
 
 .page-content {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: left;
-  align-items: center;
-  margin: 40px;
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 250px));
+  grid-auto-rows: 250px;
+  justify-content: center;
+  margin: 20px;
 }
 
 .addCard {
+  cursor: pointer;
   box-shadow: $shadow;
   width: 250px;
   height: 250px;
@@ -188,13 +201,10 @@ export default {
   background-image: $nav-gradient;
 }
 
-// Icon on the new members button
 .button-icon {
   text-align: center;
-  font-size: 144px;
-  font-weight: 600;
-  background-clip: text;
-  bottom: 25px;
+  font-size: 8em;
+  bottom: 2px;
   position: relative;
   vertical-align: center;
 }
@@ -207,7 +217,8 @@ export default {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background-color: #bebebe;
+  // background-color: #bebebe;
+  background-color: $light;
   user-select: none;
 }
 </style>
