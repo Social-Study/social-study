@@ -71,6 +71,7 @@ Chat:
     ☐ Total number of messages indicator (Could either be total messages or unread messages...)
        Not sure how I would implement tracking unread messages
     ☐ Local desktop notifications if there is a new message.
+    ☐ Transition when the button first appears
 
 Known Bugs:
   ☐ Form validation is broken
