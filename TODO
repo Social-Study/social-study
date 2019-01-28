@@ -12,6 +12,8 @@ Possible Features (Time Permitting):
   ☐ Indicators that show online group members in the sidebar
   ☐ User chooses a gradient for their specific study group during creation
   ☐ Add emoji menu to the study group chat.
+  ☐ Generate SSR with Nuxt.js. Server side rendering
+    https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
 
 General:
   ☐ Go through and error check all inputs where necessary
