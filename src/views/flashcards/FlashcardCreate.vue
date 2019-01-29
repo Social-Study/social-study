@@ -12,6 +12,10 @@
       </template>
 
       <template slot="right">
+        <toggle-switch
+          @toggle="toggled = $event"
+          :values="['Private', 'Public']"
+        ></toggle-switch>
         <button
           @click="saveDeck"
           class="btn btn-action split"
@@ -69,14 +73,17 @@
 
 <script>
 import PageTitle from "@/components/navigation/PageTitle";
+import ToggleSwitch from "@/components/ToggleSwitch.vue";
 import FlashcardCreateForm from "@/components/flashcards/FlashcardCreateForm";
+
 import firebase, { db } from "@/firebaseConfig";
 
 export default {
   name: "FlashcardCreate",
   components: {
+    FlashcardCreateForm,
     PageTitle,
-    FlashcardCreateForm
+    ToggleSwitch
   },
   data() {
     return {
@@ -84,11 +91,15 @@ export default {
       definitions: [null],
       deckTitle: "",
       noTitle: false,
-      contentFilled: true
+      contentFilled: true,
+      toggled: false
     };
   },
   created() {},
   methods: {
+    debug() {
+      console.log(this.toggled);
+    },
     termUpdated(value) {
       this.terms[value.index] = value.term;
     },

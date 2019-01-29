@@ -71,15 +71,21 @@ export default {
 #container {
   // margin: 25px;
   // margin-top: 30px;
-  background-image: $orange-gradient;
+  // background-image: $orange-gradient;
   padding: 10px;
   height: 250px;
   width: 250px;
   border-radius: 10px;
   margin: 0 40px 40px 0;
-  box-shadow: $shadow;
+  box-shadow: $shadow-hovered;
+  border: 1px solid $secondary-light;
+
+  .form-label {
+    color: $secondary;
+  }
+
   &:hover {
-    box-shadow: $shadow-hovered;
+    box-shadow: $shadow-heavy;
   }
 }
 #input-term {

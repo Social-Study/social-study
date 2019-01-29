@@ -12,8 +12,9 @@
       <deck-selector />
       <h3 id="step-instruction">Select Quiz Question Types</h3>
       <!-- TODO: Create question type selectors. -->
+      <!-- <i class="fas fa-plus"></i> -->
       <button class="btn btn-success">
-        Generate <i class="fas fa-plus"></i>
+        Generate
       </button>
     </div>
   </div>

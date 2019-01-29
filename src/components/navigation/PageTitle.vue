@@ -54,6 +54,7 @@ export default {
     font-weight: bold;
     padding: 0 4px;
     font-family: $primary-font;
+    font-weight: 400;
   }
 
   button {
