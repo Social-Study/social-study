@@ -29,6 +29,8 @@ General:
     - Collapsed or Open Sidebar
     - Collapsed or Open Chat
     - Chat notifications on. etc...
+   ☐ Sequential loading animations when list are being displayed for the first time
+       Every list is loading from firebase so there is a delay before the data is shown. Figure out how to get loading list to be animated 1-by-1 when shown for the first time
 
 Components Needed:
   ☐ Notification popup
@@ -74,6 +76,8 @@ Chat:
        Not sure how I would implement tracking unread messages
     ☐ Local desktop notifications if there is a new message.
     ☐ Transition when the button first appears
+    ☐ Allow user's to delete their own messages
+      - Maybe allow editing?
 
 Known Bugs:
   ☐ Form validation is broken
@@ -129,8 +133,6 @@ Animations / Transitions:
   Create Page:
     ☐ Animation when steps indicator changes
     ☐ Animation when user navigates between cards
-    ☐ Sequential loading animations when list are being displayed for the first time
-      Show the icons appearing one after the other
 
 Archive:
   ✔ Reduce whitespace on icon. Maybe flex center that part? @done(19-01-21 22:00) @project(Notes.Note Collection)

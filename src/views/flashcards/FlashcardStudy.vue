@@ -74,9 +74,15 @@ import { db } from "@/firebaseConfig";
 import anime from "animejs";
 
 export default {
-  name: "flashcardStudy",
+  name: "FlashcardStudy",
   components: {
     PageTitle
+  },
+  props: {
+    isPrivate: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -101,8 +107,19 @@ export default {
     let flashcardCollection = db
       .collection("study-groups")
       .doc(groupID)
-      .collection("flashcards")
-      .doc(deckID);
+      .collection("flashcards");
+
+    // Load from different firestore location if the deck if public or private
+    if (this.isPrivate) {
+      console.log("private set");
+      flashcardCollection = flashcardCollection
+        .doc("private")
+        .collection(this.$store.getters.uid)
+        .doc(deckID);
+    } else {
+      flashcardCollection = flashcardCollection.doc(deckID);
+    }
+
     flashcardCollection
       .get()
       .then(doc => {
@@ -134,7 +151,7 @@ export default {
         this.isShuffled = false;
         this.termList = this.originalTermList.slice();
         this.definitionList = this.originalDefinitionList.slice();
-        console.log("back to original");
+        // console.log("back to original");
       } else {
         // Otherwise use a shuffle algorithm on the lists
         for (let i = this.termList.length - 1; i > 0; i--) {
@@ -148,7 +165,7 @@ export default {
             this.definitionList[i]
           ];
         }
-        console.log("Shuffled");
+        // console.log("Shuffled");
         this.isShuffled = true;
       }
       // Reset the study position

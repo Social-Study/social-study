@@ -116,7 +116,8 @@ let router = new Router({
       meta: {
         title: "Flashcard Study | Social Study",
         requiresAuth: true
-      }
+      },
+      props: true
     },
     {
       path: "/:groupID/flashcards/create",

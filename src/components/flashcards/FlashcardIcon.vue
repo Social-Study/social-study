@@ -11,6 +11,8 @@
     <!-- Creator Avatar and Name Chip -->
     <!-- TODO: Figure out how to use my existing avatar component -->
     <div class="chip text-ellipsis">
+      <!-- TODO: Set the background to a color if there is an image url, otherwise set to transaprent to remove ugly border-->
+      <!-- style="background-color: transparent;" -->
       <img
         :src="info.creatorPhoto"
         class="avatar avatar-sm"
@@ -25,7 +27,7 @@
         id="editBtn"
       >Edit</button>
       <button
-        @click="$router.push(`/${$route.params.groupID}/flashcards/${info.id}/study`)"
+        @click="goStudy"
         id="studyBtn"
       >Study</button>
     </div>
@@ -44,9 +46,24 @@ export default {
     info: {
       type: Object,
       required: true
+    },
+    isPrivate: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
+    goStudy() {
+      if (this.isPrivate) {
+        // router.push({ name: 'user', params: { userId: 123 }})
+        // $router.push(`/${$route.params.groupID}/flashcards/${info.id}/study`);
+        this.$router.push({
+          name: "study",
+          params: { deckID: this.info.id, isPrivate: this.isPrivate }
+        });
+      } else {
+      }
+    },
     calcDays(modDate) {
       let currentDate = new Date();
       modDate = new Date(modDate);

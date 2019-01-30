@@ -132,12 +132,26 @@ export default {
       // Confirm that all fields are filled
       if (this.deckTitle !== "" && this.contentFilled) {
         const groupID = this.$route.params.groupID;
-        const flashcardCollection = db
+
+        // Main flashcard collection route
+        let flashcardCollection = db
           .collection("study-groups")
           .doc(groupID)
           .collection("flashcards");
+
+        if (!this.toggled) {
+          console.log("private");
+          flashcardCollection = db
+            .collection("study-groups")
+            .doc(groupID)
+            .collection("flashcards")
+            .doc("private")
+            .collection(this.$store.getters.uid);
+        }
+
         let user = firebase.auth().currentUser; // Used to get user's name
         let initDate = new Date(); //Date object for creation and modified fields
+
         flashcardCollection
           .add({
             title: this.deckTitle,
@@ -151,16 +165,17 @@ export default {
           })
           .then(docRef => {
             console.log("Flashcard Deck created with doc id: ", docRef.id);
-            db.collection("study-groups")
-              .doc(groupID)
-              .collection("flashcards")
-              .doc(docRef.id)
-              .update({
-                documentID: docRef.id
-              })
-              .then(() => {
-                this.$router.push(`/${this.$route.params.groupID}/flashcards`);
-              });
+            this.$router.push(`/${this.$route.params.groupID}/flashcards`);
+            // db.collection("study-groups")
+            //   .doc(groupID)
+            //   .collection("flashcards")
+            //   .doc(docRef.id)
+            //   .update({
+            //     documentID: docRef.id
+            //   })
+            //   .then(() => {
+            //
+            //   });
           })
           .catch(error => {
             console.error("Error adding document: ", error);

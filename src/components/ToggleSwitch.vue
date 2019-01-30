@@ -1,6 +1,5 @@
 <template>
   <div id="switch-container">
-
     <input
       type="checkbox"
       id="switch"
