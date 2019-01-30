@@ -48,19 +48,18 @@
     <div class="page-content">
       <flashcard-create-form
         v-for="(term, index) in terms"
-        :key="index"
+        :key="hash[index]"
         :index="index"
         maxlength="100"
         @termUpdated="termUpdated"
         @defUpdated="defUpdated"
         @addNew="addCard"
-        @delete="deleteCard(term)"
+        @delete="deleteCard(index)"
       />
       <div
         class="addCard"
         @click="addCard"
       >
-        <!-- <h2>Add Card</h2> -->
         <div class="gradient-border add">
           <div class="add-button">
             <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
@@ -90,20 +89,22 @@ export default {
     return {
       terms: [null],
       definitions: [null],
+      hash: [null], // Hash is used as a unique way to access each item. Without it there may not be any unique property to use as the key
       deckTitle: "",
       noTitle: false,
       contentFilled: true,
       toggled: false
     };
   },
-  created() {},
+  created() {
+    this.hash.push(new Date().getTime());
+  },
   methods: {
     deleteCard(index) {
       console.log("delete: " + index);
-      // this.terms.splice(index, 1);
-      // this.definitions.splice(index, 1);
       this.$delete(this.terms, index);
       this.$delete(this.definitions, index);
+      this.$delete(this.hash, index);
     },
     termUpdated(value) {
       this.terms[value.index] = value.term;
@@ -114,6 +115,7 @@ export default {
     addCard() {
       this.terms.push(null);
       this.definitions.push(null);
+      this.hash.push(new Date().getTime());
     },
     //saves the current deck and pushes it to firebase
     saveDeck() {
@@ -156,6 +158,7 @@ export default {
             title: this.deckTitle,
             terms: this.terms,
             definitions: this.definitions,
+            hash: this.hash,
             creatorUID: this.$store.getters.uid,
             creatorName: user.displayName,
             creationDate: initDate,
