@@ -55,13 +55,12 @@ export default {
   methods: {
     goStudy() {
       if (this.isPrivate) {
-        // router.push({ name: 'user', params: { userId: 123 }})
-        // $router.push(`/${$route.params.groupID}/flashcards/${info.id}/study`);
         this.$router.push({
           name: "study",
           params: { deckID: this.info.id, isPrivate: this.isPrivate }
         });
       } else {
+        this.$router.push({ name: "study", params: { deckID: this.info.id } });
       }
     },
     calcDays(modDate) {

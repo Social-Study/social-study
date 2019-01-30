@@ -54,6 +54,7 @@
         @termUpdated="termUpdated"
         @defUpdated="defUpdated"
         @addNew="addCard"
+        @delete="deleteCard(term)"
       />
       <div
         class="addCard"
@@ -97,8 +98,12 @@ export default {
   },
   created() {},
   methods: {
-    debug() {
-      console.log(this.toggled);
+    deleteCard(index) {
+      console.log("delete: " + index);
+      // this.terms.splice(index, 1);
+      // this.definitions.splice(index, 1);
+      this.$delete(this.terms, index);
+      this.$delete(this.definitions, index);
     },
     termUpdated(value) {
       this.terms[value.index] = value.term;
@@ -122,12 +127,6 @@ export default {
           this.contentFilled = false;
         }
       }
-      // for (let i = 0; i < this.definitions.length; i++) {
-      //   if (this.definitions[i] === null) {
-      //     console.log("def null Term Found");
-      //     this.contentFilled = false;
-      //   }
-      // }
 
       // Confirm that all fields are filled
       if (this.deckTitle !== "" && this.contentFilled) {
@@ -166,16 +165,6 @@ export default {
           .then(docRef => {
             console.log("Flashcard Deck created with doc id: ", docRef.id);
             this.$router.push(`/${this.$route.params.groupID}/flashcards`);
-            // db.collection("study-groups")
-            //   .doc(groupID)
-            //   .collection("flashcards")
-            //   .doc(docRef.id)
-            //   .update({
-            //     documentID: docRef.id
-            //   })
-            //   .then(() => {
-            //
-            //   });
           })
           .catch(error => {
             console.error("Error adding document: ", error);

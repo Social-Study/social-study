@@ -82,7 +82,6 @@ export default {
     margin: 0;
     font-weight: 700;
     line-height: normal;
-    // max-width: 32%;
   }
 
   .right {
@@ -90,7 +89,6 @@ export default {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-end;
-    // width: 300px;
 
     .form-input {
       width: 250px;

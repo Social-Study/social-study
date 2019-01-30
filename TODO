@@ -86,6 +86,7 @@ Known Bugs:
   FlashCard Study:
       ☐ Select the next flashcard by clicking the button. Then try using spacebar to flip the card. The next card is shown.
         This is due to the button capturing focus and the spacebar is pressing it instead of flipping the card.
+      ☐ Prompt users before leaving if not saved (similar to note page)
 
 Vuex Store:
   ☐ Save the number of unread messages to the store.
