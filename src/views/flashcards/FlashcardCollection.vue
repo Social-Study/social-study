@@ -51,6 +51,9 @@
 </template>
 
 <script>
+// To combine the decks, add a boolean variable that denotes public or private, send that variable via the isPrivate prop. It should work just the same if I want to combine the cards instead of keeping them in seperate areas.
+// Also need to add some sort of visible indicator that the flashcard is public or private on the icon
+
 import FlashcardIcon from "@/components/flashcards/FlashcardIcon";
 import PageTitle from "@/components/navigation/PageTitle";
 import { db } from "@/firebaseConfig";
@@ -122,6 +125,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles.scss";
+
+h5 {
+  font-family: $secondary-font;
+  font-weight: 700;
+  margin: 20px;
+}
 
 .card-container {
   // margin: 0 auto;

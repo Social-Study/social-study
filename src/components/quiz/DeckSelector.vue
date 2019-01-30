@@ -1,20 +1,36 @@
 <template>
   <div>
-
+    <h5>Public Flashcard Decks</h5>
     <div id="container">
       <div
         id="deck"
-        v-for="deck in decks"
-        :key="deck.name"
+        v-for="deck in publicDecks"
+        :key="deck.title"
         @click="toggleSelected(deck)"
         :class="deck.selected ? 'selected': ''"
       >
         <div id="deck-details">
-          {{deck.name}}
+          {{deck.title}}
+        </div>
+      </div>
+    </div>
+
+    <h5>Private Flashcard Decks</h5>
+    <div id="container">
+      <div
+        id="deck"
+        v-for="deck in privateDecks"
+        :key="deck.title"
+        @click="toggleSelected(deck)"
+        :class="deck.selected ? 'selected private': ''"
+      >
+        <div id="deck-details">
+          {{deck.title}}
         </div>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -22,22 +38,65 @@
 // TODO: Split flashcards into public and private sections
 // TODO: Figure out how to emit the selected flashcards
 
+import { db } from "@/firebaseConfig";
+
 export default {
   name: "DeckSelector",
   data() {
     return {
-      decks: [
-        { name: "deck1", selected: false },
-        { name: "deck2", selected: false },
-        { name: "deck3", selected: false }
-      ]
-      // selectedDecks: [true, true, false, false, false]
+      privateIsLoading: true,
+      publicIsLoading: true,
+      publicDecks: [],
+      privateDecks: []
     };
+  },
+  created() {
+    const groupID = this.$route.params.groupID;
+    let publicCollection = db
+      .collection("study-groups")
+      .doc(groupID)
+      .collection("flashcards");
+
+    let privateCollection = db
+      .collection("study-groups")
+      .doc(groupID)
+      .collection("flashcards")
+      .doc("private")
+      .collection(this.$store.getters.uid);
+
+    publicCollection
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          // doc.data() is never undefined for query doc snapshots
+          this.publicDecks.push({ id: doc.id, selected: false, ...doc.data() });
+        });
+      })
+      .catch(function(error) {
+        console.log("Error getting public decks: ", error);
+      });
+
+    privateCollection
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          // doc.data() is never undefined for query doc snapshots
+          this.privateDecks.push({
+            id: doc.id,
+            selected: false,
+            ...doc.data()
+          });
+        });
+      })
+      .catch(function(error) {
+        console.log("Error getting private decks: ", error);
+      });
   },
   methods: {
     toggleSelected(deck) {
       // TODO: Add question limit checks when loading actual data.
       deck.selected = !deck.selected;
+      console.log(deck.selected);
     }
   }
 };
@@ -83,6 +142,13 @@ export default {
       border-image-slice: 1;
       border-width: 3px;
       box-shadow: $shadow-heavy;
+
+      &.private {
+        border-image: $blue-gradient;
+        border-image-slice: 1;
+        border-width: 3px;
+        box-shadow: $shadow-heavy;
+      }
     }
   }
 }
