@@ -93,6 +93,14 @@ export default {
     .form-input {
       width: 250px;
     }
+
+    .title {
+      user-select: none;
+      font-size: 1.6em;
+      margin: 0;
+      font-weight: 700;
+      line-height: normal;
+    }
   }
 }
 </style>
