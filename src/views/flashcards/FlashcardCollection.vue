@@ -70,6 +70,8 @@ export default {
       publicIsLoading: true,
       publicDecks: [],
       privateDecks: [],
+      // TODO: Figure out how to get all decks in the same list
+      decks: [],
       searchQuery: ""
     };
   },
@@ -133,9 +135,6 @@ h5 {
 }
 
 .card-container {
-  // margin: 0 auto;
-  // width: 100%;
-  // padding: 20px;
   margin: 20px;
   display: grid;
   grid-gap: 20px;

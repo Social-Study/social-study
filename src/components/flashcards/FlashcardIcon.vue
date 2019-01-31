@@ -4,6 +4,12 @@
 
     <!-- Title -->
     <h2 id="title">{{info.title}}</h2>
+    <div id="indicator">
+      <i
+        class="far"
+        :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"
+      ></i>
+    </div>
     <!-- Created -->
     <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
     <!-- Last Updated -->
@@ -89,7 +95,7 @@ $card-height: 218px;
   background-color: white;
   height: $card-height;
   width: $card-width;
-  padding: 1em;
+  padding: 0.5em;
   border-radius: 10px;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
 
@@ -98,11 +104,34 @@ $card-height: 218px;
   justify-content: space-between;
 }
 
+#indicator {
+  cursor: pointer;
+  margin: 5px;
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: whitesmoke;
+  align-self: center;
+
+  &:hover {
+    background-color: darken(whitesmoke, 20);
+  }
+
+  i.fa-eye {
+    color: $success-color;
+  }
+
+  i.fa-eye-slash {
+    color: $error-color;
+  }
+}
+
 #title {
   font-family: $secondary-font;
   font-weight: 700;
   white-space: nowrap;
-  // overflow: hidden;
+  margin: 0;
   text-overflow: ellipsis;
   max-width: $card-width;
   max-height: 100px;
@@ -132,6 +161,7 @@ p > i {
 }
 
 #button-container {
+  align-self: space-between;
   margin-top: 8px;
   display: flex;
   flex-flow: row nowrap;
