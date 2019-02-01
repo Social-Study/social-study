@@ -29,8 +29,11 @@ General:
     - Collapsed or Open Sidebar
     - Collapsed or Open Chat
     - Chat notifications on. etc...
-   ☐ Sequential loading animations when list are being displayed for the first time
+  ☐ Sequential loading animations when list are being displayed for the first time
        Every list is loading from firebase so there is a delay before the data is shown. Figure out how to get loading list to be animated 1-by-1 when shown for the first time
+  ☐ Small QOL Features
+    ☐ Always verify delete actions
+    ☐
 
 Components Needed:
   ☐ Notification popup
@@ -124,9 +127,11 @@ Flashcards Collection:
   ☐ Display a "deck standing" color indicator to show whether the flashcard deck is good or bad
   ☐ Use the avatar component or show the user's initials if they don't have a profile picture.
 
-Flashcards:
+  Flashcards:
   ☐ Autofocus after using keybind to create a new flashcard
-  ☐ Public and private flashcard sets @critical
+  ☐ Fix switching flashcard decks from the edit page instead of only from the icon.
+  ☐ Extract firebase functions to a separate file to be reused.... @high
+  ✔ Public and private flashcard sets @critical @done(19-01-31 23:16)
 
 Animations / Transitions:
   Flashcard Study:

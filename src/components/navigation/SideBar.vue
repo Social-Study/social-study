@@ -282,7 +282,6 @@ export default {
   left: 0;
   border-top: 2px solid $secondary;
   background-color: $dark;
-  // transition: 1s;
 
   display: flex;
   flex-flow: column nowrap;
@@ -291,7 +290,7 @@ export default {
   .menu {
     background: $dark;
     box-shadow: none;
-    min-width: 0;
+    min-width: 50px;
 
     // Group Info Text
     .tile-content {
@@ -330,17 +329,18 @@ export default {
 
   &.collapsed {
     width: 50px;
+    // min-width: 50px;
     transition: 1s;
-    // margin-right: 50px;
     .menu {
       padding: 0;
     }
   }
 
+  // TODO: Figure out how to fix the animation. I got the text not to deform during the transition but now the transition pops.
   &.active {
     width: 200px;
+    min-width: 200px;
     transition: 1s;
-    // margin-right: 200px;
   }
 }
 </style>

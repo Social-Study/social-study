@@ -24,6 +24,7 @@
       <button
         v-if="$store.getters.uid === info.creatorUID"
         id="editBtn"
+        @click="$router.push({name: 'editFlashcards', params: {deckID: info.id, isPrivate: isPrivate}})"
       >Edit</button>
       <div
         v-if="info.creatorUID === $store.getters.uid"

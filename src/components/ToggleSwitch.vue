@@ -19,11 +19,15 @@ export default {
     values: {
       type: Array,
       required: false
+    },
+    default: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      toggled: false
+      toggled: this.default
     };
   },
   computed: {

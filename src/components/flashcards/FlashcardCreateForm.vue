@@ -17,7 +17,7 @@
       type="text"
       class="form-input"
       id="input-term"
-      maxlength="15"
+      maxlength="30"
       v-model="data.term"
       v-on:input="TermUpdated"
       autofocus
@@ -47,20 +47,27 @@
 export default {
   name: "flashcardCreateForm",
   props: {
-    index: Number
+    initTerm: {
+      type: String,
+      default: "",
+      required: false
+    },
+    initDef: {
+      type: String,
+      default: "",
+      required: false
+    }
   },
   data() {
     return {
       data: {
         index: 0,
-        term: "",
-        def: ""
+        term: this.initTerm,
+        def: this.initDef
       }
     };
   },
-  created() {
-    this.data.index = this.index;
-  },
+  created() {},
   methods: {
     debug() {
       console.log("clicked");

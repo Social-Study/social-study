@@ -129,6 +129,16 @@ let router = new Router({
       }
     },
     {
+      path: "/:groupID/flashcards/edit",
+      name: "editFlashcards",
+      component: FlashcardCreate,
+      meta: {
+        title: "Edit Deck | Social Study",
+        requiresAuth: true
+      },
+      props: true
+    },
+    {
       path: "/:groupID/quizzes/create",
       name: "createQuiz",
       component: QuizCreate,
