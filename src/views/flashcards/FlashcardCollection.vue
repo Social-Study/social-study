@@ -12,7 +12,7 @@
       <template slot="right">
         <div class="has-icon-left">
           <input
-            type="text"
+            type="search"
             class="form-input"
             placeholder="Search by Title"
             v-model="searchQuery"
@@ -21,26 +21,18 @@
         </div>
       </template>
     </page-title>
-    <div v-if="!publicIsLoading && !privateIsLoading">
-      <h5 class="text-left">Public Decks</h5>
-      <div class="card-container">
-        <flashcard-icon
-          v-for="(deck,index) in computePublic"
-          :key="index"
-          :info="deck"
-        >
-        </flashcard-icon>
-      </div>
-      <h5 class="text-left">Private Decks</h5>
-      <div class="card-container">
-        <flashcard-icon
-          v-for="(deck,index) in computePrivate"
-          :key="index"
-          :info="deck"
-          :isPrivate="true"
-        >
-        </flashcard-icon>
-      </div>
+    <div
+      v-if="!publicIsLoading && !privateIsLoading"
+      class="card-container"
+    >
+      <flashcard-icon
+        v-for="deck in combined"
+        :key="deck.creationDate.toDate().getTime()"
+        :info="deck"
+        :isPrivate="deck.isPrivate"
+        @toggle="changeVisibility(deck)"
+      >
+      </flashcard-icon>
     </div>
     <div
       v-else
@@ -48,6 +40,7 @@
       class="loading loading-lg"
     ></div>
   </div>
+
 </template>
 
 <script>
@@ -57,6 +50,11 @@
 import FlashcardIcon from "@/components/flashcards/FlashcardIcon";
 import PageTitle from "@/components/navigation/PageTitle";
 import { db } from "@/firebaseConfig";
+
+/* Possible solution:
+    Computed function to combine and filter keyword, returns concat of the two arrays.
+    May have to insert a isPrivate property
+*/
 
 export default {
   name: "FlashcardCollection",
@@ -70,52 +68,120 @@ export default {
       publicIsLoading: true,
       publicDecks: [],
       privateDecks: [],
-      // TODO: Figure out how to get all decks in the same list
       decks: [],
-      searchQuery: ""
+      searchQuery: "",
+      groupID: this.$route.params.groupID,
+      uid: this.$store.getters.uid
     };
   },
   created() {
-    const groupID = this.$route.params.groupID;
-    let publicCollection = db
-      .collection("study-groups")
-      .doc(groupID)
-      .collection("flashcards");
+    this.loadDecks();
+  },
+  methods: {
+    // Load the decks, modifying the data where necessary
+    loadDecks() {
+      // Reset the deck array objects in case of reload
+      this.privateDecks = [];
+      this.publicDecks = [];
 
-    let privateCollection = db
-      .collection("study-groups")
-      .doc(groupID)
-      .collection("flashcards")
-      .doc("private")
-      .collection(this.$store.getters.uid);
+      let publicCol = db
+        .collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("flashcards");
 
-    // This allows it to auto update
-    this.$bind("publicDecks", publicCollection).then(flashcardDecks => {
-      this.publicDecks === flashcardDecks;
-      // Need to filter out the private document to prevent null errors
-      this.publicDecks = this.publicDecks.filter(deck => {
-        return deck.id !== "private";
-      });
-      this.publicIsLoading = false;
-    });
+      let privateCol = db
+        .collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("flashcards")
+        .doc("private")
+        .collection(this.$store.getters.uid);
 
-    this.$bind("privateDecks", privateCollection).then(flashcardDecks => {
-      this.privateDecks === flashcardDecks;
-      this.privateIsLoading = false;
-    });
+      // Load the public decks from the group, don't include the "private" collection as a deck
+      publicCol
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(deck => {
+            let out = { id: deck.id, ...deck.data() };
+            out.isPrivate = false;
+            if (deck.id !== "private") {
+              this.publicDecks.push(out);
+            }
+          });
+        })
+        .then(() => {
+          this.publicIsLoading = false;
+        });
+
+      // Load the private decks, set the isPrivate field to true for each deck
+      privateCol
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(deck => {
+            let out = { id: deck.id, ...deck.data() };
+            out.isPrivate = true;
+            this.privateDecks.push(out);
+          });
+        })
+        .then(() => {
+          this.privateIsLoading = false;
+        });
+    },
+    // Switch the decks location in firebase to public or private
+    changeVisibility(deck) {
+      // Modify the document in firebase when the user toggles.
+      let privateCol = db
+        .collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("flashcards")
+        .doc("private")
+        .collection(this.$store.getters.uid)
+        .doc(deck.id);
+
+      let publicCol = db
+        .collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("flashcards")
+        .doc(deck.id);
+
+      // Determine what firestore route the deck needs to be transferred to and from
+      let from, to;
+      if (deck.isPrivate) {
+        from = privateCol;
+        to = publicCol;
+      } else {
+        from = publicCol;
+        to = privateCol;
+      }
+
+      // This is run as a transaction because it needs to be atomic.
+      // Ensures that both the moving and deleting are executed together
+      return db
+        .runTransaction(transaction => {
+          // This code may get re-run multiple times if there are conflicts.
+          return transaction.get(from).then(deck => {
+            // Get the contents of the existing document
+            if (!deck.exists) {
+              throw "Deck does not exist!";
+            }
+            transaction.set(to, deck.data()); // Create new document
+            transaction.delete(from); // Delete old document
+          });
+        })
+        .then(() => {
+          console.log("Transaction successfully committed!");
+          this.loadDecks();
+        })
+        .catch(error => {
+          console.log("Transaction failed: ", error);
+        });
+    }
   },
   computed: {
-    computePublic() {
-      // Filter the note list by the query string. Including partial matches.
-      // Converted to lowercase to avoid capitalization enforcement
-      return this.publicDecks.filter(deck => {
-        return deck.title
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase());
-      });
-    },
-    computePrivate() {
-      return this.privateDecks.filter(deck => {
+    combined() {
+      // Combine the public and private decks into a single array
+      let decks = this.privateDecks.concat(this.publicDecks);
+      // Filter the deck display based on the search word
+      return decks.filter(deck => {
         return deck.title
           .toLowerCase()
           .includes(this.searchQuery.toLowerCase());
@@ -141,6 +207,6 @@ h5 {
   grid-template-columns: repeat(auto-fit, minmax(100px, 288px));
   grid-auto-rows: 218px;
   justify-content: center;
-  transition: all 350ms ease-in;
+  // transition: all 350ms ease-in;
 }
 </style>

@@ -1,15 +1,8 @@
 <template>
   <!-- Flashcard Icon -->
   <div id="flashcard">
-
     <!-- Title -->
     <h2 id="title">{{info.title}}</h2>
-    <div id="indicator">
-      <i
-        class="far"
-        :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"
-      ></i>
-    </div>
     <!-- Created -->
     <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
     <!-- Last Updated -->
@@ -17,11 +10,11 @@
     <!-- Creator Avatar and Name Chip -->
     <!-- TODO: Figure out how to use my existing avatar component -->
     <div class="chip text-ellipsis">
-      <!-- TODO: Set the background to a color if there is an image url, otherwise set to transaprent to remove ugly border-->
-      <!-- style="background-color: transparent;" -->
+      <!-- Set background to transparent when there is an image. Fixes fuzzy outline  -->
       <img
         :src="info.creatorPhoto"
         class="avatar avatar-sm"
+        :class="info.creatorPhoto !== '' ? 'chip-transp' : ''"
       >
       {{info.creatorName}}
     </div>
@@ -32,6 +25,18 @@
         v-if="$store.getters.uid === info.creatorUID"
         id="editBtn"
       >Edit</button>
+      <div
+        v-if="info.creatorUID === $store.getters.uid"
+        @click="$emit('toggle')"
+        id="indicator"
+        class="tooltip tooltip-bottom"
+        data-tooltip="Toggle Visibility"
+      >
+        <i
+          class="far"
+          :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"
+        ></i>
+      </div>
       <button
         @click="goStudy"
         id="studyBtn"
@@ -95,7 +100,7 @@ $card-height: 218px;
   background-color: white;
   height: $card-height;
   width: $card-width;
-  padding: 0.5em;
+  padding: 1em;
   border-radius: 10px;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
 
@@ -106,6 +111,12 @@ $card-height: 218px;
 
 #indicator {
   cursor: pointer;
+  position: relative;
+  display: inline-block;
+
+  top: 0px;
+  left: 0px;
+
   margin: 5px;
   height: 30px;
   width: 30px;
@@ -156,8 +167,12 @@ p > i {
 
 .chip {
   padding: 15px;
-  margin: auto;
+  margin: 0 auto;
   text-align: center;
+}
+
+.chip-transp {
+  background-color: transparent;
 }
 
 #button-container {

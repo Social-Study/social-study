@@ -103,7 +103,6 @@ export default {
   created() {
     const groupID = this.$route.params.groupID;
     const deckID = this.$route.params.deckID;
-    // const self = this;
     let flashcardCollection = db
       .collection("study-groups")
       .doc(groupID)
@@ -120,6 +119,7 @@ export default {
       flashcardCollection = flashcardCollection.doc(deckID);
     }
 
+    // Load deck from firebase
     flashcardCollection
       .get()
       .then(doc => {
