@@ -4,7 +4,14 @@
       <router-link
         class="navbar-brand"
         to="/dashboard"
-      >Social Study</router-link>
+      ><img
+          src="../../assets/icons/social_study_white.png"
+          height="40px"
+          width="40px"
+          alt=""
+        >
+        <h1>Social Study</h1>
+      </router-link>
 
       <group-dropdown :studyGroups="studyGroups" />
 
@@ -154,16 +161,27 @@ export default {
 
 .navbar {
   background-color: $dark;
-  padding: 0px 10px 0px 0px;
+  padding: 0px 10px 0px 10px;
   height: $nav-height;
 }
 
 a.navbar-brand {
   font-family: $logo-font;
-  font-size: 1.7em;
-  color: white;
+
+  display: flex;
+  flex-flow: row nowrap;
   min-width: 200px;
+  justify-content: space-between;
+  align-items: center;
   margin-right: 25px;
+
+  h1 {
+    font-size: 1.4em;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    margin: 0;
+  }
 }
 
 .menu {

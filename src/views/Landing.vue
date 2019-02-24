@@ -4,11 +4,17 @@
     <!-- Header Section -->
     <header class="navbar">
       <section class="navbar-section">
-        <a
+        <img
+          src="../assets/icons/social_study_white.png"
+          height="50px"
+          width="50px"
+          alt=""
+        >
+        <!-- <a
           href="#"
           class="navbar-brand m-2"
           :style="centerTitle"
-        >Social Study</a>
+        >Social Study</a> -->
       </section>
 
       <!-- Login Form -->
@@ -124,155 +130,151 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="columns body-container">
+      <!-- Left Block: Information -->
+      <div class="column col-6 col-md-12">
+        <div style="margin-left: 20px; margin-right: 20px;">
+          <h1
+            id="logo"
+            class="hide-sm hide-xs"
+          >Social Study</h1>
+          <p style="margin-top: 20px;">The <i>free</i> learning tool for all ages.</p>
 
-      <div class="columns bodyContainer">
-        <!-- Left Block: Information -->
-        <div class="column col-6 col-md-12">
-          <div style="margin-left: 20px; margin-right: 20px;">
-            <h1
-              id="logo"
-              class="hide-sm hide-xs"
-            >Social Study</h1>
-            <p style="margin-top: 20px;">The <i>free</i> learning tool for all ages.</p>
-
-            <div class="columns">
-              <div
-                class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
-                data-tooltip="Create and study notes and flashcards"
+          <div class="columns">
+            <div
+              class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+              data-tooltip="Create and study notes and flashcards"
+            >
+              <img
+                class="img-responsive undraw-svg"
+                src="../assets/undraw_studying.svg"
+                alt="studying"
               >
-                <img
-                  class="img-responsive undraw-svg"
-                  src="../assets/undraw_studying.svg"
-                  alt="studying"
-                >
-              </div>
-              <div
-                class=" col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
-                data-tooltip="Take practice quizzes"
+            </div>
+            <div
+              class=" col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+              data-tooltip="Take practice quizzes"
+            >
+              <img
+                class="img-responsive  undraw-svg"
+                src="../assets/undraw_exams.svg"
+                alt="quizzes"
               >
-                <img
-                  class="img-responsive  undraw-svg"
-                  src="../assets/undraw_exams.svg"
-                  alt="quizzes"
-                >
-              </div>
-              <div
-                class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
-                data-tooltip="Take notes and keep them organized"
+            </div>
+            <div
+              class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+              data-tooltip="Take notes and keep them organized"
+            >
+              <img
+                class="img-responsive  undraw-svg"
+                src="../assets/undraw_taking_notes.svg"
+                alt="note taking"
               >
-                <img
-                  class="img-responsive  undraw-svg"
-                  src="../assets/undraw_taking_notes.svg"
-                  alt="note taking"
-                >
-              </div>
-              <div
-                class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
-                data-tooltip="Create and manage events and assignments"
+            </div>
+            <div
+              class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+              data-tooltip="Create and manage events and assignments"
+            >
+              <img
+                class="img-responsive  undraw-svg"
+                src="../assets/undraw_events.svg"
+                alt="schedule management"
               >
-                <img
-                  class="img-responsive  undraw-svg"
-                  src="../assets/undraw_events.svg"
-                  alt="schedule management"
-                >
-              </div>
-              <div
-                class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
-                data-tooltip="Communicate with classmates"
+            </div>
+            <div
+              class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+              data-tooltip="Communicate with classmates"
+            >
+              <img
+                class="img-responsive  undraw-svg"
+                src="../assets/undraw_group_chat.svg"
+                alt="communication"
               >
-                <img
-                  class="img-responsive  undraw-svg"
-                  src="../assets/undraw_group_chat.svg"
-                  alt="communication"
-                >
-              </div>
-              <div
-                class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
-                data-tooltip="Improve your academic success!"
+            </div>
+            <div
+              class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
+              data-tooltip="Improve your academic success!"
+            >
+              <img
+                class="img-responsive  undraw-svg"
+                src="../assets/undraw_grad.svg"
+                alt="success"
               >
-                <img
-                  class="img-responsive  undraw-svg"
-                  src="../assets/undraw_grad.svg"
-                  alt="success"
-                >
-              </div>
             </div>
           </div>
         </div>
-
-        <!-- Right Block: Sign Up Form -->
-        <div
-          class="column col-6 col-sm-12 col-md-12 hide-xs hide-sm"
-          style="margin-bottom: 30px;"
-        >
-
-          <div id="right-container form-group">
-            <form
-              @submit.prevent
-              data-vv-scope="signup"
-            >
-              <h1 style="margin-top: 40px;">Sign Up</h1>
-              <span id="name-container">
-                <input
-                  v-validate.disable="'required|alpha'"
-                  v-model.trim="firstName"
-                  class="form-input"
-                  type="text"
-                  name="firstname"
-                  placeholder="First Name"
-                >
-                <input
-                  v-validate.disable="'required|alpha'"
-                  v-model.trim="lastName"
-                  class="form-input"
-                  type="text"
-                  name="lastname"
-                  placeholder="Last Name"
-                >
-              </span>
-              <br>
-              <input
-                v-validate.disable="'required|email'"
-                v-model="newEmail"
-                type="text"
-                class="form-input"
-                name="email"
-                placeholder="Email Address"
-              ><br>
-              <input
-                v-validate.disable="'required|min:6'"
-                v-model="newPassword"
-                class="form-input"
-                type="password"
-                name="password"
-                placeholder="Password"
-              ><br>
-              <button
-                @click="createAccount"
-                class="btn btn-primary mx-1"
-              >Sign Up</button>
-              <button
-                @click="googleSignIn"
-                class="btn mx-1"
-              >
-                <i class="fab fa-google"></i>
-                Sign in with Google
-              </button>
-            </form>
-          </div>
-        </div>
       </div>
 
+      <!-- Right Block: Sign Up Form -->
       <div
-        class="show-xs show-sm"
-        style="margin-top: 80px;"
+        class="column col-6 col-sm-12 col-md-12 hide-xs hide-sm"
+        style="margin-bottom: 30px;"
       >
-        <p>Unfortunately, <i>Social Study</i> is only available on desktop.</p>
-        <p>To sign up, please visit the site on your desktop!</p>
+
+        <div id="right-container form-group">
+          <form
+            @submit.prevent
+            data-vv-scope="signup"
+          >
+            <h1 style="margin-top: 40px;">Sign Up</h1>
+            <span id="name-container">
+              <input
+                v-validate.disable="'required|alpha'"
+                v-model.trim="firstName"
+                class="form-input"
+                type="text"
+                name="firstname"
+                placeholder="First Name"
+              >
+              <input
+                v-validate.disable="'required|alpha'"
+                v-model.trim="lastName"
+                class="form-input"
+                type="text"
+                name="lastname"
+                placeholder="Last Name"
+              >
+            </span>
+            <br>
+            <input
+              v-validate.disable="'required|email'"
+              v-model="newEmail"
+              type="text"
+              class="form-input"
+              name="email"
+              placeholder="Email Address"
+            ><br>
+            <input
+              v-validate.disable="'required|min:6'"
+              v-model="newPassword"
+              class="form-input"
+              type="password"
+              name="password"
+              placeholder="Password"
+            ><br>
+            <button
+              @click="createAccount"
+              class="btn btn-primary mx-1"
+            >Sign Up</button>
+            <button
+              @click="googleSignIn"
+              class="btn mx-1"
+            >
+              <i class="fab fa-google"></i>
+              Sign in with Google
+            </button>
+          </form>
+        </div>
       </div>
     </div>
 
+    <div
+      class="show-xs show-sm"
+      style="margin-top: 80px;"
+    >
+      <p>Unfortunately, <i>Social Study</i> is only available on desktop.</p>
+      <p>To sign up, please visit the site on your desktop!</p>
+    </div>
   </div>
 </template>
 
@@ -489,7 +491,7 @@ div.tooltip {
 }
 
 // Aligns all content vertically on the screen
-.bodyContainer {
+.body-container {
   min-height: 92vh;
   display: flex;
   flex: row;
@@ -533,7 +535,7 @@ div.tooltip {
 .navbar {
   background-color: $dark;
   padding: 0px 10px;
-  // max-height: 8vh;
+  height: 64px;
 }
 
 // Set login input form widths
