@@ -8,6 +8,7 @@
                   questionCount === 0 ||
                   selectedQTypes.length === 0 ||
                   selectedQTypes == null ? 'disabled': ''"
+          @click="loadQuiz()"
         >
           Generate
         </button>
@@ -53,6 +54,14 @@ export default {
       selectedDecks: null,
       selectedQTypes: null
     };
+  },
+  methods: {
+    loadQuiz() {
+      console.log("click");
+      // TODO: Send only relevant parsed data to new page
+      // this.$router.replace();
+      this.$router.replace({ name: "study", params: { deckID: this.info.id } });
+    }
   },
   computed: {
     questionCount() {
