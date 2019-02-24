@@ -1,29 +1,37 @@
 <template>
   <div>
     <page-title>
+      <template slot="left">
+        <button
+          class="btn btn-success btn-lg"
+          :class="selectedDecks == null ||
+                  questionCount === 0 ||
+                  selectedQTypes.length === 0 ||
+                  selectedQTypes == null ? 'disabled': ''"
+        >
+          Generate
+        </button>
+      </template>
       <template slot="center">
         Create a New Quiz
       </template>
       <template slot="right">
         <!-- Using the title class in the PageTitle component -->
-        <!-- <h2 class="title">Total: {{questionCount}}</h2> -->
         <h2 class="title">{{questionCount}}/100</h2>
       </template>
     </page-title>
     <div class="content-container">
+      <h3 id="step-instruction">Select Quiz Question Types</h3>
+      <question-type-selector @selected="selectedQTypes = $event" />
+
       <h3 id="step-instruction">Select Decks to Generate Your Quiz</h3>
       <h5 id="step-hint">Quiz has a 100 card limit</h5>
       <!-- Component that displays checkboxes of each available flashcard deck -->
-      <!-- :allowSelect="questionCount < 7 ? true : false" -->
       <deck-selector
         :limit="100"
         @selected="selectedDecks = $event"
       />
-      <h3 id="step-instruction">Select Quiz Question Types</h3>
-      <!-- TODO: Create question type selectors. -->
-      <button class="btn btn-success">
-        Generate
-      </button>
+
     </div>
   </div>
 </template>
@@ -31,18 +39,19 @@
 <script>
 import PageTitle from "@/components/navigation/PageTitle";
 import DeckSelector from "@/components/quiz/DeckSelector";
-
-// TODO: Create selectors for the question types
+import QuestionTypeSelector from "@/components/quiz/QuestionTypeSelector";
 
 export default {
   name: "QuizCreate",
   components: {
     PageTitle,
-    DeckSelector
+    DeckSelector,
+    QuestionTypeSelector
   },
   data() {
     return {
-      selectedDecks: null
+      selectedDecks: null,
+      selectedQTypes: null
     };
   },
   computed: {
