@@ -6,8 +6,8 @@
         to="/dashboard"
       ><img
           src="../../assets/icons/social_study_white.png"
-          height="40px"
-          width="40px"
+          height="38px"
+          width="38px"
           alt=""
         >
         <h1>Social Study</h1>

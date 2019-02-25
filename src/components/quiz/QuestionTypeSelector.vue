@@ -61,9 +61,7 @@ export default {
       let selected = [];
       this.questionTypes.forEach(type => {
         if (type.selected === true) {
-          selected.push({
-            type: type.type
-          });
+          selected.push(type.type);
         }
       });
       return selected;

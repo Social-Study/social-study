@@ -123,9 +123,9 @@ export default {
           .limit(4)
       ).then(flashcards => {
         this.recentFlashcards = flashcards;
-        this.recentFlashcards = this.recentFlashcards.filter(deck => {
-          return deck.id !== "private";
-        });
+        // this.recentFlashcards = this.recentFlashcards.filter(deck => {
+        //   return deck.id !== "private";
+        // });
         this.flashcardsLoading = false;
       });
     }

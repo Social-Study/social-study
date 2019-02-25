@@ -58,9 +58,27 @@ export default {
   methods: {
     loadQuiz() {
       console.log("click");
-      // TODO: Send only relevant parsed data to new page
-      // this.$router.replace();
-      this.$router.replace({ name: "quiz" });
+      let terms = [];
+      let defs = [];
+      this.selectedDecks.public.forEach(deck => {
+        terms = terms.concat(deck.terms);
+        defs = defs.concat(deck.definitions);
+      });
+
+      this.selectedDecks.private.forEach(deck => {
+        console.log(deck);
+        terms = terms.concat(deck.terms);
+        defs = defs.concat(deck.definitions);
+      });
+
+      this.$router.replace({
+        name: "quiz",
+        params: {
+          terms: terms,
+          definitions: defs,
+          questionTypes: this.selectedQTypes
+        }
+      });
     }
   },
   computed: {

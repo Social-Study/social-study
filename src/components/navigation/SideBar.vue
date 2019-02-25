@@ -69,7 +69,8 @@
         >
           <router-link
             :to="{name: 'createQuiz'}"
-            :class="$route.name === 'createQuiz' ? 'active' : ''"
+            :class="$route.name === 'createQuiz' ? 'active' : '' ||
+              $route.name === 'quiz' ? 'active' : ''"
           ><i
               :class="{'large-icon': !show}"
               class="fas fa-pencil-alt"
