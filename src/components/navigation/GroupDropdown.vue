@@ -18,9 +18,12 @@
         :key="index"
       >
         <li>
-          <div class="group-card">
+          <div
+            class="group-card"
+            :class="group.id == $route.params.groupID ? 'current-group' : ''"
+          >
             <router-link
-              class="card-text"
+              class="card-text "
               :to="{ name: 'home', params: { groupID: group.id } }"
             >
               <p
@@ -113,14 +116,20 @@ export default {
   box-shadow: $shadow;
 
   &:hover {
-    background-color: $dark;
-    p {
-      color: white;
-    }
+    background-color: darken(white, 10);
   }
-
   a {
     text-decoration: none;
+  }
+}
+
+.current-group {
+  background-color: $dark;
+  p {
+    color: white;
+  }
+  &:hover p {
+    color: $secondary;
   }
 }
 

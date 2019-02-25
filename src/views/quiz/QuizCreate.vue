@@ -6,8 +6,8 @@
           class="btn btn-success btn-lg"
           :class="selectedDecks == null ||
                   questionCount === 0 ||
-                  selectedQTypes.length === 0 ||
-                  selectedQTypes == null ? 'disabled': ''"
+                  selectedQTypes == null ||
+                  selectedQTypes.length === 0 ? 'disabled': ''"
           @click="loadQuiz()"
         >
           Generate
@@ -60,7 +60,7 @@ export default {
       console.log("click");
       // TODO: Send only relevant parsed data to new page
       // this.$router.replace();
-      this.$router.replace({ name: "study", params: { deckID: this.info.id } });
+      this.$router.replace({ name: "quiz" });
     }
   },
   computed: {
