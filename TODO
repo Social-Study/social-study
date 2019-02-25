@@ -90,6 +90,9 @@ Known Bugs:
       ☐ Select the next flashcard by clicking the button. Then try using spacebar to flip the card. The next card is shown.
         This is due to the button capturing focus and the spacebar is pressing it instead of flipping the card.
       ☐ Prompt users before leaving if not saved (similar to note page)
+  Chat:
+    ☐ When user changes their profile picture, the old image is deleted but we still need the image at the old url.
+      Need to make sure I am uploading to the same url not creating a new one
 
 Vuex Store:
   ☐ Save the number of unread messages to the store.
