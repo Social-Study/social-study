@@ -58,10 +58,33 @@ export default {
       this.$emit("selected", this.getAllSelected());
     },
     getAllSelected() {
-      let selected = [];
+      // Create object to be passed to the quiz page
+      // Selected question types are set to true
+      let selected = {
+        matching: false,
+        shortAnswer: false,
+        multipleChoice: false,
+        dragAndDrop: false
+      };
+      // Every selected type is set to true
       this.questionTypes.forEach(type => {
         if (type.selected === true) {
-          selected.push(type.type);
+          switch (type.type) {
+            case "Multiple Choice":
+              selected.multipleChoice = true;
+              break;
+            case "Matching":
+              selected.matching = true;
+              break;
+            case "Drag and Drop":
+              selected.dragAndDrop = true;
+              break;
+            case "Short Answer":
+              selected.shortAnswer = true;
+              break;
+            default:
+              console.log("WTF");
+          }
         }
       });
       return selected;

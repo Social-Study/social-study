@@ -3,12 +3,11 @@
     class="quiz-content"
     v-if="terms && definitions && questionTypes"
   >
-    <!-- TODO: Convert questio type data to an object -->
-    <!-- matching: true, shortAnswer: false, etc -->
-    <short-answer-question v-if="questionTypes.includes('Short Answer')" />
-    <matching-question v-if="questionTypes.includes('Matching')" />
-    <multiple-choice-question v-if="questionTypes.includes('Multiple Choice')" />
-    <drag-drop-question v-if="questionTypes.includes('Drag and Drop')" />
+    <short-answer-question v-if="questionTypes.shortAnswer == true" />
+    <matching-question v-if="
+      questionTypes.matching == true" />
+    <multiple-choice-question v-if="questionTypes.multipleChoice == true" />
+    <drag-drop-question v-if="questionTypes.dragAndDrop == true" />
 
   </div>
   <div v-else>
@@ -17,8 +16,8 @@
 </template>
 
 <script>
-import MatchingQuestion from "@/components/quiz/questions/ShortAnswerQuestion";
-import ShortAnswerQuestion from "@/components/quiz/questions/MatchingQuestion";
+import ShortAnswerQuestion from "@/components/quiz/questions/ShortAnswerQuestion";
+import MatchingQuestion from "@/components/quiz/questions/MatchingQuestion";
 import MultipleChoiceQuestion from "@/components/quiz/questions/MultipleChoiceQuestion";
 import DragDropQuestion from "@/components/quiz/questions/DragDropQuestion";
 
@@ -40,7 +39,7 @@ export default {
       required: true
     },
     questionTypes: {
-      type: Array,
+      type: Object,
       required: true
     }
   }

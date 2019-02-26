@@ -29,12 +29,12 @@
         <drop
           class="drop"
           key="def1"
-          :class="{ over: over.zone1 }"
-          @dragover="over.zone1 = true"
-          @dragleave="over.zone1 = false"
-          @drop="handleDrop(over.zone1, ...arguments)"
+          :class="{ over: zone1.over }"
+          @dragover="zone1.over = true"
+          @dragleave="zone1.over = false"
+          @drop="handleDrop(zone1, ...arguments)"
         >
-          Def1
+          {{zone1.text}}
         </drop>
         <h2>Brazil</h2>
       </div>
@@ -42,12 +42,12 @@
         <drop
           key="def2"
           class="drop"
-          :class="{ over: over.zone2 }"
-          @dragover="over.zone2 = true"
-          @dragleave="over.zone2 = false"
-          @drop="handleDrop(over.zone2, ...arguments)"
+          :class="{ over: zone2.over}"
+          @dragover="zone2.over = true"
+          @dragleave="zone2.over = false"
+          @drop="handleDrop(zone2, ...arguments)"
         >
-          Def2
+          {{zone2.text}}
         </drop>
         <h2>England</h2>
       </div>
@@ -55,12 +55,12 @@
         <drop
           key="def3"
           class="drop"
-          :class="{ over: over.zone3 }"
-          @dragover="over.zone3 = true"
-          @dragleave="over.zone3 = false"
-          @drop="handleDrop(over.zone3, ...arguments)"
+          :class="{ over: zone3.over }"
+          @dragover="zone3.over = true"
+          @dragleave="zone3.over= false"
+          @drop="handleDrop(zone3, ...arguments)"
         >
-          Def3
+          {{zone3.text}}
         </drop>
         <h2>Canada</h2>
       </div>
@@ -68,12 +68,12 @@
         <drop
           key="def4"
           class="drop"
-          :class="{ over: over.zone4 }"
-          @dragover="over.zone4 = true"
-          @dragleave="over.zone4 = false"
-          @drop="handleDrop(over.zone4, ...arguments)"
+          :class="{ over: zone4.over }"
+          @dragover="zone4.over = true"
+          @dragleave="zone4.over = false"
+          @drop="handleDrop(zone4, ...arguments)"
         >
-          Def4
+          {{zone4.text}}
         </drop>
         <h2>China</h2>
       </div>
@@ -88,11 +88,33 @@ export default {
   components: { Drag, Drop },
   data: function() {
     return {
-      over: {
-        zone1: false,
-        zone2: false,
-        zone3: false,
-        zone4: false
+      // over: {
+      //   zone1: false,
+      //   zone2: false,
+      //   zone3: false,
+      //   zone4: false
+      // },
+      // zoneText: {
+      //   zone1: "Def1",
+      //   zone2: "Def2",
+      //   zone3: "Def3",
+      //   zone4: "Def4"
+      // },
+      zone1: {
+        over: false,
+        text: "Def1"
+      },
+      zone2: {
+        over: false,
+        text: "Def2"
+      },
+      zone3: {
+        over: false,
+        text: "Def3"
+      },
+      zone4: {
+        over: false,
+        text: "Def4"
       }
     };
   },
@@ -100,7 +122,8 @@ export default {
     handleDrop(dropZone, data) {
       console.log(JSON.stringify(data));
       console.log(dropZone);
-      dropZone = true;
+      dropZone.over = true;
+      dropZone.text = data.term;
       // TODO: This is where you implement the logic I think
       // alert(`You dropped with data: ${JSON.stringify(data)}`);
     }
