@@ -55,9 +55,6 @@ h1 {
 
 // TODO: Improve alignment and centering
 #choices {
-  // width: 400px;
-  // height: 200px;
-
   padding: 30px;
   margin-top: 10px;
 

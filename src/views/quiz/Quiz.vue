@@ -3,6 +3,8 @@
     class="quiz-content"
     v-if="terms && definitions && questionTypes"
   >
+    <!-- TODO: Convert questio type data to an object -->
+    <!-- matching: true, shortAnswer: false, etc -->
     <short-answer-question v-if="questionTypes.includes('Short Answer')" />
     <matching-question v-if="questionTypes.includes('Matching')" />
     <multiple-choice-question v-if="questionTypes.includes('Multiple Choice')" />
