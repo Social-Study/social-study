@@ -42,6 +42,10 @@ export default {
       type: Object,
       required: true
     }
+  },
+  created() {
+    // Shuffle All Term/Def combos
+    // Determine how many of each question type to create
   }
 };
 </script>

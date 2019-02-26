@@ -2,6 +2,7 @@
   <div id="question">
     <h1>3. Match each term to its definition</h1>
     <div id="terms-holder">
+      <!-- Create draggable component for each term -->
       <drag
         v-for="(term, index) in drag"
         :key="term.term"
@@ -14,10 +15,11 @@
 
     <div id="defs-holder">
       <div id="left">
+        <!-- Show a drop area for each term -->
         <drop
           v-for="slot in drop"
           class="drop"
-          :key="slot.hash"
+          :key="slot.definition"
           :class="{ over: slot.over, filled: slot.filled }"
           @click.native="resetDrop(slot)"
           @dragover="handleDragOver(slot)"
@@ -28,10 +30,11 @@
         </drop>
       </div>
       <div id="right">
-        <h2>Brazil</h2>
-        <h2>England</h2>
-        <h2>Canada</h2>
-        <h2>China</h2>
+        <!-- Show all definitions -->
+        <h2
+          v-for="slot in drop"
+          :key="slot.definition"
+        >{{slot.definition}}</h2>
       </div>
     </div>
   </div>
@@ -44,6 +47,7 @@ export default {
   components: { Drag, Drop },
   data: function() {
     return {
+      // Drag zone data
       drag: [
         {
           term: "Brazilia",
@@ -62,46 +66,59 @@ export default {
           draggable: true
         }
       ],
+      // Drop zone data
       drop: [
         {
-          hash: 1,
           over: false,
           filled: false,
           text: "",
-          from: null
+          from: null,
+          definition: "Brazil"
         },
         {
-          hash: 2,
           over: false,
           filled: false,
           text: "",
-          from: null
+          from: null,
+          definition: "England"
         },
         {
-          hash: 3,
           over: false,
           filled: false,
           text: "",
-          from: null
+          from: null,
+          definition: "China"
         },
         {
-          hash: 4,
           over: false,
           filled: false,
           text: "",
-          from: null
+          from: null,
+          definition: "Canada"
         }
       ]
     };
   },
   methods: {
     handleDrop(drop, data) {
-      drop.over = true;
-      drop.filled = true;
-      drop.text = data.term;
-      drop.from = data.from;
-      // Get the drag index from data and make drag item not draggable
-      this.drag[data.from].draggable = false;
+      if (drop.from == null) {
+        // Dropping to an unfilled area
+        // Get the drag index from data and make drag item not draggable
+        drop.from = data.from;
+        this.drag[data.from].draggable = false;
+        drop.over = true;
+        drop.filled = true;
+        drop.text = data.term;
+      } else {
+        // Dropping to a take drop zone
+        // Replace existing term and enable its draggable property
+        this.drag[drop.from].draggable = true;
+        drop.from = data.from;
+        this.drag[data.from].draggable = false;
+        drop.over = true;
+        drop.filled = true;
+        drop.text = data.term;
+      }
     },
     handleDragOver(drop) {
       if (drop.text === "") {
@@ -119,6 +136,7 @@ export default {
         drop.filled = false;
         drop.over = false;
         this.drag[drop.from].draggable = true;
+        drop.from = null;
       }
     }
   }
@@ -186,6 +204,7 @@ h1 {
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
 }
 
+// Change style when the term has already been placed
 .drag.placed {
   cursor: default;
   box-shadow: none;
