@@ -3,78 +3,34 @@
     <h1>3. Match each term to its definition</h1>
     <div id="terms-holder">
       <drag
+        v-for="(term, index) in drag"
+        :key="term.term"
         class="drag"
-        key="term1"
-        :transfer-data="{ term: 'term1' }"
-      >Term1</drag>
-      <drag
-        class="drag"
-        key="term2"
-        :transfer-data="{ term: 'term2' }"
-      >Term2</drag>
-      <drag
-        class="drag"
-        key="term3"
-        :transfer-data="{ term: 'term3' }"
-      >Term3</drag>
-      <drag
-        class="drag"
-        key="term4"
-        :transfer-data="{ term: 'term4' }"
-      >Term4</drag>
+        :draggable="term.draggable"
+        :class="{ placed: !term.draggable }"
+        :transfer-data="{ from: index, term: term.term }"
+      >{{term.term}}</drag>
     </div>
 
     <div id="defs-holder">
-      <div class="drop-container">
+      <div id="left">
         <drop
+          v-for="slot in drop"
           class="drop"
-          key="def1"
-          :class="{ over: zone1.over }"
-          @dragover="zone1.over = true"
-          @dragleave="zone1.over = false"
-          @drop="handleDrop(zone1, ...arguments)"
+          :key="slot.hash"
+          :class="{ over: slot.over, filled: slot.filled }"
+          @click.native="resetDrop(slot)"
+          @dragover="handleDragOver(slot)"
+          @dragleave="handleDragLeave(slot)"
+          @drop="handleDrop(slot, ...arguments)"
         >
-          {{zone1.text}}
+          {{slot.text}}
         </drop>
+      </div>
+      <div id="right">
         <h2>Brazil</h2>
-      </div>
-      <div class="drop-container">
-        <drop
-          key="def2"
-          class="drop"
-          :class="{ over: zone2.over}"
-          @dragover="zone2.over = true"
-          @dragleave="zone2.over = false"
-          @drop="handleDrop(zone2, ...arguments)"
-        >
-          {{zone2.text}}
-        </drop>
         <h2>England</h2>
-      </div>
-      <div class="drop-container">
-        <drop
-          key="def3"
-          class="drop"
-          :class="{ over: zone3.over }"
-          @dragover="zone3.over = true"
-          @dragleave="zone3.over= false"
-          @drop="handleDrop(zone3, ...arguments)"
-        >
-          {{zone3.text}}
-        </drop>
         <h2>Canada</h2>
-      </div>
-      <div class="drop-container">
-        <drop
-          key="def4"
-          class="drop"
-          :class="{ over: zone4.over }"
-          @dragover="zone4.over = true"
-          @dragleave="zone4.over = false"
-          @drop="handleDrop(zone4, ...arguments)"
-        >
-          {{zone4.text}}
-        </drop>
         <h2>China</h2>
       </div>
     </div>
@@ -84,54 +40,92 @@
 <script>
 import { Drag, Drop } from "vue-drag-drop";
 export default {
-  name: "DragDropComponent",
+  name: "DragDropQuestion",
   components: { Drag, Drop },
   data: function() {
     return {
-      // over: {
-      //   zone1: false,
-      //   zone2: false,
-      //   zone3: false,
-      //   zone4: false
-      // },
-      // zoneText: {
-      //   zone1: "Def1",
-      //   zone2: "Def2",
-      //   zone3: "Def3",
-      //   zone4: "Def4"
-      // },
-      zone1: {
-        over: false,
-        text: "Def1"
-      },
-      zone2: {
-        over: false,
-        text: "Def2"
-      },
-      zone3: {
-        over: false,
-        text: "Def3"
-      },
-      zone4: {
-        over: false,
-        text: "Def4"
-      }
+      drag: [
+        {
+          term: "Brazilia",
+          draggable: true
+        },
+        {
+          term: "London",
+          draggable: true
+        },
+        {
+          term: "Ottowa",
+          draggable: true
+        },
+        {
+          term: "Beijing",
+          draggable: true
+        }
+      ],
+      drop: [
+        {
+          hash: 1,
+          over: false,
+          filled: false,
+          text: "",
+          from: null
+        },
+        {
+          hash: 2,
+          over: false,
+          filled: false,
+          text: "",
+          from: null
+        },
+        {
+          hash: 3,
+          over: false,
+          filled: false,
+          text: "",
+          from: null
+        },
+        {
+          hash: 4,
+          over: false,
+          filled: false,
+          text: "",
+          from: null
+        }
+      ]
     };
   },
   methods: {
-    handleDrop(dropZone, data) {
-      console.log(JSON.stringify(data));
-      console.log(dropZone);
-      dropZone.over = true;
-      dropZone.text = data.term;
-      // TODO: This is where you implement the logic I think
-      // alert(`You dropped with data: ${JSON.stringify(data)}`);
+    handleDrop(drop, data) {
+      drop.over = true;
+      drop.filled = true;
+      drop.text = data.term;
+      drop.from = data.from;
+      // Get the drag index from data and make drag item not draggable
+      this.drag[data.from].draggable = false;
+    },
+    handleDragOver(drop) {
+      if (drop.text === "") {
+        drop.over = true;
+      }
+    },
+    handleDragLeave(drop) {
+      if (drop.text === "") {
+        drop.over = false;
+      }
+    },
+    resetDrop(drop) {
+      if (drop.from !== null) {
+        drop.text = "";
+        drop.filled = false;
+        drop.over = false;
+        this.drag[drop.from].draggable = true;
+      }
     }
   }
 };
 </script>
 
-<style <style lang="scss" scoped>
+<style lang="scss" scoped>
 @import "@/styles.scss";
 
 h1 {
@@ -159,28 +153,29 @@ h1 {
   padding: 10px;
   margin-top: 10px;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 
   background-color: #e7e7e7;
-
-  .drop-container {
-    width: 60%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
+  #left {
+    // Nothing for now
+  }
+  #right {
+    flex: 6;
+    text-align: center;
   }
 }
 
 .drag,
 .drop {
   cursor: pointer;
+  user-select: none;
 
   height: 50px;
   padding: 0 20px 0 20px;
   margin: 5px;
+  min-width: 86px;
 
   display: flex;
   flex-flow: row nowrap;
@@ -191,13 +186,24 @@ h1 {
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
 }
 
+.drag.placed {
+  cursor: default;
+  box-shadow: none;
+  background-color: lighten(#c4c4c4, 10);
+}
+
 .drop {
+  cursor: default;
   box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.35);
 }
 
 .drop.over {
   border-color: #aaa;
-  // background: #ccc;
   background-image: $green-gradient;
+}
+
+.drop.filled {
+  box-shadow: none;
+  cursor: pointer;
 }
 </style>
