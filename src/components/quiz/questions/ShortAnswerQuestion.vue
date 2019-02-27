@@ -5,7 +5,7 @@
       class="answer-input"
       type="text"
       v-model.trim="userAnswer"
-      @input="checkCorrect()"
+      @input="handleInput()"
       :class="{ correct }"
     >
   </div>
@@ -28,16 +28,29 @@ export default {
   data() {
     return {
       userAnswer: "",
-      correct: false
+      correct: false,
+      answered: false
     };
   },
   methods: {
-    checkCorrect() {
+    // TODO: Think about logic to set answered to true only a single time
+    handleInput() {
       console.log(this.userAnswer, "  ", this.term);
       if (this.userAnswer.toLowerCase() === this.term.toLowerCase()) {
         this.correct = true;
+        this.$emit("correct");
       } else {
         this.correct = false;
+      }
+    }
+  },
+  watch: {
+    userAnswer(newVal, oldVal) {
+      // console.log(oldVal, newVal);
+      if (oldVal === "" && newVal !== "") {
+        this.$emit("answered", true);
+      } else if (oldVal !== "" && newVal == "") {
+        this.$emit("answered", false);
       }
     }
   }

@@ -5,7 +5,7 @@
         Quiz
       </template>
       <template slot="right">
-        <h2 class="title">Answered: 0/10</h2>
+        <h2 class="title">Answered: {{answeredQuestions}}/{{totalQuestions}}</h2>
       </template>
     </page-title>
     <div
@@ -16,6 +16,7 @@
         <short-answer-question
           v-for="(term, index) in questionGroups.shortAnswer.terms"
           :key="index"
+          @answered="handleAnswered"
           :term="term"
           :definition="questionGroups.shortAnswer.definitions[index]"
         />
@@ -72,8 +73,12 @@ export default {
   },
   data() {
     return {
+      answeredQuestions: 0,
+      totalQuestions: this.terms.length,
+      // Shuffled versions of the props
       shuffledTerms: this.terms,
       shuffledDefs: this.definitions,
+      // Stores the shuffled questions sorted into groups
       questionGroups: {
         multipleChoice: {
           terms: [],
@@ -87,6 +92,14 @@ export default {
     };
   },
   methods: {
+    handleAnswered(isAnswered) {
+      // TODO: This isn't being received
+      if (isAnswered) {
+        this.answeredQuestions++;
+      } else if (!isAnswered) {
+        this.answeredQuestions--;
+      }
+    },
     // Shuffle both arrays so that the contents are still parallel
     shuffleAll() {
       for (let i = this.shuffledTerms.length - 1; i > 0; i--) {
@@ -139,13 +152,15 @@ export default {
     }
   },
   created() {
-    // Shuffle All Term/Def combos
+    // If the props are not found go back to quiz create page
+    // This only happens when the user refreshes (right now there is no fix)
     if (!this.terms && !this.definitions && !this.questionTypes) {
       this.$router.go(-1);
     }
+
+    // Shuffle All Term/Def combos
     this.shuffleAll();
-    console.log(this.shuffledTerms);
-    console.log(this.shuffledDefs);
+
     // Determine how many of each question type to create
     this.splitQuestions();
   }
