@@ -57,7 +57,6 @@ export default {
   },
   methods: {
     loadQuiz() {
-      console.log("click");
       let terms = [];
       let defs = [];
       this.selectedDecks.public.forEach(deck => {
@@ -66,12 +65,11 @@ export default {
       });
 
       this.selectedDecks.private.forEach(deck => {
-        console.log(deck);
         terms = terms.concat(deck.terms);
         defs = defs.concat(deck.definitions);
       });
 
-      this.$router.replace({
+      this.$router.push({
         name: "quiz",
         params: {
           terms: terms,

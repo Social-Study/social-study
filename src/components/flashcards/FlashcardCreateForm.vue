@@ -18,7 +18,7 @@
       class="form-input"
       id="input-term"
       maxlength="30"
-      v-model="data.term"
+      v-model.trim="data.term"
       v-on:input="TermUpdated"
       autofocus
     >
@@ -34,7 +34,7 @@
       id="input-def"
       rows="3"
       maxlength="150"
-      v-model="data.def"
+      v-model.trim="data.def"
       v-on:input="DefUpdated"
       @keydown.ctrl.enter="$emit('addNew')"
       @keydown.tab="$emit('addNew')"

@@ -1,16 +1,46 @@
 <template>
   <div id="question">
-    <h1>1. What is the capital of Brazil?</h1>
+    <h1>{{definition}}</h1>
     <input
-      id="answer-input"
+      class="answer-input"
       type="text"
+      v-model.trim="userAnswer"
+      @input="checkCorrect()"
+      :class="{ correct }"
     >
   </div>
 </template>
 
 <script>
 export default {
-  name: "ShortAnswerQuestion"
+  // TODO: Emit something if the user's input is correct
+  name: "ShortAnswerQuestion",
+  props: {
+    term: {
+      type: String,
+      required: true
+    },
+    definition: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      userAnswer: "",
+      correct: false
+    };
+  },
+  methods: {
+    checkCorrect() {
+      console.log(this.userAnswer, "  ", this.term);
+      if (this.userAnswer.toLowerCase() === this.term.toLowerCase()) {
+        this.correct = true;
+      } else {
+        this.correct = false;
+      }
+    }
+  }
 };
 </script>
 
@@ -20,7 +50,7 @@ h1 {
   font-size: 28px;
 }
 
-#answer-input {
+.answer-input {
   margin-top: 10px;
   border-radius: 10px;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
@@ -31,5 +61,9 @@ h1 {
   font-size: 24px;
   width: 400px;
   height: 50px;
+}
+
+.correct {
+  background-color: green;
 }
 </style>
