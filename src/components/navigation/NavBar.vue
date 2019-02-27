@@ -160,7 +160,7 @@ export default {
 }
 
 .navbar {
-  background-color: $dark;
+  background-color: $primary;
   padding: 0px 10px 0px 10px;
   height: $nav-height;
 }

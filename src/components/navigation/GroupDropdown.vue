@@ -95,11 +95,6 @@ export default {
   color: $secondary-light;
 }
 
-.group-dropdown-button {
-  width: 250px;
-  margin-right: 20px;
-}
-
 .group-menu {
   background-color: $secondary-light;
   box-shadow: $shadow-heavy;
