@@ -51,6 +51,7 @@
             :class="
               $route.name === 'flashcards' ? 'active' : '' ||
               $route.name === 'study' ? 'active' : '' ||
+              $route.name === 'editFlashcards' ? 'active' : '' ||
               $route.name === 'createFlashcards' ? 'active' : ''"
             :to="{ name: 'flashcards' }"
           >

@@ -98,10 +98,10 @@ export default {
       display: block;
     }
 
-    .add-button > .button-icon {
-      transform: scale(1.1);
-      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+    // .add-button > .button-icon {
+    //   transform: scale(1.05);
+    //   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    // }
   }
 }
 
@@ -121,27 +121,30 @@ h2 {
 .add {
   background-image: $nav-gradient;
   cursor: pointer;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 // Icon on the new members button
 .button-icon {
-  text-align: center;
+  top: 5px;
   font-size: 8em;
-  bottom: 2px;
   position: relative;
-  vertical-align: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 // Circle background between the gradient and add icon
 .add-button {
-  position: relative;
-  top: 10px;
-  left: 10px;
+  // position: relative;
   width: 140px;
   height: 140px;
   border-radius: 50%;
   background-color: $light;
-  // background-color: #bebebe;
   user-select: none;
 }
 

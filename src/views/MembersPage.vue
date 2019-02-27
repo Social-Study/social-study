@@ -1,5 +1,10 @@
 <template>
   <div>
+    <!-- Notification displays when a new code is generated -->
+    <notifications
+      group="generateInvite"
+      position="left top"
+    />
     <page-title>
       <template slot="center">Members</template>
     </page-title>
@@ -135,6 +140,14 @@ export default {
           inviteCodes: FirebaseConsts.firestore.FieldValue.arrayUnion(
             this.inviteCode
           )
+        })
+        .then(() => {
+          this.$notify({
+            group: "generateInvite",
+            type: "success",
+            title: "Invite Code Generated",
+            text: "The code has been copied to your clipboard."
+          });
         });
       this.$refs.invite.select();
       document.execCommand("copy");

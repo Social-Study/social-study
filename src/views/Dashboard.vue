@@ -4,10 +4,6 @@
     id="full-screen"
     v-if="this.user !== null"
   >
-    <notifications
-      group="joinErrors"
-      position="right top"
-    />
     <!-- Centered Empty Dashboard Placeholder -->
     <div>
       <div class="empty">
