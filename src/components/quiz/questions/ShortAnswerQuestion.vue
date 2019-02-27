@@ -61,9 +61,14 @@ h1 {
   font-size: 24px;
   width: 400px;
   height: 50px;
+
+  &:focus {
+    outline: 0;
+    background-color: darken(#e7e7e7, 5);
+  }
 }
 
 .correct {
-  background-color: green;
+  border: 2px solid green;
 }
 </style>

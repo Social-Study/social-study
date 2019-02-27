@@ -58,15 +58,21 @@ export default {
     console.log("Correct Index:", this.correctIndex);
   },
   methods: {
-    // TODO: Make the non-duplicate loop more efficient
+    // TODO: Make sure all choices are non duplicates
     getChoice(index) {
-      if (index - 1 === this.correctIndex) {
+      if (index === this.correctIndex) {
         return this.term;
       } else {
-        let dummyOption = this.choiceList[
-          Math.floor(Math.random() * this.choiceList.length)
-        ];
-        return dummyOption;
+        let randomIndex;
+        let wrongChoice;
+        // Loop until we get an option that isn't the same as the correct term.
+        do {
+          randomIndex = Math.floor(Math.random() * this.choiceList.length);
+          wrongChoice = this.choiceList[randomIndex];
+          console.log("wrongChoice:", wrongChoice, "term:", this.term);
+        } while (wrongChoice === this.term);
+
+        return wrongChoice;
       }
     },
     checkCorrect() {
@@ -104,7 +110,7 @@ h1 {
   background-color: #e7e7e7;
 
   &.correct {
-    background-color: green;
+    border: 2px solid green;
   }
   .answers {
     justify-items: stretch;

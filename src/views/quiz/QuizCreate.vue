@@ -3,7 +3,7 @@
     <page-title>
       <template slot="left">
         <button
-          class="btn btn-success btn-lg"
+          class="btn btn-success"
           :class="selectedDecks == null ||
                   questionCount === 0 ||
                   selectedQTypes == null ||
@@ -11,6 +11,7 @@
           @click="loadQuiz()"
         >
           Generate
+          <i class="fas fa-plus"></i>
         </button>
       </template>
       <template slot="center">
