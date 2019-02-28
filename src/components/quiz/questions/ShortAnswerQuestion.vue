@@ -35,7 +35,7 @@ export default {
   methods: {
     // TODO: Think about logic to set answered to true only a single time
     handleInput() {
-      console.log(this.userAnswer, "  ", this.term);
+      // console.log(this.userAnswer, "  ", this.term);
       if (this.userAnswer.toLowerCase() === this.term.toLowerCase()) {
         this.correct = true;
         this.$emit("correct");

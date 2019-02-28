@@ -1,6 +1,6 @@
 <template>
   <div id="question">
-    <h1>3. Match each term to its definition</h1>
+    <h1>Match each term to its definition</h1>
     <div id="terms-holder">
       <!-- Create draggable component for each term -->
       <drag
@@ -34,6 +34,7 @@
         <h2
           v-for="slot in drop"
           :key="slot.definition"
+          :class="{correct: slot.isCorrect}"
         >{{slot.definition}}</h2>
       </div>
     </div>
@@ -45,59 +46,48 @@ import { Drag, Drop } from "vue-drag-drop";
 export default {
   name: "DragDropQuestion",
   components: { Drag, Drop },
+  props: {
+    terms: {
+      type: Array,
+      required: true
+    },
+    defs: {
+      type: Array,
+      required: true
+    }
+  },
   data: function() {
     return {
       // Drag zone data
-      drag: [
-        {
-          term: "Brazilia",
-          draggable: true
-        },
-        {
-          term: "London",
-          draggable: true
-        },
-        {
-          term: "Ottowa",
-          draggable: true
-        },
-        {
-          term: "Beijing",
-          draggable: true
-        }
-      ],
+      drag: [],
       // Drop zone data
-      drop: [
-        {
-          over: false,
-          filled: false,
-          text: "",
-          from: null,
-          definition: "Brazil"
-        },
-        {
-          over: false,
-          filled: false,
-          text: "",
-          from: null,
-          definition: "England"
-        },
-        {
-          over: false,
-          filled: false,
-          text: "",
-          from: null,
-          definition: "China"
-        },
-        {
-          over: false,
-          filled: false,
-          text: "",
-          from: null,
-          definition: "Canada"
-        }
-      ]
+      drop: []
     };
+  },
+  created() {
+    // Create the drag and drop data objects
+    for (let i = 0; i < this.terms.length; i++) {
+      this.drag.push({
+        term: this.terms[i],
+        draggable: true
+      });
+
+      this.drop.push({
+        definition: this.defs[i],
+        correctTerm: this.terms[i],
+        isCorrect: false,
+        text: "", // Drop Zone text (set to the term when dropped)
+        over: false, // Hovering over drop zone?
+        filled: false, // Drop zone filled with term?
+        from: null // Index of the drag term dropped in the zone
+      });
+    }
+
+    // Shuffle the array of term objects so it is difficult to match to their defs
+    for (let i = this.drop.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.drop[i], this.drop[j]] = [this.drop[j], this.drop[i]];
+    }
   },
   methods: {
     handleDrop(drop, data) {
@@ -109,6 +99,7 @@ export default {
         drop.over = true;
         drop.filled = true;
         drop.text = data.term;
+        this.$emit("answered", true);
       } else {
         // Dropping to a take drop zone
         // Replace existing term and enable its draggable property
@@ -118,6 +109,14 @@ export default {
         drop.over = true;
         drop.filled = true;
         drop.text = data.term;
+      }
+      this.checkCorrect(drop);
+    },
+    checkCorrect(drop) {
+      if (drop.text === drop.correctTerm) {
+        drop.isCorrect = true;
+      } else {
+        drop.isCorrect = false;
       }
     },
     handleDragOver(drop) {
@@ -137,6 +136,8 @@ export default {
         drop.over = false;
         this.drag[drop.from].draggable = true;
         drop.from = null;
+        drop.isCorrect = false;
+        this.$emit("answered", false);
       }
     }
   }
@@ -159,7 +160,7 @@ h1 {
 
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 
   background-color: #e7e7e7;
@@ -197,7 +198,8 @@ h1 {
 
   display: flex;
   flex-flow: row nowrap;
-  place-items: center;
+  justify-content: center;
+  align-items: center;
 
   background-color: #c4c4c4;
   border-radius: 18px;
@@ -224,5 +226,9 @@ h1 {
 .drop.filled {
   box-shadow: none;
   cursor: pointer;
+}
+
+.correct {
+  color: green;
 }
 </style>

@@ -1,6 +1,9 @@
 <template>
   <div>
     <page-title>
+      <template slot="left">
+        <button class="btn btn-primary">Submit Quiz</button>
+      </template>
       <template slot="center">
         Quiz
       </template>
@@ -8,6 +11,10 @@
         <h2 class="title">Answered: {{answeredQuestions}}/{{totalQuestions}}</h2>
       </template>
     </page-title>
+    <!-- <div class="quiz-title">
+      <h2 class="title">Answered: {{answeredQuestions}}/{{totalQuestions}}</h2>
+    </div> -->
+
     <div
       class="quiz-content"
       v-if="terms && definitions && questionTypes"
@@ -16,9 +23,9 @@
         <short-answer-question
           v-for="(term, index) in questionGroups.shortAnswer.terms"
           :key="index"
-          @answered="handleAnswered"
           :term="term"
           :definition="questionGroups.shortAnswer.definitions[index]"
+          @answered="handleAnswered"
         />
       </div>
       <div v-if="questionTypes.multipleChoice == true">
@@ -28,10 +35,19 @@
           :term="term"
           :definition="questionGroups.multipleChoice.definitions[index]"
           :choiceList="shuffledTerms"
+          @answered="handleAnswered"
+        />
+      </div>
+      <div v-if="questionTypes.dragAndDrop == true">
+        <drag-drop-question
+          v-for="(termArray, index) in questionGroups.dragAndDrop.terms"
+          :key="index"
+          :terms="termArray"
+          :defs="questionGroups.dragAndDrop.definitions[index]"
+          @answered="handleAnswered"
         />
       </div>
       <matching-question v-if="questionTypes.matching == true" />
-      <drag-drop-question v-if="questionTypes.dragAndDrop == true" />
 
     </div>
     <div v-else>
@@ -85,6 +101,10 @@ export default {
           definitions: []
         },
         shortAnswer: {
+          terms: [],
+          definitions: []
+        },
+        dragAndDrop: {
           terms: [],
           definitions: []
         }
@@ -147,8 +167,30 @@ export default {
             terms: this.shuffledTerms.slice(i, i + size),
             definitions: this.shuffledDefs.slice(i, i + size)
           };
+        } else if (
+          // User selected short answer and questions haven't yet been generated
+          this.questionTypes.dragAndDrop &&
+          this.questionGroups.dragAndDrop.terms.length === 0
+        ) {
+          // TODO: Loop through the terms/defs in 4s to create a 2d subarray
+          let terms = [];
+          let defs = [];
+
+          // TODO: Drag and drop should now use this data it seems to work...
+          for (let j = i; j < this.shuffledTerms.length; j += 4) {
+            console.log("test");
+            terms.push(this.shuffledTerms.slice(j, j + 4));
+            defs.push(this.shuffledDefs.slice(j, j + 4));
+          }
+
+          console.log(terms);
+          this.questionGroups.dragAndDrop = {
+            terms: terms,
+            definitions: defs
+          };
         }
       }
+      // TODO: append extras to the end
     }
   },
   created() {
@@ -171,6 +213,17 @@ export default {
 #question {
   margin-top: 40px;
 }
+
+// .quiz-title {
+//   position: sticky;
+//   top: 0;
+// }
+
+.header-container {
+  position: sticky;
+  top: 0;
+}
+
 .quiz-content {
   display: flex;
   flex-flow: column nowrap;

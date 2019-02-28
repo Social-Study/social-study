@@ -55,7 +55,7 @@ export default {
     for (let i = 0; i < 4; i++) {
       this.choices.push(this.getChoice(i));
     }
-    console.log("Correct Index:", this.correctIndex);
+    // console.log("Correct Index:", this.correctIndex);
   },
   methods: {
     // TODO: Make sure all choices are non duplicates
@@ -69,7 +69,7 @@ export default {
         do {
           randomIndex = Math.floor(Math.random() * this.choiceList.length);
           wrongChoice = this.choiceList[randomIndex];
-          console.log("wrongChoice:", wrongChoice, "term:", this.term);
+          // console.log("wrongChoice:", wrongChoice, "term:", this.term);
         } while (wrongChoice === this.term);
 
         return wrongChoice;
@@ -80,6 +80,14 @@ export default {
         this.correct = true;
       } else {
         this.correct = false;
+      }
+    }
+  },
+  watch: {
+    picked(newVal, oldVal) {
+      // console.log(oldVal, newVal);
+      if (oldVal === null && newVal !== null) {
+        this.$emit("answered", true);
       }
     }
   }
@@ -149,7 +157,6 @@ h1 {
   background-image: $green-gradient2;
 }
 label {
-  // font: 300 16px/1.7 "Open Sans", sans-serif;
   color: #666;
   cursor: pointer;
 }
