@@ -18,6 +18,8 @@
   <div
     v-else
     class="profile-card"
+    :class="description !== null ? 'tooltip tooltip-bottom' : ''"
+    :data-tooltip="description"
   >
     <div class="gradient-border">
       <Avatar
@@ -51,6 +53,11 @@ export default {
   props: {
     photoURL: String,
     displayName: String,
+    description: {
+      type: String,
+      required: false,
+      default: null
+    },
     add: {
       type: Boolean,
       default: false,

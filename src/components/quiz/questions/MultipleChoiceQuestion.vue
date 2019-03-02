@@ -77,8 +77,10 @@ export default {
     },
     checkCorrect() {
       if (this.picked == this.correctIndex) {
+        this.$emit("correct", true);
         this.correct = true;
       } else {
+        this.$emit("correct", false);
         this.correct = false;
       }
     }

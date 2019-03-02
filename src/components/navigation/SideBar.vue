@@ -282,7 +282,7 @@ export default {
   z-index: 200;
   top: $nav-height;
   left: 0;
-  border-top: 2px solid $secondary;
+  // border-top: 2px solid $secondary;
   background-color: $dark;
 
   display: flex;

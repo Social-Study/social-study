@@ -34,6 +34,7 @@
           :key="member.uid"
           :photoURL="member.photoURL"
           :displayName="member.displayName"
+          :description="member.description"
           :owner="member.uid === studyGroup.owner"
         >
         </member-card>

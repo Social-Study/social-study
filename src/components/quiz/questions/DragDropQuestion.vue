@@ -114,9 +114,11 @@ export default {
     },
     checkCorrect(drop) {
       if (drop.text === drop.correctTerm) {
+        this.$emit("correct", true);
         drop.isCorrect = true;
       } else {
         drop.isCorrect = false;
+        this.$emit("correct", false);
       }
     },
     handleDragOver(drop) {

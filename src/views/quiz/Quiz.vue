@@ -2,7 +2,10 @@
   <div>
     <page-title>
       <template slot="left">
-        <button class="btn btn-primary">Submit Quiz</button>
+        <button
+          class="btn btn-primary"
+          @click="showScoreModal = true"
+        >Submit Quiz</button>
       </template>
       <template slot="center">
         Quiz
@@ -11,9 +14,39 @@
         <h2 class="title">Answered: {{answeredQuestions}}/{{totalQuestions}}</h2>
       </template>
     </page-title>
-    <!-- <div class="quiz-title">
-      <h2 class="title">Answered: {{answeredQuestions}}/{{totalQuestions}}</h2>
-    </div> -->
+
+    <div
+      v-show="showScoreModal"
+      class="modal modal-sm active"
+      id="modal-id"
+    >
+      <a
+        href="#close"
+        class="modal-overlay"
+        aria-label="Close"
+        @click="showScoreModal = false"
+      ></a>
+      <div class="modal-container">
+        <div class="modal-header">
+          <a
+            href="#close"
+            class="btn btn-clear float-right"
+            aria-label="Close"
+            @click="showScoreModal = false"
+          ></a>
+          <div class="modal-title h5">Quiz Results</div>
+        </div>
+        <div class="modal-body">
+          <div class="content">
+            <h2>{{ Math.round((correctQuestions / totalQuestions)*100) }} %</h2>
+            <h3>You got {{correctQuestions}} out of {{totalQuestions}} correct!</h3>
+          </div>
+        </div>
+        <!-- <div class="modal-footer">
+          ...
+        </div> -->
+      </div>
+    </div>
 
     <div
       class="quiz-content"
@@ -26,6 +59,7 @@
           :term="term"
           :definition="questionGroups.shortAnswer.definitions[index]"
           @answered="handleAnswered"
+          @correct="handleCorrect"
         />
       </div>
       <div v-if="questionTypes.multipleChoice == true">
@@ -36,6 +70,7 @@
           :definition="questionGroups.multipleChoice.definitions[index]"
           :choiceList="shuffledTerms"
           @answered="handleAnswered"
+          @correct="handleCorrect"
         />
       </div>
       <div v-if="questionTypes.dragAndDrop == true">
@@ -45,6 +80,7 @@
           :terms="termArray"
           :defs="questionGroups.dragAndDrop.definitions[index]"
           @answered="handleAnswered"
+          @correct="handleCorrect"
         />
       </div>
       <matching-question v-if="questionTypes.matching == true" />
@@ -90,6 +126,8 @@ export default {
   data() {
     return {
       answeredQuestions: 0,
+      correctQuestions: 0,
+      showScoreModal: false,
       totalQuestions: this.terms.length,
       // Shuffled versions of the props
       shuffledTerms: this.terms,
@@ -118,6 +156,13 @@ export default {
         this.answeredQuestions++;
       } else if (!isAnswered) {
         this.answeredQuestions--;
+      }
+    },
+    handleCorrect(isCorrect) {
+      if (isCorrect) {
+        this.correctQuestions++;
+      } else if (!isAnswered) {
+        this.correctQuestions--;
       }
     },
     // Shuffle both arrays so that the contents are still parallel

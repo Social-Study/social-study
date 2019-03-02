@@ -98,6 +98,12 @@ export default {
 .group-dropdown-button {
   width: 250px;
   margin-right: 20px;
+  background-color: lighten($dark, 5) !important;
+  border: none !important;
+
+  &:hover {
+    background-color: lighten($dark, 10) !important;
+  }
 }
 
 .group-menu {
