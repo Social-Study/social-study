@@ -100,7 +100,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     if (!this.isSaved) {
-      if (confirm("Note is note saved! Are you sure you want to leave?")) {
+      if (confirm("Note is not saved! Are you sure you want to leave?")) {
         next();
       }
     } else {

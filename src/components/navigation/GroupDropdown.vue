@@ -130,9 +130,10 @@ export default {
 }
 
 .current-group {
-  background-color: $dark;
+  // background-color: $dark;
+  border: 2px solid $primary;
   p {
-    color: white;
+    // color: white;
   }
   &:hover p {
     color: $secondary;
