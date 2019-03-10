@@ -70,12 +70,17 @@ export default {
   height: 288px;
   width: 216px;
   padding: 1em;
-  border-radius: 10px;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
-
+  border: 2px solid $secondary-light;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &:hover{
+      border-image: $orange-gradient;
+      border-image-slice: 1;
+      box-shadow: $shadow-heavy;
+  }
 }
 
 #title {

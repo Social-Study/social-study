@@ -102,7 +102,6 @@ $card-height: 218px;
   height: $card-height;
   width: $card-width;
   padding: 1em;
- // border-radius: 10px;
   border: 2px solid $secondary-light;
 
   display: flex;
