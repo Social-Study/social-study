@@ -33,6 +33,7 @@ $secondary-light: hsla(236%, 11%, 71%, 1);
 
 //UI 2.0 colors
 $transparent-dark: rgba(0, 0, 0, 0.75);
+$transparent-hover: lighten($transparent-dark, 10);
 
 // Border Radius Presets
 $border-round: 10px;

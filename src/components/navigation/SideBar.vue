@@ -308,7 +308,7 @@ export default {
 
       i.large-icon {
         text-align: center;
-        font-size: 30px;
+        font-size: 25px;
       }
     }
 
@@ -331,7 +331,7 @@ export default {
   &.collapsed {
     width: 50px;
     // min-width: 50px;
-    transition: 1s;
+    transition: 0.25s;
     .menu {
       padding: 0;
     }
@@ -341,7 +341,7 @@ export default {
   &.active {
     width: 200px;
     min-width: 200px;
-    transition: 1s;
+    transition: 0.25s;
   }
 }
 </style>

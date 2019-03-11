@@ -6,6 +6,7 @@
   >
     <a
       class="group-dropdown-button btn btn-primary dropdown-toggle"
+      id="group-button"
       tabindex="0"
     >
       Study Groups <i class="fas fa-caret-down"></i>
@@ -105,6 +106,7 @@ export default {
   box-shadow: $shadow-heavy;
   max-width: 250px;
   min-width: 250px;
+  margin-top: 4px;
 }
 
 .group-card {
@@ -142,5 +144,13 @@ export default {
   user-select: none;
   margin: 0;
   color: $secondary;
+}
+#group-button{
+  background-color:$transparent-dark;
+  color: white;
+
+  &:hover{
+    background-color: $transparent-hover;
+  }
 }
 </style>

@@ -2,21 +2,23 @@
 // name-input: Used for input boxes that allow the user to change the name of their content
 // split: Used to apply spacing between buttons in the title bar
 <template>
-  <div
-    class="header-container"
-    :class="$store.getters.chatActive ? 'chat-active' : ''"
-  >
-    <div class="left">
-      <slot name="left"></slot>
-    </div>
-    <h1 class="center text-ellipsis">
-      <slot name="center"></slot>
-    </h1>
-    <div class="right">
-      <slot name="right"></slot>
-    </div>
+  <div class="pageTitel-container">
+    <div
+        class="header-container"
+        :class="$store.getters.chatActive ? 'chat-active' : ''"
+      >
+        <div class="left">
+          <slot name="left"></slot>
+        </div>
+        <h1 class="center text-ellipsis">
+          <slot name="center"></slot>
+        </h1>
+        <div class="right">
+          <slot name="right"></slot>
+        </div>
+      </div>
+      <hr>
   </div>
-
 </template>
 
 <script>
@@ -33,11 +35,21 @@ export default {
   width: 100%;
 }
 
-.header-container {
-  padding: 4px 8px 4px 8px;
-  background-color: $secondary-light;
-  font-family: $secondary-font;
+.pageTitel-container{
+  margin-bottom: 20px;
+}
 
+hr{
+  margin:0px;
+  height: 1px;
+  background-image: $orange-gradient;
+  border:none;
+}
+
+.header-container {
+  background-color: transparent;
+  font-family: $secondary-font;
+  color:$dark;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -46,13 +58,11 @@ export default {
 
   .name-input {
     border: none;
-    background-color: #f6f6f6;
-    font-size: 20px;
+    font-size: 10px;
     min-width: 350px;
     max-width: 350px;
-    height: 36px;
+    height: 26px;
     font-weight: bold;
-    padding: 0 4px;
     font-family: $primary-font;
     font-weight: 400;
   }
@@ -78,7 +88,7 @@ export default {
   .center {
     flex: 2;
     user-select: none;
-    font-size: 1.8em;
+    font-size: 1.4em;
     margin: 0;
     font-weight: 700;
     line-height: normal;

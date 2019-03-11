@@ -34,6 +34,7 @@
         v-if="$route.params.groupID"
         style="width: 32px; height: 32px;margin-right: 20px; border: none"
         class="btn btn-action"
+        id="chat-button"
         @click="$store.commit('toggleChatActive')"
       ><i class="fas fa-comment-alt"></i></button>
       <div
@@ -207,6 +208,14 @@ a.navbar-brand {
   color:white;
 }
 
+#chat-button{
+  background-color: $transparent-dark;
+  color:white;
+
+  &:hover{
+    background-color: $transparent-hover;
+  }
+}
 
 .settings-menu {
   position: absolute;
