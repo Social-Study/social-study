@@ -20,10 +20,10 @@
             </div>
           </div>
         </li>
-        <li
+        <hr
           v-show="show"
-          class="divider"
-        ></li>
+          class="section-divider"
+        >
 
         <!-- Home Link -->
         <li
@@ -281,15 +281,15 @@ export default {
   z-index: 200;
   top: $nav-height;
   left: 0;
-  border-top: 2px solid $secondary;
-  background-color: $dark;
+  background-color: $transparent-dark;
+  transition: 0.25s;
 
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
 
   .menu {
-    background: $dark;
+    background-color: transparent;
     box-shadow: none;
     min-width: 50px;
 
@@ -330,8 +330,7 @@ export default {
 
   &.collapsed {
     width: 50px;
-    // min-width: 50px;
-    transition: 0.25s;
+    min-width: 50px;
     .menu {
       padding: 0;
     }
@@ -341,7 +340,12 @@ export default {
   &.active {
     width: 200px;
     min-width: 200px;
-    transition: 0.25s;
   }
+}
+
+.section-divider{
+  height:1px;
+  background-image: $orange-gradient;
+  border:none;
 }
 </style>

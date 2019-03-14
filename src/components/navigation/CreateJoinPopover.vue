@@ -193,9 +193,12 @@ hr{
 #button{
   background-color: $transparent-dark;
   color:white;
+  border: solid 2px $primary;
 
   &:hover{
-    background-color: $transparent-hover;
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
   }
 }
 </style>

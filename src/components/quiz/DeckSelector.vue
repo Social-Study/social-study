@@ -214,7 +214,9 @@ export default {
       height: 100%;
       padding: 4px;
 
-      background-color: lighten($secondary-light, 20);
+      // background-color: lighten($secondary-light, 20);
+      background-color: $transparent-dark;
+      color:white;
 
       display: flex;
       justify-content: center;
@@ -225,19 +227,21 @@ export default {
       font-family: $secondary-font;
       font-weight: 700;
     }
-
     &.selected {
-      border-image: $nav-gradient;
+      background-image: $orange-gradient;
+      border: none;
+      color: white;
+      box-shadow: $shadow-hovered;
+
+      #deck-details #deck-author{
+        color: $dark;
+      }
+    }
+    &:hover{
+      border-image: $orange-gradient;
       border-image-slice: 1;
       border-width: 2px;
       box-shadow: $shadow-heavy;
-
-      &.private {
-        border-image: $blue-gradient;
-        border-image-slice: 1;
-        border-width: 2px;
-        box-shadow: $shadow-heavy;
-      }
     }
   }
 }

@@ -114,16 +114,19 @@ export default {
   max-width: 250px;
   padding: 5px;
   background-color: white;
-  box-shadow: $shadow;
+  border: solid 2px white;
   transition: padding-top 0.1s, padding-bottom 0.1s;
   transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
   &:hover{
     padding-top: 5%;
     padding-bottom: 5%;
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
 
     #instructorText{
       font-size: 15px;
-      color: black;
+      color: $dark;
     }
 
   }
@@ -133,8 +136,8 @@ export default {
 }
 
 .current-group {
-  box-shadow: $shadow-heavy;
   background-image: $orange-gradient;
+  border: none;
   p {
     color: white;
   }
@@ -148,9 +151,12 @@ export default {
 #group-button{
   background-color:$transparent-dark;
   color: white;
+  border: solid 2px $primary;
 
   &:hover{
-    background-color: $transparent-hover;
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
   }
 }
 </style>

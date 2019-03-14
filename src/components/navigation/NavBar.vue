@@ -32,7 +32,7 @@
     <section class="navbar-section">
       <button
         v-if="$route.params.groupID"
-        style="width: 32px; height: 32px;margin-right: 20px; border: none"
+        style="width: 36px; height: 36px;margin-right: 20px;"
         class="btn btn-action"
         id="chat-button"
         @click="$store.commit('toggleChatActive')"
@@ -211,15 +211,18 @@ a.navbar-brand {
 #chat-button{
   background-color: $transparent-dark;
   color:white;
+  border: solid 2px $primary;
 
   &:hover{
-    background-color: $transparent-hover;
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
   }
 }
 
 .settings-menu {
   position: absolute;
-  top: 25px;
+  top: 40px;
   right: 30px;
 }
 
