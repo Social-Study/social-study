@@ -132,7 +132,7 @@ export default {
         this.userText = doc.data().content;
         this.isLoading = false;
       })
-      .catch(err => {
+      .catch(() => {
         this.isLoading = false;
         this.isError = true;
       });

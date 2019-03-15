@@ -110,7 +110,6 @@ export default {
 
     // Load from different firestore location if the deck if public or private
     if (this.isPrivate) {
-      console.log("private set");
       flashcardCollection = flashcardCollection
         .doc("private")
         .collection(this.$store.getters.uid)
@@ -135,13 +134,13 @@ export default {
 
           this.currentContent = this.termList[0];
           this.dataloaded = true;
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
         }
+        // else {
+        // console.log("No such document!");
+        // }
       })
       .catch(error => {
-        console.log("Error getting document:", error);
+        // console.log("Error getting document:", error);
       });
   },
   methods: {

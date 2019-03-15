@@ -161,7 +161,7 @@ export default {
     handleCorrect(isCorrect) {
       if (isCorrect) {
         this.correctQuestions++;
-      } else if (!isAnswered) {
+      } else if (!isCorrect) {
         this.correctQuestions--;
       }
     },
@@ -187,10 +187,8 @@ export default {
           qTypeCount++;
         }
       });
-      console.log("Question Types:", qTypeCount);
 
       let size = Math.floor(this.shuffledTerms.length / qTypeCount);
-      console.log("Size:", size);
 
       // Split the ques/def combo accordingly
       for (let i = 0; i < this.shuffledTerms.length; i += size) {
@@ -223,12 +221,10 @@ export default {
 
           // TODO: Drag and drop should now use this data it seems to work...
           for (let j = i; j < this.shuffledTerms.length; j += 4) {
-            console.log("test");
             terms.push(this.shuffledTerms.slice(j, j + 4));
             defs.push(this.shuffledDefs.slice(j, j + 4));
           }
 
-          console.log(terms);
           this.questionGroups.dragAndDrop = {
             terms: terms,
             definitions: defs

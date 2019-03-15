@@ -96,8 +96,9 @@ export default {
           this.publicDecks.push({ id: doc.id, selected: false, ...doc.data() });
         });
       })
+      // Catch public deck loading error
       .catch(function(error) {
-        console.log("Error getting public decks: ", error);
+        // console.log("Error getting public decks: ", error);
       });
 
     privateCollection
@@ -112,8 +113,9 @@ export default {
           });
         });
       })
+      // Catch public deck loading error
       .catch(function(error) {
-        console.log("Error getting private decks: ", error);
+        // console.log("Error getting private decks: ", error);
       });
   },
   methods: {
@@ -216,7 +218,7 @@ export default {
 
       // background-color: lighten($secondary-light, 20);
       background-color: $transparent-dark;
-      color:white;
+      color: white;
 
       display: flex;
       justify-content: center;
@@ -233,11 +235,11 @@ export default {
       color: white;
       box-shadow: $shadow-hovered;
 
-      #deck-details #deck-author{
+      #deck-details #deck-author {
         color: $dark;
       }
     }
-    &:hover{
+    &:hover {
       border-image: $orange-gradient;
       border-image-slice: 1;
       border-width: 2px;

@@ -180,26 +180,26 @@ export default {
 .popover-container {
   // top: -10px !important;
   .card {
-      background-color: $transparent-dark;
-      color:white;
+    background-color: $transparent-dark;
+    color: white;
   }
 }
 
-hr{
+hr {
   background-image: $orange-gradient;
-  height:1px;
-  border:none;
+  height: 1px;
+  border: none;
 }
-.section-title{
+.section-title {
   text-align: center;
   padding-bottom: 2%;
 }
-#button{
+#button {
   background-color: $transparent-dark;
-  color:white;
+  color: white;
   border: solid 2px $primary;
 
-  &:hover{
+  &:hover {
     border-image: $orange-gradient;
     border-image-slice: 1;
     border-width: 2px;

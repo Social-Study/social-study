@@ -235,9 +235,8 @@ export default {
           this.isMember = true;
           this.isLoading = false;
         })
+        //  Catch load error
         .catch(() => {
-          console.log("load error!");
-
           this.isLoading = false;
         });
     }

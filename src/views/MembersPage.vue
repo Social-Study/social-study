@@ -120,7 +120,7 @@ export default {
         this.studyGroup = group;
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
 
     // Watch for changes on the document, if there is, set study group to new info

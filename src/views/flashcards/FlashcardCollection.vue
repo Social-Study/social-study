@@ -155,25 +155,27 @@ export default {
 
       // This is run as a transaction because it needs to be atomic.
       // Ensures that both the moving and deleting are executed together
-      return db
-        .runTransaction(transaction => {
-          // This code may get re-run multiple times if there are conflicts.
-          return transaction.get(from).then(deck => {
-            // Get the contents of the existing document
-            if (!deck.exists) {
-              throw "Deck does not exist!";
-            }
-            transaction.set(to, deck.data()); // Create new document
-            transaction.delete(from); // Delete old document
-          });
-        })
-        .then(() => {
-          console.log("Transaction successfully committed!");
-          this.loadDecks();
-        })
-        .catch(error => {
-          console.log("Transaction failed: ", error);
-        });
+      return (
+        db
+          .runTransaction(transaction => {
+            // This code may get re-run multiple times if there are conflicts.
+            return transaction.get(from).then(deck => {
+              // Get the contents of the existing document
+              if (!deck.exists) {
+                throw "Deck does not exist!";
+              }
+              transaction.set(to, deck.data()); // Create new document
+              transaction.delete(from); // Delete old document
+            });
+          })
+          .then(() => {
+            this.loadDecks();
+          })
+          // Error switching flashcard deck location
+          .catch(error => {
+            // console.log("Transaction failed: ", error);
+          })
+      );
     }
   },
   computed: {

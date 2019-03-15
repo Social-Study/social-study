@@ -47,13 +47,8 @@
 </template>
 
 <script>
-import Avatar from "@/components/Avatar";
-
 export default {
   name: "FlashcardIcon",
-  components: {
-    Avatar
-  },
   props: {
     info: {
       type: Object,
@@ -108,10 +103,10 @@ $card-height: 218px;
   flex-direction: column;
   justify-content: space-between;
 
-  &:hover{
-      border-image: $orange-gradient;
-      border-image-slice: 1;
-      box-shadow: $shadow-heavy;
+  &:hover {
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    box-shadow: $shadow-heavy;
   }
 }
 

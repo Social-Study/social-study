@@ -69,13 +69,10 @@ export default {
   },
   created() {},
   methods: {
-    debug() {
-      console.log("clicked");
-    },
-    termUpdated(event) {
+    termUpdated() {
       this.$emit("termUpdated", this.data);
     },
-    defUpdated(event) {
+    defUpdated() {
       this.$emit("defUpdated", this.data);
     }
   }

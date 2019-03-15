@@ -85,6 +85,9 @@ export default {
       }
       return 0;
     },
+    /**
+     * Sort all agenda items using the custom implemented compare function
+     */
     sortItems() {
       console.log(this.agendaItems.sort(this.compare));
     }

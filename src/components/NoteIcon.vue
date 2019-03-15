@@ -76,10 +76,10 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 
-  &:hover{
-      border-image: $orange-gradient;
-      border-image-slice: 1;
-      box-shadow: $shadow-heavy;
+  &:hover {
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    box-shadow: $shadow-heavy;
   }
 }
 

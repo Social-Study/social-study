@@ -113,12 +113,12 @@ a.modal-overlay {
 // Sidebar Styles for Visible /
 .sidebar-active {
   margin-left: 200px;
-  transition: .25s;
+  transition: 0.25s;
 }
 
 .sidebar-inactive {
   margin-left: 50px;
-  transition: .25s;
+  transition: 0.25s;
 }
 
 // Chat Sidebar Styles for Visible / Hidden

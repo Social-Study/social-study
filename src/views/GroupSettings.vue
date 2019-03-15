@@ -351,7 +351,6 @@ export default {
       // Have to manually find and delete subcollections
     },
     changeOwner() {
-      console.log(this.selected);
       db.collection("study-groups")
         .doc(this.$route.params.groupID)
         .update({
@@ -446,7 +445,7 @@ export default {
           });
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
         });
     },
     parseDays(days) {

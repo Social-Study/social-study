@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import { db } from "@/firebaseConfig";
-
 export default {
   name: "QuestionTypeSelector",
   data() {
@@ -83,7 +81,8 @@ export default {
               selected.shortAnswer = true;
               break;
             default:
-              console.log("WTF");
+            // This shoudl never be reached...
+            // console.er("WTF");
           }
         }
       });
@@ -139,7 +138,7 @@ export default {
       box-shadow: $shadow-hovered;
     }
 
-    &:hover{
+    &:hover {
       border-image: $orange-gradient;
       border-image-slice: 1;
       border-width: 2px;

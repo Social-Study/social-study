@@ -236,8 +236,9 @@ export default {
       .then(user => {
         this.userBio = user.description;
       })
+      // Catch load user data error
       .catch(error => {
-        console.log("ProfileSettings: " + error);
+        // console.log("ProfileSettings: " + error);
       });
 
     this.loadGroups();
@@ -262,8 +263,9 @@ export default {
         .then(groupList => {
           this.groupList = groupList;
         })
+        // Catch group loading error
         .catch(error => {
-          console.log(error);
+          // console.log(error);
         });
     },
     leaveGroup(id) {
@@ -349,7 +351,6 @@ export default {
 @import "@/styles.scss";
 
 .modal-container {
-
   #close {
     color: $secondary;
     i {

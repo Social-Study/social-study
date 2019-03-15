@@ -147,7 +147,6 @@ export default {
       }
     },
     deleteCard(index) {
-      console.log("delete: " + index);
       if (this.terms.length !== 1) {
         this.$delete(this.terms, index);
         this.$delete(this.definitions, index);
@@ -189,18 +188,16 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     //saves the current deck and pushes it to firebase
     saveDeck() {
       for (let i = 0; i < this.terms.length; i++) {
         if (this.terms[i] === null) {
-          console.log("term null Term Found");
           this.contentFilled = false;
         }
         if (this.definitions[i] === null) {
-          console.log("def null Term Found");
           this.contentFilled = false;
         }
       }
@@ -232,7 +229,7 @@ export default {
               this.$router.push(`/${this.$route.params.groupID}/flashcards`);
             })
             .catch(error => {
-              console.error("Error updating document: ", error);
+              // console.error("Error updating document: ", error);
             });
         } else {
           // Otherwise create a brand new document
@@ -253,11 +250,10 @@ export default {
               this.$router.push(`/${this.$route.params.groupID}/flashcards`);
             })
             .catch(error => {
-              console.error("Error adding document: ", error);
+              // console.error("Error adding document: ", error);
             });
         }
       } else {
-        console.log("noTitle");
         this.noTitle = true;
       }
     }

@@ -509,8 +509,9 @@ export default {
           this.newGroupID = docRef.id;
           this.next();
         })
+        // Catch error when creating Study Group
         .catch(error => {
-          console.log("CreateGroup: " + error);
+          // console.log("CreateGroup: " + error);
         });
     }
   },

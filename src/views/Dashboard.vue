@@ -50,8 +50,9 @@ export default {
       .then(user => {
         this.user = user;
       })
+      // Catch error when loading user's account data
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
 
     // Get members list of joined study Groups
