@@ -110,7 +110,7 @@ a.modal-overlay {
   background-image: $dark-gradient !important;
 }
 
-// Sidebar Styles for Visible /
+// Sidebar Styles for Visible / Hidden
 .sidebar-active {
   margin-left: 200px;
   transition: 0.25s;

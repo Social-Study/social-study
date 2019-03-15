@@ -85,7 +85,6 @@
                 <textarea
                   @keydown.ctrl.enter="saveChanges"
                   name="bio"
-                  cols="53"
                   rows="3"
                   style="resize: none;"
                   v-model="profileDetails.newBio"
@@ -363,6 +362,10 @@ export default {
       outline: none;
     }
   }
+}
+
+textarea {
+  width: 100%;
 }
 
 .modal-header {

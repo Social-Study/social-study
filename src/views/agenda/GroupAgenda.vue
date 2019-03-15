@@ -4,7 +4,7 @@
       <template slot="left">
         <button
           class="btn btn-primary"
-          @click="createItem"
+          @click="showCreateModal = true"
         >Add Item <i class="fas fa-plus"></i>
         </button>
       </template>
@@ -12,8 +12,15 @@
         Group Agenda
       </template>
     </page-title>
-    <div class="content-container">
 
+    <!-- Modal Component -->
+    <agenda-create-modal
+      v-if="showCreateModal"
+      @close="showCreateModal = false"
+      @publish="createItem"
+    />
+
+    <div class="content-container">
       <!-- List of all agenda items -->
       <div class="item-list">
         <div
@@ -50,8 +57,9 @@ import PageTitle from "@/components/navigation/PageTitle";
 import AgendaItem from "@/components/agenda/AgendaItem";
 import AgendaItemDateHeader from "@/components/agenda/AgendaItemDateHeader";
 import AgendaItemDetail from "@/components/agenda/AgendaItemDetail";
+import AgendaCreateModal from "@/components/agenda/AgendaCreateModal";
 
-import { format, isSameDay } from "date-fns";
+import { format, isSameDay, setHours, setMinutes } from "date-fns";
 
 export default {
   name: "GroupAgenda",
@@ -59,14 +67,28 @@ export default {
     PageTitle,
     AgendaItem,
     AgendaItemDateHeader,
-    AgendaItemDetail
+    AgendaItemDetail,
+    AgendaCreateModal
   },
   data() {
     return {
+      // Only shown when the create new button is pressed
+      showCreateModal: false,
       // Object that is clicked on (focused)
       selectedItem: {},
       // List of all agenda item objects
-      agendaItems: []
+      agendaItems: [],
+      // New event object details
+      newEvent: {
+        title: "",
+        description: "",
+        date: null,
+        time: {
+          HH: "12",
+          mm: "00",
+          ss: "00"
+        }
+      }
     };
   },
   created() {
@@ -93,14 +115,21 @@ export default {
       }
     },
     /**
-     * Create a new agenda item
+     * Create a new agenda item. Each agenda item contains the following:
+     *
+     * Title
+     * Description
+     * Date/Time
+     *
      */
-    createItem() {
-      let date = new Date();
-      this.agendaItems.push({
-        title: format(date, "MM/DD/YYYY"),
-        date: date
-      });
+    createItem(e) {
+      console.log(e);
+      let eventDate = e.date;
+      eventDate = setHours(eventDate, e.time.hh);
+      eventDate = setMinutes(eventDate, e.time.mm);
+
+      console.log(eventDate.toString());
+      this.showCreateModal = false;
     },
     /**
      * Compare two agenda objects by their date value
@@ -117,7 +146,7 @@ export default {
      * Sort all agenda items using the custom implemented compare function
      */
     sortItems() {
-      console.log(this.agendaItems.sort(this.compare));
+      // console.log(this.agendaItems.sort(this.compare));
     }
   }
 };
