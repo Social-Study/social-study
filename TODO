@@ -1,19 +1,6 @@
 Branding:
-  ☐ Design a logo / titlebar icon
     - My brother is working on a design
   ☐ Think of better slogan.
-  ☐ Find better flashcard sidebar icon
-
-Possible Features (Time Permitting):
-  ☐ Maybe allow users to upload pdfs and save notes to their own documents
-  ☐ Video/Audio Chat with WebRTC
-  ☐ Make the site mobile friendly.
-    Hardest part is making the navbar change into a mobile form.
-  ☐ Indicators that show online group members in the sidebar
-  ☐ User chooses a gradient for their specific study group during creation
-  ☐ Add emoji menu to the study group chat.
-  ☐ Generate SSR with Nuxt.js. Server side rendering
-    https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
 
 General:
   ☐ Go through and error check all inputs where necessary
@@ -33,13 +20,12 @@ General:
        Every list is loading from firebase so there is a delay before the data is shown. Figure out how to get loading list to be animated 1-by-1 when shown for the first time
   ☐ Small QOL Features
     ☐ Always verify delete actions
-    ☐
+
+  ☐ The user's "bio" information should be displayed somewhere....
 
 Components Needed:
   ☐ Notification popup
     Currently using vue-notifications but would be willing to switch to something better.
-  ☐ Modal that can be used for all other modals.
-  ☐ Custom designed switch component
 
 Firebase Functions File:
   ☐ Remove expired invite codes
@@ -48,9 +34,6 @@ Firebase Functions File:
   ☐ Function to increment message counter of the document everytime a new document is created
   ☐ Generate a boilerplate note when a new user joins the study group? It should let them know the full functionality of markdown and the syntax
 
-Landing:
-  ☐ Improve form validation
-
 Modals:
   ☐ Improve modals with new design...
 
@@ -58,9 +41,6 @@ New Sidebar:
   ☐ Create a smooth transition between collapsed and visible states
     Right now the text pops around as the transition plays
     May have to do something like "inline-block" so that elements don't break
-
-Page Header:
-  ☐ Figure out how to always center the text, right now it is pushed left and right by other header content...
 
 Notes:
   ☐ Find more markdown css themes
@@ -77,19 +57,23 @@ Chat:
   Maybes:
     ☐ Total number of messages indicator (Could either be total messages or unread messages...)
        Not sure how I would implement tracking unread messages
-    ☐ Local desktop notifications if there is a new message.
     ☐ Transition when the button first appears
     ☐ Allow user's to delete their own messages
       - Maybe allow editing?
+
+
+Quiz:
+  ☐ When the user refreshes the page, the route props are lost...
 
 Known Bugs:
   ☐ Form validation is broken
     - May have to implement custom validation for the create page
     - Might be caused by not using a form. I'm just using vee-validate to validate input fields...
   FlashCard Study:
-      ☐ Select the next flashcard by clicking the button. Then try using spacebar to flip the card. The next card is shown.
+    ☐ Select the next flashcard by clicking the button. Then try using spacebar to flip the card. The next card is shown.
         This is due to the button capturing focus and the spacebar is pressing it instead of flipping the card.
-      ☐ Prompt users before leaving if not saved (similar to note page)
+  Flashcard Create / Edit:
+    ☐ Prompt users before leaving if not saved (similar to note page)
   Chat:
     ☐ When user changes their profile picture, the old image is deleted but we still need the image at the old url.
       Need to make sure I am uploading to the same url not creating a new one
@@ -106,6 +90,7 @@ Homepage:
 Members Page:
   ☐ Add members list page sort filters
     - Joined Date, Alphabetical, etc...
+  ☐ Fix plus icon scaling and positioning
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
@@ -126,24 +111,40 @@ Create Study Group:
   ☐ Maybe split the code into pieces to make it more manageble...
 
 Flashcards Collection:
-  ☐ Figure out proper way to get the last row to the left instead of centering it.
   ☐ Display a "deck standing" color indicator to show whether the flashcard deck is good or bad
   ☐ Use the avatar component or show the user's initials if they don't have a profile picture.
 
-  Flashcards:
   ☐ Autofocus after using keybind to create a new flashcard
-  ☐ Fix switching flashcard decks from the edit page instead of only from the icon.
   ☐ Extract firebase functions to a separate file to be reused.... @high
-  ✔ Public and private flashcard sets @critical @done(19-01-31 23:16)
 
 Animations / Transitions:
-  Flashcard Study:
-    ☐ Animations feel too fast
   Create Page:
     ☐ Animation when steps indicator changes
     ☐ Animation when user navigates between cards
 
+Possible Features (Time Permitting):
+  ☐ Maybe allow users to upload pdfs and save notes to their own documents
+  ☐ Video/Audio Chat with WebRTC
+  ☐ Make the site mobile friendly.
+    Hardest part is making the navbar change into a mobile form.
+  ☐ Indicators that show online group members in the sidebar
+  ☐ User chooses a gradient for their specific study group during creation
+  ☐ Add emoji menu to the study group chat.
+  ☐ Generate SSR with Nuxt.js. Server side rendering
+    https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
+
 Archive:
+  ✔ Design a logo / titlebar icon @done(19-02-28 22:55) @project(Branding)
+  ✔ Find better flashcard sidebar icon @done(19-02-28 22:55) @project(Branding)
+  ✘ Modal that can be used for all other modals. @cancelled(19-02-28 22:56) @project(Components Needed)
+  ✔ Custom designed switch component @done(19-02-28 22:55) @project(Components Needed)
+  ✔ Improve form validation @done(19-02-28 22:56) @project(Landing)
+  ✔ Figure out how to always center the text, right now it is pushed left and right by other header content... @done(19-02-28 22:56) @project(Page Header)
+  ✔ Local desktop notifications if there is a new message. @done(19-02-28 22:56) @project(Chat.Maybes)
+  ✔ Figure out proper way to get the last row to the left instead of centering it. @done(19-02-28 22:57) @project(Flashcards Collection)
+  ✘ Fix switching flashcard decks from the edit page instead of only from the icon. @cancelled(19-02-28 22:58) @project(Flashcards Collection)
+  ✔ Public and private flashcard sets @critical @done(19-01-31 23:16) @project(Flashcards Collection)
+  ✘ Animations feel too fast @cancelled(19-02-28 22:58) @project(Animations / Transitions.Flashcard Study)
   ✔ Reduce whitespace on icon. Maybe flex center that part? @done(19-01-21 22:00) @project(Notes.Note Collection)
   ✔ Find a better alternate font to go with Roboto. Change from Inter UI to Roboto @done(19-01-21 21:43) @project(General)
   ✘ Shadow around the left edge of chat sidebar @cancelled(19-01-21 21:44) @project(Chat.Maybes)

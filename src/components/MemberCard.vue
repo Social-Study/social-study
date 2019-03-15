@@ -18,6 +18,8 @@
   <div
     v-else
     class="profile-card"
+    :class="description !== null ? 'tooltip tooltip-bottom' : ''"
+    :data-tooltip="description"
   >
     <div class="gradient-border">
       <Avatar
@@ -51,6 +53,11 @@ export default {
   props: {
     photoURL: String,
     displayName: String,
+    description: {
+      type: String,
+      required: false,
+      default: null
+    },
     add: {
       type: Boolean,
       default: false,
@@ -95,10 +102,10 @@ export default {
       display: block;
     }
 
-    .add-button > .button-icon {
-      transform: scale(1.1);
-      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+    // .add-button > .button-icon {
+    //   transform: scale(1.05);
+    //   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    // }
   }
 }
 
@@ -119,6 +126,10 @@ h2 {
 .add {
   background-image: $nav-gradient;
   cursor: pointer;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 // Icon on the new members button
@@ -127,19 +138,23 @@ h2 {
   font-size: 4em;
   top: 10px;
   position: relative;
-  vertical-align: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 // Circle background between the gradient and add icon
 .add-button {
+
   position: relative;
   top: 5px;
   left: 5px;
   width: 100px;
   height: 100px;
+
   border-radius: 50%;
   background-color: $light;
-  // background-color: #bebebe;
   user-select: none;
 }
 

@@ -3,7 +3,7 @@
     <page-title>
       <template slot="left">
         <button
-          class="btn btn-success btn-lg"
+          class="btn btn-success"
           :class="selectedDecks == null ||
                   questionCount === 0 ||
                   selectedQTypes == null ||
@@ -11,6 +11,7 @@
           @click="loadQuiz()"
         >
           Generate
+          <i class="fas fa-plus"></i>
         </button>
       </template>
       <template slot="center">
@@ -57,7 +58,6 @@ export default {
   },
   methods: {
     loadQuiz() {
-      console.log("click");
       let terms = [];
       let defs = [];
       this.selectedDecks.public.forEach(deck => {
@@ -66,12 +66,11 @@ export default {
       });
 
       this.selectedDecks.private.forEach(deck => {
-        console.log(deck);
         terms = terms.concat(deck.terms);
         defs = defs.concat(deck.definitions);
       });
 
-      this.$router.replace({
+      this.$router.push({
         name: "quiz",
         params: {
           terms: terms,

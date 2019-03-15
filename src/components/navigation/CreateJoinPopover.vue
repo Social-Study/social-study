@@ -1,5 +1,9 @@
 <template>
   <div>
+    <notifications
+      group="joinErrors"
+      position="right top"
+    />
     <div class="popover popover-bottom">
       <button 
         class="btn btn-action"

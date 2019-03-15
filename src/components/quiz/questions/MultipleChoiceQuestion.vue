@@ -1,38 +1,23 @@
 <template>
   <div id="question">
-    <h1>2. What is the capital of Spain?</h1>
-    <div id="choices">
-      <div class="answers">
+    <h1>{{definition}}</h1>
+    <div
+      class="choices"
+      :class="{correct}"
+    >
+      <div
+        class="answers"
+        v-for="i in 4"
+        :key="i"
+      >
         <input
           type="radio"
           class="custom-radio"
-          name="answer"
-          id=""
-        > Amsterdam
-      </div>
-      <div class="answers">
-        <input
-          type="radio"
-          class="custom-radio"
-          name="answer"
-          id=""
-        > Madrid
-      </div>
-      <div class="answers">
-        <input
-          type="radio"
-          class="custom-radio"
-          name="answer"
-          id=""
-        > Berlin
-      </div>
-      <div class="answers">
-        <input
-          type="radio"
-          class="custom-radio"
-          name="answer"
-          id=""
-        > Dublin
+          :name="definition"
+          :value="i-1"
+          v-model.number="picked"
+          @change="checkCorrect()"
+        > {{choices[i-1]}}
       </div>
     </div>
 
@@ -41,7 +26,73 @@
 
 <script>
 export default {
-  name: "MultipleChoiceQuestion"
+  name: "MultipleChoiceQuestion",
+  props: {
+    term: {
+      type: String,
+      required: true
+    },
+    definition: {
+      type: String,
+      required: true
+    },
+    choiceList: {
+      type: Array,
+      required: true
+    }
+  },
+  data() {
+    return {
+      choices: [],
+      correctIndex: null,
+      picked: null,
+      keys: [],
+      correct: false
+    };
+  },
+  created() {
+    this.correctIndex = Math.floor(Math.random() * 4);
+    for (let i = 0; i < 4; i++) {
+      this.choices.push(this.getChoice(i));
+    }
+    // console.log("Correct Index:", this.correctIndex);
+  },
+  methods: {
+    // TODO: Make sure all choices are non duplicates
+    getChoice(index) {
+      if (index === this.correctIndex) {
+        return this.term;
+      } else {
+        let randomIndex;
+        let wrongChoice;
+        // Loop until we get an option that isn't the same as the correct term.
+        do {
+          randomIndex = Math.floor(Math.random() * this.choiceList.length);
+          wrongChoice = this.choiceList[randomIndex];
+          // console.log("wrongChoice:", wrongChoice, "term:", this.term);
+        } while (wrongChoice === this.term);
+
+        return wrongChoice;
+      }
+    },
+    checkCorrect() {
+      if (this.picked == this.correctIndex) {
+        this.$emit("correct", true);
+        this.correct = true;
+      } else {
+        this.$emit("correct", false);
+        this.correct = false;
+      }
+    }
+  },
+  watch: {
+    picked(newVal, oldVal) {
+      // console.log(oldVal, newVal);
+      if (oldVal === null && newVal !== null) {
+        this.$emit("answered", true);
+      }
+    }
+  }
 };
 </script>
 
@@ -54,7 +105,7 @@ h1 {
 }
 
 // TODO: Improve alignment and centering
-#choices {
+.choices {
   padding: 30px;
   margin-top: 10px;
 
@@ -67,6 +118,10 @@ h1 {
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
 
   background-color: #e7e7e7;
+
+  &.correct {
+    border: 2px solid green;
+  }
   .answers {
     justify-items: stretch;
     padding: 10px;
@@ -97,14 +152,6 @@ h1 {
   margin-right: 7px;
   outline: none;
 }
-// .custom-radio:checked::before {
-//   // position: absolute;
-//   // font: 13px/1 "Open Sans", sans-serif;
-//   // left: 11px;
-//   // top: 7px;
-//   // content: "\02143";
-//   // // transform: rotate(40deg);
-// }
 .custom-radio:hover {
   background-color: #f1f1f1;
 }
@@ -112,7 +159,6 @@ h1 {
   background-image: $green-gradient2;
 }
 label {
-  // font: 300 16px/1.7 "Open Sans", sans-serif;
   color: #666;
   cursor: pointer;
 }

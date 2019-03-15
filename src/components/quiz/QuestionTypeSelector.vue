@@ -34,11 +34,11 @@ export default {
             "Select correct term for the given definition from the given options",
           selected: false
         },
-        {
-          type: "Matching",
-          description: "Match the correct term to the given definition",
-          selected: false
-        },
+        // {
+        //   type: "Matching",
+        //   description: "Match the correct term to the given definition",
+        //   selected: false
+        // },
         {
           type: "Drag and Drop",
           description: "Drag the correct term to the given definition",

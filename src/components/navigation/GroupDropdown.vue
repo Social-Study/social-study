@@ -97,7 +97,6 @@ export default {
   font-size: 0;
   transition: font-size 0.1s, color 0.1s;
   transition-timing-function: ease-in;
-
 }
 
 .group-menu {
@@ -136,10 +135,12 @@ export default {
 }
 
 .current-group {
+
   background-image: $orange-gradient;
   border: none;
+
   p {
-    color: white;
+    // color: white;
   }
 }
 

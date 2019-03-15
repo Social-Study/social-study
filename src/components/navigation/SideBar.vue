@@ -51,6 +51,7 @@
             :class="
               $route.name === 'flashcards' ? 'active' : '' ||
               $route.name === 'study' ? 'active' : '' ||
+              $route.name === 'editFlashcards' ? 'active' : '' ||
               $route.name === 'createFlashcards' ? 'active' : ''"
             :to="{ name: 'flashcards' }"
           >
@@ -281,8 +282,11 @@ export default {
   z-index: 200;
   top: $nav-height;
   left: 0;
+
+  // background-color: $dark;
   background-color: $transparent-dark;
   transition: 0.25s;
+
 
   display: flex;
   flex-flow: column nowrap;

@@ -3,16 +3,6 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-// activeGroup: {
-//   groupID: "",
-//     details: null
-// }
-// setActiveGroup(state, { details, groupID }) {
-//   state.activeGroup.details = details;
-//   state.activeGroup.groupID = groupID;
-// },
-// activeGroup: state => state.activeGroup
-
 export default new Vuex.Store({
   state: {
     uid: "",

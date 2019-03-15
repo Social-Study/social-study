@@ -178,7 +178,8 @@ a.navbar-brand {
   min-width: 200px;
   justify-content: space-between;
   align-items: center;
-  margin-right: 25px;
+  margin-right: 15px;
+  padding-right: 10px;
 
   h1 {
     font-size: 1.4em;

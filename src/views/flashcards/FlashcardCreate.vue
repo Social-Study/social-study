@@ -13,6 +13,7 @@
 
       <template slot="right">
         <toggle-switch
+          v-if="deckID === null"
           @toggle="toggled = $event"
           :default="toggled"
           :values="['Private', 'Public']"
@@ -86,8 +87,6 @@ import ToggleSwitch from "@/components/ToggleSwitch.vue";
 import FlashcardCreateForm from "@/components/flashcards/FlashcardCreateForm";
 
 import firebase, { db } from "@/firebaseConfig";
-
-// TODO: make load to edit
 // Make sure that you cannot submit an empty set.
 
 export default {
@@ -122,9 +121,9 @@ export default {
   created() {
     // Editing existing deck
     if (this.deckID != null) {
-      // Set the toggle property to the prop's value
+      // Remove the toggle switch when editing (easy solution to a tough problem)
       // This value is received from the FlashCardIcon where the user clicks the "edit button"
-      this.toggled = !this.isPrivate;
+      this.toggled = !this.isPrivate; // Still need to set toggled to determine collection location
       this.loadDeck();
     }
   },

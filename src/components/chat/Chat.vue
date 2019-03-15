@@ -164,8 +164,6 @@ export default {
   z-index: 0;
   top: $nav-height;
   right: 0;
-  border-top: 2px solid $secondary;
-  // border-bottom: 2px solid white;
   background-color: $dark;
   overflow-x: hidden;
   transition: 0.25s;
