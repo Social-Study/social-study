@@ -36,7 +36,6 @@
     </div>
     <div
       v-else
-      style="margin-top: 35%;"
       class="loading loading-lg"
     ></div>
   </div>
@@ -209,6 +208,6 @@ h5 {
   grid-template-columns: repeat(auto-fit, minmax(100px, 288px));
   grid-auto-rows: 218px;
   justify-content: center;
-  // transition: all 350ms ease-in;
+  transition: all 350ms ease-in;
 }
 </style>

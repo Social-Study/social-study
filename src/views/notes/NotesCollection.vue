@@ -165,9 +165,6 @@ export default {
 }
 
 .content-container {
-  // width: 100%;
-  // padding: 20px;
-  // margin: 0 auto;
   margin: 20px;
   display: grid;
   grid-gap: 20px;

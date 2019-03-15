@@ -15,6 +15,7 @@
       </template>
     </page-title>
 
+    <!-- Quiz Score Modal -->
     <div
       v-show="showScoreModal"
       class="modal modal-sm active"
@@ -24,16 +25,16 @@
         href="#close"
         class="modal-overlay"
         aria-label="Close"
-        @click="showScoreModal = false"
       ></a>
+      <!--      @click="showScoreModal = false" -->
       <div class="modal-container">
         <div class="modal-header">
-          <a
+          <!-- <a
             href="#close"
             class="btn btn-clear float-right"
             aria-label="Close"
             @click="showScoreModal = false"
-          ></a>
+          ></a> -->
           <div class="modal-title h5">Quiz Results</div>
         </div>
         <div class="modal-body">
@@ -42,9 +43,14 @@
             <h3>You got {{correctQuestions}} out of {{totalQuestions}} correct!</h3>
           </div>
         </div>
-        <!-- <div class="modal-footer">
-          ...
-        </div> -->
+        <div class="modal-footer">
+          <button
+            class="btn btn-primary"
+            @click="$router.go(-1)"
+          >
+            Done
+          </button>
+        </div>
       </div>
     </div>
 
@@ -52,6 +58,7 @@
       class="quiz-content"
       v-if="terms && definitions && questionTypes"
     >
+
       <div v-if="questionTypes.shortAnswer == true">
         <short-answer-question
           v-for="(term, index) in questionGroups.shortAnswer.terms"
@@ -84,7 +91,6 @@
         />
       </div>
       <matching-question v-if="questionTypes.matching == true" />
-
     </div>
     <div v-else>
       <h1>Error Loading Quiz</h1>
@@ -251,18 +257,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles.scss";
+
 #question {
   margin-top: 40px;
-}
-
-// .quiz-title {
-//   position: sticky;
-//   top: 0;
-// }
-
-.header-container {
-  position: sticky;
-  top: 0;
 }
 
 .quiz-content {
@@ -270,6 +268,8 @@ export default {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
+  max-height: $page-with-header-height;
+  overflow-y: auto;
 }
 </style>
