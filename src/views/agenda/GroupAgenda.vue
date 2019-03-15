@@ -97,12 +97,11 @@ export default {
 
 .content-container {
   height: $page-with-header-height;
-  padding: 20px;
 }
 
 .item-list {
   height: 100%;
-  border: 2px solid $secondary-light;
+  // border: 2px solid $secondary-light;
   padding: 20px;
   overflow: auto;
 }
@@ -117,6 +116,7 @@ export default {
 }
 
 .agenda-item {
+  cursor: pointer;
   border: 2px solid $secondary-light;
   height: 80px;
   margin-bottom: 20px;

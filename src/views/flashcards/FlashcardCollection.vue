@@ -13,7 +13,7 @@
         <div class="has-icon-left">
           <input
             type="search"
-            class="form-input"
+            class="search-input"
             placeholder="Search by Title"
             v-model="searchQuery"
           >

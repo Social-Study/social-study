@@ -2,22 +2,19 @@
 // name-input: Used for input boxes that allow the user to change the name of their content
 // split: Used to apply spacing between buttons in the title bar
 <template>
-  <div class="pageTitel-container">
-    <div
-        class="header-container"
-        :class="$store.getters.chatActive ? 'chat-active' : ''"
-      >
-        <div class="left">
-          <slot name="left"></slot>
-        </div>
-        <h1 class="center text-ellipsis">
-          <slot name="center"></slot>
-        </h1>
-        <div class="right">
-          <slot name="right"></slot>
-        </div>
-      </div>
-      <hr>
+  <div
+    class="header-container"
+    :class="$store.getters.chatActive ? 'chat-active' : ''"
+  >
+    <div class="left">
+      <slot name="left"></slot>
+    </div>
+    <h1 class="center text-ellipsis">
+      <slot name="center"></slot>
+    </h1>
+    <div class="right">
+      <slot name="right"></slot>
+    </div>
   </div>
 </template>
 
@@ -35,36 +32,41 @@ export default {
   width: 100%;
 }
 
-.pageTitel-container{
-  margin-bottom: 20px;
-}
-
-hr{
-  margin:0px;
-  height: 1px;
-  background-image: $orange-gradient;
-  border:none;
-}
+// hr {
+//   margin: 0px;
+//   height: 1px;
+//   background-image: $orange-gradient;
+//   border: none;
+// }
 
 .header-container {
+  padding: 4px 8px;
   background-color: transparent;
   font-family: $secondary-font;
-  color:$dark;
+  color: $dark;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   height: $header-height;
 
+  // Create bottom gradient border without <hr> element
+  background-image: none, $orange-gradient;
+  background-size: 100% 1px;
+  background-position: 0% 0%, 0% 100%;
+  background-repeat: no-repeat;
+
   .name-input {
     border: none;
-    font-size: 10px;
-    min-width: 350px;
-    max-width: 350px;
-    height: 26px;
+    font-size: 20px;
+    min-width: 300px;
+    max-width: 300px;
+    height: 36px;
+    padding: 0 4px;
     font-weight: bold;
     font-family: $primary-font;
     font-weight: 400;
+    border-bottom: 1px solid $dark;
   }
 
   button {
@@ -100,8 +102,17 @@ hr{
     flex-flow: row nowrap;
     justify-content: flex-end;
 
-    .form-input {
-      width: 250px;
+    .search-input {
+      border: none;
+      font-size: 18px;
+      min-width: 300px;
+      max-width: 300px;
+      height: 36px;
+      padding: 0 30px;
+      font-weight: bold;
+      font-family: $primary-font;
+      font-weight: 400;
+      border-bottom: 1px solid $dark;
     }
 
     .title {

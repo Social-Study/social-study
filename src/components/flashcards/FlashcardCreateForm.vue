@@ -19,7 +19,7 @@
       id="input-term"
       maxlength="30"
       v-model.trim="data.term"
-      v-on:input="TermUpdated"
+      v-on:input="termUpdated"
       autofocus
     >
     <label
@@ -35,7 +35,7 @@
       rows="3"
       maxlength="150"
       v-model.trim="data.def"
-      v-on:input="DefUpdated"
+      v-on:input="defUpdated"
       @keydown.ctrl.enter="$emit('addNew')"
       @keydown.tab="$emit('addNew')"
     >
@@ -72,10 +72,10 @@ export default {
     debug() {
       console.log("clicked");
     },
-    TermUpdated(event) {
+    termUpdated(event) {
       this.$emit("termUpdated", this.data);
     },
-    DefUpdated(event) {
+    defUpdated(event) {
       this.$emit("defUpdated", this.data);
     }
   }

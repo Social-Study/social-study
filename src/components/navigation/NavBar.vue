@@ -42,7 +42,10 @@
         @mouseout="menuActive = false;"
         class="menu-container"
       >
-        <Avatar :user="firestoreUser" class="avatar" />
+        <Avatar
+          :user="firestoreUser"
+          class="avatar"
+        />
 
         <ul
           v-show="menuActive == true"
@@ -72,9 +75,7 @@
           </li>
 
           <!-- Log Out Button -->
-          <li 
-            class="menu-item text-left"
-          >
+          <li class="menu-item text-left">
             <a
               @click="logOut"
               id="logOutButton"
@@ -178,7 +179,7 @@ a.navbar-brand {
   min-width: 200px;
   justify-content: space-between;
   align-items: center;
-  margin-right: 15px;
+  margin-right: 25px;
   padding-right: 10px;
 
   h1 {
@@ -193,7 +194,7 @@ a.navbar-brand {
 .menu {
   cursor: pointer;
   background-color: $transparent-dark;
-  color:white;
+  color: white;
   li {
     margin-top: 0;
   }
@@ -203,18 +204,18 @@ a.navbar-brand {
   padding: 2px;
 }
 
-#settings:hover, 
-#logOutButton:hover{
+#settings:hover,
+#logOutButton:hover {
   background-image: $orange-gradient;
-  color:white;
+  color: white;
 }
 
-#chat-button{
+#chat-button {
   background-color: $transparent-dark;
-  color:white;
+  color: white;
   border: solid 2px $primary;
 
-  &:hover{
+  &:hover {
     border-image: $orange-gradient;
     border-image-slice: 1;
     border-width: 2px;
@@ -223,7 +224,7 @@ a.navbar-brand {
 
 .settings-menu {
   position: absolute;
-  top: 40px;
+  top: 25px;
   right: 30px;
 }
 

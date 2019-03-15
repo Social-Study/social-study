@@ -279,6 +279,21 @@ export default {
   margin: 20px;
 }
 
+.gradient-border {
+  margin: 30px auto;
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+  background-image: $nav-gradient;
+}
+
+// Icon on the new members button
+.button-icon {
+  font-size: 6em;
+  position: relative;
+  top: 20px;
+}
+
 .addCard {
   cursor: pointer;
   box-shadow: $shadow;
@@ -291,36 +306,30 @@ export default {
   margin: 0 40px 40px 0;
 
   &:hover {
-    box-shadow: $shadow-hovered;
+    box-shadow: $shadow-heavy;
+    border-image: $orange-gradient;
+    border-image-slice: 1;
   }
 }
 
-.gradient-border {
-  margin: 30px auto;
-  height: 160px;
-  width: 160px;
-  border-radius: 50%;
+.add {
   background-image: $nav-gradient;
-}
-
-.button-icon {
-  text-align: center;
-  font-size: 8em;
-  bottom: 2px;
-  position: relative;
-  vertical-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 // Circle background between the gradient and add icon
 .add-button {
-  position: relative;
-  top: 10px;
-  left: 10px;
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  // background-color: #bebebe;
   background-color: $light;
   user-select: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

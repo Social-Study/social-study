@@ -283,10 +283,9 @@ export default {
   top: $nav-height;
   left: 0;
 
-  // background-color: $dark;
-  background-color: $transparent-dark;
+  background-color: $dark;
+  // background-color: $transparent-dark;
   transition: 0.25s;
-
 
   display: flex;
   flex-flow: column nowrap;
@@ -347,9 +346,9 @@ export default {
   }
 }
 
-.section-divider{
-  height:1px;
+.section-divider {
+  height: 1px;
   background-image: $orange-gradient;
-  border:none;
+  border: none;
 }
 </style>
