@@ -1,7 +1,7 @@
 <template>
   <div class="modal modal-md active">
     <a
-      @click="$emit('closeSettings');"
+      @click="closeAndReset"
       href="#close"
       class="modal-overlay"
       aria-label="Close"
@@ -10,11 +10,14 @@
     <div class="modal-container">
       <div class="modal-header">
         <a
-          @click="$emit('closeSettings');"
+          @click="closeAndReset"
           href="#close"
-          class="btn btn-clear float-right"
+          id="close"
+          class="float-right"
           aria-label="Close"
-        ></a>
+        >
+          <i class="fas fa-times"></i>
+        </a>
 
         <div class="modal-title h4">Settings</div>
       </div>
@@ -175,12 +178,13 @@
               >
                 <td>{{ group.className }}</td>
                 <td>{{ group.membersLength }}</td>
-                <td>
+                <td class="button-td">
+
                   <button
                     @click="leaveGroup(group.groupID);"
-                    class="btn btn-error btn-block"
+                    class="btn btn-error"
                   >
-                    <i class="icon icon-cross"></i>
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
               </tr>
@@ -203,7 +207,7 @@
 </template>
 
 <script>
-import { getUserData, getUserGroups } from "../scripts/userFuncs";
+import { getUserData, getUserGroups } from "@/scripts/userFuncs";
 import { FirebaseConsts, Storage, db } from "@/firebaseConfig";
 
 let picRef = Storage.ref();
@@ -241,7 +245,7 @@ export default {
     // db.collection("study-groups").where();
   },
   watch: {
-    activeTab(newVal, oldVal) {
+    activeTab(newVal) {
       if (newVal === 3) {
         // console.log("reloading groups");
         this.loadGroups();
@@ -249,6 +253,10 @@ export default {
     }
   },
   methods: {
+    closeAndReset() {
+      this.activeTab = 1;
+      this.$emit("closeSettings");
+    },
     loadGroups() {
       getUserGroups(this.user.uid)
         .then(groupList => {
@@ -275,9 +283,17 @@ export default {
           this.profileDetails.newName !== this.user.displayName &&
           this.profileDetails.newName !== ""
         ) {
+          // Update the user's auth account
           this.user.updateProfile({
             displayName: this.profileDetails.newName
           });
+
+          // Update the firestore doc for the user
+          db.collection("users")
+            .doc(this.$store.getters.uid)
+            .update({
+              displayName: this.profileDetails.newName
+            });
         }
 
         if (this.profileDetails.newPhoto !== null) {
@@ -319,7 +335,7 @@ export default {
             });
         }
 
-        this.$emit("closeSettings");
+        this.closeAndReset();
       }
     },
     handleFile(event) {
@@ -330,15 +346,57 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles.scss";
+
 .modal-container {
-  border-radius: 10px;
+
+  #close {
+    color: $secondary;
+    i {
+      font-size: 24px;
+    }
+    &:hover {
+      color: darken($secondary, 5);
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.modal-header {
+  margin: 15px 15px 0 15px;
+}
+
+.modal-title {
+  font-family: $secondary-font;
+  font-weight: 700;
+}
+
+.tile-title {
+  // padding: 5px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-family: $secondary-font;
 }
 
 .tab-item {
   cursor: pointer;
+  color: $secondary-light;
+  a:hover {
+    color: $secondary !important;
+  }
+  &.active {
+    font-weight: 700;
+  }
 }
 
-.tile-title {
-  padding: 5px;
+.button-td {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  .btn {
+    width: 40px;
+  }
 }
 </style>

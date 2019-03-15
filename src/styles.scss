@@ -1,0 +1,52 @@
+// Gradients
+$nav-gradient: linear-gradient(-90deg, #5c00fd 0%, #fd007e 100%);
+$green-gradient: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+$green-gradient2: linear-gradient(0deg, #0ccd38 0%, #96cb00 100%);
+$orange-gradient: linear-gradient(90deg, #ffa404 0%, #ff0479 100%);
+$blue-gradient: linear-gradient(to right, #48c6ef 0%, #6f86d6 100%);
+$dark-gradient: linear-gradient(
+  rgba(22, 22, 22, 0.75) 0%,
+  rgba(22, 22, 22, 0.5625) 100%
+);
+
+// Fonts
+$logo-font: "Pacifico", cursive;
+$primary-font: "Roboto", serif;
+$secondary-font: "Open Sans", sans-serif;
+// $secondary-font: "Montserrat";
+// $primary-font: "Inter UI";
+
+// Shadows
+$shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+$shadow-hovered: 5px 12px 20px rgba(36, 37, 38, 0.13);
+$shadow-heavy: 0 6px 15px rgba(36, 37, 38, 0.5);
+
+// Colors
+$light-grey: #e7e7e7; // Used for flashcard backgrounds
+/* HSL */
+// New theme pallete
+$primary: hsla(241%, 63%, 59%, 1);
+$dark: hsla(224%, 14%, 22%, 1);
+$light: hsla(240%, 100%, 99%, 1);
+$secondary: hsla(235%, 18%, 36%, 1);
+$secondary-light: hsla(236%, 11%, 71%, 1);
+
+//UI 2.0 colors
+$transparent-dark: rgba(0, 0, 0, 0.75);
+$transparent-hover: lighten($transparent-dark, 10);
+
+// Border Radius Presets
+$border-round: 10px;
+$border-rounder: 16px;
+
+// COMMON SIZING
+$nav-height: 50px;
+$header-height: 50px;
+$content-height: calc(100% - #{$nav-height});
+$page-with-header-height: calc(100% - #{$header-height});
+
+/*
+  SPECTRE CSS COLOR OVERRIDES
+ */
+$error-color: #cf4545;
+$success-color: #32b643;

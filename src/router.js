@@ -1,18 +1,44 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Dashboard from "./views/Dashboard.vue";
-import Landing from "./views/Landing.vue";
-import GroupHomePage from "./views/GroupHomePage";
-import CreateGroup from "./views/CreateGroup";
+import firebase from "@/firebaseConfig";
 
-import MembersPage from "./views/MembersPage";
-import FlashcardCollection from "./views/FlashcardCollection";
-import FlashcardStudy from "./views/FlashcardStudy";
+// User login and signup page
+import Landing from "@/views/Landing.vue";
 
-import firebase from "./firebaseConfig";
+// User Specific Homepage
+import Dashboard from "@/views/Dashboard.vue";
+
+// Create a New Group
+import CreateGroup from "@/views/CreateGroup";
+
+// Group Specific Homepage
+import GroupHomePage from "@/views/GroupHomePage";
+
+// Flashcard Functionality Pages
+import FlashcardCollection from "@/views/flashcards/FlashcardCollection";
+import FlashcardStudy from "@/views/flashcards/FlashcardStudy";
+import FlashcardCreate from "@/views/flashcards/FlashcardCreate";
+
+// Quiz Functionality Pages
+import QuizCreate from "@/views/quiz/QuizCreate";
+import Quiz from "@/views/quiz/Quiz";
+
+// Agenda Functionality Pages
+import GroupAgenda from "@/views/agenda/GroupAgenda.vue";
+
+// Note Functionality Pages
+import NotesCollection from "@/views/notes/NotesCollection";
+import NotePage from "@/views/notes/NotePage";
+
+// Group Members Listing
+import MembersPage from "@/views/MembersPage";
+
+// Group Settings Page (Only the Group Owner can access)
+import GroupSettings from "@/views/GroupSettings";
 
 Vue.use(Router);
 
+// TODO: Figure out how to get dynamic page titles.
 let router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
@@ -40,7 +66,7 @@ let router = new Router({
     },
     {
       path: "/dashboard/create",
-      name: "create",
+      name: "createGroup",
       component: CreateGroup,
       meta: {
         title: "Create | Social Study",
@@ -52,7 +78,25 @@ let router = new Router({
       name: "home",
       component: GroupHomePage,
       meta: {
-        title: "Homepage | Social Study",
+        title: "Home | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/:groupID/notes",
+      name: "notes",
+      component: NotesCollection,
+      meta: {
+        title: "Notes | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/:groupID/notes/:noteID",
+      name: "note",
+      component: NotePage,
+      meta: {
+        title: "Note | Social Study",
         requiresAuth: true
       }
     },
@@ -66,11 +110,60 @@ let router = new Router({
       }
     },
     {
-      path: "/:groupID/flashcards/study",
+      path: "/:groupID/flashcards/:deckID/study",
       name: "study",
       component: FlashcardStudy,
+      // TODO: Dynamic page titles
       meta: {
-        title: "Flashcard | Social Study",
+        title: "Flashcard Study | Social Study",
+        requiresAuth: true
+      },
+      props: true
+    },
+    {
+      path: "/:groupID/flashcards/create",
+      name: "createFlashcards",
+      component: FlashcardCreate,
+      meta: {
+        title: "Create a Deck | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/:groupID/flashcards/edit",
+      name: "editFlashcards",
+      component: FlashcardCreate,
+      meta: {
+        title: "Edit Deck | Social Study",
+        requiresAuth: true
+      },
+      props: true
+    },
+    {
+      path: "/:groupID/quizzes/create",
+      name: "createQuiz",
+      component: QuizCreate,
+      meta: {
+        title: "Generate a Quiz | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/:groupID/quizzes/quiz",
+      name: "quiz",
+      component: Quiz,
+      meta: {
+        title: "Quiz | Social Study",
+        requiresAuth: true
+      },
+      props: true
+    },
+    {
+      path: "/:groupID/agenda",
+      name: "agenda",
+      component: GroupAgenda,
+      meta: {
+        title: "Group Agenda | Social Study",
         requiresAuth: true
       }
     },
@@ -80,6 +173,15 @@ let router = new Router({
       component: MembersPage,
       meta: {
         title: "Members | Social Study",
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/:groupID/settings",
+      name: "settings",
+      component: GroupSettings,
+      meta: {
+        title: "Group Settings | Social Study",
         requiresAuth: true
       }
     }
@@ -109,22 +211,5 @@ router.beforeEach((to, from, next) => {
     }
   });
 });
-// router.beforeEach((to, from, next) => {
-//   document.title = to.meta.title;
-//   console.log(to);
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     firebase.auth().onAuthStateChanged(user => {
-//       if (!user) {
-//         next({
-//           path: "/landing"
-//         });
-//       } else {
-//         next();
-//       }
-//     });
-//   } else {
-//     next();
-//   }
-// });
 
 export default router;

@@ -1,22 +1,27 @@
 <template>
-  <div style="height: 86%;">
+  <div id="full-screen">
 
-    <page-title> Create a new Study Group </page-title>
+    <!-- Page Title -->
+    <page-title>
+      <template slot="center">Create New Study Group</template>
+    </page-title>
+
     <!-- Notification -->
     <notifications
       group="create"
       position="right bottom"
     />
-    <div class="createContent">
+
+    <div class="create-content">
 
       <!-- Contains Center Content; Buttons and Content -->
-      <div class="navContainer">
+      <div class="nav-container">
         <button
           @click="back"
           class="btn btn-action btn-success btn-lg s-circle"
           :class="active === 0 ? 'disabled c-not-allowed' : ''"
         >
-          <i class="icon icon-arrow-left"></i>
+          <i class="fas fa-arrow-left"></i>
         </button>
 
         <!-- Class Name Form -->
@@ -25,16 +30,24 @@
           class="infoContainer"
         >
           <h2>What is the name of the class?</h2>
-          <input
-            @keydown.enter="next"
-            class="form-input"
-            type="text"
-            v-model="className"
-            placeholder="Class Name"
-            name="className"
-            v-validate="'required'"
-          />
-          <span style="color: red;">{{ errors.first("className") }}</span>
+
+          <div
+            class="form-group"
+            :class="errors.first('className') ?  'has-error' : '' || !errors.first('className') && className ? 'has-success' : ''"
+          >
+            <input
+              @keydown.enter="next"
+              class="form-input"
+              type="text"
+              v-model="className"
+              placeholder="Class Name"
+              name="className"
+              v-validate="'required'"
+              required
+            />
+            <p class="form-input-hint">{{ errors.first("className") }}</p>
+          </div>
+          <!-- <span style="color: red;">{{ errors.first("className") }}</span> -->
           <h3 style="margin-top: 20px;">Course Code? (Optional)</h3>
           <input
             @keydown.enter="next"
@@ -51,17 +64,24 @@
           class="infoContainer"
           v-else-if="active === 1"
         >
+          <!-- TODO: Figure out why validation isn't working... -->
           <h2>What is the course intructor's name?</h2>
-          <input
-            @keydown.enter="next"
-            class="form-input"
-            type="text"
-            v-model="instructorName"
-            placeholder="Instructor Name"
-            name="instructorName"
-            v-validate="'required'"
-          />
-          <span style="color: red;">{{ errors.first("instructorName") }}</span>
+          <div
+            class="form-group"
+            :class="errors.first('instructorName') ?  'has-error' : '' || !errors.first('instructorName') && instructorName ? 'has-success' : ''"
+          >
+            <input
+              @keydown.enter="next"
+              class="form-input"
+              type="text"
+              v-model="instructorName"
+              placeholder="Instructor Name"
+              name="instructor"
+              v-validate="'required|alpha_spaces'"
+              required
+            />
+            <p class="form-input-hint">{{ errors.first("instructorName") }}</p>
+          </div>
         </div>
 
         <!-- Class Meeting Time Form -->
@@ -71,6 +91,7 @@
         >
           <h2>When does your class meet?</h2>
 
+          <!-- Day Selector Button Block -->
           <div class="btn-group btn-group-block">
             <button
               @click="toggle('monday');"
@@ -115,11 +136,13 @@
               type="time"
               class="time-picker form-input"
               v-model="meetingTime[0]"
+              required
             />
             <input
               type="time"
               class="time-picker form-input"
               v-model="meetingTime[1]"
+              required
             />
           </div>
         </div>
@@ -298,7 +321,7 @@
           class="btn btn-action btn-success btn-lg s-circle"
           :class="active === 7 ? 'disabled' : ''"
         >
-          <i class="icon icon-arrow-right"></i>
+          <i class="fas fa-arrow-right"></i>
         </button>
       </div>
 
@@ -382,9 +405,9 @@
 </template>
 
 <script>
-import firebase, { db } from "../firebaseConfig";
-import generateCode from "../scripts/generateCode";
-import PageTitle from "../components/PageTitle";
+import firebase, { db } from "@/firebaseConfig";
+import generateCode from "@/scripts/generateCode";
+import PageTitle from "@/components/navigation/PageTitle";
 
 export default {
   name: "CreateGroup",
@@ -392,6 +415,8 @@ export default {
     PageTitle
   },
   data() {
+    // TODO: refactor these into objects
+    // TODO: Finish updating validation...
     return {
       active: 0,
       className: "",
@@ -498,15 +523,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styleVariables.scss";
+@import "@/styles.scss";
+
+#full-screen {
+  height: $content-height;
+}
 
 button.s-circle {
   margin: 15px;
 }
 
 // Main container, centers all content on the page
-.createContent {
-  min-height: 100%;
+.create-content {
+  height: $page-with-header-height;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -514,9 +543,10 @@ button.s-circle {
 }
 
 // Aligns the card into a row between the two traversal buttons.
-.navContainer {
+.nav-container {
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
+  place-content: center;
   justify-content: center;
   align-items: center;
 }
@@ -538,7 +568,7 @@ button.s-circle {
 
 .createBtn {
   cursor: pointer;
-  background-image: $nav-gradient;
+  background-image: $blue-gradient;
   width: 300px;
   padding: 20px;
   font-family: $logo-font;

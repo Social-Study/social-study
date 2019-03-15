@@ -1,89 +1,208 @@
 Branding:
-  ☐ Design a logo / titlebar icon
+    - My brother is working on a design
   ☐ Think of better slogan.
-  ☐ The new titlebar icon only apply to the google redirect popup window but now the title bar?
-  ☐ Find better flashcard sidebar icon
 
-Database Design:
-☐ General:
-  ☐ Not sure why the favicon is not showing???? @low
-  ☐ Make sure the build bundle size is not too large. @low
-  ☐ Go through an error check all inputs where necessary
-
-  ☐ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high
-    Not exactly sure how to do this.
-  ☐ find new animation library
+General:
+  ☐ Go through and error check all inputs where necessary
     - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
-  ☐ Maybe allow users to upload pdfs and save notes to their own documents
-  ☐ Store displayname in firestore so that it updates
+  ☐ Make sure that each page that loads from firebase has error checking
+    ☐ Should display an error message if the firebase load fails
+    ☐ User's should be limited to what they are permitted to access..
+  ☐ Lazy loading of subpages. @high
+    - Sub-pages are pages that you are taken to after clicking a main page
+    - Ex) Study-flashcard, take-quiz
+  ☐ Paginate collection pages so they scale when more information is added.
+  ☐ Not sure if I should save some things about the user's preferences to firebase
+    - Collapsed or Open Sidebar
+    - Collapsed or Open Chat
+    - Chat notifications on. etc...
+  ☐ Sequential loading animations when list are being displayed for the first time
+       Every list is loading from firebase so there is a delay before the data is shown. Figure out how to get loading list to be animated 1-by-1 when shown for the first time
+  ☐ Small QOL Features
+    ☐ Always verify delete actions
+
+  ☐ The user's "bio" information should be displayed somewhere....
 
 Components Needed:
   ☐ Notification popup
     Currently using vue-notifications but would be willing to switch to something better.
-  ☐ Modal that can be used for all other modals.
-  ☐ Custom designed switch component
 
 Firebase Functions File:
   ☐ Remove expired invite codes
   ☐ Downscale images?
   ☐ Remove messages once size reaches > 1000 messages
   ☐ Function to increment message counter of the document everytime a new document is created
+  ☐ Generate a boilerplate note when a new user joins the study group? It should let them know the full functionality of markdown and the syntax
+
+Modals:
+  ☐ Improve modals with new design...
+
+New Sidebar:
+  ☐ Create a smooth transition between collapsed and visible states
+    Right now the text pops around as the transition plays
+    May have to do something like "inline-block" so that elements don't break
+
+Notes:
+  ☐ Find more markdown css themes
+    ☐ Dark theme
+  ☐ Maybe extract the view component if we want to use it for aiding users in creating their flashcards.
+  ☐ Autoscroll viewing content to match...
+  ☐ Alert user when they try to leave without saving their notes.
+  ☐ Scale the views to be on top of eachother when window width is too small
+  ☐ Add a switch to show preview vs edit views...
+  Maybes:
+    ☐ Allow users to create collections to manage their own notes?
+
+Chat:
+  Maybes:
+    ☐ Total number of messages indicator (Could either be total messages or unread messages...)
+       Not sure how I would implement tracking unread messages
+    ☐ Transition when the button first appears
+    ☐ Allow user's to delete their own messages
+      - Maybe allow editing?
 
 
-Notifications:
-  ☐ Notification when group not found
+Quiz:
+  ☐ When the user refreshes the page, the route props are lost...
 
 Known Bugs:
-  ☐ When you click a group in the drop down, there are two bars that appear. Not sure what causes it.
-  ☐ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present
+  ☐ Form validation is broken
+    - May have to implement custom validation for the create page
+    - Might be caused by not using a form. I'm just using vee-validate to validate input fields...
+  FlashCard Study:
+    ☐ Select the next flashcard by clicking the button. Then try using spacebar to flip the card. The next card is shown.
+        This is due to the button capturing focus and the spacebar is pressing it instead of flipping the card.
+  Flashcard Create / Edit:
+    ☐ Prompt users before leaving if not saved (similar to note page)
+  Chat:
+    ☐ When user changes their profile picture, the old image is deleted but we still need the image at the old url.
+      Need to make sure I am uploading to the same url not creating a new one
 
 Vuex Store:
-  ☐ Only save the uid to local storage
+  ☐ Save the number of unread messages to the store.
+    Reset the number when the user opens the chat sidebar
 
 Homepage:
-  ✔ Add more detail to Study Group cards in dropdown @done(18-12-16 21:51)
-  ☐ Figure out what the card backgrounds should look like
+  ☐ Display an empty placeholder if the user doesn't have any recent notes or books.
+  ☐ Think of better design for dashboard and homepage
+    - The current design feels cluttered not very useful.
 
 Members Page:
   ☐ Add members list page sort filters
     - Joined Date, Alphabetical, etc...
+  ☐ Fix plus icon scaling and positioning
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
-  ☐ Automatically update to the file picker's picture so user can preview what it will look like
-
-Study Group Settings:
-  ☐ Add homepage option to list and remove active invite codes.
-  ☐ Allow option to remove members from group
-  ☐ Show a study group settings page only to the group owner to allow them to change the details after creation
+  ☐ Automatically update to the file picker's picture so user can preview what it will look like @low
+  ☐ Create a placeholder for when the user doesn't have any study groups. Don't just show an empty table
 
 Side Bar:
-  ☐ add more Study Group information (meeting time, location, extra info) possibly do this in a modal
+  ☐ Add more Study Group information (meeting time, location, extra info) possibly do this in a modal
 
 NavBar:
-  ☐ Upgrade navbar dropdown to look more like the figma design. Each class should provide some details @today
   ☐ Redesign navbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility
+    Maybe a complete redesign or maybe just some improvements
+  ☐ Style the currently active group dropdown based on the route parameters
 
 Create Study Group:
-  ☐ Prevent user from clicking create and getting to copy code if they don't do all steps
   ☐ Add transitions to make it look nice
-  ☐ Figure out how to center the content without using a fixed page size (94vh)
   ☐ Put a conditional on the meeting days and times. Ask "Does the have designated meeting days and times?"
+  ☐ Maybe split the code into pieces to make it more manageble...
 
 Flashcards Collection:
-  ☐ Figure out proper way to get the last row to the left instead of centering it.
+  ☐ Display a "deck standing" color indicator to show whether the flashcard deck is good or bad
+  ☐ Use the avatar component or show the user's initials if they don't have a profile picture.
 
-Flashcards:
-  ☐ Implement navigation animations
-  ☐ Implement firebase functionality
-  ☐ find a way to better indicate which side of the flashcard is currently displaying
+  ☐ Autofocus after using keybind to create a new flashcard
+  ☐ Extract firebase functions to a separate file to be reused.... @high
 
 Animations / Transitions:
   Create Page:
     ☐ Animation when steps indicator changes
     ☐ Animation when user navigates between cards
 
+Possible Features (Time Permitting):
+  ☐ Maybe allow users to upload pdfs and save notes to their own documents
+  ☐ Video/Audio Chat with WebRTC
+  ☐ Make the site mobile friendly.
+    Hardest part is making the navbar change into a mobile form.
+  ☐ Indicators that show online group members in the sidebar
+  ☐ User chooses a gradient for their specific study group during creation
+  ☐ Add emoji menu to the study group chat.
+  ☐ Generate SSR with Nuxt.js. Server side rendering
+    https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
+
 Archive:
+  ✔ Design a logo / titlebar icon @done(19-02-28 22:55) @project(Branding)
+  ✔ Find better flashcard sidebar icon @done(19-02-28 22:55) @project(Branding)
+  ✘ Modal that can be used for all other modals. @cancelled(19-02-28 22:56) @project(Components Needed)
+  ✔ Custom designed switch component @done(19-02-28 22:55) @project(Components Needed)
+  ✔ Improve form validation @done(19-02-28 22:56) @project(Landing)
+  ✔ Figure out how to always center the text, right now it is pushed left and right by other header content... @done(19-02-28 22:56) @project(Page Header)
+  ✔ Local desktop notifications if there is a new message. @done(19-02-28 22:56) @project(Chat.Maybes)
+  ✔ Figure out proper way to get the last row to the left instead of centering it. @done(19-02-28 22:57) @project(Flashcards Collection)
+  ✘ Fix switching flashcard decks from the edit page instead of only from the icon. @cancelled(19-02-28 22:58) @project(Flashcards Collection)
+  ✔ Public and private flashcard sets @critical @done(19-01-31 23:16) @project(Flashcards Collection)
+  ✘ Animations feel too fast @cancelled(19-02-28 22:58) @project(Animations / Transitions.Flashcard Study)
+  ✔ Reduce whitespace on icon. Maybe flex center that part? @done(19-01-21 22:00) @project(Notes.Note Collection)
+  ✔ Find a better alternate font to go with Roboto. Change from Inter UI to Roboto @done(19-01-21 21:43) @project(General)
+  ✘ Shadow around the left edge of chat sidebar @cancelled(19-01-21 21:44) @project(Chat.Maybes)
+  ✔ Prevent user from clicking create and getting to copy code if they don't do all steps @done(19-01-21 21:48) @project(Create Study Group)
+  ✔ Figure out how to center the content without using a fixed page size (94vh) @done(19-01-21 21:48) @project(Create Study Group)
+  ✔ Fix the scrolling error @critical @done(19-01-21 01:06) @project(General)
+    -Setting a page content to 100% should not show a scrollbar
+    -May need to completely change how the sidebar works. I will probably end up doing that anyway because the current sidebar doesn't work well when collapsed.
+    -The sidebar toggle button is in a bad location.
+  ✔ Add a date display so that you can tell on what day the messages were sent @done(19-01-20 01:03) @project(Chat)
+  ✔ Going to make it so that when you click a message a date is shown, maybe slide down the message. @done(19-01-20 01:03) @project(Chat)
+  ✔ Go through and improve the colors and design as we go. There are some things that I think are ugly, design wise. @done(19-01-19 15:55) @project(General)
+  ✔ Clean up the css @done(19-01-19 15:55) @project(General)
+  ✔ Remove unused styles @done(19-01-19 15:55) @project(General)
+  ✔ Make more readable (remove deeply nested styles) @done(19-01-19 15:55) @project(General)
+  ✘ Create add button card item @cancelled(19-01-10 14:45) @project(Components Needed)
+  ✔ Make sure that other users cannot access notes they didn't create @done(19-01-10 13:30) @project(Notes)
+  ✔ Figure out what I should limit the title length to @done(19-01-10 13:30) @project(Notes)
+  ✔ implement a note deletion feature so users can delete notes they don't want @done(19-01-10 13:30) @project(Notes)
+  ✔ The new titlebar icon only apply to the google redirect popup window but now the title bar? @done(19-01-10 13:30) @project(Branding)
+  ✔ Improve color design. Not sure about the gradients the more I work with it. @done(19-01-10 13:30) @project(Branding)
+  ✔ Figure out how to make these pages more responsive so that the cards scale better and don't break apart as much... @done(19-01-04 14:43) @project(Collection Pages)
+  ✔ Not sure why the favicon is not showing???? @low @done(19-01-04 13:56) @project(General)
+  ✔ Button to restart flashcards when you reach the end @done(19-01-04 13:50) @project(Flashcards)
+  ✔ Shuffle button @done(19-01-04 13:50) @project(Flashcards)
+  ✔ Make sure the build bundle size is not too large. @low @done(19-01-04 12:35) @project(General)
+  ✔ Figure out how to split the code so the bundle size is not as large... @done(19-01-04 12:35) @project(General)
+  ✔ When the page content overflows downwards, only allow the page content to scroll not the sidebar or header @high @done(19-01-04 12:34) @project(General)
+    Not exactly sure how to do this.
+  ✔ REFACTOR the components into different subfolders to organize it a bit @done(19-01-04 12:35) @project(General)
+  ✔ Collection should have a loading indicator @done(18-12-26 20:53) @project(Notes)
+  ✔ The page-title doesn't properly slide along with the sidebar when there is a scrollbar present @done(18-12-22 14:17) @project(Known Bugs)
+  ✘ Give the group owner a glow around their card @cancelled(18-12-22 14:17) @project(Members Page)
+  ✔ Differentiate the owner from the other members @done(18-12-22 14:17) @project(Members Page)
+  ✔ Store displayname in firestore so that it updates @done(18-12-21 21:37) @project(General)
+  ✔ Make svg's smaller @done(18-12-21 23:15) @project(Landing)
+  ✔ Word breaking looks fucked up. Splits in the middle of words even when there are other places to break it @done(18-12-21 21:39) @project(Chat)
+  ✔ Sound when a message is received (Implemented but not sure about it) @done(18-12-21 21:39) @project(Chat.Maybes)
+  ✔ Change the sound notifications to only play when the user has the chat sidebar closed @done(18-12-21 21:39) @project(Chat.Maybes)
+  ✔ Create search that filters the results using the JS filter method. @done(18-12-22 13:49) @project(Collection Pages)
+  ✔ find new animation library @done(18-12-19 20:15) @project(General)
+  ✔ Update page-title so that it can be used with pages that have buttons in their headers @done(18-12-20 11:54) @project(Components Needed)
+  ✔ Make chat scroll when another user sends a message @started(18-12-21 21:01) @done(18-12-21 21:08) @lasted(7m42s) @project(Chat)
+  ✔ Notification when group not found @done(18-12-19 20:08) @project(Notifications)
+  ✔ When you click a group in the drop down, there are two bars that appear. Not sure what causes it. @done(18-12-19 20:08) @project(Known Bugs)
+  ✔ Only save the uid to local storage @done(18-12-21 11:29) @project(Vuex Store)
+  ✔ Figure out what the card backgrounds should look like @done(18-12-19 20:08) @project(Homepage)
+  ✔ Add homepage option to list and remove active invite codes. @done(18-12-21 21:10) @project(Study Group Settings)
+  ✔ Allow option to remove members from group @done(18-12-21 21:10) @project(Study Group Settings)
+  ✔ Show a study group settings page only to the group owner to allow them to change the details after creation @done(18-12-21 21:10) @project(Study Group Settings)
+  ✔ load in decks from firebase @done(18-12-19 20:17) @project(Flashcards Collection)
+  ✔ link decks to study page @done(18-12-19 20:17) @project(Flashcards Collection)
+  ✔ Implement navigation animations @done(18-12-19 20:16) @project(Flashcards)
+  ✔ Implement firebase functionality @done(18-12-19 20:16) @project(Flashcards)
+  ✔ find a way to better indicate which side of the flashcard is currently displaying @done(18-12-19 20:16) @project(Flashcards)
+  ✔ Make component more robust so that it accepts buttons in the navbar. Would help with page layout looks and functionality @done(18-12-21 21:19) @project(PageTitle)
+  ✔ Add more detail to Study Group cards in dropdown @done(18-12-16 21:51) @project(Homepage)
+  ✔ Upgrade navbar dropdown to look more like the figma design. Each class should provide some details @today @done(18-12-18 13:15) @project(NavBar)
   ✔ Decide if I should store each user's study groups in their profile as well as in the actual study group itself @done(18-12-16 20:15) @project(Database Design)
   ✔ add dark blur effect to modals @done(18-12-16 20:12)
   ✘ Figure out how to delete a code after 24 hours. @cancelled(18-12-16 17:08) @project(Database Design)

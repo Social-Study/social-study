@@ -1,6 +1,12 @@
 <template>
-  <div class="toast" :class="color">
-    <button @click="$emit('closeMessage')" class="btn btn-clear float-right"></button>
+  <div
+    class="toast"
+    :class="color"
+  >
+    <button
+      @click="$emit('closeMessage')"
+      class="btn btn-clear float-right"
+    ></button>
     <slot>Message Here</slot>
   </div>
 </template>
@@ -12,11 +18,11 @@ export default {
     visible: Boolean,
     type: String
   },
-  data: function() {
+  data() {
     return {};
   },
   computed: {
-    color: function() {
+    color() {
       return {
         "toast-primary": this.type === "success",
         "toast-error": this.type === "error"
