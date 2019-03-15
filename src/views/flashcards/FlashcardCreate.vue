@@ -12,11 +12,23 @@
       </template>
 
       <template slot="right">
+        <toggle-switch
+          @toggle="toggled = $event"
+          :default="toggled"
+          :values="['Private', 'Public']"
+        ></toggle-switch>
         <button
           @click="saveDeck"
           class="btn btn-action split"
         >
           <i class="fas fa-save"></i>
+        </button>
+        <button
+          v-if="deckID !== null"
+          @click="deleteDeck"
+          class="btn btn-error btn-action split"
+        >
+          <i class="fas fa-trash"></i>
         </button>
       </template>
     </page-title>
@@ -42,20 +54,21 @@
       Please Enter term and definition for each flashcard
     </div>
     <div class="page-content">
+      <!-- maxlength="100" -->
       <flashcard-create-form
         v-for="(term, index) in terms"
-        :key="index"
-        :index="index"
-        maxlength="100"
-        @termUpdated="termUpdated"
-        @defUpdated="defUpdated"
+        :key="hash[index]"
+        :initTerm="term"
+        :initDef="definitions[index]"
+        @termUpdated="termUpdated($event, index)"
+        @defUpdated="defUpdated($event, index)"
         @addNew="addCard"
+        @delete="deleteCard(index)"
       />
       <div
         class="addCard"
         @click="addCard"
       >
-        <!-- <h2>Add Card</h2> -->
         <div class="gradient-border add">
           <div class="add-button">
             <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
@@ -69,35 +82,116 @@
 
 <script>
 import PageTitle from "@/components/navigation/PageTitle";
+import ToggleSwitch from "@/components/ToggleSwitch.vue";
 import FlashcardCreateForm from "@/components/flashcards/FlashcardCreateForm";
+
 import firebase, { db } from "@/firebaseConfig";
+
+// TODO: make load to edit
+// Make sure that you cannot submit an empty set.
 
 export default {
   name: "FlashcardCreate",
   components: {
+    FlashcardCreateForm,
     PageTitle,
-    FlashcardCreateForm
+    ToggleSwitch
+  },
+  props: {
+    deckID: {
+      type: String,
+      default: null,
+      required: false
+    },
+    isPrivate: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
       terms: [null],
       definitions: [null],
+      hash: [new Date().getTime()], // Hash is used as a unique way to access each item. Without it there may not be any unique property to use as the key
       deckTitle: "",
       noTitle: false,
-      contentFilled: true
+      contentFilled: true,
+      toggled: false
     };
   },
-  created() {},
+  created() {
+    // Editing existing deck
+    if (this.deckID != null) {
+      // Set the toggle property to the prop's value
+      // This value is received from the FlashCardIcon where the user clicks the "edit button"
+      this.toggled = !this.isPrivate;
+      this.loadDeck();
+    }
+  },
   methods: {
-    termUpdated(value) {
-      this.terms[value.index] = value.term;
+    getCollection() {
+      // Determines what Firestore path to use and returns the object
+      const groupID = this.$route.params.groupID;
+      // Main flashcard collection route
+      if (!this.toggled) {
+        return db
+          .collection("study-groups")
+          .doc(groupID)
+          .collection("flashcards")
+          .doc("private")
+          .collection(this.$store.getters.uid);
+      } else {
+        return db
+          .collection("study-groups")
+          .doc(groupID)
+          .collection("flashcards");
+      }
     },
-    defUpdated(value) {
-      this.definitions[value.index] = value.def;
+    deleteCard(index) {
+      console.log("delete: " + index);
+      if (this.terms.length !== 1) {
+        this.$delete(this.terms, index);
+        this.$delete(this.definitions, index);
+        this.$delete(this.hash, index);
+      }
+    },
+    termUpdated(value, index) {
+      this.terms[index] = value.term;
+    },
+    defUpdated(value, index) {
+      this.definitions[index] = value.def;
     },
     addCard() {
       this.terms.push(null);
       this.definitions.push(null);
+      this.hash.push(new Date().getTime());
+    },
+    deleteDeck() {
+      this.getCollection()
+        .doc(this.deckID)
+        .delete();
+      this.$router.push(`/${this.$route.params.groupID}/flashcards`);
+    },
+    loadDeck() {
+      let deck = this.getCollection().doc(this.deckID);
+      deck
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            this.deckTitle = doc.data().title;
+            this.terms = doc.data().terms;
+            this.definitions = doc.data().definitions;
+            this.hash = doc.data().hash;
+            // creatorName: user.displayName,
+            // creationDate: initDate,
+            // lastUpdated: initDate,
+            // creatorUID: this.$store.getters.uid,
+            // creatorPhoto: this.$store.getters.photoURL
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     //saves the current deck and pushes it to firebase
     saveDeck() {
@@ -111,49 +205,58 @@ export default {
           this.contentFilled = false;
         }
       }
-      // for (let i = 0; i < this.definitions.length; i++) {
-      //   if (this.definitions[i] === null) {
-      //     console.log("def null Term Found");
-      //     this.contentFilled = false;
-      //   }
-      // }
 
       // Confirm that all fields are filled
       if (this.deckTitle !== "" && this.contentFilled) {
-        const groupID = this.$route.params.groupID;
-        const flashcardCollection = db
-          .collection("study-groups")
-          .doc(groupID)
-          .collection("flashcards");
+        let flashcardCollection = this.getCollection();
+
         let user = firebase.auth().currentUser; // Used to get user's name
         let initDate = new Date(); //Date object for creation and modified fields
-        flashcardCollection
-          .add({
-            title: this.deckTitle,
-            terms: this.terms,
-            definitions: this.definitions,
-            creatorUID: this.$store.getters.uid,
-            creatorName: user.displayName,
-            creationDate: initDate,
-            lastUpdated: initDate,
-            creatorPhoto: this.$store.getters.photoURL
-          })
-          .then(docRef => {
-            console.log("Flashcard Deck created with doc id: ", docRef.id);
-            db.collection("study-groups")
-              .doc(groupID)
-              .collection("flashcards")
-              .doc(docRef.id)
-              .update({
-                documentID: docRef.id
-              })
-              .then(() => {
-                this.$router.push(`/${this.$route.params.groupID}/flashcards`);
-              });
-          })
-          .catch(error => {
-            console.error("Error adding document: ", error);
-          });
+
+        // Editing not creating so update firstore not create new
+        if (this.deckID != null) {
+          flashcardCollection
+            .doc(this.deckID)
+            .update({
+              title: this.deckTitle,
+              terms: this.terms,
+              definitions: this.definitions,
+              hash: this.hash,
+              creatorName: user.displayName,
+              lastUpdated: initDate,
+              creatorPhoto: this.$store.getters.photoURL
+              // creatorUID: this.$store.getters.uid,
+              // creationDate: initDate,
+            })
+            .then(() => {
+              // console.log("Flashcard Deck created with doc id: ", docRef.id);
+              this.$router.push(`/${this.$route.params.groupID}/flashcards`);
+            })
+            .catch(error => {
+              console.error("Error updating document: ", error);
+            });
+        } else {
+          // Otherwise create a brand new document
+          flashcardCollection
+            .add({
+              title: this.deckTitle,
+              terms: this.terms,
+              definitions: this.definitions,
+              hash: this.hash,
+              creatorUID: this.$store.getters.uid,
+              creatorName: user.displayName,
+              creationDate: initDate,
+              lastUpdated: initDate,
+              creatorPhoto: this.$store.getters.photoURL
+            })
+            .then(docRef => {
+              console.log("Flashcard Deck created with doc id: ", docRef.id);
+              this.$router.push(`/${this.$route.params.groupID}/flashcards`);
+            })
+            .catch(error => {
+              console.error("Error adding document: ", error);
+            });
+        }
       } else {
         console.log("noTitle");
         this.noTitle = true;
@@ -182,8 +285,8 @@ export default {
   box-shadow: $shadow;
   width: 250px;
   height: 250px;
-  border-radius: 10px;
-  background-color: $light-grey;
+  border: 2px solid $secondary-light;
+  background-color: white;
   user-select: none;
   padding-top: 10px;
   margin: 0 40px 40px 0;

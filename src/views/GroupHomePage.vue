@@ -123,7 +123,21 @@ export default {
           .limit(4)
       ).then(flashcards => {
         this.recentFlashcards = flashcards;
+        // this.recentFlashcards = this.recentFlashcards.filter(deck => {
+        //   return deck.id !== "private";
+        // });
         this.flashcardsLoading = false;
+      });
+    }
+  },
+  computed: {
+    filteredDecks() {
+      // Filter the note list by the query string. Including partial matches.
+      // Converted to lowercase to avoid capitalization enforcement
+      return this.decks.filter(deck => {
+        return deck.title
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
       });
     }
   },

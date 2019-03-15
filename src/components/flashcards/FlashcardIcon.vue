@@ -1,7 +1,6 @@
 <template>
   <!-- Flashcard Icon -->
   <div id="flashcard">
-
     <!-- Title -->
     <h2 id="title">{{info.title}}</h2>
     <!-- Created -->
@@ -11,9 +10,11 @@
     <!-- Creator Avatar and Name Chip -->
     <!-- TODO: Figure out how to use my existing avatar component -->
     <div class="chip text-ellipsis">
+      <!-- Set background to transparent when there is an image. Fixes fuzzy outline  -->
       <img
         :src="info.creatorPhoto"
         class="avatar avatar-sm"
+        :class="info.creatorPhoto !== '' ? 'chip-transp' : ''"
       >
       {{info.creatorName}}
     </div>
@@ -23,9 +24,22 @@
       <button
         v-if="$store.getters.uid === info.creatorUID"
         id="editBtn"
+        @click="$router.push({name: 'editFlashcards', params: {deckID: info.id, isPrivate: isPrivate}})"
       >Edit</button>
+      <div
+        v-if="info.creatorUID === $store.getters.uid"
+        @click="$emit('toggle')"
+        id="indicator"
+        class="tooltip tooltip-bottom"
+        data-tooltip="Toggle Visibility"
+      >
+        <i
+          class="far"
+          :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"
+        ></i>
+      </div>
       <button
-        @click="$router.push(`/${$route.params.groupID}/flashcards/${info.id}/study`)"
+        @click="goStudy"
         id="studyBtn"
       >Study</button>
     </div>
@@ -44,9 +58,23 @@ export default {
     info: {
       type: Object,
       required: true
+    },
+    isPrivate: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
+    goStudy() {
+      if (this.isPrivate) {
+        this.$router.push({
+          name: "study",
+          params: { deckID: this.info.id, isPrivate: this.isPrivate }
+        });
+      } else {
+        this.$router.push({ name: "study", params: { deckID: this.info.id } });
+      }
+    },
     calcDays(modDate) {
       let currentDate = new Date();
       modDate = new Date(modDate);
@@ -74,19 +102,53 @@ $card-height: 218px;
   height: $card-height;
   width: $card-width;
   padding: 1em;
-  border-radius: 10px;
-  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  border: 2px solid $secondary-light;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &:hover{
+      border-image: $orange-gradient;
+      border-image-slice: 1;
+      box-shadow: $shadow-heavy;
+  }
+}
+
+#indicator {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+
+  top: 0px;
+  left: 0px;
+
+  margin: 5px;
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: whitesmoke;
+  align-self: center;
+
+  &:hover {
+    background-color: darken(whitesmoke, 20);
+  }
+
+  i.fa-eye {
+    color: $success-color;
+  }
+
+  i.fa-eye-slash {
+    color: $error-color;
+  }
 }
 
 #title {
   font-family: $secondary-font;
   font-weight: 700;
   white-space: nowrap;
-  // overflow: hidden;
+  margin: 0;
   text-overflow: ellipsis;
   max-width: $card-width;
   max-height: 100px;
@@ -111,11 +173,16 @@ p > i {
 
 .chip {
   padding: 15px;
-  margin: auto;
+  margin: 0 auto;
   text-align: center;
 }
 
+.chip-transp {
+  background-color: transparent;
+}
+
 #button-container {
+  align-self: space-between;
   margin-top: 8px;
   display: flex;
   flex-flow: row nowrap;

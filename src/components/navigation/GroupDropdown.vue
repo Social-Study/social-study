@@ -6,6 +6,7 @@
   >
     <a
       class="group-dropdown-button btn btn-primary dropdown-toggle"
+      id="group-button"
       tabindex="0"
     >
       Study Groups <i class="fas fa-caret-down"></i>
@@ -18,9 +19,12 @@
         :key="index"
       >
         <li>
-          <div class="group-card">
+          <div
+            class="group-card"
+            :class="group.id == $route.params.groupID ? 'current-group' : ''"
+          >
             <router-link
-              class="card-text"
+              class="card-text "
               :to="{ name: 'home', params: { groupID: group.id } }"
             >
               <p
@@ -89,38 +93,53 @@ export default {
 }
 
 #instructorText {
-  color: $secondary-light;
-}
+  color: transparent;
+  font-size: 0;
+  transition: font-size 0.1s, color 0.1s;
+  transition-timing-function: ease-in;
 
-.group-dropdown-button {
-  width: 250px;
-  margin-right: 20px;
 }
 
 .group-menu {
-  background-color: $secondary-light;
+  background: transparent;
+  background-color: $transparent-dark;
   box-shadow: $shadow-heavy;
   max-width: 250px;
   min-width: 250px;
+  margin-top: 4px;
 }
 
 .group-card {
   width: 100%;
   max-width: 250px;
   padding: 5px;
-  border-radius: 10px;
   background-color: white;
-  box-shadow: $shadow;
+  border: solid 2px white;
+  transition: padding-top 0.1s, padding-bottom 0.1s;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
+  &:hover{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
 
-  &:hover {
-    background-color: $dark;
-    p {
-      color: white;
+    #instructorText{
+      font-size: 15px;
+      color: $dark;
     }
-  }
 
+  }
   a {
     text-decoration: none;
+  }
+}
+
+.current-group {
+  background-image: $orange-gradient;
+  border: none;
+  p {
+    color: white;
   }
 }
 
@@ -128,5 +147,16 @@ export default {
   user-select: none;
   margin: 0;
   color: $secondary;
+}
+#group-button{
+  background-color:$transparent-dark;
+  color: white;
+  border: solid 2px $primary;
+
+  &:hover{
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
+  }
 }
 </style>

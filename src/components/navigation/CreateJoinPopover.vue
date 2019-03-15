@@ -1,18 +1,21 @@
 <template>
   <div>
     <div class="popover popover-bottom">
-      <button class="btn btn-action"><i class="fas fa-plus"></i></button>
+      <button 
+        class="btn btn-action"
+        id="button"
+      ><i class="fas fa-plus"></i></button>
       <div class="popover-container">
         <div class="card">
           <div class="card-body text-bold">
+            <div class="section-title">Create</div>
             <button
               @click="$router.push('/dashboard/create')"
+              id="create-button"
               class="btn btn-primary btn-create"
-            >Create</button> New Study Group
-            <div
-              class="divider text-center"
-              data-content="OR"
-            ></div>
+            >New Study Group</button> 
+            <hr id="divider">
+            <div class="section-title">Join</div>
             <div class="empty-action input-group input-inline">
               <input
                 @keydown.enter="fetchStudyGroup"
@@ -169,21 +172,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-create {
-  margin-right: 20px;
-}
+@import "@/styles.scss";
 .popover-container {
   // top: -10px !important;
   .card {
-    border-radius: 10px !important;
+      background-color: $transparent-dark;
+      color:white;
   }
 }
 
-.modal-container {
-  border-radius: 10px;
+hr{
+  background-image: $orange-gradient;
+  height:1px;
+  border:none;
 }
+.section-title{
+  text-align: center;
+  padding-bottom: 2%;
+}
+#button{
+  background-color: $transparent-dark;
+  color:white;
+  border: solid 2px $primary;
 
-.modal-btn {
-  margin-left: 20px;
+  &:hover{
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
+  }
 }
 </style>

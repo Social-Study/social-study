@@ -20,10 +20,10 @@
             </div>
           </div>
         </li>
-        <li
+        <hr
           v-show="show"
-          class="divider"
-        ></li>
+          class="section-divider"
+        >
 
         <!-- Home Link -->
         <li
@@ -51,7 +51,7 @@
             :class="
               $route.name === 'flashcards' ? 'active' : '' ||
               $route.name === 'study' ? 'active' : '' ||
-              $route.name === 'create' ? 'active' : ''"
+              $route.name === 'createFlashcards' ? 'active' : ''"
             :to="{ name: 'flashcards' }"
           >
             <i
@@ -69,7 +69,8 @@
         >
           <router-link
             :to="{name: 'createQuiz'}"
-            :class="$route.name === 'createQuiz' ? 'active' : ''"
+            :class="$route.name === 'createQuiz' ? 'active' : '' ||
+              $route.name === 'quiz' ? 'active' : ''"
           ><i
               :class="{'large-icon': !show}"
               class="fas fa-pencil-alt"
@@ -280,18 +281,17 @@ export default {
   z-index: 200;
   top: $nav-height;
   left: 0;
-  border-top: 2px solid $secondary;
-  background-color: $dark;
-  // transition: 1s;
+  background-color: $transparent-dark;
+  transition: 0.25s;
 
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
 
   .menu {
-    background: $dark;
+    background-color: transparent;
     box-shadow: none;
-    min-width: 0;
+    min-width: 50px;
 
     // Group Info Text
     .tile-content {
@@ -308,7 +308,7 @@ export default {
 
       i.large-icon {
         text-align: center;
-        font-size: 30px;
+        font-size: 25px;
       }
     }
 
@@ -330,17 +330,22 @@ export default {
 
   &.collapsed {
     width: 50px;
-    transition: 1s;
-    // margin-right: 50px;
+    min-width: 50px;
     .menu {
       padding: 0;
     }
   }
 
+  // TODO: Figure out how to fix the animation. I got the text not to deform during the transition but now the transition pops.
   &.active {
     width: 200px;
-    transition: 1s;
-    // margin-right: 200px;
+    min-width: 200px;
   }
+}
+
+.section-divider{
+  height:1px;
+  background-image: $orange-gradient;
+  border:none;
 }
 </style>

@@ -12,6 +12,8 @@ Possible Features (Time Permitting):
   ☐ Indicators that show online group members in the sidebar
   ☐ User chooses a gradient for their specific study group during creation
   ☐ Add emoji menu to the study group chat.
+  ☐ Generate SSR with Nuxt.js. Server side rendering
+    https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
 
 General:
   ☐ Go through and error check all inputs where necessary
@@ -27,6 +29,11 @@ General:
     - Collapsed or Open Sidebar
     - Collapsed or Open Chat
     - Chat notifications on. etc...
+  ☐ Sequential loading animations when list are being displayed for the first time
+       Every list is loading from firebase so there is a delay before the data is shown. Figure out how to get loading list to be animated 1-by-1 when shown for the first time
+  ☐ Small QOL Features
+    ☐ Always verify delete actions
+    ☐
 
 Components Needed:
   ☐ Notification popup
@@ -72,6 +79,8 @@ Chat:
        Not sure how I would implement tracking unread messages
     ☐ Local desktop notifications if there is a new message.
     ☐ Transition when the button first appears
+    ☐ Allow user's to delete their own messages
+      - Maybe allow editing?
 
 Known Bugs:
   ☐ Form validation is broken
@@ -80,6 +89,10 @@ Known Bugs:
   FlashCard Study:
       ☐ Select the next flashcard by clicking the button. Then try using spacebar to flip the card. The next card is shown.
         This is due to the button capturing focus and the spacebar is pressing it instead of flipping the card.
+      ☐ Prompt users before leaving if not saved (similar to note page)
+  Chat:
+    ☐ When user changes their profile picture, the old image is deleted but we still need the image at the old url.
+      Need to make sure I am uploading to the same url not creating a new one
 
 Vuex Store:
   ☐ Save the number of unread messages to the store.
@@ -117,9 +130,11 @@ Flashcards Collection:
   ☐ Display a "deck standing" color indicator to show whether the flashcard deck is good or bad
   ☐ Use the avatar component or show the user's initials if they don't have a profile picture.
 
-Flashcards:
+  Flashcards:
   ☐ Autofocus after using keybind to create a new flashcard
-  ☐ Public and private flashcard sets @critical
+  ☐ Fix switching flashcard decks from the edit page instead of only from the icon.
+  ☐ Extract firebase functions to a separate file to be reused.... @high
+  ✔ Public and private flashcard sets @critical @done(19-01-31 23:16)
 
 Animations / Transitions:
   Flashcard Study:
@@ -127,8 +142,6 @@ Animations / Transitions:
   Create Page:
     ☐ Animation when steps indicator changes
     ☐ Animation when user navigates between cards
-    ☐ Sequential loading animations when list are being displayed for the first time
-      Show the icons appearing one after the other
 
 Archive:
   ✔ Reduce whitespace on icon. Maybe flex center that part? @done(19-01-21 22:00) @project(Notes.Note Collection)

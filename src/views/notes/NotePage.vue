@@ -238,7 +238,6 @@ export default {
   padding: 20px 10px !important;
   box-shadow: $shadow-hovered;
   font-family: $primary-font;
-  // font-family: "Inter UI";
   background-color: white;
   padding: 0;
   overflow-y: auto;

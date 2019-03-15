@@ -21,6 +21,7 @@ import FlashcardCreate from "@/views/flashcards/FlashcardCreate";
 
 // Quiz Functionality Pages
 import QuizCreate from "@/views/quiz/QuizCreate";
+import Quiz from "@/views/quiz/Quiz";
 
 // Agenda Functionality Pages
 import GroupAgenda from "@/views/agenda/GroupAgenda.vue";
@@ -116,7 +117,8 @@ let router = new Router({
       meta: {
         title: "Flashcard Study | Social Study",
         requiresAuth: true
-      }
+      },
+      props: true
     },
     {
       path: "/:groupID/flashcards/create",
@@ -128,6 +130,16 @@ let router = new Router({
       }
     },
     {
+      path: "/:groupID/flashcards/edit",
+      name: "editFlashcards",
+      component: FlashcardCreate,
+      meta: {
+        title: "Edit Deck | Social Study",
+        requiresAuth: true
+      },
+      props: true
+    },
+    {
       path: "/:groupID/quizzes/create",
       name: "createQuiz",
       component: QuizCreate,
@@ -135,6 +147,16 @@ let router = new Router({
         title: "Generate a Quiz | Social Study",
         requiresAuth: true
       }
+    },
+    {
+      path: "/:groupID/quizzes/quiz",
+      name: "quiz",
+      component: Quiz,
+      meta: {
+        title: "Quiz | Social Study",
+        requiresAuth: true
+      },
+      props: true
     },
     {
       path: "/:groupID/agenda",

@@ -75,7 +75,7 @@ export default {
 
 // Global Styles
 <style lang="scss">
-@import "./styles.scss";
+@import "@/styles.scss";
 @import "node_modules/animate.css/animate";
 @import "node_modules/spectre.css/src/spectre.scss";
 @import "node_modules/spectre.css/src/spectre-exp.scss";
@@ -113,23 +113,23 @@ a.modal-overlay {
 // Sidebar Styles for Visible /
 .sidebar-active {
   margin-left: 200px;
-  transition: 1s;
+  transition: .25s;
 }
 
 .sidebar-inactive {
   margin-left: 50px;
-  transition: 1s;
+  transition: .25s;
 }
 
 // Chat Sidebar Styles for Visible / Hidden
 .chat-active {
   margin-right: 300px;
-  transition: 1s;
+  transition: 0.25s;
 }
 
 .chat-inactive {
   margin-right: 0px;
-  transition: 1s;
+  transition: 0.25s;
   // height: 100%;
 }
 </style>
