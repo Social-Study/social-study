@@ -1,23 +1,45 @@
 <template>
   <div>
     <page-title>
+      <template slot="left">
+        <button
+          class="btn btn-primary"
+          @click="createItem"
+        >Add Item <i class="fas fa-plus"></i>
+        </button>
+      </template>
       <template slot="center">
         Group Agenda
       </template>
     </page-title>
     <div class="content-container">
 
+      <!-- List of all agenda items -->
       <div class="item-list">
-        <div class="date-header">
-          Thursday, March 14
-        </div>
         <div
-          v-for="item in agendaItems"
-          :key="item.title"
-          class="agenda-item"
+          v-for="(item, index) in agendaItems"
+          :key="item.date.getTime()"
         >
-          {{item.title}}
+          <agenda-item-date-header
+            v-if="showDateHeader(index)"
+            :date="item.date"
+          />
+          <agenda-item
+            :item="item"
+            @itemSelected="selectedItem = item"
+            :selected-item="selectedItem"
+            :index="index"
+          />
         </div>
+      </div>
+      <div class="divider-vert"></div>
+
+      <!-- Clicked agenda item's details -->
+      <div class="item-detail-container">
+        <agenda-item-detail
+          v-if="selectedItem !== {}"
+          :selectedItem="selectedItem"
+        />
       </div>
     </div>
   </div>
@@ -25,62 +47,68 @@
 
 <script>
 import PageTitle from "@/components/navigation/PageTitle";
+import AgendaItem from "@/components/agenda/AgendaItem";
+import AgendaItemDateHeader from "@/components/agenda/AgendaItemDateHeader";
+import AgendaItemDetail from "@/components/agenda/AgendaItemDetail";
+
+import { format, isSameDay } from "date-fns";
 
 export default {
   name: "GroupAgenda",
   components: {
-    PageTitle
+    PageTitle,
+    AgendaItem,
+    AgendaItemDateHeader,
+    AgendaItemDetail
   },
   data() {
     return {
-      agendaItems: [
-        {
-          title: "Agenda Item 4",
-          value: 10
-        },
-        {
-          title: "Agenda Item 1",
-          value: 4
-        },
-        {
-          title: "Agenda Item 1",
-          value: 4
-        },
-        {
-          title: "Agenda Item 1",
-          value: 100
-        },
-        {
-          title: "Agenda Item 1",
-          value: 4
-        },
-        {
-          title: "Agenda Item 1",
-          value: 4
-        },
-        {
-          title: "Agenda Item 1",
-          value: 4
-        },
-        {
-          title: "Agenda Item 3",
-          value: 6
-        },
-        {
-          title: "Agenda Item 2",
-          value: 5
-        }
-      ]
+      // Object that is clicked on (focused)
+      selectedItem: {},
+      // List of all agenda item objects
+      agendaItems: []
     };
   },
   created() {
+    // Sort all loaded agenda items on create
     this.sortItems();
   },
   methods: {
+    /**
+     * Determine if the previous agenda item has the same date as the current
+     * index item. (3/15/19 === 3/15/19)
+     *
+     * This is used to conditionally show the date header only when the dates
+     * are different. There will be blocks of items using the same header.
+     */
+    showDateHeader(index) {
+      if (index !== 0) {
+        return !isSameDay(
+          this.agendaItems[index].date,
+          this.agendaItems[index - 1].date
+        );
+      } else {
+        // The first item will always show the header.
+        return true;
+      }
+    },
+    /**
+     * Create a new agenda item
+     */
+    createItem() {
+      let date = new Date();
+      this.agendaItems.push({
+        title: format(date, "MM/DD/YYYY"),
+        date: date
+      });
+    },
+    /**
+     * Compare two agenda objects by their date value
+     */
     compare(a, b) {
-      if (a.value > b.value) {
+      if (a.date > b.date) {
         return 1;
-      } else if (a.value < b.value) {
+      } else if (a.date < b.date) {
         return -1;
       }
       return 0;
@@ -100,39 +128,24 @@ export default {
 
 .content-container {
   height: $page-with-header-height;
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .item-list {
   height: 100%;
-  // border: 2px solid $secondary-light;
   padding: 20px;
   overflow: auto;
+  flex: 1;
 }
 
-.date-header {
-  background-color: $secondary-light;
-  font-size: 1em;
-  width: 250px;
-  margin: 0 10px 10px 0;
-  border-radius: 5px;
-  color: white;
+.item-detail-container {
+  padding: 20px;
+  height: 100%;
+  flex: 3;
 }
 
-.agenda-item {
-  cursor: pointer;
-  border: 2px solid $secondary-light;
-  height: 80px;
-  margin-bottom: 20px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:hover {
-    border-image: $orange-gradient;
-    border-image-slice: 1;
-    border-width: 2px;
-    box-shadow: $shadow-hovered;
-  }
+.divider-vert {
+  padding: 0;
 }
 </style>

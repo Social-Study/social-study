@@ -1,5 +1,5 @@
 Branding:
-    - My brother is working on a design
+  ☐ PURPLE Social Study icon for the favicon @high
   ☐ Think of better slogan.
 
 General:
@@ -21,7 +21,7 @@ General:
   ☐ Small QOL Features
     ☐ Always verify delete actions
 
-  ☐ The user's "bio" information should be displayed somewhere....
+  ✔ The user's "bio" information should be displayed somewhere.... @done(19-03-15 14:11)
 
 Components Needed:
   ☐ Notification popup
