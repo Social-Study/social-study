@@ -6,6 +6,7 @@
   >
     <a
       class="group-dropdown-button btn btn-primary dropdown-toggle"
+      id="group-button"
       tabindex="0"
     >
       Study Groups <i class="fas fa-caret-down"></i>
@@ -92,37 +93,41 @@ export default {
 }
 
 #instructorText {
-  color: $secondary-light;
-}
-
-.group-dropdown-button {
-  width: 250px;
-  margin-right: 20px;
-  background-color: lighten($dark, 5) !important;
-  border: none !important;
-
-  &:hover {
-    background-color: lighten($dark, 10) !important;
-  }
+  color: transparent;
+  font-size: 0;
+  transition: font-size 0.1s, color 0.1s;
+  transition-timing-function: ease-in;
 }
 
 .group-menu {
-  background-color: $secondary-light;
+  background: transparent;
+  background-color: $transparent-dark;
   box-shadow: $shadow-heavy;
   max-width: 250px;
   min-width: 250px;
+  margin-top: 4px;
 }
 
 .group-card {
   width: 100%;
   max-width: 250px;
   padding: 5px;
-  border-radius: 10px;
   background-color: white;
-  box-shadow: $shadow;
+  border: solid 2px white;
+  transition: padding-top 0.1s, padding-bottom 0.1s;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
+  &:hover{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
 
-  &:hover {
-    background-color: darken(white, 10);
+    #instructorText{
+      font-size: 15px;
+      color: $dark;
+    }
+
   }
   a {
     text-decoration: none;
@@ -130,13 +135,12 @@ export default {
 }
 
 .current-group {
-  // background-color: $dark;
-  border: 2px solid $primary;
+
+  background-image: $orange-gradient;
+  border: none;
+
   p {
     // color: white;
-  }
-  &:hover p {
-    color: $secondary;
   }
 }
 
@@ -144,5 +148,16 @@ export default {
   user-select: none;
   margin: 0;
   color: $secondary;
+}
+#group-button{
+  background-color:$transparent-dark;
+  color: white;
+  border: solid 2px $primary;
+
+  &:hover{
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
+  }
 }
 </style>

@@ -284,8 +284,8 @@ export default {
   box-shadow: $shadow;
   width: 250px;
   height: 250px;
-  border-radius: 10px;
-  background-color: $light-grey;
+  border: 2px solid $secondary-light;
+  background-color: white;
   user-select: none;
   padding-top: 10px;
   margin: 0 40px 40px 0;

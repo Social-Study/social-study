@@ -349,7 +349,6 @@ export default {
 @import "@/styles.scss";
 
 .modal-container {
-  border-radius: 10px;
 
   #close {
     color: $secondary;

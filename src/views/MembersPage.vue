@@ -194,7 +194,7 @@ export default {
   width: 100%;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 300px));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 250px));
   grid-auto-rows: 300px;
   justify-content: center;
   padding: 20px;

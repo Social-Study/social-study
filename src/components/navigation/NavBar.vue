@@ -32,8 +32,9 @@
     <section class="navbar-section">
       <button
         v-if="$route.params.groupID"
-        style="width: 32px; height: 32px;margin-right: 20px; border: none"
+        style="width: 36px; height: 36px;margin-right: 20px;"
         class="btn btn-action"
+        id="chat-button"
         @click="$store.commit('toggleChatActive')"
       ><i class="fas fa-comment-alt"></i></button>
       <div
@@ -41,7 +42,7 @@
         @mouseout="menuActive = false;"
         class="menu-container"
       >
-        <Avatar :user="firestoreUser" />
+        <Avatar :user="firestoreUser" class="avatar" />
 
         <ul
           v-show="menuActive == true"
@@ -60,6 +61,7 @@
           <li class="menu-item text-left">
             <a
               @click="isSettingsActive = true;"
+              id="settings"
               class="text-center c-pointer"
             >
               <i
@@ -70,9 +72,12 @@
           </li>
 
           <!-- Log Out Button -->
-          <li class="menu-item text-left">
+          <li 
+            class="menu-item text-left"
+          >
             <a
               @click="logOut"
+              id="logOutButton"
               class="text-center"
             >
               <i
@@ -160,7 +165,6 @@ export default {
 }
 
 .navbar {
-  // background-color: $dark;
   background-color: $primary;
   padding: 0px 10px 0px 10px;
   height: $nav-height;
@@ -188,7 +192,8 @@ a.navbar-brand {
 
 .menu {
   cursor: pointer;
-  border-radius: 10px;
+  background-color: $transparent-dark;
+  color:white;
   li {
     margin-top: 0;
   }
@@ -198,15 +203,32 @@ a.navbar-brand {
   padding: 2px;
 }
 
+#settings:hover, 
+#logOutButton:hover{
+  background-image: $orange-gradient;
+  color:white;
+}
+
+#chat-button{
+  background-color: $transparent-dark;
+  color:white;
+  border: solid 2px $primary;
+
+  &:hover{
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
+  }
+}
+
 .settings-menu {
   position: absolute;
-  border-radius: 10px 0px 10px 10px;
-  top: 25px;
+  top: 40px;
   right: 30px;
 }
 
 .btn-create:hover {
-  background-color: white;
+  background-image: white;
 }
 
 .h5 {

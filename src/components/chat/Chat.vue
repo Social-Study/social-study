@@ -152,7 +152,7 @@ export default {
 // Chat sidebar header
 #header {
   display: block;
-  transition: 1s;
+  transition: 0.25s;
   margin-bottom: 9px;
 }
 
@@ -166,7 +166,7 @@ export default {
   right: 0;
   background-color: $dark;
   overflow-x: hidden;
-  transition: 1s;
+  transition: 0.25s;
   padding-top: 10px;
 
   // Content is the flex container that holds everything
@@ -197,12 +197,12 @@ export default {
 
 .collapsed {
   width: 0;
-  transition: 1s;
+  transition: 0.25s;
 }
 
 .text {
   display: block;
-  transition: 1s;
+  transition: 0.25s;
 }
 
 .active {

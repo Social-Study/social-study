@@ -77,8 +77,7 @@ export default {
     },
     DefUpdated(event) {
       this.$emit("defUpdated", this.data);
-    },
-    ErrorCheck() {}
+    }
   }
 };
 </script>
@@ -117,10 +116,9 @@ export default {
   padding: 10px;
   height: 250px;
   width: 250px;
-  border-radius: 10px;
   margin: 0 40px 40px 0;
   // box-shadow: $shadow-hovered;
-  border: 1px solid $secondary-light;
+  border: 2px solid $secondary-light;
 
   .form-label {
     color: $secondary;
@@ -128,6 +126,8 @@ export default {
 
   &:hover {
     box-shadow: $shadow-heavy;
+    border-image: $orange-gradient;
+    border-image-slice: 1;
   }
 }
 #input-term {
@@ -142,9 +142,5 @@ label {
 }
 textarea {
   resize: none;
-  border-radius: 5px;
-}
-input {
-  border-radius: 5px;
 }
 </style>

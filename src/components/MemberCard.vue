@@ -77,12 +77,9 @@ export default {
 // Individual info card
 .profile-card {
   // cursor: pointer;
-  height: 300px;
-  width: 300px;
-  margin: 0 20px 20px 0px;
-  border-radius: 16px;
-  background-color: white;
-  box-shadow: $shadow;
+  height: 200px;
+  width: 200px;
+  background-color: transparent;
   user-select: none;
 
   .gradient-underline {
@@ -113,14 +110,15 @@ export default {
 }
 
 h2 {
-  font-size: 1.5em;
+  margin-top: 5px;
+  font-size: 1.2em;
 }
 
 // gradient background around border
 .gradient-border {
-  margin: 30px auto;
-  height: 160px;
-  width: 160px;
+  margin: 0px auto;
+  height: 110px;
+  width: 110px;
   border-radius: 50%;
   background-image: $blue-gradient;
 }
@@ -136,8 +134,9 @@ h2 {
 
 // Icon on the new members button
 .button-icon {
-  top: 5px;
-  font-size: 8em;
+  text-align: center;
+  font-size: 4em;
+  top: 10px;
   position: relative;
   display: flex;
   flex-flow: row nowrap;
@@ -147,9 +146,13 @@ h2 {
 
 // Circle background between the gradient and add icon
 .add-button {
-  // position: relative;
-  width: 140px;
-  height: 140px;
+
+  position: relative;
+  top: 5px;
+  left: 5px;
+  width: 100px;
+  height: 100px;
+
   border-radius: 50%;
   background-color: $light;
   user-select: none;
@@ -158,9 +161,9 @@ h2 {
 // Image on top of the gradient background
 .profile-image {
   position: relative;
-  top: 10px;
-  width: 140px;
-  height: 140px;
+  top: 5px;
+  width: 100px;
+  height: 100px;
   font-size: 60px;
 }
 </style>

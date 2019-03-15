@@ -133,6 +133,13 @@ export default {
     }
 
     &.selected {
+      background-image: $orange-gradient;
+      border: none;
+      color: white;
+      box-shadow: $shadow-hovered;
+    }
+
+    &:hover{
       border-image: $orange-gradient;
       border-image-slice: 1;
       border-width: 2px;
