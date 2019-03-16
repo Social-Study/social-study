@@ -25,11 +25,11 @@
       <div class="item-list">
         <div
           v-for="(item, index) in agendaItems"
-          :key="item.date.getTime()"
+          :key="item.creationDate.toDate().getTime()"
         >
           <agenda-item-date-header
             v-if="showDateHeader(index)"
-            :date="item.date"
+            :date="item.date.toDate()"
           />
           <agenda-item
             :item="item"
@@ -44,7 +44,7 @@
       <!-- Clicked agenda item's details -->
       <div class="item-detail-container">
         <agenda-item-detail
-          v-if="selectedItem !== {}"
+          v-if="selectedItem !== null"
           :selectedItem="selectedItem"
         />
       </div>
@@ -60,6 +60,7 @@ import AgendaItemDetail from "@/components/agenda/AgendaItemDetail";
 import AgendaCreateModal from "@/components/agenda/AgendaCreateModal";
 
 import { format, isSameDay, setHours, setMinutes } from "date-fns";
+import { db } from "@/firebaseConfig";
 
 export default {
   name: "GroupAgenda",
@@ -75,25 +76,21 @@ export default {
       // Only shown when the create new button is pressed
       showCreateModal: false,
       // Object that is clicked on (focused)
-      selectedItem: {},
+      selectedItem: null,
       // List of all agenda item objects
-      agendaItems: [],
-      // New event object details
-      newEvent: {
-        title: "",
-        description: "",
-        date: null,
-        time: {
-          HH: "12",
-          mm: "00",
-          ss: "00"
-        }
-      }
+      agendaItems: []
     };
   },
   created() {
-    // Sort all loaded agenda items on create
-    this.sortItems();
+    this.$bind(
+      "agendaItems",
+      db
+        .collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("agenda")
+    ).then(() => {
+      this.selectedItem = this.agendaItems[0];
+    });
   },
   methods: {
     /**
@@ -129,7 +126,20 @@ export default {
       eventDate = setMinutes(eventDate, e.time.mm);
 
       console.log(eventDate.toString());
+
       this.showCreateModal = false;
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("agenda")
+        .add({
+          title: e.title,
+          description: e.description,
+          date: eventDate,
+          creationDate: new Date()
+        })
+        .then(() => {
+          this.showCreateModal = false;
+        });
     },
     /**
      * Compare two agenda objects by their date value

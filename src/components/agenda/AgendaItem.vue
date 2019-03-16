@@ -5,7 +5,7 @@
     <div
       class="agenda-item"
       @click="$emit('itemSelected')"
-      :class="datesEqual(item.date) ? 'selected':''"
+      :class="checkSelected(item.creationDate) ? 'selected':''"
     >
       {{ item.title }}
     </div>
@@ -24,7 +24,7 @@ export default {
     },
     selectedItem: {
       type: Object,
-      required: true
+      required: false
     },
     index: {
       type: Number,
@@ -37,8 +37,11 @@ export default {
      *
      * Returns true if equal. False otherwise
      */
-    datesEqual(date) {
-      return isEqual(this.selectedItem.date, date);
+    checkSelected(date) {
+      if (this.selectedItem !== undefined) {
+        return isEqual(this.selectedItem.creationDate.toDate(), date.toDate());
+      }
+      return false;
     }
   }
 };

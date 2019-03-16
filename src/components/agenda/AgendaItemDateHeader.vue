@@ -20,7 +20,7 @@ export default {
      * Outputs formated date string for the item list headers
      */
     dateHeader(date) {
-      return format(date, "dddd, MMMM Mo");
+      return format(date, "dddd, MMMM Do");
     }
   }
 };

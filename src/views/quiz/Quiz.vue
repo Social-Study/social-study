@@ -157,7 +157,6 @@ export default {
   },
   methods: {
     handleAnswered(isAnswered) {
-      // TODO: This isn't being received
       if (isAnswered) {
         this.answeredQuestions++;
       } else if (!isAnswered) {

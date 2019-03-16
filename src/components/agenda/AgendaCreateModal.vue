@@ -62,6 +62,7 @@
               <div class="tile-subtitle date-time-container">
                 <!-- Date Picker -->
                 <date-picker
+                  :disabledDates="disabledDates"
                   v-model="date"
                   :inline="true"
                 />
@@ -93,6 +94,8 @@
 import DatePicker from "vuejs-datepicker";
 import VueTimepicker from "vue2-timepicker";
 
+import { endOfYesterday } from "date-fns";
+
 export default {
   name: "AgendaCreateModal",
   components: {
@@ -101,13 +104,17 @@ export default {
   },
   data() {
     return {
+      disabledDates: {
+        to: endOfYesterday()
+      },
       title: "",
       description: "",
       date: null,
       time: {
         hh: "12",
         mm: "00",
-        ss: "00"
+        ss: "00",
+        A: "AM"
       }
     };
   },

@@ -3,8 +3,8 @@
 <template>
   <div class="item-detail">
     <!-- <h1>{{ formatDate(selectedItem.date) }}</h1> -->
-    <h1 v-if="selectedItem.date !== undefined">
-      {{ selectedItem.date.getTime() }}
+    <h1 v-if="selectedItem !== null">
+      {{ selectedItem.date.toDate().getTime() }}
     </h1>
   </div>
 </template>
