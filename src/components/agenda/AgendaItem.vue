@@ -5,7 +5,7 @@
     <div
       class="agenda-item"
       @click="$emit('itemSelected')"
-      :class="checkSelected(item.creationDate) ? 'selected':''"
+      :class="{selected}"
     >
       {{ item.title }}
     </div>
@@ -16,33 +16,21 @@
 import { isEqual } from "date-fns";
 
 export default {
-  name: "AgendaItemDetail",
+  name: "AgendaItem",
   props: {
     item: {
       type: Object,
       required: true
     },
-    selectedItem: {
-      type: Object,
-      required: false
-    },
-    index: {
-      type: Number,
-      required: true
+    selected: {
+      type: Boolean,
+      default: false
     }
   },
-  methods: {
-    /**
-     * Check if the selectedDate is the same as the given date parameter
-     *
-     * Returns true if equal. False otherwise
-     */
-    checkSelected(date) {
-      if (this.selectedItem !== undefined) {
-        return isEqual(this.selectedItem.creationDate.toDate(), date.toDate());
-      }
-      return false;
-    }
+  data() {
+    return {
+      isSelected: false
+    };
   }
 };
 </script>

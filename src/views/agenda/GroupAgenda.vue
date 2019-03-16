@@ -31,11 +31,11 @@
             v-if="showDateHeader(index)"
             :date="item.date.toDate()"
           />
+          <!-- :selected="checkSelected(index)" -->
           <agenda-item
+            :selected="selectedIndex === index"
             :item="item"
-            @itemSelected="selectedItem = item"
-            :selected-item="selectedItem"
-            :index="index"
+            @itemSelected="handleSelected(index)"
           />
         </div>
       </div>
@@ -44,9 +44,13 @@
       <!-- Clicked agenda item's details -->
       <div class="item-detail-container">
         <agenda-item-detail
-          v-if="selectedItem !== null"
+          v-if="selectedItem"
           :selectedItem="selectedItem"
         />
+        <div v-else>
+          <!-- TODO: Implement an empty placeholder -->
+          <h1>NOTHING SELECTED</h1>
+        </div>
       </div>
     </div>
   </div>
@@ -78,7 +82,8 @@ export default {
       // Object that is clicked on (focused)
       selectedItem: null,
       // List of all agenda item objects
-      agendaItems: []
+      agendaItems: [],
+      selectedIndex: -1
     };
   },
   created() {
@@ -88,11 +93,19 @@ export default {
         .collection("study-groups")
         .doc(this.$route.params.groupID)
         .collection("agenda")
-    ).then(() => {
-      this.selectedItem = this.agendaItems[0];
-    });
+        .orderBy("date", "asc")
+    );
   },
   methods: {
+    /**
+     * Logic to notify the items if they are selected
+     * Selected item is set to the agenda item at index
+     * The selectedIndex is set to that index.
+     */
+    handleSelected(index) {
+      this.selectedItem = this.agendaItems[index];
+      this.selectedIndex = index;
+    },
     /**
      * Determine if the previous agenda item has the same date as the current
      * index item. (3/15/19 === 3/15/19)
@@ -103,8 +116,8 @@ export default {
     showDateHeader(index) {
       if (index !== 0) {
         return !isSameDay(
-          this.agendaItems[index].date,
-          this.agendaItems[index - 1].date
+          this.agendaItems[index].date.toDate(),
+          this.agendaItems[index - 1].date.toDate()
         );
       } else {
         // The first item will always show the header.
@@ -140,23 +153,6 @@ export default {
         .then(() => {
           this.showCreateModal = false;
         });
-    },
-    /**
-     * Compare two agenda objects by their date value
-     */
-    compare(a, b) {
-      if (a.date > b.date) {
-        return 1;
-      } else if (a.date < b.date) {
-        return -1;
-      }
-      return 0;
-    },
-    /**
-     * Sort all agenda items using the custom implemented compare function
-     */
-    sortItems() {
-      // console.log(this.agendaItems.sort(this.compare));
     }
   }
 };

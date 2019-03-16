@@ -135,18 +135,6 @@ export default {
         this.$emit("selected", this.getAllSelected());
         this.totalSelected -= deck.terms.length;
       }
-
-      // if (this.allowSelect) {
-      //   deck.selected = !deck.selected;
-      //   this.$emit("selected", this.getAllSelected());
-      // } else {
-      //   // When the limit has been reached, you may still unselect
-      //   if (deck.selected) {
-      //     deck.selected = !deck.selected;
-      //     this.$emit("selected", this.getAllSelected());
-      //   }
-      //   console.log("allowSelect is false");
-      // }
     },
     getAllSelected() {
       let decks = { public: [], private: [] };

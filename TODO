@@ -28,11 +28,18 @@ Components Needed:
     Currently using vue-notifications but would be willing to switch to something better.
 
 Firebase Functions File:
+  ☐ Remove old agenda items from display (maybe paginate the items and allow users to go back...)
   ☐ Remove expired invite codes
   ☐ Downscale images?
   ☐ Remove messages once size reaches > 1000 messages
   ☐ Function to increment message counter of the document everytime a new document is created
   ☐ Generate a boilerplate note when a new user joins the study group? It should let them know the full functionality of markdown and the syntax
+
+Agenda:
+  ☐ Edit items
+  ☐ Delete items
+  ☐ loading indicators
+  ☐ empty placeholders
 
 Modals:
   ☐ Improve modals with new design...
@@ -63,7 +70,9 @@ Chat:
 
 
 Quiz:
-  ☐ When the user refreshes the page, the route props are lost...
+  ☐ Add T/F question type
+  ☐ Fix questions to match new design
+  ☐ Fix Griffin's bug?
 
 Known Bugs:
   ☐ Form validation is broken
