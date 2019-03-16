@@ -56,6 +56,7 @@ export default {
   background-position: 0% 0%, 0% 100%;
   background-repeat: no-repeat;
 
+  // TODO: Figure out how to combine these two input styles. They are the same except a minor tweak
   .name-input {
     border: none;
     font-size: 20px;
@@ -67,6 +68,21 @@ export default {
     font-family: $primary-font;
     font-weight: 400;
     border-bottom: 1px solid $dark;
+    background-color: $light;
+  }
+
+  .search-input {
+    border: none;
+    font-size: 18px;
+    min-width: 300px;
+    max-width: 300px;
+    height: 36px;
+    padding: 0 30px;
+    font-weight: bold;
+    font-family: $primary-font;
+    font-weight: 400;
+    border-bottom: 1px solid $dark;
+    background-color: $light;
   }
 
   button {
@@ -101,19 +117,6 @@ export default {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-end;
-
-    .search-input {
-      border: none;
-      font-size: 18px;
-      min-width: 300px;
-      max-width: 300px;
-      height: 36px;
-      padding: 0 30px;
-      font-weight: bold;
-      font-family: $primary-font;
-      font-weight: 400;
-      border-bottom: 1px solid $dark;
-    }
 
     .title {
       user-select: none;

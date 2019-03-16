@@ -39,7 +39,7 @@
         <div class="has-icon-left">
           <input
             type="text"
-            class="form-input"
+            class="search-input"
             placeholder="Search by Title"
             v-model="searchQuery"
           >
