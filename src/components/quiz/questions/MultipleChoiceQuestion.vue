@@ -1,26 +1,19 @@
 <template>
   <div id="question">
-    <h1>{{definition}}</h1>
-    <div
-      class="choices"
-      :class="{correct}"
-    >
-      <div
-        class="answers"
-        v-for="i in 4"
-        :key="i"
-      >
+    <h1>{{ definition }}</h1>
+    <div class="choices" :class="{ correct }">
+      <div class="answers" v-for="i in 4" :key="i">
         <input
           type="radio"
           class="custom-radio"
           :name="definition"
-          :value="i-1"
+          :value="i - 1"
           v-model.number="picked"
           @change="checkCorrect()"
-        > {{choices[i-1]}}
+        />
+        {{ choices[i - 1] }}
       </div>
     </div>
-
   </div>
 </template>
 

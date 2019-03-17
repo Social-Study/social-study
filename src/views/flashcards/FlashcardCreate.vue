@@ -8,7 +8,7 @@
           v-model="deckTitle"
           maxlength="30"
           placeholder="Untitled Flashcard Deck"
-        >
+        />
       </template>
 
       <template slot="right">
@@ -18,10 +18,7 @@
           :default="toggled"
           :values="['Private', 'Public']"
         ></toggle-switch>
-        <button
-          @click="saveDeck"
-          class="btn btn-action split"
-        >
+        <button @click="saveDeck" class="btn btn-action split">
           <i class="fas fa-save"></i>
         </button>
         <button
@@ -34,20 +31,14 @@
       </template>
     </page-title>
 
-    <div
-      class="toast toast-error"
-      v-if="noTitle"
-    >
+    <div class="toast toast-error" v-if="noTitle">
       <button
         class="btn btn-clear float-right"
         @click="noTitle = false"
       ></button>
       Please Enter a title for the flashcard deck
     </div>
-    <div
-      class="toast toast-error"
-      v-if="!contentFilled"
-    >
+    <div class="toast toast-error" v-if="!contentFilled">
       <button
         class="btn btn-clear float-right"
         @click="contentFilled = true"
@@ -66,10 +57,7 @@
         @addNew="addCard"
         @delete="deleteCard(index)"
       />
-      <div
-        class="addCard"
-        @click="addCard"
-      >
+      <div class="addCard" @click="addCard">
         <div class="gradient-border add">
           <div class="add-button">
             <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
@@ -77,7 +65,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -258,7 +245,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 @import "@/styles.scss";

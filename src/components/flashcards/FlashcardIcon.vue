@@ -2,11 +2,15 @@
   <!-- Flashcard Icon -->
   <div id="flashcard">
     <!-- Title -->
-    <h2 id="title">{{info.title}}</h2>
+    <h2 id="title">{{ info.title }}</h2>
     <!-- Created -->
-    <p id="created"><i>Created on</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
+    <p id="created">
+      <i>Created on</i> {{ info.creationDate.toDate().toLocaleDateString() }}
+    </p>
     <!-- Last Updated -->
-    <p id="modified"><i>Updated</i> {{calcDays(info.lastUpdated.toDate())}}</p>
+    <p id="modified">
+      <i>Updated</i> {{ calcDays(info.lastUpdated.toDate()) }}
+    </p>
     <!-- Creator Avatar and Name Chip -->
     <!-- TODO: Figure out how to use my existing avatar component -->
     <div class="chip text-ellipsis">
@@ -15,8 +19,8 @@
         :src="info.creatorPhoto"
         class="avatar avatar-sm"
         :class="info.creatorPhoto !== '' ? 'chip-transp' : ''"
-      >
-      {{info.creatorName}}
+      />
+      {{ info.creatorName }}
     </div>
     <!-- Edit and Study Buttons -->
     <div id="button-container">
@@ -24,8 +28,15 @@
       <button
         v-if="$store.getters.uid === info.creatorUID"
         id="editBtn"
-        @click="$router.push({name: 'editFlashcards', params: {deckID: info.id, isPrivate: isPrivate}})"
-      >Edit</button>
+        @click="
+          $router.push({
+            name: 'editFlashcards',
+            params: { deckID: info.id, isPrivate: isPrivate }
+          })
+        "
+      >
+        Edit
+      </button>
       <div
         v-if="info.creatorUID === $store.getters.uid"
         @click="$emit('toggle')"
@@ -33,15 +44,9 @@
         class="tooltip tooltip-bottom"
         data-tooltip="Toggle Visibility"
       >
-        <i
-          class="far"
-          :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"
-        ></i>
+        <i class="far" :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"></i>
       </div>
-      <button
-        @click="goStudy"
-        id="studyBtn"
-      >Study</button>
+      <button @click="goStudy" id="studyBtn">Study</button>
     </div>
   </div>
 </template>

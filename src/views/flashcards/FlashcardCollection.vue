@@ -5,10 +5,13 @@
         <button
           class="btn btn-primary"
           @click="$router.push(`/${$route.params.groupID}/flashcards/create`)"
-        >New Deck <i class="fas fa-plus"></i>
+        >
+          New Deck <i class="fas fa-plus"></i>
         </button>
       </template>
-      <template slot="center">Flashcard Collection</template>
+      <template slot="center"
+        >Flashcard Collection</template
+      >
       <template slot="right">
         <div class="has-icon-left">
           <input
@@ -16,15 +19,12 @@
             class="search-input"
             placeholder="Search by Title"
             v-model="searchQuery"
-          >
+          />
           <i class="form-icon fas fa-search"></i>
         </div>
       </template>
     </page-title>
-    <div
-      v-if="!publicIsLoading && !privateIsLoading"
-      class="card-container"
-    >
+    <div v-if="!publicIsLoading && !privateIsLoading" class="card-container">
       <flashcard-icon
         v-for="deck in combined"
         :key="deck.creationDate.toDate().getTime()"
@@ -34,12 +34,8 @@
       >
       </flashcard-icon>
     </div>
-    <div
-      v-else
-      class="loading loading-lg"
-    ></div>
+    <div v-else class="loading loading-lg"></div>
   </div>
-
 </template>
 
 <script>

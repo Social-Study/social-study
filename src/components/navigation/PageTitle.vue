@@ -1,6 +1,6 @@
 // Use these style classes on your components to style them like the other pages
-// name-input: Used for input boxes that allow the user to change the name of their content
-// split: Used to apply spacing between buttons in the title bar
+// name-input: Used for input boxes that allow the user to change the name of
+their content // split: Used to apply spacing between buttons in the title bar
 <template>
   <div
     class="header-container"

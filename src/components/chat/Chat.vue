@@ -1,16 +1,10 @@
 <template>
   <div>
-    <div
-      class="sidebar"
-      :class="show ? 'active' : 'collapsed'"
-    >
+    <div class="sidebar" :class="show ? 'active' : 'collapsed'">
       <div class="content">
         <h3 id="header">Study Group Chat</h3>
         <div class="divider-gradient mb-2"></div>
-        <div
-          class="messages"
-          ref="messages"
-        >
+        <div class="messages" ref="messages">
           <transition-group
             name="chatTransition"
             enter-active-class="animated fadeInDown"
@@ -18,11 +12,10 @@
             <message
               v-for="message in groupMessages"
               :key="message.date.toString()"
-              :sender="message.sender === $store.getters.uid ? true: false"
+              :sender="message.sender === $store.getters.uid ? true : false"
               :details="message"
             ></message>
           </transition-group>
-
         </div>
         <div class="divider-gradient my-2"></div>
         <input
@@ -31,17 +24,17 @@
           class="form-input message-input"
           placeholder="Group Message"
           v-model="userMessage"
-        >
+        />
         <button
           @click="sendMessage"
           class="btn btn-primary"
           :class="userMessage === '' ? 'disabled' : ''"
-        >Send</button>
+        >
+          Send
+        </button>
       </div>
-
     </div>
   </div>
-
 </template>
 
 <script>

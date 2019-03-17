@@ -1,9 +1,5 @@
 <template>
-
-  <div
-    id="full-screen"
-    v-if="this.user !== null"
-  >
+  <div id="full-screen" v-if="this.user !== null">
     <!-- Centered Empty Dashboard Placeholder -->
     <div>
       <div class="empty">
@@ -13,13 +9,17 @@
             class="undraw-svg"
             src="../assets/undraw_no_data.svg"
             alt="No Study Groups"
-          >
+          />
         </div>
         <p
           v-if="this.studyGroups && this.studyGroups.length === 0"
           class="empty-title h5"
-        >You don't have any Study Groups!</p>
-        <p class="empty-subtitle text-large text-bold">Welcome to your Dashboard</p>
+        >
+          You don't have any Study Groups!
+        </p>
+        <p class="empty-subtitle text-large text-bold">
+          Welcome to your Dashboard
+        </p>
         <p class="empty-subtitle">It is currently in development.</p>
       </div>
     </div>

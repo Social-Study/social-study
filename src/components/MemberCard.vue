@@ -1,9 +1,6 @@
 <template>
   <!-- Add Member Card -->
-  <div
-    v-if="add"
-    class="profile-card c-hand hoverable"
-  >
+  <div v-if="add" class="profile-card c-hand hoverable">
     <div class="gradient-border add">
       <div class="add-button">
         <!-- <h1 class="button-icon">+</h1> -->
@@ -24,13 +21,11 @@
     <div class="gradient-border">
       <Avatar
         class="profile-image"
-        :user="{photoURL: photoURL, displayName: displayName}"
+        :user="{ photoURL: photoURL, displayName: displayName }"
       />
     </div>
-    <h2
-      style="width: 100%;"
-      class="text-ellipsis"
-    >{{ displayName }}
+    <h2 style="width: 100%;" class="text-ellipsis">
+      {{ displayName }}
       <!-- Show crown icon on the owner's card -->
       <i
         v-if="owner"
@@ -38,7 +33,6 @@
         class="fas fa-crown"
       ></i>
     </h2>
-
   </div>
 </template>
 

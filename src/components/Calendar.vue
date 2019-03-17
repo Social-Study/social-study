@@ -1,9 +1,13 @@
 <template>
   <div class="calendar">
     <div class="calendar-nav navbar">
-      <button class="btn btn-action btn-link btn-lg"><i class="fas fa-arrow-left"></i></button>
+      <button class="btn btn-action btn-link btn-lg">
+        <i class="fas fa-arrow-left"></i>
+      </button>
       <div class="navbar-primary">March 2017</div>
-      <button class="btn btn-action btn-link btn-lg"><i class="fas fa-arrow-right"></i></button>
+      <button class="btn btn-action btn-link btn-lg">
+        <i class="fas fa-arrow-right"></i>
+      </button>
     </div>
     <div class="calendar-container">
       <div class="calendar-header">
@@ -34,20 +38,11 @@
         <div class="calendar-date">
           <button class="date-item">3</button>
         </div>
-        <div
-          class="calendar-date tooltip"
-          data-tooltip="Today"
-        >
+        <div class="calendar-date tooltip" data-tooltip="Today">
           <button class="date-item date-today">4</button>
         </div>
-        <div
-          class="calendar-date tooltip"
-          data-tooltip="Not available"
-        >
-          <button
-            class="date-item"
-            disabled=""
-          >5</button>
+        <div class="calendar-date tooltip" data-tooltip="Not available">
+          <button class="date-item" disabled="">5</button>
         </div>
         <div class="calendar-date">
           <button class="date-item">6</button>
@@ -55,10 +50,7 @@
         <div class="calendar-date">
           <button class="date-item">7</button>
         </div>
-        <div
-          class="calendar-date tooltip"
-          data-tooltip="You have appointments"
-        >
+        <div class="calendar-date tooltip" data-tooltip="You have appointments">
           <button class="date-item badge">8</button>
         </div>
         <div class="calendar-date">
@@ -144,5 +136,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

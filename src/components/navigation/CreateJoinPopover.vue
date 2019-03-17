@@ -1,14 +1,10 @@
 <template>
   <div>
-    <notifications
-      group="joinErrors"
-      position="right top"
-    />
+    <notifications group="joinErrors" position="right top" />
     <div class="popover popover-bottom">
-      <button 
-        class="btn btn-action"
-        id="button"
-      ><i class="fas fa-plus"></i></button>
+      <button class="btn btn-action" id="button">
+        <i class="fas fa-plus"></i>
+      </button>
       <div class="popover-container">
         <div class="card">
           <div class="card-body text-bold">
@@ -17,8 +13,10 @@
               @click="$router.push('/dashboard/create')"
               id="create-button"
               class="btn btn-primary btn-create"
-            >New Study Group</button> 
-            <hr id="divider">
+            >
+              New Study Group
+            </button>
+            <hr id="divider" />
             <div class="section-title">Join</div>
             <div class="empty-action input-group input-inline">
               <input
@@ -27,11 +25,13 @@
                 class="form-input"
                 placeholder="Invite Code"
                 type="text"
-              >
+              />
               <button
                 @click="fetchStudyGroup"
                 class="btn btn-primary input-group-btn"
-              >Join</button>
+              >
+                Join
+              </button>
             </div>
           </div>
         </div>
@@ -39,10 +39,7 @@
     </div>
 
     <!-- Class Join Confirmation Modal -->
-    <div
-      v-if="showModal && inviteGroup !== null"
-      class="modal modal-sm active"
-    >
+    <div v-if="showModal && inviteGroup !== null" class="modal modal-sm active">
       <a
         @click="showModal = false"
         href="#close"
@@ -51,31 +48,40 @@
       ></a>
       <div class="modal-container">
         <div class="modal-header">
-          <div class="modal-title h5 text-bold text-large">Join {{inviteGroup.className}}?</div>
+          <div class="modal-title h5 text-bold text-large">
+            Join {{ inviteGroup.className }}?
+          </div>
         </div>
         <div class="modal-body">
-          <div class="text-uppercase text-bold text-left text-dark">Instructor</div>
-          <div class="text-center text-primary">{{inviteGroup.instructorName}}</div>
-          <div class="text-uppercase text-left text-bold text-dark"># of Members</div>
-          <div class="text-center text-primary">{{inviteGroup.members.length}}</div>
+          <div class="text-uppercase text-bold text-left text-dark">
+            Instructor
+          </div>
+          <div class="text-center text-primary">
+            {{ inviteGroup.instructorName }}
+          </div>
+          <div class="text-uppercase text-left text-bold text-dark">
+            # of Members
+          </div>
+          <div class="text-center text-primary">
+            {{ inviteGroup.members.length }}
+          </div>
         </div>
         <div class="modal-footer">
-          <button
-            @click="showModal=false"
-            class="btn modal-btn"
-          >Cancel</button>
+          <button @click="showModal = false" class="btn modal-btn">
+            Cancel
+          </button>
           <button
             @click="joinStudyGroup"
             class="btn btn-primary modal-btn"
             :class="isLoading ? 'loading' : ''"
-          >Join</button>
+          >
+            Join
+          </button>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-
 
 <script>
 import { db, FirebaseConsts } from "@/firebaseConfig";

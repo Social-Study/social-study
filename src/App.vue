@@ -2,22 +2,12 @@
   <div id="app">
     <NavBar v-if="$route.name !== 'landing'" />
     <router-view v-if="!$route.params.groupID" />
-    <side-bar
-      :show="sidebarActive"
-      v-else
-    >
-      <router-view
-        id="router-view"
-        :class="getActive"
-      />
-      <chat
-        :show="chatActive"
-        :user="user"
-      />
+    <side-bar :show="sidebarActive" v-else>
+      <router-view id="router-view" :class="getActive" />
+      <chat :show="chatActive" :user="user" />
     </side-bar>
   </div>
 </template>
-
 
 <script>
 import NavBar from "@/components/navigation/NavBar";
@@ -71,7 +61,6 @@ export default {
   }
 };
 </script>
-
 
 // Global Styles
 <style lang="scss">

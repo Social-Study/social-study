@@ -1,17 +1,10 @@
 <template>
   <div id="container">
     <div id="card-header">
-      <label
-        class="form-label"
-        id="label-term"
-      >
+      <label class="form-label" id="label-term">
         Term
       </label>
-      <i
-        id="delete"
-        class="fas fa-minus"
-        @click="$emit('delete')"
-      ></i>
+      <i id="delete" class="fas fa-minus" @click="$emit('delete')"></i>
     </div>
     <input
       type="text"
@@ -21,11 +14,8 @@
       v-model.trim="data.term"
       v-on:input="termUpdated"
       autofocus
-    >
-    <label
-      class="form-label"
-      id="label-def"
-    >
+    />
+    <label class="form-label" id="label-def">
       Definition
     </label>
     <textarea
@@ -39,7 +29,7 @@
       @keydown.ctrl.enter="$emit('addNew')"
       @keydown.tab="$emit('addNew')"
     >
-  </textarea>
+    </textarea>
   </div>
 </template>
 

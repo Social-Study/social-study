@@ -2,30 +2,23 @@
   <div>
     <page-title>
       <template slot="left">
-        <button
-          class="btn btn-primary"
-          @click="showScoreModal = true"
-        >Submit Quiz</button>
+        <button class="btn btn-primary" @click="showScoreModal = true">
+          Submit Quiz
+        </button>
       </template>
       <template slot="center">
         Quiz
       </template>
       <template slot="right">
-        <h2 class="title">Answered: {{answeredQuestions}}/{{totalQuestions}}</h2>
+        <h2 class="title">
+          Answered: {{ answeredQuestions }}/{{ totalQuestions }}
+        </h2>
       </template>
     </page-title>
 
     <!-- Quiz Score Modal -->
-    <div
-      v-show="showScoreModal"
-      class="modal modal-sm active"
-      id="modal-id"
-    >
-      <a
-        href="#close"
-        class="modal-overlay"
-        aria-label="Close"
-      ></a>
+    <div v-show="showScoreModal" class="modal modal-sm active" id="modal-id">
+      <a href="#close" class="modal-overlay" aria-label="Close"></a>
       <!--      @click="showScoreModal = false" -->
       <div class="modal-container">
         <div class="modal-header">
@@ -39,26 +32,24 @@
         </div>
         <div class="modal-body">
           <div class="content">
-            <h2>{{ Math.round((correctQuestions / totalQuestions)*100) }} %</h2>
-            <h3>You got {{correctQuestions}} out of {{totalQuestions}} correct!</h3>
+            <h2>
+              {{ Math.round((correctQuestions / totalQuestions) * 100) }} %
+            </h2>
+            <h3>
+              You got {{ correctQuestions }} out of
+              {{ totalQuestions }} correct!
+            </h3>
           </div>
         </div>
         <div class="modal-footer">
-          <button
-            class="btn btn-primary"
-            @click="$router.go(-1)"
-          >
+          <button class="btn btn-primary" @click="$router.go(-1)">
             Done
           </button>
         </div>
       </div>
     </div>
 
-    <div
-      class="quiz-content"
-      v-if="terms && definitions && questionTypes"
-    >
-
+    <div class="quiz-content" v-if="terms && definitions && questionTypes">
       <div v-if="questionTypes.shortAnswer == true">
         <short-answer-question
           v-for="(term, index) in questionGroups.shortAnswer.terms"

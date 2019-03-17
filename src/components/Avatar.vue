@@ -6,21 +6,15 @@
   ></div>
   <figure
     v-else-if="this.user.photoURL === null"
-    :style="{backgroundColor: color}"
+    :style="{ backgroundColor: color }"
     :data-initial="computedInitials"
     class="avatar"
     :class="getSize"
-  >
-  </figure>
+  ></figure>
 
-  <figure
-    v-else
-    class="avatar"
-    :class="getSize"
-  >
-    <img :src="this.user.photoURL">
+  <figure v-else class="avatar" :class="getSize">
+    <img :src="this.user.photoURL" />
   </figure>
-
 </template>
 
 <script>

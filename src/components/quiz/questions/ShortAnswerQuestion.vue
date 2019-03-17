@@ -1,13 +1,13 @@
 <template>
   <div id="question">
-    <h1>{{definition}}</h1>
+    <h1>{{ definition }}</h1>
     <input
       class="answer-input"
       type="text"
       v-model.trim="userAnswer"
       @input="handleInput()"
       :class="{ correct }"
-    >
+    />
   </div>
 </template>
 

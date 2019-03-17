@@ -6,10 +6,10 @@
     <div
       class="agenda-item"
       @click="$emit('itemSelected')"
-      :class="{selected}"
+      :class="{ selected }"
     >
       <h3>{{ item.title }}</h3>
-      <p class="text-gray">{{getRemainingDays(item.date.toDate())}}</p>
+      <p class="text-gray">{{ getRemainingDays(item.date.toDate()) }}</p>
     </div>
   </div>
 </template>

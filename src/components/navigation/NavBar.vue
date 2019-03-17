@@ -1,22 +1,19 @@
 <template>
   <header class="navbar">
     <section class="navbar-section">
-      <router-link
-        class="navbar-brand"
-        to="/dashboard"
-      ><img
+      <router-link class="navbar-brand" to="/dashboard"
+        ><img
           src="../../assets/icons/social_study_white.png"
           height="38px"
           width="38px"
           alt=""
-        >
+        />
         <h1>Social Study</h1>
       </router-link>
 
       <group-dropdown :studyGroups="studyGroups" />
 
       <create-join-popover></create-join-popover>
-
     </section>
 
     <profile-settings
@@ -24,7 +21,7 @@
       profile-settings
       :user="this.user"
       :photoURL="this.firestoreUser.photoURL"
-      @closeSettings="isSettingsActive = false;"
+      @closeSettings="isSettingsActive = false"
       v-show="isSettingsActive"
     />
 
@@ -36,26 +33,19 @@
         class="btn btn-action"
         id="chat-button"
         @click="$store.commit('toggleChatActive')"
-      ><i class="fas fa-comment-alt"></i></button>
+      >
+        <i class="fas fa-comment-alt"></i>
+      </button>
       <div
-        @mouseover="menuActive = true;"
-        @mouseout="menuActive = false;"
+        @mouseover="menuActive = true"
+        @mouseout="menuActive = false"
         class="menu-container"
       >
-        <Avatar
-          :user="firestoreUser"
-          class="avatar"
-        />
+        <Avatar :user="firestoreUser" class="avatar" />
 
-        <ul
-          v-show="menuActive == true"
-          class="menu settings-menu"
-        >
+        <ul v-show="menuActive == true" class="menu settings-menu">
           <li class="menu-item text-left">
-            <p
-              v-if="user"
-              class="h5 text-center text-ellipsis"
-            >
+            <p v-if="user" class="h5 text-center text-ellipsis">
               {{ user.displayName }}
             </p>
           </li>
@@ -63,28 +53,18 @@
           <!-- Settings Button -->
           <li class="menu-item text-left">
             <a
-              @click="isSettingsActive = true;"
+              @click="isSettingsActive = true"
               id="settings"
               class="text-center c-pointer"
             >
-              <i
-                class="fas fa-cog"
-                style="margin-right: 10px;"
-              ></i> Settings
+              <i class="fas fa-cog" style="margin-right: 10px;"></i> Settings
             </a>
           </li>
 
           <!-- Log Out Button -->
           <li class="menu-item text-left">
-            <a
-              @click="logOut"
-              id="logOutButton"
-              class="text-center"
-            >
-              <i
-                class="fas fa-sign-out-alt"
-                style="margin-right: 10px;"
-              ></i>
+            <a @click="logOut" id="logOutButton" class="text-center">
+              <i class="fas fa-sign-out-alt" style="margin-right: 10px;"></i>
               Log Out
             </a>
           </li>

@@ -9,18 +9,18 @@
           v-for="deck in publicDecks"
           :key="deck.title"
           @click="toggleSelected(deck)"
-          :class="deck.selected ? 'selected': ''"
+          :class="deck.selected ? 'selected' : ''"
         >
           <div id="deck-details">
             <div id="deck-name">
-              {{deck.title}}
+              {{ deck.title }}
             </div>
             <div id="deck-author">
-              {{deck.creatorName}}
+              {{ deck.creatorName }}
             </div>
           </div>
           <div id="card-count">
-            {{deck.terms.length}}
+            {{ deck.terms.length }}
           </div>
         </div>
       </div>
@@ -34,24 +34,23 @@
           v-for="deck in privateDecks"
           :key="deck.title"
           @click="toggleSelected(deck)"
-          :class="deck.selected ? 'selected private': ''"
+          :class="deck.selected ? 'selected private' : ''"
         >
           <div id="deck-details">
             <div id="deck-name">
-              {{deck.title}}
+              {{ deck.title }}
             </div>
             <div id="deck-author">
-              {{deck.creatorName}}
+              {{ deck.creatorName }}
             </div>
           </div>
           <div id="card-count">
-            {{deck.terms.length}}
+            {{ deck.terms.length }}
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>

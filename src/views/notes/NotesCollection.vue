@@ -4,11 +4,10 @@
       <template slot="left">
         <!-- Show a popover menu when the user chooses to create a new note -->
         <div class="popover popover-right">
-          <button class="btn btn-primary">New Note <i class="fas fa-plus"></i></button>
-          <div
-            style="margin-top: 20px;"
-            class="popover-container"
-          >
+          <button class="btn btn-primary">
+            New Note <i class="fas fa-plus"></i>
+          </button>
+          <div style="margin-top: 20px;" class="popover-container">
             <div class="card">
               <div class="card-header">
                 Enter a title for your new note:
@@ -19,14 +18,16 @@
                   v-model="noteTitle"
                   type="text"
                   class="form-input"
-                >
+                />
               </div>
               <div class="card-footer">
                 <button
                   @click="createNote"
                   class="btn btn-primary"
                   :class="loadingNewNote ? 'loading' : ''"
-                >Create Note</button>
+                >
+                  Create Note
+                </button>
               </div>
             </div>
           </div>
@@ -42,29 +43,19 @@
             class="search-input"
             placeholder="Search by Title"
             v-model="searchQuery"
-          >
+          />
           <i class="form-icon fas fa-search"></i>
         </div>
       </template>
     </page-title>
     <!-- In the future this will hold other things like the sort buttons, etc. -->
 
-    <div
-      v-if="!isLoading"
-      class="content-container"
-    >
-      <note-icon
-        v-for="note in filteredNotes"
-        :info="note"
-        :key="note.id"
-      />
+    <div v-if="!isLoading" class="content-container">
+      <note-icon v-for="note in filteredNotes" :info="note" :key="note.id" />
       <!-- @delete="deleteNote(note.id)"
         @viewNote="$router.push(`/${$route.params.groupID}/notes/${note.id}`)" -->
     </div>
-    <div
-      v-else
-      class="loading loading-lg"
-    ></div>
+    <div v-else class="loading loading-lg"></div>
   </div>
 </template>
 

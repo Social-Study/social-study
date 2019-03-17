@@ -1,18 +1,16 @@
 <template>
   <div>
     <!-- Notification displays when a new code is generated -->
-    <notifications
-      group="generateInvite"
-      position="left top"
-    />
+    <notifications group="generateInvite" position="left top" />
     <page-title>
-      <template slot="center">Members</template>
+      <template slot="center"
+        >Members</template
+      >
     </page-title>
     <div
       v-if="!loading"
       style="display: flex; flex-flow: row nowrap; justify-content: center;"
     >
-
       <!-- Display card for each member of the Study Group -->
       <transition-group
         name="transition"
@@ -22,11 +20,8 @@
         class="content-container"
       >
         <!-- Invite New Member Card -->
-        <member-card
-          key="addButton"
-          @click.native="inviteMember()"
-          add
-        > </member-card>
+        <member-card key="addButton" @click.native="inviteMember()" add>
+        </member-card>
 
         <!-- Show card for each group member -->
         <member-card
@@ -39,19 +34,11 @@
         >
         </member-card>
       </transition-group>
-
     </div>
-    <div
-      v-else
-      class="loading loading-lg"
-    ></div>
+    <div v-else class="loading loading-lg"></div>
 
     <!-- Display Invite Code Modal -->
-    <div
-      v-show="displayModal"
-      class="modal modal-sm active"
-      id="modal-id"
-    >
+    <div v-show="displayModal" class="modal modal-sm active" id="modal-id">
       <a
         @click="displayModal = false"
         href="#"
@@ -67,7 +54,6 @@
             aria-label="Close"
           ></a>
           <div class="modal-title h5">Generate New Invite</div>
-
         </div>
         <div class="modal-body">
           <div class="content">
@@ -77,11 +63,10 @@
                 ref="invite"
                 type="text"
                 class="form-input"
-              >
-              <button
-                @click="copyCode"
-                class="btn btn-primary input-group-btn"
-              >Generate</button>
+              />
+              <button @click="copyCode" class="btn btn-primary input-group-btn">
+                Generate
+              </button>
             </div>
           </div>
         </div>

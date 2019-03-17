@@ -1,13 +1,12 @@
 <template>
-
   <div class="agenda-form">
-    <div class="modal-title h5">{{getTitle}}</div>
+    <div class="modal-title h5">{{ getTitle }}</div>
     <div class="tile">
       <div class="tile-content text-left">
         <div class="tile-title text-bold">Event Title</div>
         <div class="tile-subtitle">
           <input
-            @input="$emit('publish', item);"
+            @input="$emit('publish', item)"
             class="form-input"
             v-model="item.title"
             type="text"
@@ -22,7 +21,7 @@
         <div class="tile-title text-bold">Event Description</div>
         <div class="tile-subtitle">
           <textarea
-            @input="$emit('publish', item);"
+            @input="$emit('publish', item)"
             class="form-input"
             name="description"
             rows="3"
@@ -46,7 +45,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>

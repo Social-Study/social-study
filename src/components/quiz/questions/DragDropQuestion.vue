@@ -10,7 +10,8 @@
         :draggable="term.draggable"
         :class="{ placed: !term.draggable }"
         :transfer-data="{ from: index, term: term.term }"
-      >{{term.term}}</drag>
+        >{{ term.term }}</drag
+      >
     </div>
 
     <div id="defs-holder">
@@ -26,7 +27,7 @@
           @dragleave="handleDragLeave(slot)"
           @drop="handleDrop(slot, ...arguments)"
         >
-          {{slot.text}}
+          {{ slot.text }}
         </drop>
       </div>
       <div id="right">
@@ -34,8 +35,10 @@
         <h2
           v-for="slot in drop"
           :key="slot.definition"
-          :class="{correct: slot.isCorrect}"
-        >{{slot.definition}}</h2>
+          :class="{ correct: slot.isCorrect }"
+        >
+          {{ slot.definition }}
+        </h2>
       </div>
     </div>
   </div>

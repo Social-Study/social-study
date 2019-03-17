@@ -1,35 +1,34 @@
-
 <template>
   <div v-if="userAuthorized && !isLoading">
     <page-title>
-      <template slot="center">Study Group Admin Settings</template>
+      <template slot="center"
+        >Study Group Admin Settings</template
+      >
       <template slot="right">
         <div class="popover popover-left">
-          <button class="btn btn-action btn-error"><i class="fas fa-trash-alt"></i></button>
+          <button class="btn btn-action btn-error">
+            <i class="fas fa-trash-alt"></i>
+          </button>
           <div class="popover-container">
             <div class="card">
               <div class="card-header">
                 <h5>Delete Group?</h5>
               </div>
               <div class="card-body">
-                This will delete the group and all of its content.
-                Consider transferring ownership and leaving instead.
+                This will delete the group and all of its content. Consider
+                transferring ownership and leaving instead.
               </div>
               <div class="card-footer">
-                <button
-                  @click="deleteGroup"
-                  class="btn btn-error"
-                >Yes, Delete the Group</button>
+                <button @click="deleteGroup" class="btn btn-error">
+                  Yes, Delete the Group
+                </button>
               </div>
             </div>
           </div>
         </div>
       </template>
     </page-title>
-    <notifications
-      group="save"
-      position="left top"
-    />
+    <notifications group="save" position="left top" />
     <div class="container">
       <div class="columns">
         <div class="column col-5 col-mx-auto col-xl-10">
@@ -43,70 +42,62 @@
             >
               <!-- Class Name Input -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Class Name</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Class Name</label
+                >
                 <input
                   class="col-9 form-input"
                   type="text"
                   v-model="details.className"
                   placeholder="Class Name"
-                >
+                />
               </div>
 
               <!-- Course Code Input (Optional) -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Course Code</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Course Code</label
+                >
                 <input
                   class="col-9 form-input"
                   type="text"
                   v-model="details.courseCode"
                   placeholder="Course Code"
-                >
+                />
               </div>
 
               <!-- Class Instructor Input -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Instructor Name</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Instructor Name</label
+                >
                 <input
                   class="col-9 form-input"
                   type="text"
                   v-model="details.instructorName"
                   placeholder="Instructor Name"
-                >
+                />
               </div>
 
               <!-- Class Meeting Location Input -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Meeting Location</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Meeting Location</label
+                >
                 <input
                   class="col-9 form-input"
                   type="text"
                   v-model="details.location"
                   placeholder="Meeting Location"
-                >
+                />
               </div>
 
               <!-- Class Meeting Time Input -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Meeting Time</label>
-                <div
-                  class="col-9"
-                  id="time-group"
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Meeting Time</label
                 >
+                <div class="col-9" id="time-group">
                   <input
                     class="form-input"
                     type="time"
@@ -114,7 +105,7 @@
                     placeholder="Instructor Name"
                     v-model="details.meetingTime[0]"
                     required
-                  >
+                  />
                   -
                   <input
                     class="form-input"
@@ -123,47 +114,46 @@
                     v-model="details.meetingTime[1]"
                     placeholder="Instructor Name"
                     required
-                  >
+                  />
                 </div>
               </div>
 
               <!-- Meeting Days -->
               <div class="form-group day-selector">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Meeting Days</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Meeting Days</label
+                >
                 <div class="col-9 btn-group btn-group-block">
                   <button
-                    @click.prevent="toggle('monday');"
+                    @click.prevent="toggle('monday')"
                     :class="details.meetingDays.monday ? 'active' : ''"
                     class="btn btn-block"
                   >
                     Mon
                   </button>
                   <button
-                    @click.prevent="toggle('tuesday');"
+                    @click.prevent="toggle('tuesday')"
                     :class="details.meetingDays.tuesday ? 'active' : ''"
                     class="btn btn-block"
                   >
                     Tue
                   </button>
                   <button
-                    @click.prevent="toggle('wednesday');"
+                    @click.prevent="toggle('wednesday')"
                     :class="details.meetingDays.wednesday ? 'active' : ''"
                     class="btn btn-block"
                   >
                     Wed
                   </button>
                   <button
-                    @click.prevent="toggle('thursday');"
+                    @click.prevent="toggle('thursday')"
                     :class="details.meetingDays.thursday ? 'active' : ''"
                     class="btn btn-block"
                   >
                     Thu
                   </button>
                   <button
-                    @click.prevent="toggle('friday');"
+                    @click.prevent="toggle('friday')"
                     :class="details.meetingDays.friday ? 'active' : ''"
                     class="btn btn-block"
                   >
@@ -174,24 +164,22 @@
 
               <!-- Website URL (Optional) -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Course Website</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Course Website</label
+                >
                 <input
                   class="col-9 form-input"
                   type="url"
                   v-model="details.url"
                   placeholder="Optional Website URL"
-                >
+                />
               </div>
 
               <!-- Study Group Description (Optional-->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Group Description</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Group Description</label
+                >
                 <textarea
                   class="col-9 form-input"
                   type="url"
@@ -199,21 +187,22 @@
                   placeholder="Optional Description"
                   style="resize: none;"
                 />
-                </div>
-          </form>
-          <div v-else class="loading loading-lg"></div>
-          <div id="btn-container">
-            <button v-if="!loading.details"
+              </div>
+            </form>
+            <div v-else class="loading loading-lg"></div>
+            <div id="btn-container">
+              <button
+                v-if="!loading.details"
                 class="btn btn-primary "
                 id="save-btn"
                 @click="saveData"
-              >Save Changes <i class="fas fa-save"></i>
-            </button>
+              >
+                Save Changes <i class="fas fa-save"></i>
+              </button>
+            </div>
           </div>
         </div>
-        </div>
         <div class="column col-6 col-xl-12">
-
           <div class="columns">
             <div class="group-details column col-10 col-mx-auto">
               <h2>Active Invite Codes</h2>
@@ -226,9 +215,12 @@
                 </thead>
                 <tbody>
                   <tr v-for="code in inviteCodes" :key="code">
-                    <td style="width: 95%;">{{code}}</td>
+                    <td style="width: 95%;">{{ code }}</td>
                     <td class="button-td">
-                      <button @click="removeCode(code)" class="btn btn-action btn-error">
+                      <button
+                        @click="removeCode(code)"
+                        class="btn btn-action btn-error"
+                      >
                         <i class="fas fa-times"></i>
                       </button>
                     </td>
@@ -248,10 +240,13 @@
                 </thead>
                 <tbody>
                   <!-- Show all members but you; the admin -->
-                  <tr v-for="member in membersWithoutYou" :key="member.uid ">
-                    <td style="width: 95%;">{{member.displayName}}</td>
+                  <tr v-for="member in membersWithoutYou" :key="member.uid">
+                    <td style="width: 95%;">{{ member.displayName }}</td>
                     <td class="button-td">
-                      <button @click="removeMember(member.uid)" class="btn btn-action btn-error">
+                      <button
+                        @click="removeMember(member.uid)"
+                        class="btn btn-action btn-error"
+                      >
                         <i class="fas fa-times"></i>
                       </button>
                     </td>
@@ -268,22 +263,27 @@
                   <option
                     v-for="member in membersWithoutYou"
                     :key="member.uid"
-                    :value="member.uid">{{member.displayName}}
+                    :value="member.uid"
+                    >{{ member.displayName }}
                   </option>
                 </select>
-                <button @click="changeOwner" class="btn btn-error input-group-btn">Transfer</button>
+                <button
+                  @click="changeOwner"
+                  class="btn btn-error input-group-btn"
+                >
+                  Transfer
+                </button>
               </div>
               <div v-else class="loading loading-lg"></div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
   </div>
 
   <!-- TODO: Craft error landing page -->
-  <h1  v-else-if="!isLoading && !userAuthorized"> WTF ARE YOU DOING HERE</h1>
+  <h1 v-else-if="!isLoading && !userAuthorized">WTF ARE YOU DOING HERE</h1>
   <div v-else class="loading loading-lg"></div>
 </template>
 
@@ -493,7 +493,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 @import "../styles";

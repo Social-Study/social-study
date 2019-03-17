@@ -2,10 +2,8 @@
   <div>
     <page-title>
       <template slot="left">
-        <button
-          class="btn btn-primary"
-          @click="showCreateForm(true)"
-        >Add Item <i class="fas fa-plus"></i>
+        <button class="btn btn-primary" @click="showCreateForm(true)">
+          Add Item <i class="fas fa-plus"></i>
         </button>
       </template>
       <template slot="center">
@@ -18,23 +16,33 @@
           @click="createItem"
           class="btn btn-success btn-action split"
           :class="!validInfoEntered ? 'disabled' : ''"
-        ><i class="fas fa-save"></i></button>
+        >
+          <i class="fas fa-save"></i>
+        </button>
 
         <!-- Existing Item Button Bar -->
-        <div v-if="selectedIndex !== -1 && selectedItem.creatorID === $store.getters.uid">
-
+        <div
+          v-if="
+            selectedIndex !== -1 &&
+              selectedItem.creatorID === $store.getters.uid
+          "
+        >
           <!-- Edit an existing agenda item that you've created -->
           <button
             v-if="!isShowingItemForm"
             @click="showCreateForm(false)"
             class="btn btn-success btn-action"
-          ><i class="fas fa-pen"></i></button>
+          >
+            <i class="fas fa-pen"></i>
+          </button>
 
           <!-- Delete an existing agenda item that you've created -->
           <button
             @click="deleteItem(selectedItem)"
             class="btn btn-error btn-action split"
-          ><i class="fas fa-trash"></i></button>
+          >
+            <i class="fas fa-trash"></i>
+          </button>
         </div>
       </template>
     </page-title>
@@ -46,8 +54,7 @@
           v-if="isLoadingItems"
           id="loading-indicator"
           class="loading loading-lg"
-        >
-        </div>
+        ></div>
         <div
           v-else
           v-for="(item, index) in agendaItems"
@@ -91,9 +98,11 @@
               class="undraw-svg"
               src="@/assets/undraw_no_data.svg"
               alt="No Study Groups"
-            >
+            />
           </div>
-          <p class="empty-title h5">Add an Agenda Item for the Study Group to see!</p>
+          <p class="empty-title h5">
+            Add an Agenda Item for the Study Group to see!
+          </p>
           <!-- <p class="empty-subtitle text-large text-bold">Add an agenda item for the group to see!</p> -->
           <!-- <p class="empty-subtitle">Click the add bottom in the top left to get started!</p> -->
         </div>
@@ -108,9 +117,11 @@
               class="undraw-svg"
               src="@/assets/undraw_select.svg"
               alt="No Study Groups"
-            >
+            />
           </div>
-          <p class="empty-title h5">Select an Agenda Item to see more details!</p>
+          <p class="empty-title h5">
+            Select an Agenda Item to see more details!
+          </p>
           <!-- <p class="empty-subtitle text-large text-bold">Add an agenda item for the group to see!</p> -->
           <!-- <p class="empty-subtitle">Click the add bottom in the top left to get started!</p> -->
         </div>

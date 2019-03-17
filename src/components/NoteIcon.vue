@@ -2,24 +2,27 @@
   <!-- Note Icon -->
   <div id="note">
     <!-- Title -->
-    <h2 id="title">{{info.title}}</h2>
+    <h2 id="title">{{ info.title }}</h2>
     <div>
       <!-- Created -->
-      <p id="created"><i>Created on</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
+      <p id="created">
+        <i>Created on</i> {{ info.creationDate.toDate().toLocaleDateString() }}
+      </p>
       <!-- Modified -->
       <!-- <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p> -->
-      <p id="modified"><i>Modified</i> {{calcDays(info.lastUpdated.toDate())}}</p>
+      <p id="modified">
+        <i>Modified</i> {{ calcDays(info.lastUpdated.toDate()) }}
+      </p>
     </div>
 
     <div id="button-container">
-      <button
-        @click="deleteNote(info.id)"
-        id="deleteBtn"
-      >Delete</button>
+      <button @click="deleteNote(info.id)" id="deleteBtn">Delete</button>
       <button
         @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
         id="editBtn"
-      >Edit</button>
+      >
+        Edit
+      </button>
     </div>
   </div>
 </template>

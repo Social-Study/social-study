@@ -1,19 +1,18 @@
 // The details of a specific agenda item.
 
 <template>
-  <div
-    v-if="selectedItem !== null"
-    class="item-detail"
-  >
+  <div v-if="selectedItem !== null" class="item-detail">
     <h1 id="title">
       {{ selectedItem.title }}
     </h1>
-    <h3 id="date">{{ formatDate(selectedItem.date.toDate()) }} at
-      {{ formatTime(selectedItem.date.toDate()) }}</h3>
-    <h3 id="date">{{getRemainingDays(selectedItem.date.toDate())}}</h3>
+    <h3 id="date">
+      {{ formatDate(selectedItem.date.toDate()) }} at
+      {{ formatTime(selectedItem.date.toDate()) }}
+    </h3>
+    <h3 id="date">{{ getRemainingDays(selectedItem.date.toDate()) }}</h3>
     <div class="divider"></div>
     <h4 class="text-left">Description:</h4>
-    <p id="description">{{ selectedItem.description }} </p>
+    <p id="description">{{ selectedItem.description }}</p>
   </div>
 </template>
 

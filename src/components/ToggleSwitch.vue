@@ -7,7 +7,7 @@
       @change="$emit('toggle', toggled)"
     /><label for="switch">Toggle</label>
 
-    <h4 v-if="values">{{status}}</h4>
+    <h4 v-if="values">{{ status }}</h4>
   </div>
 </template>
 

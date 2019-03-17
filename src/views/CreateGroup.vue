@@ -1,19 +1,16 @@
 <template>
   <div id="full-screen">
-
     <!-- Page Title -->
     <page-title>
-      <template slot="center">Create New Study Group</template>
+      <template slot="center"
+        >Create New Study Group</template
+      >
     </page-title>
 
     <!-- Notification -->
-    <notifications
-      group="create"
-      position="right bottom"
-    />
+    <notifications group="create" position="right bottom" />
 
     <div class="create-content">
-
       <!-- Contains Center Content; Buttons and Content -->
       <div class="nav-container">
         <button
@@ -25,15 +22,18 @@
         </button>
 
         <!-- Class Name Form -->
-        <div
-          v-if="active === 0"
-          class="infoContainer"
-        >
+        <div v-if="active === 0" class="infoContainer">
           <h2>What is the name of the class?</h2>
 
           <div
             class="form-group"
-            :class="errors.first('className') ?  'has-error' : '' || !errors.first('className') && className ? 'has-success' : ''"
+            :class="
+              errors.first('className')
+                ? 'has-error'
+                : '' || (!errors.first('className') && className)
+                ? 'has-success'
+                : ''
+            "
           >
             <input
               @keydown.enter="next"
@@ -60,15 +60,18 @@
         </div>
 
         <!-- Instructor Name Form -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 1"
-        >
+        <div class="infoContainer" v-else-if="active === 1">
           <!-- TODO: Figure out why validation isn't working... -->
           <h2>What is the course intructor's name?</h2>
           <div
             class="form-group"
-            :class="errors.first('instructorName') ?  'has-error' : '' || !errors.first('instructorName') && instructorName ? 'has-success' : ''"
+            :class="
+              errors.first('instructorName')
+                ? 'has-error'
+                : '' || (!errors.first('instructorName') && instructorName)
+                ? 'has-success'
+                : ''
+            "
           >
             <input
               @keydown.enter="next"
@@ -85,44 +88,41 @@
         </div>
 
         <!-- Class Meeting Time Form -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 2"
-        >
+        <div class="infoContainer" v-else-if="active === 2">
           <h2>When does your class meet?</h2>
 
           <!-- Day Selector Button Block -->
           <div class="btn-group btn-group-block">
             <button
-              @click="toggle('monday');"
+              @click="toggle('monday')"
               :class="meetingDays.monday ? 'active' : ''"
               class="btn"
             >
               Monday
             </button>
             <button
-              @click="toggle('tuesday');"
+              @click="toggle('tuesday')"
               :class="meetingDays.tuesday ? 'active' : ''"
               class="btn"
             >
               Tuesday
             </button>
             <button
-              @click="toggle('wednesday');"
+              @click="toggle('wednesday')"
               :class="meetingDays.wednesday ? 'active' : ''"
               class="btn"
             >
               Wednesday
             </button>
             <button
-              @click="toggle('thursday');"
+              @click="toggle('thursday')"
               :class="meetingDays.thursday ? 'active' : ''"
               class="btn"
             >
               Thursday
             </button>
             <button
-              @click="toggle('friday');"
+              @click="toggle('friday')"
               :class="meetingDays.friday ? 'active' : ''"
               class="btn"
             >
@@ -148,10 +148,7 @@
         </div>
 
         <!-- Class Meeting Location Form -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 3"
-        >
+        <div class="infoContainer" v-else-if="active === 3">
           <h2>Where does the class meet?</h2>
 
           <input
@@ -167,18 +164,12 @@
         </div>
 
         <!-- Instructor Website Form -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 4"
-        >
+        <div class="infoContainer" v-else-if="active === 4">
           <h2>Does your instructor have a website?</h2>
 
           <div class="form-group switch">
             <label class="form-switch">
-              <input
-                type="checkbox"
-                v-model="hasWebsite"
-              />
+              <input type="checkbox" v-model="hasWebsite" />
               <i class="form-icon"></i>
             </label>
           </div>
@@ -188,11 +179,7 @@
             enter-active-class="animated fadeInDown"
             leave-active-class="animated fadeOutUp"
           >
-            <div
-              v-show="hasWebsite"
-              key="input"
-              class="input-group"
-            >
+            <div v-show="hasWebsite" key="input" class="input-group">
               <span class="input-group-addon">https://</span>
               <input
                 @keydown.enter="next"
@@ -205,12 +192,9 @@
                 placeholder="Website URL"
               />
             </div>
-            <span
-              key="error-string"
-              style="color: red;"
-            >{{
+            <span key="error-string" style="color: red;">{{
               errors.first("url")
-              }}</span>
+            }}</span>
 
             <br key="break" />
             <br key="break2" />
@@ -219,31 +203,22 @@
               target="_blank"
               key="link"
               :href="formattedURL"
-            >{{ formattedURL }}</a>
+              >{{ formattedURL }}</a
+            >
           </transition-group>
         </div>
 
         <!-- Extra Group Info Form -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 5"
-        >
+        <div class="infoContainer" v-else-if="active === 5">
           <h2>Would you like to enter any additional information?</h2>
           <div class="form-group switch">
             <label class="form-switch">
-              <input
-                type="checkbox"
-                v-model="hasExtraInfo"
-              />
+              <input type="checkbox" v-model="hasExtraInfo" />
               <i class="form-icon"></i>
             </label>
           </div>
           <br />
-          <div
-            v-show="hasExtraInfo"
-            key="input"
-            class="input-group"
-          >
+          <div v-show="hasExtraInfo" key="input" class="input-group">
             <transition
               name="transition"
               enter-active-class="animated fadeInDown"
@@ -265,28 +240,16 @@
         </div>
 
         <!-- Create Group with previous data confirmation -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 6"
-        >
-          <button
-            @click="createStudyGroup"
-            class="createBtn"
-          >
+        <div class="infoContainer" v-else-if="active === 6">
+          <button @click="createStudyGroup" class="createBtn">
             Create Study Group
           </button>
         </div>
 
         <!-- Invite Code / New Group Links -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 7"
-        >
+        <div class="infoContainer" v-else-if="active === 7">
           <h3>Your new Study Group has been created!</h3>
-          <div
-            style="width: 50%; margin: 20px auto;"
-            class="input-group"
-          >
+          <div style="width: 50%; margin: 20px auto;" class="input-group">
             <input
               type="text"
               ref="inviteDisplay"
@@ -295,23 +258,20 @@
               v-model="inviteCode"
               style="margin: 0;"
             />
-            <button
-              @click="copyCode"
-              class="btn btn-primary input-group-btn"
-            >
+            <button @click="copyCode" class="btn btn-primary input-group-btn">
               Copy Code
             </button>
           </div>
           <div id="btnContainer">
-            <router-link
-              class="btn"
-              :to="{ name: 'dashboard' }"
-            >Dashboard</router-link>
+            <router-link class="btn" :to="{ name: 'dashboard' }"
+              >Dashboard</router-link
+            >
             <router-link
               style="margin: 0px 10px;"
               class="btn btn-success"
               :to="{ name: 'home', params: { groupID: newGroupID } }"
-            >Go to Group</router-link>
+              >Go to Group</router-link
+            >
           </div>
         </div>
 
@@ -327,77 +287,29 @@
 
       <!-- Bottom Of Page Steps Indicator -->
       <ul class="step">
-        <li
-          :class="active === 0 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Group Name"
-          >Step 1</a>
+        <li :class="active === 0 ? 'active' : ''" class="step-item">
+          <a class="tooltip" data-tooltip="Group Name">Step 1</a>
         </li>
-        <li
-          :class="active === 1 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Instructor's Name"
-          >Step 2</a>
+        <li :class="active === 1 ? 'active' : ''" class="step-item">
+          <a class="tooltip" data-tooltip="Instructor's Name">Step 2</a>
         </li>
-        <li
-          :class="active === 2 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Meeting Times"
-          >Step 3</a>
+        <li :class="active === 2 ? 'active' : ''" class="step-item">
+          <a class="tooltip" data-tooltip="Meeting Times">Step 3</a>
         </li>
-        <li
-          :class="active === 3 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Meeting Location"
-          >Step 4</a>
+        <li :class="active === 3 ? 'active' : ''" class="step-item">
+          <a class="tooltip" data-tooltip="Meeting Location">Step 4</a>
         </li>
-        <li
-          :class="active === 4 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Instructor Website"
-          >Step 5</a>
+        <li :class="active === 4 ? 'active' : ''" class="step-item">
+          <a class="tooltip" data-tooltip="Instructor Website">Step 5</a>
         </li>
-        <li
-          :class="active === 5 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Additional Information"
-          >Step 6</a>
+        <li :class="active === 5 ? 'active' : ''" class="step-item">
+          <a class="tooltip" data-tooltip="Additional Information">Step 6</a>
         </li>
-        <li
-          :class="active === 6 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Confirm Creation"
-          >Step 7</a>
+        <li :class="active === 6 ? 'active' : ''" class="step-item">
+          <a class="tooltip" data-tooltip="Confirm Creation">Step 7</a>
         </li>
-        <li
-          :class="active === 7 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Success"
-          >Done</a>
+        <li :class="active === 7 ? 'active' : ''" class="step-item">
+          <a class="tooltip" data-tooltip="Success">Done</a>
         </li>
       </ul>
     </div>
