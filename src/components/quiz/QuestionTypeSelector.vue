@@ -114,7 +114,7 @@ export default {
     margin: 20px;
 
     display: flex;
-    flex-flow: col nowrap;
+    flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
 

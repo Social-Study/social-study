@@ -4,7 +4,7 @@
     <!-- Title -->
     <h2 id="title">{{info.title}}</h2>
     <!-- Created -->
-    <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
+    <p id="created"><i>Created on</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
     <!-- Last Updated -->
     <p id="modified"><i>Updated</i> {{calcDays(info.lastUpdated.toDate())}}</p>
     <!-- Creator Avatar and Name Chip -->
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import { distanceInWordsToNow } from "date-fns";
+
 export default {
   name: "FlashcardIcon",
   props: {
@@ -70,16 +72,19 @@ export default {
         this.$router.push({ name: "study", params: { deckID: this.info.id } });
       }
     },
-    calcDays(modDate) {
-      let currentDate = new Date();
-      modDate = new Date(modDate);
-      if (currentDate.toDateString() === modDate.toDateString()) {
-        return "today";
-      }
-      let timeDiff = Math.abs(currentDate.getTime() - modDate.getTime());
-      let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      let retString = days > 1 ? days + " days ago" : days + " day ago";
-      return retString;
+    calcDays(date) {
+      // Old manual date calculations
+
+      // let currentDate = new Date();
+      // modDate = new Date(modDate);
+      // if (currentDate.toDateString() === modDate.toDateString()) {
+      //   return "today";
+      // }
+      // let timeDiff = Math.abs(currentDate.getTime() - modDate.getTime());
+      // let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      // let retString = days > 1 ? days + " days ago" : days + " day ago";
+      // return retString;
+      return distanceInWordsToNow(date) + " ago";
     }
   }
 };

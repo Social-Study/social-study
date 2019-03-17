@@ -126,7 +126,7 @@ import AgendaItemDateHeader from "@/components/agenda/AgendaItemDateHeader";
 import AgendaItemDetail from "@/components/agenda/AgendaItemDetail";
 import AgendaCreateForm from "@/components/agenda/AgendaCreateForm";
 
-import { format, isSameDay, setHours, setMinutes } from "date-fns";
+import { parse, format, isSameDay, setHours, setMinutes } from "date-fns";
 import { db } from "@/firebaseConfig";
 
 export default {
@@ -213,7 +213,6 @@ export default {
      * is the creator of the item
      */
     deleteItem(item) {
-      console.log("deleting item: ", item.title);
       db.collection("study-groups")
         .doc(this.$route.params.groupID)
         .collection("agenda")
@@ -233,11 +232,11 @@ export default {
      *
      */
     createItem() {
-      let eventDate = this.newItem.date;
-      eventDate = setHours(eventDate, this.newItem.time.hh);
-      eventDate = setMinutes(eventDate, this.newItem.time.mm);
-
       // Create new item
+
+      let dateObj = parse(this.newItem.date);
+      console.log(dateObj.toString());
+
       if (this.selectedItem === null && this.selectedIndex === -1) {
         db.collection("study-groups")
           .doc(this.$route.params.groupID)
@@ -245,7 +244,7 @@ export default {
           .add({
             title: this.newItem.title,
             description: this.newItem.description,
-            date: eventDate,
+            date: dateObj,
             creationDate: new Date(),
             creatorID: this.$store.getters.uid
           })

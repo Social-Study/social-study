@@ -11,7 +11,7 @@
             class="form-input"
             v-model="item.title"
             type="text"
-            maxlength="50"
+            maxlength="26"
           />
         </div>
       </div>
@@ -37,20 +37,11 @@
       <div class="tile-content text-left">
         <div class="tile-title text-bold">Event Date / Time</div>
         <div class="tile-subtitle date-time-container">
-          <!-- Date Picker -->
-          <date-picker
-            @input="$emit('publish', item);"
-            :disabledDates="disabledDates"
+          <flat-pickr
+            @on-change="$emit('publish', item)"
+            :config="config"
             v-model="item.date"
-          />
-          <!-- :inline="true" -->
-          <!-- Time Picker -->
-          <vue-timepicker
-            @input="$emit('publish', item);"
-            v-model="item.time"
-            hide-clear-button
-            format="hh:mm A"
-          ></vue-timepicker>
+          ></flat-pickr>
         </div>
       </div>
     </div>
@@ -59,16 +50,17 @@
 </template>
 
 <script>
-import DatePicker from "vuejs-datepicker";
-import VueTimepicker from "vue2-timepicker";
+import flatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+import "flatpickr/dist/themes/airbnb.css";
+import ConfirmDatePlugin from "flatpickr/dist/plugins/confirmDate/confirmDate.js";
 
 import { endOfYesterday, getMinutes } from "date-fns";
 
 export default {
   name: "AgendaCreateForm",
   components: {
-    DatePicker,
-    VueTimepicker
+    flatPickr
   },
   props: {
     editItem: {
@@ -76,41 +68,36 @@ export default {
       required: false
     }
   },
+  data() {
+    return {
+      // Disables all previous dates on the calendar.
+      config: {
+        minDate: Date.now(),
+        dateFormat: "Z",
+        //  YYYY-MM-DDThh:mmTZD (eg 1997-07-16T19:20+01:00)
+        altInput: true,
+        altFormat: "F j, Y @ h:i K",
+        enableTime: true,
+        plugins: [new ConfirmDatePlugin()]
+      },
+      item: {
+        title: "",
+        description: "",
+        date: null
+      }
+    };
+  },
   created() {
     // Transfer all the prop data to the editable data if they are editing an existing event
     if (this.editItem !== null) {
       this.item.title = this.editItem.title;
       this.item.description = this.editItem.description;
 
-      var dateObject = this.editItem.date.toDate();
-      this.item.date = dateObject;
-      this.item.time.hh = "" + dateObject.getHours();
-      // Fucky logic to pass existing minutes to the time picker
-      this.item.time.mm =
-        getMinutes(this.editItem.date.toDate()) < 10
-          ? "0" + getMinutes(this.editItem.date.toDate())
-          : getMinutes(this.editItem.date.toDate());
+      this.item.date = this.editItem.date.toDate();
+      this.config.defaultDate = this.item.date;
     }
   },
-  data() {
-    return {
-      // Disables all previous dates on the calendar.
-      disabledDates: {
-        to: endOfYesterday()
-      },
-      item: {
-        title: "",
-        description: "",
-        date: null,
-        time: {
-          hh: "12",
-          mm: "00",
-          ss: "00",
-          A: "PM"
-        }
-      }
-    };
-  },
+
   computed: {
     getTitle() {
       if (this.editItem) {
@@ -129,11 +116,11 @@ textarea {
   width: 100%;
 }
 
-.date-time-container {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-}
+// .date-time-container {
+//   display: flex;
+//   flex-flow: row nowrap;
+//   justify-content: space-evenly;
+// }
 
 .tile-title {
   padding: 5px;

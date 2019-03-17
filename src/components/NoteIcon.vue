@@ -5,7 +5,7 @@
     <h2 id="title">{{info.title}}</h2>
     <div>
       <!-- Created -->
-      <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
+      <p id="created"><i>Created on</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
       <!-- Modified -->
       <!-- <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p> -->
       <p id="modified"><i>Modified</i> {{calcDays(info.lastUpdated.toDate())}}</p>
@@ -26,6 +26,7 @@
 
 <script>
 import { db } from "@/firebaseConfig";
+import { distanceInWordsToNow } from "date-fns";
 
 export default {
   name: "NoteIcon",
@@ -46,16 +47,8 @@ export default {
         .doc(id)
         .delete();
     },
-    calcDays(modDate) {
-      let currentDate = new Date();
-      modDate = new Date(modDate);
-      if (currentDate.toDateString() === modDate.toDateString()) {
-        return "today";
-      }
-      let timeDiff = Math.abs(currentDate.getTime() - modDate.getTime());
-      let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      let retString = days > 1 ? days + " days ago" : days + " day ago";
-      return retString;
+    calcDays(date) {
+      return distanceInWordsToNow(date) + " ago";
     }
   }
 };

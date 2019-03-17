@@ -152,9 +152,9 @@ export default {
     }
 
     .message-content {
+      white-space: pre-wrap;
       text-align: left;
       margin: 0 4px;
-      // display: inline-block;
       padding: 3px 6px;
       border-radius: 18px;
       color: black;

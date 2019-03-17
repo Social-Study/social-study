@@ -8,17 +8,46 @@ admin.initializeApp({
   storageBucket: "social-study-f3af2.appspot.com",
   messagingSenderId: "265403435232"
 });
-const firestore = admin.firestore();
+const firestore = new admin.firestore();
+const settings = { timestampsInSnapshots: true };
+firestore.settings(settings);
 
-exports.removeOldInvites = functions.firestore
-  .document("/study-groups/{groupID}")
-  .onUpdate((snap, context) => {
-    // The Invite Codes List has changed in some way
-    if (snap.after.data().inviteCodes !== snap.before.data().inviteCodes) {
-      console.log("Invite Code List Changed");
-      console.log("GroupID: " + context.params.groupID);
-      // firestore.collection("study-groups").doc(context.params.groupID).
-      // TODO: Implement logic to check details of inviteTimes and see if they are older than 24 hours
-      // Need to redo all the existing study groups before that...
-    }
+// Date util library
+const dateFNS = require("date-fns");
+
+exports.removeExpiredEvents = functions.firestore
+  .document("/study-groups/{groupID}/agenda/{documentID}")
+  .onCreate((snap, context) => {
+    let groupID = context.params.groupID;
+
+    firestore
+      .collection("study-groups")
+      .doc(groupID)
+      .collection("agenda")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          if (dateFNS.isPast(doc.data().date.toDate())) {
+            deleteDocument(doc.id, groupID);
+            console.log("past event found!");
+          }
+          console.log("not a past event");
+        });
+        return null;
+      })
+      .catch(error => {
+        console.error("this is the error catcher " + error);
+      });
   });
+
+function deleteDocument(id, groupID) {
+  firestore
+    .collection("study-groups")
+    .doc(groupID)
+    .collection("agenda")
+    .doc(id)
+    .delete()
+    .catch(error => {
+      console.error(error);
+    });
+}

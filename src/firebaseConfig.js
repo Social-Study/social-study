@@ -20,6 +20,6 @@ export default firebase.initializeApp(config);
 
 export const db = firebase.firestore();
 export const Storage = firebase.storage();
-db.settings({
-  timestampsInSnapshots: true
-});
+// db.settings({
+//   timestampsInSnapshots: true
+// });
