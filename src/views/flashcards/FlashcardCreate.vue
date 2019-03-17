@@ -221,8 +221,6 @@ export default {
               creatorName: user.displayName,
               lastUpdated: initDate,
               creatorPhoto: this.$store.getters.photoURL
-              // creatorUID: this.$store.getters.uid,
-              // creationDate: initDate,
             })
             .then(() => {
               // console.log("Flashcard Deck created with doc id: ", docRef.id);

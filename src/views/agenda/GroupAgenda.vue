@@ -4,26 +4,52 @@
       <template slot="left">
         <button
           class="btn btn-primary"
-          @click="showCreateModal = true"
+          @click="showCreateForm(true)"
         >Add Item <i class="fas fa-plus"></i>
         </button>
       </template>
       <template slot="center">
         Group Agenda
       </template>
-    </page-title>
+      <template slot="right">
+        <!-- Save Item Form Button -->
+        <button
+          v-if="isShowingItemForm"
+          @click="createItem"
+          class="btn btn-success btn-action split"
+          :class="!validInfoEntered ? 'disabled' : ''"
+        ><i class="fas fa-save"></i></button>
 
-    <!-- Modal Component -->
-    <agenda-create-modal
-      v-if="showCreateModal"
-      @close="showCreateModal = false"
-      @publish="createItem"
-    />
+        <!-- Existing Item Button Bar -->
+        <div v-if="selectedIndex !== -1 && selectedItem.creatorID === $store.getters.uid">
+
+          <!-- Edit an existing agenda item that you've created -->
+          <button
+            v-if="!isShowingItemForm"
+            @click="showCreateForm(false)"
+            class="btn btn-success btn-action"
+          ><i class="fas fa-pen"></i></button>
+
+          <!-- Delete an existing agenda item that you've created -->
+          <button
+            @click="deleteItem(selectedItem)"
+            class="btn btn-error btn-action split"
+          ><i class="fas fa-trash"></i></button>
+        </div>
+      </template>
+    </page-title>
 
     <div class="content-container">
       <!-- List of all agenda items -->
       <div class="item-list">
         <div
+          v-if="isLoadingItems"
+          id="loading-indicator"
+          class="loading loading-lg"
+        >
+        </div>
+        <div
+          v-else
           v-for="(item, index) in agendaItems"
           :key="item.creationDate.toDate().getTime()"
         >
@@ -41,15 +67,52 @@
       </div>
       <div class="divider-vert"></div>
 
-      <!-- Clicked agenda item's details -->
+      <!-- Right side container -->
       <div class="item-detail-container">
+        <!-- Clicked agenda item's details -->
+
         <agenda-item-detail
-          v-if="selectedItem"
+          v-if="selectedItem && !isShowingItemForm"
           :selectedItem="selectedItem"
         />
-        <div v-else>
-          <!-- TODO: Implement an empty placeholder -->
-          <h1>NOTHING SELECTED</h1>
+        <!-- Show create new item form -->
+        <agenda-create-form
+          v-else-if="isShowingItemForm"
+          :editItem="selectedItem"
+          @publish="updateNewItem"
+        />
+        <div
+          v-else-if="!isLoadingItems && agendaItems.length === 0"
+          class="empty"
+        >
+          <div class="empty-icon">
+            <img
+              id="undraw"
+              class="undraw-svg"
+              src="@/assets/undraw_no_data.svg"
+              alt="No Study Groups"
+            >
+          </div>
+          <p class="empty-title h5">Add an Agenda Item for the Study Group to see!</p>
+          <!-- <p class="empty-subtitle text-large text-bold">Add an agenda item for the group to see!</p> -->
+          <!-- <p class="empty-subtitle">Click the add bottom in the top left to get started!</p> -->
+        </div>
+
+        <div
+          v-else-if="!isLoadingItems && agendaItems.length > 0"
+          class="empty"
+        >
+          <div class="empty-icon">
+            <img
+              id="undraw"
+              class="undraw-svg"
+              src="@/assets/undraw_select.svg"
+              alt="No Study Groups"
+            >
+          </div>
+          <p class="empty-title h5">Select an Agenda Item to see more details!</p>
+          <!-- <p class="empty-subtitle text-large text-bold">Add an agenda item for the group to see!</p> -->
+          <!-- <p class="empty-subtitle">Click the add bottom in the top left to get started!</p> -->
         </div>
       </div>
     </div>
@@ -61,7 +124,7 @@ import PageTitle from "@/components/navigation/PageTitle";
 import AgendaItem from "@/components/agenda/AgendaItem";
 import AgendaItemDateHeader from "@/components/agenda/AgendaItemDateHeader";
 import AgendaItemDetail from "@/components/agenda/AgendaItemDetail";
-import AgendaCreateModal from "@/components/agenda/AgendaCreateModal";
+import AgendaCreateForm from "@/components/agenda/AgendaCreateForm";
 
 import { format, isSameDay, setHours, setMinutes } from "date-fns";
 import { db } from "@/firebaseConfig";
@@ -73,17 +136,16 @@ export default {
     AgendaItem,
     AgendaItemDateHeader,
     AgendaItemDetail,
-    AgendaCreateModal
+    AgendaCreateForm
   },
   data() {
     return {
-      // Only shown when the create new button is pressed
-      showCreateModal: false,
-      // Object that is clicked on (focused)
-      selectedItem: null,
-      // List of all agenda item objects
-      agendaItems: [],
-      selectedIndex: -1
+      isLoadingItems: true, // Show/Hide loading indicator
+      isShowingItemForm: false, // Show new item creation form
+      selectedItem: null, // Currently selected item to show details
+      agendaItems: [], // List of all agenda item objects
+      selectedIndex: -1, // Index of currently selected item (might use this only instead of both)
+      newItem: null // New Agenda item emitted from AgendaCreateForm
     };
   },
   created() {
@@ -94,7 +156,10 @@ export default {
         .doc(this.$route.params.groupID)
         .collection("agenda")
         .orderBy("date", "asc")
-    );
+    ).then(agendaItems => {
+      this.agendaItems === agendaItems;
+      this.isLoadingItems = false;
+    });
   },
   methods: {
     /**
@@ -103,6 +168,7 @@ export default {
      * The selectedIndex is set to that index.
      */
     handleSelected(index) {
+      this.isShowingItemForm = false;
       this.selectedItem = this.agendaItems[index];
       this.selectedIndex = index;
     },
@@ -125,6 +191,40 @@ export default {
       }
     },
     /**
+     * Shows the create form component
+     * Pass true if creating new item
+     * Pass false if editing existing item
+     */
+    showCreateForm(isCreateNew) {
+      if (isCreateNew) {
+        this.selectedItem = null;
+        this.selectedIndex = -1;
+      }
+      this.isShowingItemForm = true;
+    },
+    /**
+     * Retreive the emitted value from the AgendaCreateForm and update local state
+     */
+    updateNewItem(item) {
+      this.newItem = item;
+    },
+    /**
+     * Delete current selected item. This should only work if the current user
+     * is the creator of the item
+     */
+    deleteItem(item) {
+      console.log("deleting item: ", item.title);
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("agenda")
+        .doc(item.id)
+        .delete()
+        .then(() => {
+          this.selectedItem = null;
+          this.selectedIndex = -1;
+        });
+    },
+    /**
      * Create a new agenda item. Each agenda item contains the following:
      *
      * Title
@@ -132,27 +232,60 @@ export default {
      * Date/Time
      *
      */
-    createItem(e) {
-      console.log(e);
-      let eventDate = e.date;
-      eventDate = setHours(eventDate, e.time.hh);
-      eventDate = setMinutes(eventDate, e.time.mm);
+    createItem() {
+      let eventDate = this.newItem.date;
+      eventDate = setHours(eventDate, this.newItem.time.hh);
+      eventDate = setMinutes(eventDate, this.newItem.time.mm);
 
-      console.log(eventDate.toString());
-
-      this.showCreateModal = false;
-      db.collection("study-groups")
-        .doc(this.$route.params.groupID)
-        .collection("agenda")
-        .add({
-          title: e.title,
-          description: e.description,
-          date: eventDate,
-          creationDate: new Date()
-        })
-        .then(() => {
-          this.showCreateModal = false;
-        });
+      // Create new item
+      if (this.selectedItem === null && this.selectedIndex === -1) {
+        db.collection("study-groups")
+          .doc(this.$route.params.groupID)
+          .collection("agenda")
+          .add({
+            title: this.newItem.title,
+            description: this.newItem.description,
+            date: eventDate,
+            creationDate: new Date(),
+            creatorID: this.$store.getters.uid
+          })
+          .then(() => {
+            this.isShowingItemForm = false;
+          });
+      } else {
+        // Update existing item
+        db.collection("study-groups")
+          .doc(this.$route.params.groupID)
+          .collection("agenda")
+          .doc(this.selectedItem.id)
+          .update({
+            title: this.newItem.title,
+            description: this.newItem.description,
+            date: eventDate
+          })
+          .then(() => {
+            this.isShowingItemForm = false;
+            this.selectedItem = null;
+            this.selectedIndex = -1;
+          });
+      }
+    }
+  },
+  computed: {
+    /**
+     * Show/Hide the save button depending on if all the required form fields are entered
+     */
+    validInfoEntered() {
+      if (
+        this.newItem !== null &&
+        this.newItem.title !== "" &&
+        this.newItem.description !== "" &&
+        this.newItem.date !== null
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };
@@ -160,6 +293,25 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles.scss";
+
+#loading-indicator {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.empty {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  background-color: $light;
+}
+
+#undraw {
+  width: 10em;
+}
 
 .content-container {
   height: $page-with-header-height;
