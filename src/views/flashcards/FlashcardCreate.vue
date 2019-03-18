@@ -3,9 +3,9 @@
     <page-title>
       <template slot="left">
         <input
+          v-model="deckTitle"
           class="name-input"
           type="text"
-          v-model="deckTitle"
           maxlength="30"
           placeholder="Untitled Flashcard Deck"
         />
@@ -14,31 +14,40 @@
       <template slot="right">
         <toggle-switch
           v-if="deckID === null"
-          @toggle="toggled = $event"
           :default="toggled"
           :values="['Private', 'Public']"
+          @toggle="toggled = $event"
         ></toggle-switch>
-        <button @click="saveDeck" class="btn btn-action split">
+        <button
+          class="btn btn-action split"
+          @click="saveDeck"
+        >
           <i class="fas fa-save"></i>
         </button>
         <button
           v-if="deckID !== null"
-          @click="deleteDeck"
           class="btn btn-error btn-action split"
+          @click="deleteDeck"
         >
           <i class="fas fa-trash"></i>
         </button>
       </template>
     </page-title>
 
-    <div class="toast toast-error" v-if="noTitle">
+    <div
+      v-if="noTitle"
+      class="toast toast-error"
+    >
       <button
         class="btn btn-clear float-right"
         @click="noTitle = false"
       ></button>
       Please Enter a title for the flashcard deck
     </div>
-    <div class="toast toast-error" v-if="!contentFilled">
+    <div
+      v-if="!contentFilled"
+      class="toast toast-error"
+    >
       <button
         class="btn btn-clear float-right"
         @click="contentFilled = true"
@@ -50,14 +59,17 @@
       <flashcard-create-form
         v-for="(term, index) in terms"
         :key="hash[index]"
-        :initTerm="term"
-        :initDef="definitions[index]"
+        :init-term="term"
+        :init-def="definitions[index]"
         @termUpdated="termUpdated($event, index)"
         @defUpdated="defUpdated($event, index)"
         @addNew="addCard"
         @delete="deleteCard(index)"
       />
-      <div class="addCard" @click="addCard">
+      <div
+        class="addCard"
+        @click="addCard"
+      >
         <div class="gradient-border add">
           <div class="add-button">
             <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
@@ -231,7 +243,7 @@ export default {
               creatorPhoto: this.$store.getters.photoURL
             })
             .then(docRef => {
-              console.log("Flashcard Deck created with doc id: ", docRef.id);
+              // console.log("Flashcard Deck created with doc id: ", docRef.id);
               this.$router.push(`/${this.$route.params.groupID}/flashcards`);
             })
             .catch(error => {

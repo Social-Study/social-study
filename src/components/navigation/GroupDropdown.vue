@@ -2,8 +2,8 @@
   <!-- Study Group Switcher -->
   <div v-if="studyGroups.length > 0" class="dropdown">
     <a
-      class="group-dropdown-button btn btn-primary dropdown-toggle"
       id="group-button"
+      class="group-dropdown-button btn btn-primary dropdown-toggle"
       tabindex="0"
     >
       Study Groups <i class="fas fa-caret-down"></i>

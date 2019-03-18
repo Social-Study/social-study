@@ -14,9 +14,9 @@
       <!-- Contains Center Content; Buttons and Content -->
       <div class="nav-container">
         <button
-          @click="back"
           class="btn btn-action btn-success btn-lg s-circle"
           :class="active === 0 ? 'disabled c-not-allowed' : ''"
+          @click="back"
         >
           <i class="fas fa-arrow-left"></i>
         </button>
@@ -36,31 +36,31 @@
             "
           >
             <input
-              @keydown.enter="next"
+              v-model="className"
+              v-validate="'required'"
               class="form-input"
               type="text"
-              v-model="className"
               placeholder="Class Name"
               name="className"
-              v-validate="'required'"
               required
+              @keydown.enter="next"
             />
             <p class="form-input-hint">{{ errors.first("className") }}</p>
           </div>
           <!-- <span style="color: red;">{{ errors.first("className") }}</span> -->
           <h3 style="margin-top: 20px;">Course Code? (Optional)</h3>
           <input
-            @keydown.enter="next"
+            v-model="courseCode"
             class="form-input"
             type="text"
-            v-model="courseCode"
             style="width: 200px;"
             placeholder="Course Code "
+            @keydown.enter="next"
           />
         </div>
 
         <!-- Instructor Name Form -->
-        <div class="infoContainer" v-else-if="active === 1">
+        <div v-else-if="active === 1" class="infoContainer">
           <!-- TODO: Figure out why validation isn't working... -->
           <h2>What is the course intructor's name?</h2>
           <div
@@ -74,57 +74,57 @@
             "
           >
             <input
-              @keydown.enter="next"
+              v-model="instructorName"
+              v-validate="'required|alpha_spaces'"
               class="form-input"
               type="text"
-              v-model="instructorName"
               placeholder="Instructor Name"
               name="instructor"
-              v-validate="'required|alpha_spaces'"
               required
+              @keydown.enter="next"
             />
             <p class="form-input-hint">{{ errors.first("instructorName") }}</p>
           </div>
         </div>
 
         <!-- Class Meeting Time Form -->
-        <div class="infoContainer" v-else-if="active === 2">
+        <div v-else-if="active === 2" class="infoContainer">
           <h2>When does your class meet?</h2>
 
           <!-- Day Selector Button Block -->
           <div class="btn-group btn-group-block">
             <button
-              @click="toggle('monday')"
               :class="meetingDays.monday ? 'active' : ''"
               class="btn"
+              @click="toggle('monday')"
             >
               Monday
             </button>
             <button
-              @click="toggle('tuesday')"
               :class="meetingDays.tuesday ? 'active' : ''"
               class="btn"
+              @click="toggle('tuesday')"
             >
               Tuesday
             </button>
             <button
-              @click="toggle('wednesday')"
               :class="meetingDays.wednesday ? 'active' : ''"
               class="btn"
+              @click="toggle('wednesday')"
             >
               Wednesday
             </button>
             <button
-              @click="toggle('thursday')"
               :class="meetingDays.thursday ? 'active' : ''"
               class="btn"
+              @click="toggle('thursday')"
             >
               Thursday
             </button>
             <button
-              @click="toggle('friday')"
               :class="meetingDays.friday ? 'active' : ''"
               class="btn"
+              @click="toggle('friday')"
             >
               Friday
             </button>
@@ -133,43 +133,43 @@
           <br />
           <div class="time-group">
             <input
+              v-model="meetingTime[0]"
               type="time"
               class="time-picker form-input"
-              v-model="meetingTime[0]"
               required
             />
             <input
+              v-model="meetingTime[1]"
               type="time"
               class="time-picker form-input"
-              v-model="meetingTime[1]"
               required
             />
           </div>
         </div>
 
         <!-- Class Meeting Location Form -->
-        <div class="infoContainer" v-else-if="active === 3">
+        <div v-else-if="active === 3" class="infoContainer">
           <h2>Where does the class meet?</h2>
 
           <input
-            @keydown.enter="next"
+            v-model="location"
+            v-validate="'required'"
             class="form-input"
             type="text"
-            v-model="location"
             name="location"
-            v-validate="'required'"
             placeholder="Class Location"
+            @keydown.enter="next"
           />
           <span style="color: red;">{{ errors.first("location") }}</span>
         </div>
 
         <!-- Instructor Website Form -->
-        <div class="infoContainer" v-else-if="active === 4">
+        <div v-else-if="active === 4" class="infoContainer">
           <h2>Does your instructor have a website?</h2>
 
           <div class="form-group switch">
             <label class="form-switch">
-              <input type="checkbox" v-model="hasWebsite" />
+              <input v-model="hasWebsite" type="checkbox" />
               <i class="form-icon"></i>
             </label>
           </div>
@@ -182,14 +182,14 @@
             <div v-show="hasWebsite" key="input" class="input-group">
               <span class="input-group-addon">https://</span>
               <input
-                @keydown.enter="next"
+                v-model="websiteURL"
+                v-validate="'url'"
                 style="margin: 0;"
                 class="form-input"
                 type="text"
-                v-model="websiteURL"
                 name="url"
-                v-validate="'url'"
                 placeholder="Website URL"
+                @keydown.enter="next"
               />
             </div>
             <span key="error-string" style="color: red;">{{
@@ -200,8 +200,8 @@
             <br key="break2" />
             <a
               v-show="hasWebsite && websiteURL !== ''"
-              target="_blank"
               key="link"
+              target="_blank"
               :href="formattedURL"
               >{{ formattedURL }}</a
             >
@@ -209,11 +209,11 @@
         </div>
 
         <!-- Extra Group Info Form -->
-        <div class="infoContainer" v-else-if="active === 5">
+        <div v-else-if="active === 5" class="infoContainer">
           <h2>Would you like to enter any additional information?</h2>
           <div class="form-group switch">
             <label class="form-switch">
-              <input type="checkbox" v-model="hasExtraInfo" />
+              <input v-model="hasExtraInfo" type="checkbox" />
               <i class="form-icon"></i>
             </label>
           </div>
@@ -226,39 +226,39 @@
             >
               <textarea
                 v-show="hasExtraInfo"
-                @keydown.enter="next"
+                v-model="extraInfo"
                 style="resize: none"
                 class="form-input"
                 type="text-area"
-                v-model="extraInfo"
                 cols="53"
                 rows="3"
                 placeholder="Additional Class Info"
+                @keydown.enter="next"
               ></textarea>
             </transition>
           </div>
         </div>
 
         <!-- Create Group with previous data confirmation -->
-        <div class="infoContainer" v-else-if="active === 6">
-          <button @click="createStudyGroup" class="createBtn">
+        <div v-else-if="active === 6" class="infoContainer">
+          <button class="createBtn" @click="createStudyGroup">
             Create Study Group
           </button>
         </div>
 
         <!-- Invite Code / New Group Links -->
-        <div class="infoContainer" v-else-if="active === 7">
+        <div v-else-if="active === 7" class="infoContainer">
           <h3>Your new Study Group has been created!</h3>
           <div style="width: 50%; margin: 20px auto;" class="input-group">
             <input
-              type="text"
               ref="inviteDisplay"
+              v-model="inviteCode"
+              type="text"
               class="form-input"
               placeholder="Invite Code"
-              v-model="inviteCode"
               style="margin: 0;"
             />
-            <button @click="copyCode" class="btn btn-primary input-group-btn">
+            <button class="btn btn-primary input-group-btn" @click="copyCode">
               Copy Code
             </button>
           </div>
@@ -277,9 +277,9 @@
 
         <!-- Next Button -->
         <button
-          @click="next"
           class="btn btn-action btn-success btn-lg s-circle"
           :class="active === 7 ? 'disabled' : ''"
+          @click="next"
         >
           <i class="fas fa-arrow-right"></i>
         </button>
@@ -350,6 +350,11 @@ export default {
       inviteCode: "",
       newGroupID: ""
     };
+  },
+  computed: {
+    formattedURL() {
+      return "https://" + this.websiteURL;
+    }
   },
   methods: {
     toggle(key) {
@@ -425,11 +430,6 @@ export default {
         .catch(error => {
           // console.log("CreateGroup: " + error);
         });
-    }
-  },
-  computed: {
-    formattedURL() {
-      return "https://" + this.websiteURL;
     }
   }
 };

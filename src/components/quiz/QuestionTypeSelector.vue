@@ -3,8 +3,8 @@
     <div id="container">
       <div
         v-for="type in questionTypes"
-        :key="type.type"
         id="type-toggle"
+        :key="type.type"
         :class="type.selected ? 'selected' : ''"
         @click="toggleSelected(type)"
       >

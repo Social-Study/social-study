@@ -5,11 +5,11 @@
       <h5>Public Flashcard Decks</h5>
       <div id="container">
         <div
-          id="deck"
           v-for="deck in publicDecks"
+          id="deck"
           :key="deck.title"
-          @click="toggleSelected(deck)"
           :class="deck.selected ? 'selected' : ''"
+          @click="toggleSelected(deck)"
         >
           <div id="deck-details">
             <div id="deck-name">
@@ -30,11 +30,11 @@
       <h5>Private Flashcard Decks</h5>
       <div id="container">
         <div
-          id="deck"
           v-for="deck in privateDecks"
+          id="deck"
           :key="deck.title"
-          @click="toggleSelected(deck)"
           :class="deck.selected ? 'selected private' : ''"
+          @click="toggleSelected(deck)"
         >
           <div id="deck-details">
             <div id="deck-name">

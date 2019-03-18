@@ -2,11 +2,11 @@
   <div id="question">
     <h1>{{ definition }}</h1>
     <input
+      v-model.trim="userAnswer"
       class="answer-input"
       type="text"
-      v-model.trim="userAnswer"
-      @input="handleInput()"
       :class="{ correct }"
+      @input="handleInput()"
     />
   </div>
 </template>
@@ -32,6 +32,16 @@ export default {
       answered: false
     };
   },
+  watch: {
+    userAnswer(newVal, oldVal) {
+      // console.log(oldVal, newVal);
+      if (oldVal === "" && newVal !== "") {
+        this.$emit("answered", true);
+      } else if (oldVal !== "" && newVal == "") {
+        this.$emit("answered", false);
+      }
+    }
+  },
   methods: {
     handleInput() {
       if (this.userAnswer.toLowerCase() === this.term.toLowerCase()) {
@@ -40,16 +50,6 @@ export default {
       } else {
         this.correct = false;
         this.$emit("correct", false);
-      }
-    }
-  },
-  watch: {
-    userAnswer(newVal, oldVal) {
-      // console.log(oldVal, newVal);
-      if (oldVal === "" && newVal !== "") {
-        this.$emit("answered", true);
-      } else if (oldVal !== "" && newVal == "") {
-        this.$emit("answered", false);
       }
     }
   }

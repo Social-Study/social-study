@@ -19,8 +19,8 @@
         <!-- Show a drop area for each term -->
         <drop
           v-for="slot in drop"
-          class="drop"
           :key="slot.definition"
+          class="drop"
           :class="{ over: slot.over, filled: slot.filled }"
           @click.native="resetDrop(slot)"
           @dragover="handleDragOver(slot)"

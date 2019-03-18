@@ -1,6 +1,6 @@
 <template>
   <div class="full-height">
-    <div id="sidebar" v-if="activeGroup" :class="show ? 'active' : 'collapsed'">
+    <div v-if="activeGroup" id="sidebar" :class="show ? 'active' : 'collapsed'">
       <ul class="menu">
         <!-- Group Details -->
         <li v-show="show" class="menu-item" style="padding-top: 10px;">
@@ -172,6 +172,12 @@ export default {
       isLoading: true
     };
   },
+  // Reload group data if the group's url changes
+  watch: {
+    "$route.params.groupID"(id) {
+      this.loadGroupData(id);
+    }
+  },
   created() {
     this.loadGroupData(this.$route.params.groupID);
   },
@@ -195,12 +201,6 @@ export default {
         .catch(() => {
           this.isLoading = false;
         });
-    }
-  },
-  // Reload group data if the group's url changes
-  watch: {
-    "$route.params.groupID"(id) {
-      this.loadGroupData(id);
     }
   }
 };

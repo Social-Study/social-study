@@ -28,10 +28,10 @@
           <div class="icon-container">
             <div v-if="notesLoading" class="loading loading-lg"></div>
             <note-icon
-              v-else
               v-for="note in recentNotes"
-              :info="note"
+              v-else
               :key="note.id"
+              :info="note"
             />
           </div>
         </div>
@@ -51,8 +51,8 @@
           <div class="icon-container">
             <div v-if="flashcardsLoading" class="loading loading-lg"></div>
             <flashcard-icon
-              v-else
               v-for="deck in recentFlashcards"
+              v-else
               :key="deck.id"
               :info="deck"
             ></flashcard-icon>
@@ -86,6 +86,23 @@ export default {
       recentFlashcards: [],
       flashcardsLoading: false
     };
+  },
+  computed: {
+    filteredDecks() {
+      // Filter the note list by the query string. Including partial matches.
+      // Converted to lowercase to avoid capitalization enforcement
+      return this.decks.filter(deck => {
+        return deck.title
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+      });
+    }
+  },
+  watch: {
+    // reload the group data when route changes
+    "$route.params.groupID"() {
+      this.loadData();
+    }
   },
   created() {
     this.loadData();
@@ -124,23 +141,6 @@ export default {
         // });
         this.flashcardsLoading = false;
       });
-    }
-  },
-  computed: {
-    filteredDecks() {
-      // Filter the note list by the query string. Including partial matches.
-      // Converted to lowercase to avoid capitalization enforcement
-      return this.decks.filter(deck => {
-        return deck.title
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase());
-      });
-    }
-  },
-  watch: {
-    // reload the group data when route changes
-    "$route.params.groupID"() {
-      this.loadData();
     }
   }
 };

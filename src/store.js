@@ -7,7 +7,6 @@ export default new Vuex.Store({
   state: {
     uid: "",
     photoURL: "",
-    // user: null,
     chatActive: false,
     sidebarActive: true
   },

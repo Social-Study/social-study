@@ -20,15 +20,15 @@
         class="content-container"
       >
         <!-- Invite New Member Card -->
-        <member-card key="addButton" @click.native="inviteMember()" add>
+        <member-card key="addButton" add @click.native="inviteMember()">
         </member-card>
 
         <!-- Show card for each group member -->
         <member-card
           v-for="member in memberDetails"
           :key="member.uid"
-          :photoURL="member.photoURL"
-          :displayName="member.displayName"
+          :photo-u-r-l="member.photoURL"
+          :display-name="member.displayName"
           :description="member.description"
           :owner="member.uid === studyGroup.owner"
         >
@@ -38,20 +38,20 @@
     <div v-else class="loading loading-lg"></div>
 
     <!-- Display Invite Code Modal -->
-    <div v-show="displayModal" class="modal modal-sm active" id="modal-id">
+    <div v-show="displayModal" id="modal-id" class="modal modal-sm active">
       <a
-        @click="displayModal = false"
         href="#"
         class="modal-overlay"
         aria-label="Close"
+        @click="displayModal = false"
       ></a>
       <div class="modal-container">
         <div class="modal-header">
           <a
             href="#"
-            @click="displayModal = false"
             class="btn btn-clear float-right"
             aria-label="Close"
+            @click="displayModal = false"
           ></a>
           <div class="modal-title h5">Generate New Invite</div>
         </div>
@@ -59,12 +59,12 @@
           <div class="content">
             <div class="input-group">
               <input
-                v-model="inviteCode"
                 ref="invite"
+                v-model="inviteCode"
                 type="text"
                 class="form-input"
               />
-              <button @click="copyCode" class="btn btn-primary input-group-btn">
+              <button class="btn btn-primary input-group-btn" @click="copyCode">
                 Generate
               </button>
             </div>

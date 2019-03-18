@@ -1,16 +1,19 @@
 <template>
   <div v-if="!isLoading && !isError">
-    <notifications group="notes" position="left top" />
+    <notifications
+      group="notes"
+      position="left top"
+    />
 
     <!-- New Header Component -->
     <page-title>
       <template slot="left">
         <input
-          @input="handleChange()"
-          class="name-input"
           v-model="noteTitle"
+          class="name-input"
           type="text"
           maxlength="40"
+          @input="handleChange()"
         />
       </template>
       <template slot="right">
@@ -22,7 +25,10 @@
             data-tooltip="Preview Style"
             tabindex="0"
           >
-            <i style="color: #5755d9" class="fas fa-palette"></i>
+            <i
+              style="color: #5755d9"
+              class="fas fa-palette"
+            ></i>
           </a>
           <!-- menu component -->
           <ul class="menu">
@@ -32,13 +38,19 @@
         </div>
 
         <!-- Open link to markdown cheatsheet in new browser tab -->
-        <a target="_blank" href="https://www.markdownguide.org/cheat-sheet">
+        <a
+          target="_blank"
+          href="https://www.markdownguide.org/cheat-sheet"
+        >
           <button class="btn btn-action split">
             <i class="fas fa-info"></i>
           </button>
         </a>
         <!-- Save the markdown to database -->
-        <button @click="saveNote" class="btn btn-success btn-action split">
+        <button
+          class="btn btn-success btn-action split"
+          @click="saveNote"
+        >
           <i class="fas fa-save"></i>
         </button>
       </template>
@@ -46,15 +58,14 @@
 
     <div class="content-container">
       <textarea
-        @input="handleChange()"
-        @keydown.ctrl.83.prevent="saveNote"
         v-model="userText"
         class="page-edit"
+        @input="handleChange()"
+        @keydown.ctrl.83.prevent="saveNote"
       >
       </textarea>
       <!-- TODO: Use a computed property for the styling when I add more styles -->
       <div
-        v-html="render"
         class="page-view"
         :class="
           markStyleNum === 1
@@ -63,10 +74,14 @@
             ? 'markdown-body'
             : ''
         "
+        v-html="render"
       ></div>
     </div>
   </div>
-  <div v-else-if="!isLoading && isError" id="error-container">
+  <div
+    v-else-if="!isLoading && isError"
+    id="error-container"
+  >
     <img
       style="width: 10em;"
       class="undraw-svg"
@@ -75,7 +90,10 @@
     />
     <h1>Error loading note...</h1>
   </div>
-  <div v-else class="loading loading-lg"></div>
+  <div
+    v-else
+    class="loading loading-lg"
+  ></div>
 </template>
 
 <script>
@@ -109,6 +127,21 @@ export default {
       userText: "",
       markStyleNum: 2
     };
+  },
+  computed: {
+    render() {
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        gfm: true,
+        tables: true,
+        breaks: true,
+        pedantic: false,
+        sanitize: true,
+        smartLists: true,
+        smartypants: false
+      });
+      return marked(this.userText);
+    }
   },
   created() {
     db.collection("study-groups")
@@ -154,21 +187,6 @@ export default {
             text: "The note has been saved successfully."
           });
         });
-    }
-  },
-  computed: {
-    render() {
-      marked.setOptions({
-        renderer: new marked.Renderer(),
-        gfm: true,
-        tables: true,
-        breaks: true,
-        pedantic: false,
-        sanitize: true,
-        smartLists: true,
-        smartypants: false
-      });
-      return marked(this.userText);
     }
   }
 };

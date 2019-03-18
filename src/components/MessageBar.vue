@@ -1,8 +1,8 @@
 <template>
   <div class="toast" :class="color">
     <button
-      @click="$emit('closeMessage')"
       class="btn btn-clear float-right"
+      @click="$emit('closeMessage')"
     ></button>
     <slot>Message Here</slot>
   </div>

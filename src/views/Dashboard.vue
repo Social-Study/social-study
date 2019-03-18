@@ -1,5 +1,8 @@
 <template>
-  <div id="full-screen" v-if="this.user !== null">
+  <div
+    v-if="user !== null"
+    id="full-screen"
+  >
     <!-- Centered Empty Dashboard Placeholder -->
     <div>
       <div class="empty">
@@ -12,7 +15,7 @@
           />
         </div>
         <p
-          v-if="this.studyGroups && this.studyGroups.length === 0"
+          v-if="studyGroups && studyGroups.length === 0"
           class="empty-title h5"
         >
           You don't have any Study Groups!
@@ -34,7 +37,7 @@ import { db } from "@/firebaseConfig";
 import { getUserData } from "@/scripts/userFuncs";
 
 export default {
-  name: "dashboard",
+  name: "Dashboard",
   data() {
     return {
       user: null,

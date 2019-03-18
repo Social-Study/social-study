@@ -5,8 +5,8 @@
     <!-- :style="getBorderColor" -->
     <div
       class="agenda-item"
-      @click="$emit('itemSelected')"
       :class="{ selected }"
+      @click="$emit('itemSelected')"
     >
       <h3>{{ item.title }}</h3>
       <p class="text-gray">{{ getRemainingDays(item.date.toDate()) }}</p>
@@ -43,14 +43,6 @@ export default {
       }
     };
   },
-  methods: {
-    getRemainingDays(date) {
-      if (isPast(date)) {
-        return distanceInWordsToNow(date) + " ago";
-      }
-      return distanceInWordsToNow(date);
-    }
-  },
   computed: {
     /**
      * Change the item's border color based on its distance in the future
@@ -74,6 +66,14 @@ export default {
       return {
         borderColor: "" + color
       };
+    }
+  },
+  methods: {
+    getRemainingDays(date) {
+      if (isPast(date)) {
+        return distanceInWordsToNow(date) + " ago";
+      }
+      return distanceInWordsToNow(date);
     }
   }
 };

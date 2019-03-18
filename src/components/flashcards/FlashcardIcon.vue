@@ -39,14 +39,14 @@
       </button>
       <div
         v-if="info.creatorUID === $store.getters.uid"
-        @click="$emit('toggle')"
         id="indicator"
         class="tooltip tooltip-bottom"
         data-tooltip="Toggle Visibility"
+        @click="$emit('toggle')"
       >
         <i class="far" :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"></i>
       </div>
-      <button @click="goStudy" id="studyBtn">Study</button>
+      <button id="studyBtn" @click="goStudy">Study</button>
     </div>
   </div>
 </template>

@@ -4,7 +4,7 @@
       <div class="content">
         <h3 id="header">Study Group Chat</h3>
         <div class="divider-gradient mb-2"></div>
-        <div class="messages" ref="messages">
+        <div ref="messages" class="messages">
           <transition-group
             name="chatTransition"
             enter-active-class="animated fadeInDown"
@@ -19,16 +19,16 @@
         </div>
         <div class="divider-gradient my-2"></div>
         <input
-          @keydown.enter="sendMessage"
+          v-model="userMessage"
           type="text"
           class="form-input message-input"
           placeholder="Group Message"
-          v-model="userMessage"
+          @keydown.enter="sendMessage"
         />
         <button
-          @click="sendMessage"
           class="btn btn-primary"
           :class="userMessage === '' ? 'disabled' : ''"
+          @click="sendMessage"
         >
           Send
         </button>
@@ -66,6 +66,40 @@ export default {
       groupMessages: []
     };
   },
+  computed: {
+    messageLength() {
+      return this.groupMessages.length;
+    }
+  },
+  watch: {
+    // Reload the group's messages when the user switches groups
+    "$route.params.groupID"() {
+      this.loadGroupMessages();
+    },
+    messageLength(newVal, oldVal) {
+      // Only play notification when message is from another person
+      // Only play notification when the chat sidebar is closed
+      // Only play notification when the user gets a new message, not when the messages are loaded
+      if (
+        oldVal !== 0 &&
+        newVal !== 0 &&
+        this.groupMessages[this.groupMessages.length - 1].sender !==
+          this.$store.getters.uid
+      ) {
+        if (!this.$store.getters.chatActive) {
+          notification.play();
+        } else {
+          // Have to adjust the time depending on the speed of message animation
+          setTimeout(() => {
+            this.scrollToBottom(); //Always scroll to bottom when a new message comes in
+          }, 500);
+        }
+      }
+    }
+  },
+  created() {
+    this.loadGroupMessages();
+  },
   methods: {
     scrollToBottom() {
       this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
@@ -100,40 +134,6 @@ export default {
         this.groupMessages === groupMessages;
         this.scrollToBottom();
       });
-    }
-  },
-  created() {
-    this.loadGroupMessages();
-  },
-  computed: {
-    messageLength() {
-      return this.groupMessages.length;
-    }
-  },
-  watch: {
-    // Reload the group's messages when the user switches groups
-    "$route.params.groupID"() {
-      this.loadGroupMessages();
-    },
-    messageLength(newVal, oldVal) {
-      // Only play notification when message is from another person
-      // Only play notification when the chat sidebar is closed
-      // Only play notification when the user gets a new message, not when the messages are loaded
-      if (
-        oldVal !== 0 &&
-        newVal !== 0 &&
-        this.groupMessages[this.groupMessages.length - 1].sender !==
-          this.$store.getters.uid
-      ) {
-        if (!this.$store.getters.chatActive) {
-          notification.play();
-        } else {
-          // Have to adjust the time depending on the speed of message animation
-          setTimeout(() => {
-            this.scrollToBottom(); //Always scroll to bottom when a new message comes in
-          }, 500);
-        }
-      }
     }
   }
 };

@@ -8,7 +8,6 @@ General:
   ☐ Make sure that each page that loads from firebase has error checking
     ☐ Should display an error message if the firebase load fails
     ☐ User's should be limited to what they are permitted to access..
-  ☐ Lazy loading of subpages. @high
     - Sub-pages are pages that you are taken to after clicking a main page
     - Ex) Study-flashcard, take-quiz
   ☐ Paginate collection pages so they scale when more information is added.
@@ -20,29 +19,24 @@ General:
        Every list is loading from firebase so there is a delay before the data is shown. Figure out how to get loading list to be animated 1-by-1 when shown for the first time
   ☐ Small QOL Features
     ☐ Always verify delete actions
-
-  ✔ The user's "bio" information should be displayed somewhere.... @done(19-03-15 14:11)
+  ☐ Update all date / time pickers to use new component library
 
 Components Needed:
   ☐ Notification popup
     Currently using vue-notifications but would be willing to switch to something better.
 
 Firebase Functions File:
-  ☐ Remove old agenda items from display (maybe paginate the items and allow users to go back...)
-  ☐ Remove expired invite codes
+  ☐ Improve functions file code to match requirements. Right now, there are some errors thrown but it works
   ☐ Downscale images?
   ☐ Remove messages once size reaches > 1000 messages
   ☐ Function to increment message counter of the document everytime a new document is created
   ☐ Generate a boilerplate note when a new user joins the study group? It should let them know the full functionality of markdown and the syntax
 
-Agenda:
-  ☐ Edit items
-  ☐ Delete items
-  ☐ loading indicators
-  ☐ empty placeholders
-
 Modals:
   ☐ Improve modals with new design...
+
+Group Settings:
+  ☐ Update to match new design
 
 New Sidebar:
   ☐ Create a smooth transition between collapsed and visible states
@@ -52,9 +46,7 @@ New Sidebar:
 Notes:
   ☐ Find more markdown css themes
     ☐ Dark theme
-  ☐ Maybe extract the view component if we want to use it for aiding users in creating their flashcards.
   ☐ Autoscroll viewing content to match...
-  ☐ Alert user when they try to leave without saving their notes.
   ☐ Scale the views to be on top of eachother when window width is too small
   ☐ Add a switch to show preview vs edit views...
   Maybes:
@@ -64,10 +56,7 @@ Chat:
   Maybes:
     ☐ Total number of messages indicator (Could either be total messages or unread messages...)
        Not sure how I would implement tracking unread messages
-    ☐ Transition when the button first appears
-    ☐ Allow user's to delete their own messages
       - Maybe allow editing?
-
 
 Quiz:
   ☐ Add T/F question type
@@ -92,7 +81,7 @@ Vuex Store:
     Reset the number when the user opens the chat sidebar
 
 Homepage:
-  ☐ Display an empty placeholder if the user doesn't have any recent notes or books.
+  ☐ Display an empty placeholder if the user doesn't have any recent notes or flaschards.
   ☐ Think of better design for dashboard and homepage
     - The current design feels cluttered not very useful.
 
@@ -143,6 +132,18 @@ Possible Features (Time Permitting):
     https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
 
 Archive:
+  ✔ Lazy loading of subpages. @high @done(19-03-17 18:24) @project(General)
+  ✔ The user's "bio" information should be displayed somewhere.... @done(19-03-15 14:11) @project(General)
+  ✔ Remove old agenda items from display (maybe paginate the items and allow users to go back...) @done(19-03-17 18:25) @project(Firebase Functions File)
+  ✘ Remove expired invite codes @cancelled(19-03-17 18:25) @project(Firebase Functions File)
+  ✔ Edit items @done(19-03-17 18:26) @project(Agenda)
+  ✔ Delete items @done(19-03-17 18:26) @project(Agenda)
+  ✔ loading indicators @done(19-03-17 18:26) @project(Agenda)
+  ✔ empty placeholders @done(19-03-17 18:26) @project(Agenda)
+  ✘ Maybe extract the view component if we want to use it for aiding users in creating their flashcards. @cancelled(19-03-17 18:26) @project(Notes)
+  ✔ Alert user when they try to leave without saving their notes. @done(19-03-17 18:26) @project(Notes)
+  ✘ Transition when the button first appears @cancelled(19-03-17 18:26) @project(Chat.Maybes)
+  ✘ Allow user's to delete their own messages @cancelled(19-03-17 18:26) @project(Chat.Maybes)
   ✔ Design a logo / titlebar icon @done(19-02-28 22:55) @project(Branding)
   ✔ Find better flashcard sidebar icon @done(19-02-28 22:55) @project(Branding)
   ✘ Modal that can be used for all other modals. @cancelled(19-02-28 22:56) @project(Components Needed)

@@ -1,33 +1,43 @@
 <template>
   <div id="container">
     <div id="card-header">
-      <label class="form-label" id="label-term">
+      <label
+        id="label-term"
+        class="form-label"
+      >
         Term
       </label>
-      <i id="delete" class="fas fa-minus" @click="$emit('delete')"></i>
+      <i
+        id="delete"
+        class="fas fa-minus"
+        @click="$emit('delete')"
+      ></i>
     </div>
     <input
+      id="input-term"
+      v-model.trim="data.term"
       type="text"
       class="form-input"
-      id="input-term"
       maxlength="30"
-      v-model.trim="data.term"
-      v-on:input="termUpdated"
       autofocus
+      @input="termUpdated"
     />
-    <label class="form-label" id="label-def">
+    <label
+      id="label-def"
+      class="form-label"
+    >
       Definition
     </label>
     <textarea
+      id="input-def"
+      v-model.trim="data.def"
       type="text"
       class="form-input"
-      id="input-def"
       rows="3"
       maxlength="150"
-      v-model.trim="data.def"
-      v-on:input="defUpdated"
+      @input="defUpdated"
       @keydown.ctrl.enter="$emit('addNew')"
-      @keydown.tab="$emit('addNew')"
+      @keydown.tab.exact="$emit('addNew')"
     >
     </textarea>
   </div>
@@ -35,7 +45,7 @@
 
 <script>
 export default {
-  name: "flashcardCreateForm",
+  name: "FlashcardCreateForm",
   props: {
     initTerm: {
       type: String,

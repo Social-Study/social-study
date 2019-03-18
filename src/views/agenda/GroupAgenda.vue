@@ -2,7 +2,10 @@
   <div>
     <page-title>
       <template slot="left">
-        <button class="btn btn-primary" @click="showCreateForm(true)">
+        <button
+          class="btn btn-primary"
+          @click="showCreateForm(true)"
+        >
           Add Item <i class="fas fa-plus"></i>
         </button>
       </template>
@@ -13,33 +16,31 @@
         <!-- Save Item Form Button -->
         <button
           v-if="isShowingItemForm"
-          @click="createItem"
           class="btn btn-success btn-action split"
           :class="!validInfoEntered ? 'disabled' : ''"
+          @click="createItem"
         >
           <i class="fas fa-save"></i>
         </button>
 
         <!-- Existing Item Button Bar -->
-        <div
-          v-if="
+        <div v-if="
             selectedIndex !== -1 &&
               selectedItem.creatorID === $store.getters.uid
-          "
-        >
+          ">
           <!-- Edit an existing agenda item that you've created -->
           <button
             v-if="!isShowingItemForm"
-            @click="showCreateForm(false)"
             class="btn btn-success btn-action"
+            @click="showCreateForm(false)"
           >
             <i class="fas fa-pen"></i>
           </button>
 
           <!-- Delete an existing agenda item that you've created -->
           <button
-            @click="deleteItem(selectedItem)"
             class="btn btn-error btn-action split"
+            @click="deleteItem(selectedItem)"
           >
             <i class="fas fa-trash"></i>
           </button>
@@ -56,8 +57,8 @@
           class="loading loading-lg"
         ></div>
         <div
-          v-else
           v-for="(item, index) in agendaItems"
+          v-else
           :key="item.creationDate.toDate().getTime()"
         >
           <agenda-item-date-header
@@ -80,12 +81,12 @@
 
         <agenda-item-detail
           v-if="selectedItem && !isShowingItemForm"
-          :selectedItem="selectedItem"
+          :selected-item="selectedItem"
         />
         <!-- Show create new item form -->
         <agenda-create-form
           v-else-if="isShowingItemForm"
-          :editItem="selectedItem"
+          :edit-item="selectedItem"
           @publish="updateNewItem"
         />
         <div
@@ -101,10 +102,8 @@
             />
           </div>
           <p class="empty-title h5">
-            Add an Agenda Item for the Study Group to see!
+            Add an agenda item for the entire Study Group to see!
           </p>
-          <!-- <p class="empty-subtitle text-large text-bold">Add an agenda item for the group to see!</p> -->
-          <!-- <p class="empty-subtitle">Click the add bottom in the top left to get started!</p> -->
         </div>
 
         <div
@@ -120,10 +119,8 @@
             />
           </div>
           <p class="empty-title h5">
-            Select an Agenda Item to see more details!
+            Select an item to see its details.
           </p>
-          <!-- <p class="empty-subtitle text-large text-bold">Add an agenda item for the group to see!</p> -->
-          <!-- <p class="empty-subtitle">Click the add bottom in the top left to get started!</p> -->
         </div>
       </div>
     </div>
@@ -137,8 +134,8 @@ import AgendaItemDateHeader from "@/components/agenda/AgendaItemDateHeader";
 import AgendaItemDetail from "@/components/agenda/AgendaItemDetail";
 import AgendaCreateForm from "@/components/agenda/AgendaCreateForm";
 
-import { parse, format, isSameDay, setHours, setMinutes } from "date-fns";
-import { db } from "@/firebaseConfig";
+import { parse, isSameDay } from "date-fns";
+import firebase, { db } from "@/firebaseConfig";
 
 export default {
   name: "GroupAgenda",
@@ -158,6 +155,23 @@ export default {
       selectedIndex: -1, // Index of currently selected item (might use this only instead of both)
       newItem: null // New Agenda item emitted from AgendaCreateForm
     };
+  },
+  computed: {
+    /**
+     * Show/Hide the save button depending on if all the required form fields are entered
+     */
+    validInfoEntered() {
+      if (
+        this.newItem !== null &&
+        this.newItem.title !== "" &&
+        this.newItem.description !== "" &&
+        this.newItem.date !== null
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
   created() {
     this.$bind(
@@ -244,9 +258,8 @@ export default {
      */
     createItem() {
       // Create new item
-
       let dateObj = parse(this.newItem.date);
-      console.log(dateObj.toString());
+      let user = firebase.auth().currentUser;
 
       if (this.selectedItem === null && this.selectedIndex === -1) {
         db.collection("study-groups")
@@ -257,7 +270,9 @@ export default {
             description: this.newItem.description,
             date: dateObj,
             creationDate: new Date(),
-            creatorID: this.$store.getters.uid
+            creatorID: this.$store.getters.uid,
+            creatorPhoto: this.$store.getters.photoURL,
+            creatorName: user.displayName
           })
           .then(() => {
             this.isShowingItemForm = false;
@@ -271,30 +286,13 @@ export default {
           .update({
             title: this.newItem.title,
             description: this.newItem.description,
-            date: eventDate
+            date: dateObj
           })
           .then(() => {
             this.isShowingItemForm = false;
             this.selectedItem = null;
             this.selectedIndex = -1;
           });
-      }
-    }
-  },
-  computed: {
-    /**
-     * Show/Hide the save button depending on if all the required form fields are entered
-     */
-    validInfoEntered() {
-      if (
-        this.newItem !== null &&
-        this.newItem.title !== "" &&
-        this.newItem.description !== "" &&
-        this.newItem.date !== null
-      ) {
-        return true;
-      } else {
-        return false;
       }
     }
   }

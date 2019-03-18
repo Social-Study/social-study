@@ -1,20 +1,20 @@
 <template>
   <div class="modal modal-md active">
     <a
-      @click="closeAndReset"
       href="#close"
       class="modal-overlay"
       aria-label="Close"
+      @click="closeAndReset"
     ></a>
 
     <div class="modal-container">
       <div class="modal-header">
         <a
-          @click="closeAndReset"
-          href="#close"
           id="close"
+          href="#close"
           class="float-right"
           aria-label="Close"
+          @click="closeAndReset"
         >
           <i class="fas fa-times"></i>
         </a>
@@ -24,23 +24,23 @@
       <div class="modal-body">
         <ul class="tab">
           <li
-            @click="activeTab = 1"
             class="tab-item"
             :class="[activeTab === 1 ? 'active' : '']"
+            @click="activeTab = 1"
           >
             <a>Profile</a>
           </li>
           <li
-            @click="activeTab = 2"
             class="tab-item"
             :class="[activeTab === 2 ? 'active' : '']"
+            @click="activeTab = 2"
           >
             <a>Account</a>
           </li>
           <li
-            @click="activeTab = 3"
             class="tab-item"
             :class="[activeTab === 3 ? 'active' : '']"
+            @click="activeTab = 3"
           >
             <a>Study Groups</a>
           </li>
@@ -53,8 +53,8 @@
               <div class="tile-title text-bold">Display Name</div>
               <div class="tile-subtitle">
                 <input
-                  class="form-input"
                   v-model="profileDetails.newName"
+                  class="form-input"
                   type="text"
                   :placeholder="user.displayName"
                 />
@@ -67,13 +67,13 @@
               <div class="tile-subtitle">
                 Upload a new picture:
                 <input
+                  id=""
                   class="form-input form-inline"
-                  @change="handleFile($event)"
                   style="width: 300px;"
                   accept="image/*"
                   type="file"
                   name=""
-                  id=""
+                  @change="handleFile($event)"
                 />
               </div>
             </div>
@@ -83,12 +83,12 @@
               <div class="tile-title text-bold">About You</div>
               <div class="tile-subtitle">
                 <textarea
-                  @keydown.ctrl.enter="saveChanges"
+                  v-model="profileDetails.newBio"
                   name="bio"
                   rows="3"
                   style="resize: none;"
-                  v-model="profileDetails.newBio"
                   :placeholder="userBio"
+                  @keydown.ctrl.enter="saveChanges"
                 ></textarea>
               </div>
             </div>
@@ -115,22 +115,24 @@
               <div class="tile-title text-bold">Password</div>
               <div class="tile-subtitle">
                 <div class="form-group">
-                  <label class="form-label" for="currentPassword"
-                    >Confirm Current Password</label
-                  >
+                  <label
+                    class="form-label"
+                    for="currentPassword"
+                  >Confirm Current Password</label>
                   <input
+                    id="currentPassword"
                     class="form-input"
                     type="password"
-                    id="currentPassword"
                     placeholder="Old Password"
                   />
-                  <label class="form-label" for="newPassword"
-                    >Enter New Password</label
-                  >
+                  <label
+                    class="form-label"
+                    for="newPassword"
+                  >Enter New Password</label>
                   <input
+                    id="newPassword"
                     class="form-input"
                     type="password"
-                    id="newPassword"
                     placeholder="New Password"
                   />
                 </div>
@@ -142,10 +144,14 @@
               <div class="tile-title text-bold">Delete Account</div>
               <div class="tile-subtitle">
                 <div class="form-group">
-                  <label for="deleteBtn" class="form-label text-warning"
-                    >This cannot be undone!</label
+                  <label
+                    for="deleteBtn"
+                    class="form-label text-warning"
+                  >This cannot be undone!</label>
+                  <button
+                    id="deleteBtn"
+                    class="btn btn-error"
                   >
-                  <button id="deleteBtn" class="btn btn-error">
                     Delete Account
                   </button>
                 </div>
@@ -165,13 +171,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(group, index) in groupList" :key="index">
+              <tr
+                v-for="(group, index) in groupList"
+                :key="index"
+              >
                 <td>{{ group.className }}</td>
                 <td>{{ group.membersLength }}</td>
                 <td class="button-td">
                   <button
-                    @click="leaveGroup(group.groupID)"
                     class="btn btn-error"
+                    @click="leaveGroup(group.groupID)"
                   >
                     <i class="fas fa-times"></i>
                   </button>
@@ -185,8 +194,8 @@
       <div class="modal-footer">
         <button
           v-if="activeTab !== 3"
-          @click="saveChanges"
           class="save-btn btn btn-primary"
+          @click="saveChanges"
         >
           Save Changes
         </button>
@@ -204,8 +213,14 @@ let picRef = Storage.ref();
 export default {
   name: "ProfileSettings",
   props: {
-    user: Object,
-    photoURL: String
+    user: {
+      type: Object,
+      default: null
+    },
+    photoURL: {
+      type: String,
+      default: ""
+    }
   },
   data() {
     return {
@@ -218,6 +233,14 @@ export default {
       groupList: [],
       userBio: ""
     };
+  },
+  watch: {
+    activeTab(newVal) {
+      if (newVal === 3) {
+        // console.log("reloading groups");
+        this.loadGroups();
+      }
+    }
   },
   beforeMount() {
     // Load the user's description from firestore
@@ -233,14 +256,6 @@ export default {
     this.loadGroups();
 
     // db.collection("study-groups").where();
-  },
-  watch: {
-    activeTab(newVal) {
-      if (newVal === 3) {
-        // console.log("reloading groups");
-        this.loadGroups();
-      }
-    }
   },
   methods: {
     closeAndReset() {

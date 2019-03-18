@@ -19,7 +19,7 @@
                 transferring ownership and leaving instead.
               </div>
               <div class="card-footer">
-                <button @click="deleteGroup" class="btn btn-error">
+                <button class="btn btn-error" @click="deleteGroup">
                   Yes, Delete the Group
                 </button>
               </div>
@@ -46,9 +46,9 @@
                   >Class Name</label
                 >
                 <input
+                  v-model="details.className"
                   class="col-9 form-input"
                   type="text"
-                  v-model="details.className"
                   placeholder="Class Name"
                 />
               </div>
@@ -59,9 +59,9 @@
                   >Course Code</label
                 >
                 <input
+                  v-model="details.courseCode"
                   class="col-9 form-input"
                   type="text"
-                  v-model="details.courseCode"
                   placeholder="Course Code"
                 />
               </div>
@@ -72,9 +72,9 @@
                   >Instructor Name</label
                 >
                 <input
+                  v-model="details.instructorName"
                   class="col-9 form-input"
                   type="text"
-                  v-model="details.instructorName"
                   placeholder="Instructor Name"
                 />
               </div>
@@ -85,9 +85,9 @@
                   >Meeting Location</label
                 >
                 <input
+                  v-model="details.location"
                   class="col-9 form-input"
                   type="text"
-                  v-model="details.location"
                   placeholder="Meeting Location"
                 />
               </div>
@@ -97,21 +97,21 @@
                 <label class=" col-3 form-label" for="input-example-1"
                   >Meeting Time</label
                 >
-                <div class="col-9" id="time-group">
+                <div id="time-group" class="col-9">
                   <input
+                    v-model="details.meetingTime[0]"
                     class="form-input"
                     type="time"
                     style="margin-right: 10px;"
                     placeholder="Instructor Name"
-                    v-model="details.meetingTime[0]"
                     required
                   />
                   -
                   <input
+                    v-model="details.meetingTime[1]"
                     class="form-input"
                     type="time"
                     style="margin-left: 10px;"
-                    v-model="details.meetingTime[1]"
                     placeholder="Instructor Name"
                     required
                   />
@@ -125,37 +125,37 @@
                 >
                 <div class="col-9 btn-group btn-group-block">
                   <button
-                    @click.prevent="toggle('monday')"
                     :class="details.meetingDays.monday ? 'active' : ''"
                     class="btn btn-block"
+                    @click.prevent="toggle('monday')"
                   >
                     Mon
                   </button>
                   <button
-                    @click.prevent="toggle('tuesday')"
                     :class="details.meetingDays.tuesday ? 'active' : ''"
                     class="btn btn-block"
+                    @click.prevent="toggle('tuesday')"
                   >
                     Tue
                   </button>
                   <button
-                    @click.prevent="toggle('wednesday')"
                     :class="details.meetingDays.wednesday ? 'active' : ''"
                     class="btn btn-block"
+                    @click.prevent="toggle('wednesday')"
                   >
                     Wed
                   </button>
                   <button
-                    @click.prevent="toggle('thursday')"
                     :class="details.meetingDays.thursday ? 'active' : ''"
                     class="btn btn-block"
+                    @click.prevent="toggle('thursday')"
                   >
                     Thu
                   </button>
                   <button
-                    @click.prevent="toggle('friday')"
                     :class="details.meetingDays.friday ? 'active' : ''"
                     class="btn btn-block"
+                    @click.prevent="toggle('friday')"
                   >
                     Fri
                   </button>
@@ -168,9 +168,9 @@
                   >Course Website</label
                 >
                 <input
+                  v-model="details.url"
                   class="col-9 form-input"
                   type="url"
-                  v-model="details.url"
                   placeholder="Optional Website URL"
                 />
               </div>
@@ -181,9 +181,9 @@
                   >Group Description</label
                 >
                 <textarea
+                  v-model="details.description"
                   class="col-9 form-input"
                   type="url"
-                  v-model="details.description"
                   placeholder="Optional Description"
                   style="resize: none;"
                 />
@@ -193,8 +193,8 @@
             <div id="btn-container">
               <button
                 v-if="!loading.details"
-                class="btn btn-primary "
                 id="save-btn"
+                class="btn btn-primary "
                 @click="saveData"
               >
                 Save Changes <i class="fas fa-save"></i>
@@ -218,8 +218,8 @@
                     <td style="width: 95%;">{{ code }}</td>
                     <td class="button-td">
                       <button
-                        @click="removeCode(code)"
                         class="btn btn-action btn-error"
+                        @click="removeCode(code)"
                       >
                         <i class="fas fa-times"></i>
                       </button>
@@ -244,8 +244,8 @@
                     <td style="width: 95%;">{{ member.displayName }}</td>
                     <td class="button-td">
                       <button
-                        @click="removeMember(member.uid)"
                         class="btn btn-action btn-error"
+                        @click="removeMember(member.uid)"
                       >
                         <i class="fas fa-times"></i>
                       </button>
@@ -259,7 +259,7 @@
               <h2>Transfer Group Ownership</h2>
               <p id="info">Choose another member to manage the Study Group.</p>
               <div v-if="!loading.members" class="transfer-group input-group">
-                <select class="form-select" v-model="selected">
+                <select v-model="selected" class="form-select">
                   <option
                     v-for="member in membersWithoutYou"
                     :key="member.uid"
@@ -268,8 +268,8 @@
                   </option>
                 </select>
                 <button
-                  @click="changeOwner"
                   class="btn btn-error input-group-btn"
+                  @click="changeOwner"
                 >
                   Transfer
                 </button>
@@ -308,10 +308,6 @@ export default {
   components: {
     PageTitle
   },
-  created() {
-    this.checkAuth();
-    this.loadData();
-  },
   data() {
     return {
       isLoading: true,
@@ -343,6 +339,18 @@ export default {
       memberDetails: [],
       selected: ""
     };
+  },
+  computed: {
+    // Returns the member's list without you
+    membersWithoutYou() {
+      return this.memberDetails.filter(member => {
+        return member.uid !== this.$store.getters.uid;
+      });
+    }
+  },
+  created() {
+    this.checkAuth();
+    this.loadData();
   },
   methods: {
     deleteGroup() {
@@ -481,14 +489,6 @@ export default {
     // Toggle the day on or off (day selector buttons)
     toggle(key) {
       this.details.meetingDays[key] = !this.details.meetingDays[key];
-    }
-  },
-  computed: {
-    // Returns the member's list without you
-    membersWithoutYou() {
-      return this.memberDetails.filter(member => {
-        return member.uid !== this.$store.getters.uid;
-      });
     }
   }
 };

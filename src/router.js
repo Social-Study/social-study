@@ -38,40 +38,6 @@ const MembersPage = () => import("@/views/MembersPage");
 // Group Settings Page (Only the Group Owner can access)
 const GroupSettings = () => import("@/views/GroupSettings");
 
-// // User login and signup page
-// import Landing from "@/views/Landing.vue";
-
-// // User Specific Homepage
-// import Dashboard from "@/views/Dashboard.vue";
-
-// // Create a New Group
-// import CreateGroup from "@/views/CreateGroup";
-
-// // Group Specific Homepage
-// import GroupHomePage from "@/views/GroupHomePage";
-
-// // Flashcard Functionality Pages
-// import FlashcardCollection from "@/views/flashcards/FlashcardCollection";
-// import FlashcardStudy from "@/views/flashcards/FlashcardStudy";
-// import FlashcardCreate from "@/views/flashcards/FlashcardCreate";
-
-// // Quiz Functionality Pages
-// import QuizCreate from "@/views/quiz/QuizCreate";
-// import Quiz from "@/views/quiz/Quiz";
-
-// // Agenda Functionality Pages
-// import GroupAgenda from "@/views/agenda/GroupAgenda.vue";
-
-// // Note Functionality Pages
-// import NotesCollection from "@/views/notes/NotesCollection";
-// import NotePage from "@/views/notes/NotePage";
-
-// // Group Members Listing
-// import MembersPage from "@/views/MembersPage";
-
-// // Group Settings Page (Only the Group Owner can access)
-// import GroupSettings from "@/views/GroupSettings";
-
 Vue.use(Router);
 
 // TODO: Figure out how to get dynamic page titles.

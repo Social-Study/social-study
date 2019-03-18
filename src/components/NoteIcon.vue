@@ -16,10 +16,10 @@
     </div>
 
     <div id="button-container">
-      <button @click="deleteNote(info.id)" id="deleteBtn">Delete</button>
+      <button id="deleteBtn" @click="deleteNote(info.id)">Delete</button>
       <button
-        @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
         id="editBtn"
+        @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
       >
         Edit
       </button>

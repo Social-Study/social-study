@@ -5,25 +5,30 @@
     :class="getLoadingSize"
   ></div>
   <figure
-    v-else-if="this.user.photoURL === null"
+    v-else-if="user.photoURL === null"
     :style="{ backgroundColor: color }"
     :data-initial="computedInitials"
     class="avatar"
     :class="getSize"
   ></figure>
 
-  <figure v-else class="avatar" :class="getSize">
-    <img :src="this.user.photoURL" />
+  <figure
+    v-else
+    class="avatar"
+    :class="getSize"
+  >
+    <img :src="user.photoURL" />
   </figure>
 </template>
 
 <script>
 export default {
-  name: "avatar",
+  name: "Avatar",
   props: {
     user: {
       type: Object,
-      required: false
+      required: false,
+      default: null
     },
     color: {
       type: String,

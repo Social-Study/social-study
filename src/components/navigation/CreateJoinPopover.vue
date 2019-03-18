@@ -2,7 +2,7 @@
   <div>
     <notifications group="joinErrors" position="right top" />
     <div class="popover popover-bottom">
-      <button class="btn btn-action" id="button">
+      <button id="button" class="btn btn-action">
         <i class="fas fa-plus"></i>
       </button>
       <div class="popover-container">
@@ -10,9 +10,9 @@
           <div class="card-body text-bold">
             <div class="section-title">Create</div>
             <button
-              @click="$router.push('/dashboard/create')"
               id="create-button"
               class="btn btn-primary btn-create"
+              @click="$router.push('/dashboard/create')"
             >
               New Study Group
             </button>
@@ -20,15 +20,15 @@
             <div class="section-title">Join</div>
             <div class="empty-action input-group input-inline">
               <input
-                @keydown.enter="fetchStudyGroup"
                 v-model="inviteCode"
                 class="form-input"
                 placeholder="Invite Code"
                 type="text"
+                @keydown.enter="fetchStudyGroup"
               />
               <button
-                @click="fetchStudyGroup"
                 class="btn btn-primary input-group-btn"
+                @click="fetchStudyGroup"
               >
                 Join
               </button>
@@ -41,10 +41,10 @@
     <!-- Class Join Confirmation Modal -->
     <div v-if="showModal && inviteGroup !== null" class="modal modal-sm active">
       <a
-        @click="showModal = false"
         href="#close"
         class="modal-overlay"
         aria-label="Close"
+        @click="showModal = false"
       ></a>
       <div class="modal-container">
         <div class="modal-header">
@@ -67,13 +67,13 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button @click="showModal = false" class="btn modal-btn">
+          <button class="btn modal-btn" @click="showModal = false">
             Cancel
           </button>
           <button
-            @click="joinStudyGroup"
             class="btn btn-primary modal-btn"
             :class="isLoading ? 'loading' : ''"
+            @click="joinStudyGroup"
           >
             Join
           </button>

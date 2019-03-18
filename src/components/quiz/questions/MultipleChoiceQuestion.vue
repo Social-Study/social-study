@@ -2,13 +2,13 @@
   <div id="question">
     <h1>{{ definition }}</h1>
     <div class="choices" :class="{ correct }">
-      <div class="answers" v-for="i in 4" :key="i">
+      <div v-for="i in 4" :key="i" class="answers">
         <input
+          v-model.number="picked"
           type="radio"
           class="custom-radio"
           :name="definition"
           :value="i - 1"
-          v-model.number="picked"
           @change="checkCorrect()"
         />
         {{ choices[i - 1] }}
@@ -43,6 +43,14 @@ export default {
       correct: false
     };
   },
+  watch: {
+    picked(newVal, oldVal) {
+      // console.log(oldVal, newVal);
+      if (oldVal === null && newVal !== null) {
+        this.$emit("answered", true);
+      }
+    }
+  },
   created() {
     this.correctIndex = Math.floor(Math.random() * 4);
     for (let i = 0; i < 4; i++) {
@@ -75,14 +83,6 @@ export default {
       } else {
         this.$emit("correct", false);
         this.correct = false;
-      }
-    }
-  },
-  watch: {
-    picked(newVal, oldVal) {
-      // console.log(oldVal, newVal);
-      if (oldVal === null && newVal !== null) {
-        this.$emit("answered", true);
       }
     }
   }

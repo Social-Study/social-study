@@ -29,14 +29,12 @@ exports.removeExpiredEvents = functions.firestore
         querySnapshot.forEach(doc => {
           if (dateFNS.isPast(doc.data().date.toDate())) {
             deleteDocument(doc.id, groupID);
-            console.log("past event found!");
           }
-          console.log("not a past event");
         });
         return null;
       })
       .catch(error => {
-        console.error("this is the error catcher " + error);
+        console.error(error);
       });
   });
 

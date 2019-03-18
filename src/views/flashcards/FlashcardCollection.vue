@@ -15,10 +15,10 @@
       <template slot="right">
         <div class="has-icon-left">
           <input
+            v-model="searchQuery"
             type="search"
             class="search-input"
             placeholder="Search by Title"
-            v-model="searchQuery"
           />
           <i class="form-icon fas fa-search"></i>
         </div>
@@ -29,7 +29,7 @@
         v-for="deck in combined"
         :key="deck.creationDate.toDate().getTime()"
         :info="deck"
-        :isPrivate="deck.isPrivate"
+        :is-private="deck.isPrivate"
         @toggle="changeVisibility(deck)"
       >
       </flashcard-icon>
@@ -68,6 +68,18 @@ export default {
       groupID: this.$route.params.groupID,
       uid: this.$store.getters.uid
     };
+  },
+  computed: {
+    combined() {
+      // Combine the public and private decks into a single array
+      let decks = this.privateDecks.concat(this.publicDecks);
+      // Filter the deck display based on the search word
+      return decks.filter(deck => {
+        return deck.title
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+      });
+    }
   },
   created() {
     this.loadDecks();
@@ -171,18 +183,6 @@ export default {
             // console.log("Transaction failed: ", error);
           })
       );
-    }
-  },
-  computed: {
-    combined() {
-      // Combine the public and private decks into a single array
-      let decks = this.privateDecks.concat(this.publicDecks);
-      // Filter the deck display based on the search word
-      return decks.filter(deck => {
-        return deck.title
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase());
-      });
     }
   }
 };

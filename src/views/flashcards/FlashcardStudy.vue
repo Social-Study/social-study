@@ -7,9 +7,9 @@
       </template>
       <template slot="left">
         <button
-          @click="shuffleDeck"
           class="btn"
           :class="isShuffled ? 'btn-primary' : 'btn-action'"
+          @click="shuffleDeck"
         >
           <!-- Icon flashes when shuffle enabled -->
           <i
@@ -24,9 +24,9 @@
     <div class="page-content">
       <div class="center-content">
         <button
-          @click.prevent="prevCard"
           class="btn btn-action btn-primary btn-lg s-circle"
           :class="cardIndex === 0 ? 'disabled' : ''"
+          @click.prevent="prevCard"
         >
           <i class="fas fa-arrow-left"></i>
         </button>
@@ -43,7 +43,6 @@
         </div>
         <!-- Button icon and color changes when user reaches the end -->
         <button
-          @click.prevent="nextCard"
           class="btn btn-action btn-lg s-circle"
           style="transition: .5s;"
           :class="
@@ -51,6 +50,7 @@
               ? 'btn-success btn-rotate'
               : 'btn-primary'
           "
+          @click.prevent="nextCard"
         >
           <i
             :class="
@@ -144,6 +144,14 @@ export default {
       .catch(error => {
         // console.log("Error getting document:", error);
       });
+  },
+  //creates the key event listener
+  beforeMount() {
+    window.addEventListener("keyup", this.keyPressed);
+  },
+  //destroys the key event listener
+  beforeDestroy() {
+    window.removeEventListener("keyup", this.keyPressed);
   },
   methods: {
     shuffleDeck() {
@@ -293,14 +301,6 @@ export default {
           break;
       }
     }
-  },
-  //creates the key event listener
-  beforeMount() {
-    window.addEventListener("keyup", this.keyPressed);
-  },
-  //destroys the key event listener
-  beforeDestroy() {
-    window.removeEventListener("keyup", this.keyPressed);
   }
 };
 </script>

@@ -14,17 +14,17 @@
               </div>
               <div class="card-body">
                 <input
-                  @keydown.enter="createNote"
                   v-model="noteTitle"
                   type="text"
                   class="form-input"
+                  @keydown.enter="createNote"
                 />
               </div>
               <div class="card-footer">
                 <button
-                  @click="createNote"
                   class="btn btn-primary"
                   :class="loadingNewNote ? 'loading' : ''"
+                  @click="createNote"
                 >
                   Create Note
                 </button>
@@ -39,10 +39,10 @@
       <template slot="right">
         <div class="has-icon-left">
           <input
+            v-model="searchQuery"
             type="text"
             class="search-input"
             placeholder="Search by Title"
-            v-model="searchQuery"
           />
           <i class="form-icon fas fa-search"></i>
         </div>
@@ -51,7 +51,7 @@
     <!-- In the future this will hold other things like the sort buttons, etc. -->
 
     <div v-if="!isLoading" class="content-container">
-      <note-icon v-for="note in filteredNotes" :info="note" :key="note.id" />
+      <note-icon v-for="note in filteredNotes" :key="note.id" :info="note" />
       <!-- @delete="deleteNote(note.id)"
         @viewNote="$router.push(`/${$route.params.groupID}/notes/${note.id}`)" -->
     </div>
@@ -82,6 +82,17 @@ export default {
       loadingNewNote: false
     };
   },
+  computed: {
+    filteredNotes() {
+      // Filter the note list by the query string. Including partial matches.
+      // Converted to lowercase to avoid capitalization enforcement
+      return this.notesList.filter(note => {
+        return note.title
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+      });
+    }
+  },
   created() {
     // Load all user's notes on page load
     notesRef = db
@@ -94,17 +105,6 @@ export default {
       this.notesList === notesList;
       this.isLoading = false;
     });
-  },
-  computed: {
-    filteredNotes() {
-      // Filter the note list by the query string. Including partial matches.
-      // Converted to lowercase to avoid capitalization enforcement
-      return this.notesList.filter(note => {
-        return note.title
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase());
-      });
-    }
   },
   methods: {
     createNote() {

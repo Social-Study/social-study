@@ -1,17 +1,34 @@
 <template>
   <div class="agenda-form">
     <div class="modal-title h5">{{ getTitle }}</div>
-    <div class="tile">
-      <div class="tile-content text-left">
-        <div class="tile-title text-bold">Event Title</div>
-        <div class="tile-subtitle">
-          <input
-            @input="$emit('publish', item)"
-            class="form-input"
-            v-model="item.title"
-            type="text"
-            maxlength="26"
-          />
+
+    <div class="horiz-tiles">
+      <div class="tile t-left">
+        <div class="tile-content text-left">
+          <div class="tile-title text-bold">Event Title</div>
+          <div class="tile-subtitle">
+            <input
+              v-model="item.title"
+              class="form-input"
+              type="text"
+              maxlength="26"
+              @input="$emit('publish', item)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="tile t-right">
+        <div class="tile-content text-left">
+          <div class="tile-title text-bold">Event Date / Time</div>
+          <div class="tile-subtitle date-time-container">
+            <flat-pickr
+              v-model="item.date"
+              class="form-input"
+              :config="config"
+              @on-change="$emit('publish', item)"
+            ></flat-pickr>
+          </div>
         </div>
       </div>
     </div>
@@ -21,39 +38,26 @@
         <div class="tile-title text-bold">Event Description</div>
         <div class="tile-subtitle">
           <textarea
-            @input="$emit('publish', item)"
+            v-model="item.description"
             class="form-input"
             name="description"
             rows="3"
             style="resize: none;"
-            v-model="item.description"
+            @input="$emit('publish', item)"
           ></textarea>
         </div>
       </div>
     </div>
 
-    <div class="tile">
-      <div class="tile-content text-left">
-        <div class="tile-title text-bold">Event Date / Time</div>
-        <div class="tile-subtitle date-time-container">
-          <flat-pickr
-            @on-change="$emit('publish', item)"
-            :config="config"
-            v-model="item.date"
-          ></flat-pickr>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
-import "flatpickr/dist/themes/airbnb.css";
+// import "flatpickr/dist/themes/airbnb.css";
 import ConfirmDatePlugin from "flatpickr/dist/plugins/confirmDate/confirmDate.js";
-
-import { endOfYesterday, getMinutes } from "date-fns";
+import "flatpickr/dist/plugins/confirmDate/confirmDate.css";
 
 export default {
   name: "AgendaCreateForm",
@@ -63,7 +67,8 @@ export default {
   props: {
     editItem: {
       type: Object,
-      required: false
+      required: false,
+      default: null
     }
   },
   data() {
@@ -85,6 +90,15 @@ export default {
       }
     };
   },
+
+  computed: {
+    getTitle() {
+      if (this.editItem) {
+        return "Edit Existing Agenda Item";
+      }
+      return "Create New Agenda Item";
+    }
+  },
   created() {
     // Transfer all the prop data to the editable data if they are editing an existing event
     if (this.editItem !== null) {
@@ -93,15 +107,6 @@ export default {
 
       this.item.date = this.editItem.date.toDate();
       this.config.defaultDate = this.item.date;
-    }
-  },
-
-  computed: {
-    getTitle() {
-      if (this.editItem) {
-        return "Edit Existing Agenda Item";
-      }
-      return "Create New Agenda Item";
     }
   }
 };
@@ -114,11 +119,27 @@ textarea {
   width: 100%;
 }
 
-// .date-time-container {
-//   display: flex;
-//   flex-flow: row nowrap;
-//   justify-content: space-evenly;
-// }
+.horiz-tiles {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  .tile {
+    flex: 1;
+  }
+  .t-left {
+    margin-right: 10px;
+  }
+  .t-right {
+    margin-left: 10px;
+  }
+}
+
+.date-time-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
 
 .tile-title {
   padding: 5px;

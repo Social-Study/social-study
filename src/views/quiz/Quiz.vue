@@ -17,7 +17,7 @@
     </page-title>
 
     <!-- Quiz Score Modal -->
-    <div v-show="showScoreModal" class="modal modal-sm active" id="modal-id">
+    <div v-show="showScoreModal" id="modal-id" class="modal modal-sm active">
       <a href="#close" class="modal-overlay" aria-label="Close"></a>
       <!--      @click="showScoreModal = false" -->
       <div class="modal-container">
@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <div class="quiz-content" v-if="terms && definitions && questionTypes">
+    <div v-if="terms && definitions && questionTypes" class="quiz-content">
       <div v-if="questionTypes.shortAnswer == true">
         <short-answer-question
           v-for="(term, index) in questionGroups.shortAnswer.terms"
@@ -66,7 +66,7 @@
           :key="index"
           :term="term"
           :definition="questionGroups.multipleChoice.definitions[index]"
-          :choiceList="shuffledTerms"
+          :choice-list="shuffledTerms"
           @answered="handleAnswered"
           @correct="handleCorrect"
         />
@@ -145,6 +145,19 @@ export default {
         }
       }
     };
+  },
+  created() {
+    // If the props are not found go back to quiz create page
+    // This only happens when the user refreshes (right now there is no fix)
+    if (!this.terms && !this.definitions && !this.questionTypes) {
+      this.$router.go(-1);
+    }
+
+    // Shuffle All Term/Def combos
+    this.shuffleAll();
+
+    // Determine how many of each question type to create
+    this.splitQuestions();
   },
   methods: {
     handleAnswered(isAnswered) {
@@ -229,19 +242,6 @@ export default {
       }
       // TODO: append extras to the end
     }
-  },
-  created() {
-    // If the props are not found go back to quiz create page
-    // This only happens when the user refreshes (right now there is no fix)
-    if (!this.terms && !this.definitions && !this.questionTypes) {
-      this.$router.go(-1);
-    }
-
-    // Shuffle All Term/Def combos
-    this.shuffleAll();
-
-    // Determine how many of each question type to create
-    this.splitQuestions();
   }
 };
 </script>

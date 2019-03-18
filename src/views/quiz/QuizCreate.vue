@@ -56,6 +56,23 @@ export default {
       selectedQTypes: null
     };
   },
+  computed: {
+    questionCount() {
+      // Return the total number of cards/questions in the selected decks
+      if (this.selectedDecks !== null) {
+        let total = 0;
+        this.selectedDecks.public.forEach(deck => {
+          total += deck.terms.length;
+        });
+        this.selectedDecks.private.forEach(deck => {
+          total += deck.terms.length;
+        });
+
+        return total;
+      }
+      return 0;
+    }
+  },
   methods: {
     loadQuiz() {
       let terms = [];
@@ -78,23 +95,6 @@ export default {
           questionTypes: this.selectedQTypes
         }
       });
-    }
-  },
-  computed: {
-    questionCount() {
-      // Return the total number of cards/questions in the selected decks
-      if (this.selectedDecks !== null) {
-        let total = 0;
-        this.selectedDecks.public.forEach(deck => {
-          total += deck.terms.length;
-        });
-        this.selectedDecks.private.forEach(deck => {
-          total += deck.terms.length;
-        });
-
-        return total;
-      }
-      return 0;
     }
   }
 };
