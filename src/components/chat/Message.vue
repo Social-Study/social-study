@@ -1,10 +1,6 @@
 <template>
   <!-- Messages from other members -->
-  <div
-    v-if="!sender"
-    class="message"
-    @click="showDate = !showDate"
-  >
+  <div v-if="!sender" class="message" @click="showDate = !showDate">
     <div id="details-container">
       <div class="message-sender">{{ details.displayName }}</div>
       <transition
@@ -13,38 +9,30 @@
         leave-active-class="animated fadeOut"
       >
         >
-        <div
-          v-show="showDate"
-          class="message-date"
-        >{{ getSent }}</div>
+        <div v-show="showDate" class="message-date">{{ getSent }}</div>
       </transition>
     </div>
     <div class="message-inline">
       <div class="message-profile">
-        <Avatar :user="{
+        <Avatar
+          :user="{
             photoURL: details.photoURL,
             displayName: details.displayName
-          }" />
+          }"
+        />
       </div>
       <p class="message-content">{{ details.message }}</p>
     </div>
   </div>
   <!-- Messages from logged-in user -->
-  <div
-    v-else
-    class="message sent"
-    @click="showDate = !showDate"
-  >
+  <div v-else class="message sent" @click="showDate = !showDate">
     <div id="details-container">
       <transition
         name="dateTransition"
         enter-active-class="animated fadeIn slow"
         leave-active-class="animated fadeOut"
       >
-        <div
-          v-show="showDate"
-          class="message-date"
-        >{{ getSent }}</div>
+        <div v-show="showDate" class="message-date">{{ getSent }}</div>
       </transition>
     </div>
     <div class="message-inline">

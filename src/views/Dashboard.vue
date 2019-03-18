@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="user !== null"
-    id="full-screen"
-  >
+  <div v-if="user !== null" id="full-screen">
     <!-- Centered Empty Dashboard Placeholder -->
     <div>
       <div class="empty">

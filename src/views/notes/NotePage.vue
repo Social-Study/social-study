@@ -1,9 +1,6 @@
 <template>
   <div v-if="!isLoading && !isError">
-    <notifications
-      group="notes"
-      position="left top"
-    />
+    <notifications group="notes" position="left top" />
 
     <!-- New Header Component -->
     <page-title>
@@ -25,10 +22,7 @@
             data-tooltip="Preview Style"
             tabindex="0"
           >
-            <i
-              style="color: #5755d9"
-              class="fas fa-palette"
-            ></i>
+            <i style="color: #5755d9" class="fas fa-palette"></i>
           </a>
           <!-- menu component -->
           <ul class="menu">
@@ -38,19 +32,13 @@
         </div>
 
         <!-- Open link to markdown cheatsheet in new browser tab -->
-        <a
-          target="_blank"
-          href="https://www.markdownguide.org/cheat-sheet"
-        >
+        <a target="_blank" href="https://www.markdownguide.org/cheat-sheet">
           <button class="btn btn-action split">
             <i class="fas fa-info"></i>
           </button>
         </a>
         <!-- Save the markdown to database -->
-        <button
-          class="btn btn-success btn-action split"
-          @click="saveNote"
-        >
+        <button class="btn btn-success btn-action split" @click="saveNote">
           <i class="fas fa-save"></i>
         </button>
       </template>
@@ -78,10 +66,7 @@
       ></div>
     </div>
   </div>
-  <div
-    v-else-if="!isLoading && isError"
-    id="error-container"
-  >
+  <div v-else-if="!isLoading && isError" id="error-container">
     <img
       style="width: 10em;"
       class="undraw-svg"
@@ -90,10 +75,7 @@
     />
     <h1>Error loading note...</h1>
   </div>
-  <div
-    v-else
-    class="loading loading-lg"
-  ></div>
+  <div v-else class="loading loading-lg"></div>
 </template>
 
 <script>

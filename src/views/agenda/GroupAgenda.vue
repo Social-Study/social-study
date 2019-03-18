@@ -2,10 +2,7 @@
   <div>
     <page-title>
       <template slot="left">
-        <button
-          class="btn btn-primary"
-          @click="showCreateForm(true)"
-        >
+        <button class="btn btn-primary" @click="showCreateForm(true)">
           Add Item <i class="fas fa-plus"></i>
         </button>
       </template>
@@ -24,10 +21,12 @@
         </button>
 
         <!-- Existing Item Button Bar -->
-        <div v-if="
+        <div
+          v-if="
             selectedIndex !== -1 &&
               selectedItem.creatorID === $store.getters.uid
-          ">
+          "
+        >
           <!-- Edit an existing agenda item that you've created -->
           <button
             v-if="!isShowingItemForm"

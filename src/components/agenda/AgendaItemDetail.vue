@@ -1,10 +1,7 @@
 // The details of a specific agenda item.
 
 <template>
-  <div
-    v-if="selectedItem !== null"
-    class="item-detail"
-  >
+  <div v-if="selectedItem !== null" class="item-detail">
     <div id="title-container">
       <h1 id="title">
         {{ selectedItem.title }}
@@ -12,7 +9,7 @@
       <div id="user-container">
         <!-- <Avatar :user="{ photoURL: selectedItem.creatorPhoto,
        displayName: selectedItem.creatorName}"></Avatar> -->
-        <h3><i>Posted By: </i>{{selectedItem.creatorName}}</h3>
+        <h3><i>Posted By: </i>{{ selectedItem.creatorName }}</h3>
       </div>
     </div>
     <div id="date-container">
