@@ -2,7 +2,10 @@
   <div>
     <page-title>
       <template slot="left">
-        <button class="btn btn-primary" @click="showScoreModal = true">
+        <button
+          class="btn btn-primary"
+          @click="showScoreModal = true"
+        >
           Submit Quiz
         </button>
       </template>
@@ -17,8 +20,16 @@
     </page-title>
 
     <!-- Quiz Score Modal -->
-    <div v-show="showScoreModal" id="modal-id" class="modal modal-sm active">
-      <a href="#close" class="modal-overlay" aria-label="Close"></a>
+    <div
+      v-show="showScoreModal"
+      id="modal-id"
+      class="modal modal-sm active"
+    >
+      <a
+        href="#close"
+        class="modal-overlay"
+        aria-label="Close"
+      ></a>
       <!--      @click="showScoreModal = false" -->
       <div class="modal-container">
         <div class="modal-header">
@@ -42,14 +53,20 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" @click="$router.go(-1)">
+          <button
+            class="btn btn-primary"
+            @click="$router.go(-1)"
+          >
             Done
           </button>
         </div>
       </div>
     </div>
 
-    <div v-if="terms && definitions && questionTypes" class="quiz-content">
+    <div
+      v-if="terms && definitions && questionTypes"
+      class="quiz-content"
+    >
       <div v-if="questionTypes.shortAnswer == true">
         <short-answer-question
           v-for="(term, index) in questionGroups.shortAnswer.terms"
@@ -168,13 +185,22 @@ export default {
       }
     },
     handleCorrect(isCorrect) {
-      if (isCorrect) {
+      console.log(this.totalQuestions);
+
+      if (isCorrect && this.correctQuestions < this.totalQuestions) {
+        console.log("Question is correct. Incrementing...");
         this.correctQuestions++;
-      } else if (!isCorrect) {
+      } else if (!isCorrect && this.correctQuestions > 0) {
+        console.log("Question is incorrect. Decrementing");
         this.correctQuestions--;
+      } else {
+        console.log("There is an error in logic. Doing nothing.");
       }
     },
-    // Shuffle both arrays so that the contents are still parallel
+    /**
+     * Shuffle the term and definition arrays in the same manner so the
+     * corresponding term and defintion still match
+     */
     shuffleAll() {
       for (let i = this.shuffledTerms.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -188,8 +214,12 @@ export default {
         ];
       }
     },
+    /**
+     * Split the question and term arrays into subparts and assign them to
+     * the user's specifically selected question types.
+     */
     splitQuestions() {
-      // Count the number of different selected question types
+      // Count the number of different types to create
       let qTypeCount = 0;
       Object.values(this.questionTypes).forEach(value => {
         if (value) {
@@ -197,9 +227,10 @@ export default {
         }
       });
 
+      // Number of splits to make by dividing total terms by num question types
       let size = Math.floor(this.shuffledTerms.length / qTypeCount);
 
-      // Split the ques/def combo accordingly
+      // Split the question/def combo accordingly
       for (let i = 0; i < this.shuffledTerms.length; i += size) {
         // User selected multiple choice and questions haven't yet been generated
         if (
@@ -224,11 +255,9 @@ export default {
           this.questionTypes.dragAndDrop &&
           this.questionGroups.dragAndDrop.terms.length === 0
         ) {
-          // TODO: Loop through the terms/defs in 4s to create a 2d subarray
           let terms = [];
           let defs = [];
 
-          // TODO: Drag and drop should now use this data it seems to work...
           for (let j = i; j < this.shuffledTerms.length; j += 4) {
             terms.push(this.shuffledTerms.slice(j, j + 4));
             defs.push(this.shuffledDefs.slice(j, j + 4));
@@ -240,7 +269,6 @@ export default {
           };
         }
       }
-      // TODO: append extras to the end
     }
   }
 };
