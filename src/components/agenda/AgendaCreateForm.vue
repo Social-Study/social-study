@@ -72,9 +72,9 @@ export default {
   },
   data() {
     return {
-      // Disables all previous dates on the calendar.
+      // flatpickr configuration
       config: {
-        minDate: Date.now(),
+        minDate: Date.now(), // Disables all previous dates on the calendar.
         dateFormat: "Z",
         //  YYYY-MM-DDThh:mmTZD (eg 1997-07-16T19:20+01:00)
         altInput: true,
@@ -82,21 +82,13 @@ export default {
         enableTime: true,
         plugins: [new ConfirmDatePlugin()]
       },
+      // New item's details
       item: {
         title: "",
         description: "",
         date: null
       }
     };
-  },
-
-  computed: {
-    getTitle() {
-      if (this.editItem) {
-        return "Edit Existing Agenda Item";
-      }
-      return "Create New Agenda Item";
-    }
   },
   created() {
     // Transfer all the prop data to the editable data if they are editing an existing event
@@ -106,6 +98,14 @@ export default {
 
       this.item.date = this.editItem.date.toDate();
       this.config.defaultDate = this.item.date;
+    }
+  },
+  computed: {
+    getTitle() {
+      if (this.editItem) {
+        return "Edit Existing Agenda Item";
+      }
+      return "Create New Agenda Item";
     }
   }
 };

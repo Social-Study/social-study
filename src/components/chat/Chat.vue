@@ -1,17 +1,24 @@
 <template>
   <div>
-    <div class="sidebar" :class="show ? 'active' : 'collapsed'">
+    <div
+      class="sidebar"
+      :class="show ? 'active' : 'collapsed'"
+    >
       <div class="content">
         <h3 id="header">Study Group Chat</h3>
         <div class="divider-gradient mb-2"></div>
-        <div ref="messages" class="messages">
+        <div
+          ref="messages"
+          class="messages"
+        >
           <transition-group
             name="chatTransition"
             enter-active-class="animated fadeInDown"
           >
             <message
-              v-for="message in groupMessages"
+              v-for="(message, index) in groupMessages"
               :key="message.date.toString()"
+              :showName="showSender(index)"
               :sender="message.sender === $store.getters.uid ? true : false"
               :details="message"
             ></message>
@@ -101,6 +108,17 @@ export default {
     this.loadGroupMessages();
   },
   methods: {
+    showSender(index) {
+      if (index !== 0) {
+        return (
+          this.groupMessages[index].sender !=
+          this.groupMessages[index - 1].sender
+        );
+      } else {
+        // The first item will always show the header.
+        return true;
+      }
+    },
     scrollToBottom() {
       this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
     },
@@ -147,6 +165,10 @@ export default {
   display: block;
   transition: 0.25s;
   margin-bottom: 9px;
+  font-family: $secondary-font;
+  user-select: none;
+  font-size: 1.6em;
+  font-weight: 700;
 }
 
 .sidebar {

@@ -3,8 +3,8 @@ Branding:
   ☐ Think of better slogan.
 
 General:
+  ☐ Apply new transparency effects to all modal backgrounds @low
   ☐ Go through and error check all inputs where necessary
-    - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
   ☐ Make sure that each page that loads from firebase has error checking
     ☐ Should display an error message if the firebase load fails
     ☐ User's should be limited to what they are permitted to access..
@@ -20,6 +20,8 @@ General:
   ☐ Small QOL Features
     ☐ Always verify delete actions
   ☐ Update all date / time pickers to use new component library
+  ☐ Do something with the extra study group info @high
+    ☐ Show description when user tries to join the group...
 
 Components Needed:
   ☐ Notification popup
@@ -38,11 +40,6 @@ Modals:
 Group Settings:
   ☐ Update to match new design
 
-New Sidebar:
-  ☐ Create a smooth transition between collapsed and visible states
-    Right now the text pops around as the transition plays
-    May have to do something like "inline-block" so that elements don't break
-
 Notes:
   ☐ Find more markdown css themes
     ☐ Dark theme
@@ -57,11 +54,13 @@ Chat:
     ☐ Total number of messages indicator (Could either be total messages or unread messages...)
        Not sure how I would implement tracking unread messages
       - Maybe allow editing?
+    ☐ Scroll down button when not at chat end?
 
 Quiz:
   ☐ Add T/F question type
   ☐ Fix questions to match new design
   ☐ Fix Griffin's bug?
+  ☐ Bug where submitting all correct answers shows as 0 correct...@critical
 
 Known Bugs:
   ☐ Form validation is broken
@@ -79,6 +78,15 @@ Known Bugs:
 Vuex Store:
   ☐ Save the number of unread messages to the store.
     Reset the number when the user opens the chat sidebar
+
+Agenda:
+  ☐ Write agenda rules in firebase @critical
+  ☐ Should old events be purged when they expire?
+    - Feel that the agenda would be too cluttered over time without it
+    - Could possible have a load previous button...
+  ☐ Create new event input box should expand to the text's length
+  ☐ Notifications?
+  ☐ Reduce page title split between action buttons
 
 Homepage:
   ☐ Display an empty placeholder if the user doesn't have any recent notes or flaschards.
@@ -132,6 +140,13 @@ Possible Features (Time Permitting):
     https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
 
 Archive:
+  ✔ Update design to match new theme @done(19-03-21 15:00) @project(Chat)
+  ✘ Try out squares instead of rounded bubbles? @cancelled(19-03-21 14:59) @project(Chat)
+  ✔ Change title to be smaller and use secondary font @done(19-03-21 14:59) @project(Chat)
+  ✔ Use same logic as agenda page to only show names for ungrouped chat messages @done(19-03-21 14:59) @project(Chat)
+  ✘ Create a smooth transition between collapsed and visible states @cancelled(19-03-20 20:48) @project(New Sidebar)
+    Right now the text pops around as the transition plays
+    May have to do something like "inline-block" so that elements don't break
   ✔ Lazy loading of subpages. @high @done(19-03-17 18:24) @project(General)
   ✔ The user's "bio" information should be displayed somewhere.... @done(19-03-15 14:11) @project(General)
   ✔ Remove old agenda items from display (maybe paginate the items and allow users to go back...) @done(19-03-17 18:25) @project(Firebase Functions File)
