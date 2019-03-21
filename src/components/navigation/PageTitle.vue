@@ -91,7 +91,7 @@ export default {
 
   // Applied to buttons that are split apart in the header
   .split {
-    margin-left: 20px;
+    margin-left: 8px;
   }
 
   .left {

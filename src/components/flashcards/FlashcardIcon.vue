@@ -44,9 +44,15 @@
         data-tooltip="Toggle Visibility"
         @click="$emit('toggle')"
       >
-        <i class="far" :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"></i>
+        <i
+          class="far"
+          :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"
+        ></i>
       </div>
-      <button id="studyBtn" @click="goStudy">Study</button>
+      <button
+        id="studyBtn"
+        @click="goStudy"
+      >Study</button>
     </div>
   </div>
 </template>
@@ -104,8 +110,10 @@ $card-height: 218px;
 /* Icon itself */
 #flashcard {
   background-color: white;
-  height: $card-height;
-  width: $card-width;
+  min-height: $card-height;
+  max-height: $card-height;
+  min-width: $card-width;
+  max-width: $card-width;
   padding: 1em;
   border: 2px solid $secondary-light;
 

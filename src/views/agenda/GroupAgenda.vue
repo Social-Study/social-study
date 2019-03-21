@@ -2,7 +2,10 @@
   <div>
     <page-title>
       <template slot="left">
-        <button class="btn btn-primary" @click="showCreateForm(true)">
+        <button
+          class="btn btn-primary"
+          @click="showCreateForm(true)"
+        >
           Add Item <i class="fas fa-plus"></i>
         </button>
       </template>
@@ -21,12 +24,10 @@
         </button>
 
         <!-- Existing Item Button Bar -->
-        <div
-          v-if="
+        <div v-if="
             selectedIndex !== -1 &&
               selectedItem.creatorID === $store.getters.uid
-          "
-        >
+          ">
           <!-- Edit an existing agenda item that you've created -->
           <button
             v-if="!isShowingItemForm"
@@ -155,23 +156,7 @@ export default {
       newItem: null // New Agenda item emitted from AgendaCreateForm
     };
   },
-  computed: {
-    /**
-     * Show/Hide the save button depending on if all the required form fields are entered
-     */
-    validInfoEntered() {
-      if (
-        this.newItem !== null &&
-        this.newItem.title !== "" &&
-        this.newItem.description !== "" &&
-        this.newItem.date !== null
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  },
+
   created() {
     this.$bind(
       "agendaItems",
@@ -183,9 +168,20 @@ export default {
     ).then(agendaItems => {
       this.agendaItems === agendaItems;
       this.isLoadingItems = false;
+      if (this.$route.params.itemID) {
+        this.searchForItem(this.$route.params.itemID);
+      }
     });
   },
   methods: {
+    searchForItem(itemID) {
+      for (let i = 0; i < this.agendaItems.length; i++) {
+        if (this.agendaItems[i].id === this.$route.params.itemID) {
+          this.selectedItem = this.agendaItems[i];
+          this.selectedIndex = i;
+        }
+      }
+    },
     /**
      * Logic to notify the items if they are selected
      * Selected item is set to the agenda item at index
@@ -195,6 +191,9 @@ export default {
       this.isShowingItemForm = false;
       this.selectedItem = this.agendaItems[index];
       this.selectedIndex = index;
+      this.$router.push(
+        `/${this.$route.params.groupID}/agenda/${this.agendaItems[index].id}`
+      );
     },
     /**
      * Determine if the previous agenda item has the same date as the current
@@ -292,6 +291,23 @@ export default {
             this.selectedItem = null;
             this.selectedIndex = -1;
           });
+      }
+    }
+  },
+  computed: {
+    /**
+     * Show/Hide the save button depending on if all the required form fields are entered
+     */
+    validInfoEntered() {
+      if (
+        this.newItem !== null &&
+        this.newItem.title !== "" &&
+        this.newItem.description !== "" &&
+        this.newItem.date !== null
+      ) {
+        return true;
+      } else {
+        return false;
       }
     }
   }
