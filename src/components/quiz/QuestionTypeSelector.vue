@@ -107,7 +107,7 @@ export default {
   #type-toggle {
     cursor: pointer;
     user-select: none;
-
+    background-color: white;
     width: 200px;
     height: 60px;
     margin: 20px;
@@ -116,8 +116,6 @@ export default {
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-
-    border: 2px solid $secondary-light;
 
     #type-header {
       text-align: center;
@@ -132,16 +130,12 @@ export default {
 
     &.selected {
       background-image: $orange-gradient;
-      border: none;
       color: white;
-      box-shadow: $shadow-hovered;
+      box-shadow: $shadow-heavy;
     }
 
     &:hover {
-      border-image: $orange-gradient;
-      border-image-slice: 1;
-      border-width: 2px;
-      box-shadow: $shadow-heavy;
+      box-shadow: $shadow-hovered;
     }
   }
 }

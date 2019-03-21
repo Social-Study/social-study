@@ -41,7 +41,7 @@ export default {
 
 .header-container {
   padding: 4px 8px;
-  background-color: transparent;
+  background-color: white;
   font-family: $secondary-font;
   color: $dark;
   display: flex;

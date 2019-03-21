@@ -1,6 +1,7 @@
 <template>
   <!-- Note Icon -->
   <div id="note">
+    <span class="icon icon-delete" id="deleteBtn" @click="deleteNote(info.id)"></span>
     <!-- Title -->
     <h2 id="title">{{ info.title }}</h2>
     <div>
@@ -14,16 +15,12 @@
         <i>Modified</i> {{ calcDays(info.lastUpdated.toDate()) }}
       </p>
     </div>
-
-    <div id="button-container">
-      <button id="deleteBtn" @click="deleteNote(info.id)">Delete</button>
       <button
         id="editBtn"
         @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
       >
-        Edit
+        Open
       </button>
-    </div>
   </div>
 </template>
 
@@ -65,17 +62,13 @@ export default {
   background-color: white;
   height: 288px;
   width: 216px;
-  padding: 1em;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
-  border: 2px solid $secondary-light;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   &:hover {
-    border-image: $orange-gradient;
-    border-image-slice: 1;
-    box-shadow: $shadow-heavy;
+    box-shadow: $shadow-hovered;
   }
 }
 
@@ -105,19 +98,14 @@ p > i {
   font-weight: 400;
 }
 
-#button-container {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
 #deleteBtn {
+  float:left;
+  padding: 10px;
+  margin: 15px;
   cursor: pointer;
-  border: none;
-  padding: 0.3em;
   background-color: transparent;
-  color: lighten($secondary, 30);
+  width: 10px;
+  color: $secondary-light;
   font-weight: 500;
 }
 
@@ -128,11 +116,11 @@ p > i {
 #editBtn {
   cursor: pointer;
   border: none;
-  border-radius: 5px;
   /* padding: 0.3em 0.5em 0.3em 0.5em; */
-  padding: 4px 16px 4px 16px;
+  width: 100%;
   background-color: $primary;
   color: white;
+  font-size: 120%;
   font-weight: 400;
 }
 
