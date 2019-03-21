@@ -22,6 +22,7 @@ General:
   ☐ Update all date / time pickers to use new component library
   ☐ Do something with the extra study group info @high
     ☐ Show description when user tries to join the group...
+  ☐ Confirmation email when signing up @high
 
 Components Needed:
   ☐ Notification popup
