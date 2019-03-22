@@ -110,22 +110,20 @@
                   id="time-group"
                   class="col-9"
                 >
-                  <input
-                    v-model="details.meetingTime[0]"
+                  <flat-pickr
+                    :config="config"
                     class="form-input"
-                    type="time"
+                    v-model="details.meetingTime[0]"
                     style="margin-right: 10px;"
-                    placeholder="Instructor Name"
-                    required
+                    placeholder="Time"
                   />
                   -
-                  <input
-                    v-model="details.meetingTime[1]"
+                  <flat-pickr
+                    :config="config"
                     class="form-input"
-                    type="time"
+                    v-model="details.meetingTime[1]"
                     style="margin-left: 10px;"
-                    placeholder="Instructor Name"
-                    required
+                    placeholder="Time"
                   />
                 </div>
               </div>
@@ -315,15 +313,25 @@
 import { checkOwner } from "@/scripts/groupFuncs";
 import { db, FirebaseConsts } from "@/firebaseConfig";
 import PageTitle from "@/components/navigation/PageTitle";
-// TODO: Form validation
+
+import flatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+import ConfirmDatePlugin from "flatpickr/dist/plugins/confirmDate/confirmDate.js";
+import "flatpickr/dist/plugins/confirmDate/confirmDate.css";
 
 export default {
   name: "GroupSettings",
   components: {
-    PageTitle
+    PageTitle,
+    flatPickr
   },
   data() {
     return {
+      config: {
+        dateFormat: "h:i K",
+        enableTime: true,
+        noCalendar: true
+      },
       isLoading: true,
       userAuthorized: false,
       loading: {
@@ -521,16 +529,11 @@ export default {
 #time-group {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
-}
+  justify-content: space-between;
 
-#btn-container {
-  border-top: 2px solid $secondary-light;
-  // background-color: saturate($light, 50);
-}
-
-input[type="time"] {
-  width: 120px;
+  .form-input {
+    width: 150px;
+  }
 }
 
 .container {

@@ -1,5 +1,9 @@
 <template>
-  <div v-if="dataloaded" class="content-container" @keyup.space="flipCard()">
+  <div
+    v-if="dataloaded"
+    class="content-container"
+    @keyup.space="flipCard()"
+  >
     <!-- Page Title -->
     <page-title>
       <template slot="center">
@@ -24,7 +28,7 @@
     <div class="page-content">
       <div class="center-content">
         <button
-          class="btn btn-action btn-primary btn-lg s-circle"
+          class="btn btn-action btn-primary btn-lg"
           :class="cardIndex === 0 ? 'disabled' : ''"
           @click.prevent="prevCard"
         >
@@ -43,7 +47,7 @@
         </div>
         <!-- Button icon and color changes when user reaches the end -->
         <button
-          class="btn btn-action btn-lg s-circle"
+          class="btn btn-action btn-lg"
           style="transition: .5s;"
           :class="
             cardIndex === termList.length - 1
@@ -66,7 +70,10 @@
       <h1 id="cardIndex">{{ cardIndex + 1 }} / {{ termList.length }}</h1>
     </div>
   </div>
-  <div v-else class="loading loading-lg"></div>
+  <div
+    v-else
+    class="loading loading-lg"
+  ></div>
 </template>
 
 <script>
