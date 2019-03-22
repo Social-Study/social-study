@@ -1,8 +1,14 @@
 <template>
   <div>
-    <notifications group="joinErrors" position="right top" />
+    <notifications
+      group="joinErrors"
+      position="right top"
+    />
     <div class="popover popover-bottom">
-      <button id="button" class="btn btn-action">
+      <button
+        id="button"
+        class="btn btn-action"
+      >
         <i class="fas fa-plus"></i>
       </button>
       <div class="popover-container">
@@ -39,7 +45,10 @@
     </div>
 
     <!-- Class Join Confirmation Modal -->
-    <div v-if="showModal && inviteGroup !== null" class="modal modal-sm active">
+    <div
+      v-if="showModal && inviteGroup !== null"
+      class="modal modal-sm active"
+    >
       <a
         href="#close"
         class="modal-overlay"
@@ -65,13 +74,23 @@
           <div class="text-center text-primary">
             {{ inviteGroup.members.length }}
           </div>
+          <div class="text-uppercase text-left text-bold text-dark">
+            Description
+          </div>
+          <div class="text-center text-primary">
+            {{ inviteGroup.extraInfo }}
+          </div>
         </div>
         <div class="modal-footer">
-          <button class="btn modal-btn" @click="showModal = false">
+          <button
+            class="btn btn-link"
+            id="cancel-btn"
+            @click="showModal = false"
+          >
             Cancel
           </button>
           <button
-            class="btn btn-primary modal-btn"
+            class="btn btn-primary"
             :class="isLoading ? 'loading' : ''"
             @click="joinStudyGroup"
           >
@@ -200,6 +219,12 @@ hr {
   text-align: center;
   padding-bottom: 2%;
 }
+
+#cancel-btn {
+  margin-right: 10px;
+  color: $error-color;
+}
+
 #button {
   background-color: $transparent-dark;
   color: white;
