@@ -173,8 +173,8 @@ export default {
           .collection("notes")
           .doc(this.$store.getters.uid)
           .collection("private")
-          .orderBy("lastUpdated", "desc")
-          .limit(3)
+          .orderBy("lastUpdated", "asc")
+          .limit(6)
       ).then(notes => {
         this.recentNotes = notes;
         this.notesLoading = false;
@@ -186,7 +186,7 @@ export default {
           .collection("study-groups")
           .doc(this.$route.params.groupID)
           .collection("flashcards")
-          .limit(4)
+          .limit(6)
       ).then(flashcards => {
         this.recentFlashcards = flashcards;
         this.flashcardsLoading = false;
@@ -228,7 +228,6 @@ export default {
       overflow: auto;
 
       #loading-indicator {
-        min-height: 600px;
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
