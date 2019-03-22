@@ -55,7 +55,10 @@
       ></button>
       Please Enter term and definition for each flashcard
     </div>
-    <div class="page-content">
+    <div
+      v-if="!isLoading"
+      class="page-content"
+    >
       <!-- maxlength="100" -->
       <flashcard-create-form
         v-for="(term, index) in terms"
@@ -78,6 +81,10 @@
         </div>
       </div>
     </div>
+    <div
+      v-else
+      class="loading loading-lg"
+    ></div>
   </div>
 </template>
 
@@ -126,7 +133,8 @@ export default {
       noTitle: false,
       contentFilled: true,
       toggled: false,
-      isSaved: true
+      isSaved: true,
+      isLoading: false
     };
   },
   created() {
@@ -136,6 +144,7 @@ export default {
       // This value is received from the FlashCardIcon where the user clicks the "edit button"
       this.toggled = !this.isPrivate; // Still need to set toggled to determine collection location
       this.loadDeck();
+      this.isLoading = true;
     } else {
       this.isSaved = false;
     }
@@ -199,6 +208,9 @@ export default {
             this.definitions = doc.data().definitions;
             this.hash = doc.data().hash;
           }
+        })
+        .then(() => {
+          this.isLoading = false;
         })
         .catch(err => {
           // console.log(err);
