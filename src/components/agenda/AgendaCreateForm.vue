@@ -41,8 +41,6 @@
             v-model="item.description"
             class="form-input"
             name="description"
-            rows="3"
-            style="resize: none;"
             @input="$emit('publish', item)"
           ></textarea>
         </div>
@@ -116,6 +114,8 @@ export default {
 
 textarea {
   width: 100%;
+  height: 100%;
+  resize: vertical;
 }
 
 .horiz-tiles {

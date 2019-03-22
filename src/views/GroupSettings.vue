@@ -281,7 +281,7 @@
                   </option>
                 </select>
                 <button
-                  class="btn btn-error input-group-btn"
+                  class="btn btn-primary input-group-btn"
                   @click="changeOwner"
                 >
                   Transfer

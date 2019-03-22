@@ -179,6 +179,7 @@ export default {
         if (this.agendaItems[i].id === this.$route.params.itemID) {
           this.selectedItem = this.agendaItems[i];
           this.selectedIndex = i;
+          break;
         }
       }
     },
@@ -353,6 +354,7 @@ export default {
   padding: 20px;
   height: 100%;
   flex: 3;
+  overflow: auto;
 }
 
 .divider-vert {

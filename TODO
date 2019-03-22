@@ -3,7 +3,6 @@ Branding:
   ☐ Think of better slogan.
 
 General:
-  ☐ Apply new transparency effects to all modal backgrounds @low
   ☐ Go through and error check all inputs where necessary
   ☐ Make sure that each page that loads from firebase has error checking
     ☐ Should display an error message if the firebase load fails
@@ -19,9 +18,7 @@ General:
        Every list is loading from firebase so there is a delay before the data is shown. Figure out how to get loading list to be animated 1-by-1 when shown for the first time
   ☐ Small QOL Features
     ☐ Always verify delete actions
-  ☐ Update all date / time pickers to use new component library
   ☐ Do something with the extra study group info @high
-    ☐ Show description when user tries to join the group...
   ☐ Confirmation email when signing up @high
 
 Components Needed:
@@ -37,6 +34,7 @@ Firebase Functions File:
 
 Modals:
   ☐ Improve modals with new design...
+    - Partially complete
 
 Group Settings:
   ☐ Update to match new design
@@ -52,16 +50,12 @@ Notes:
 
 Chat:
   Maybes:
-    ☐ Total number of messages indicator (Could either be total messages or unread messages...)
-       Not sure how I would implement tracking unread messages
       - Maybe allow editing?
     ☐ Scroll down button when not at chat end?
 
 Quiz:
   ☐ Add T/F question type
   ☐ Fix questions to match new design
-  ☐ Fix Griffin's bug?
-  ☐ Bug where submitting all correct answers shows as 0 correct...@critical
 
 Known Bugs:
   ☐ Form validation is broken
@@ -72,22 +66,17 @@ Known Bugs:
         This is due to the button capturing focus and the spacebar is pressing it instead of flipping the card.
   Flashcard Create / Edit:
     ☐ Prompt users before leaving if not saved (similar to note page)
-  Chat:
-    ☐ When user changes their profile picture, the old image is deleted but we still need the image at the old url.
-      Need to make sure I am uploading to the same url not creating a new one
 
 Vuex Store:
   ☐ Save the number of unread messages to the store.
     Reset the number when the user opens the chat sidebar
 
 Agenda:
-  ☐ Write agenda rules in firebase @critical
   ☐ Should old events be purged when they expire?
     - Feel that the agenda would be too cluttered over time without it
     - Could possible have a load previous button...
   ☐ Create new event input box should expand to the text's length
   ☐ Notifications?
-  ☐ Reduce page title split between action buttons
 
 Homepage:
   ☐ Display an empty placeholder if the user doesn't have any recent notes or flaschards.
@@ -95,9 +84,7 @@ Homepage:
     - The current design feels cluttered not very useful.
 
 Members Page:
-  ☐ Add members list page sort filters
     - Joined Date, Alphabetical, etc...
-  ☐ Fix plus icon scaling and positioning
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
@@ -110,11 +97,9 @@ Side Bar:
 NavBar:
   ☐ Redesign navbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility
     Maybe a complete redesign or maybe just some improvements
-  ☐ Style the currently active group dropdown based on the route parameters
 
 Create Study Group:
   ☐ Add transitions to make it look nice
-  ☐ Put a conditional on the meeting days and times. Ask "Does the have designated meeting days and times?"
   ☐ Maybe split the code into pieces to make it more manageble...
 
 Flashcards Collection:
@@ -141,6 +126,21 @@ Possible Features (Time Permitting):
     https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
 
 Archive:
+  ✔ Apply new transparency effects to all modal backgrounds @low @done(19-03-22 17:42) @project(General)
+  ✔ Update all date / time pickers to use new component library @done(19-03-22 17:42) @project(General)
+  ✔ Show description when user tries to join the group... @done(19-03-22 17:42) @project(General)
+  ✘ Total number of messages indicator (Could either be total messages or unread messages...) @cancelled(19-03-22 17:43) @project(Chat.Maybes)
+    Not sure how I would implement tracking unread messages
+  ✔ Fix Griffin's bug? @done(19-03-22 17:43) @project(Quiz)
+  ✔ Bug where submitting all correct answers shows as 0 correct...@critical @done(19-03-22 17:43) @project(Quiz)
+  ✔ When user changes their profile picture, the old image is deleted but we still need the image at the old url. @done(19-03-22 17:44) @project(Known Bugs.Chat)
+    Need to make sure I am uploading to the same url not creating a new one
+  ✔ Write agenda rules in firebase @critical @done(19-03-22 17:44) @project(Agenda)
+  ✔ Reduce page title split between action buttons @done(19-03-22 17:44) @project(Agenda)
+  ✘ Add members list page sort filters @cancelled(19-03-22 17:44) @project(Members Page)
+  ✔ Fix plus icon scaling and positioning @done(19-03-22 17:44) @project(Members Page)
+  ✔ Style the currently active group dropdown based on the route parameters @done(19-03-22 17:45) @project(NavBar)
+  ✘ Put a conditional on the meeting days and times. Ask "Does the have designated meeting days and times?" @cancelled(19-03-22 17:45) @project(Create Study Group)
   ✔ Update design to match new theme @done(19-03-21 15:00) @project(Chat)
   ✘ Try out squares instead of rounded bubbles? @cancelled(19-03-21 14:59) @project(Chat)
   ✔ Change title to be smaller and use secondary font @done(19-03-21 14:59) @project(Chat)

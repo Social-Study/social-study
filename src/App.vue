@@ -2,9 +2,18 @@
   <div id="app">
     <NavBar v-if="$route.name !== 'landing'" />
     <router-view v-if="!$route.params.groupID" />
-    <side-bar v-else :show="sidebarActive">
-      <router-view id="router-view" :class="getActive" />
-      <chat :show="chatActive" :user="user" />
+    <side-bar
+      v-else
+      :show="sidebarActive"
+    >
+      <router-view
+        id="router-view"
+        :class="getActive"
+      />
+      <chat
+        :show="chatActive"
+        :user="user"
+      />
     </side-bar>
   </div>
 </template>
@@ -96,7 +105,7 @@ body {
 
 // Applies to all modal-overlays
 a.modal-overlay {
-  background-image: $dark-gradient !important;
+  background-color: $transparent-dark !important;
 }
 
 // Sidebar Styles for Visible / Hidden

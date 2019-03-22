@@ -115,18 +115,20 @@
               <div class="tile-title text-bold">Password</div>
               <div class="tile-subtitle">
                 <div class="form-group">
-                  <label class="form-label" for="currentPassword"
-                    >Confirm Current Password</label
-                  >
+                  <label
+                    class="form-label"
+                    for="currentPassword"
+                  >Confirm Current Password</label>
                   <input
                     id="currentPassword"
                     class="form-input"
                     type="password"
                     placeholder="Old Password"
                   />
-                  <label class="form-label" for="newPassword"
-                    >Enter New Password</label
-                  >
+                  <label
+                    class="form-label"
+                    for="newPassword"
+                  >Enter New Password</label>
                   <input
                     id="newPassword"
                     class="form-input"
@@ -142,10 +144,14 @@
               <div class="tile-title text-bold">Delete Account</div>
               <div class="tile-subtitle">
                 <div class="form-group">
-                  <label for="deleteBtn" class="form-label text-warning"
-                    >This cannot be undone!</label
+                  <label
+                    for="deleteBtn"
+                    class="form-label text-warning"
+                  >This cannot be undone!</label>
+                  <button
+                    id="deleteBtn"
+                    class="btn btn-error"
                   >
-                  <button id="deleteBtn" class="btn btn-error">
                     Delete Account
                   </button>
                 </div>
@@ -165,7 +171,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(group, index) in groupList" :key="index">
+              <tr
+                v-for="(group, index) in groupList"
+                :key="index"
+              >
                 <td>{{ group.className }}</td>
                 <td>{{ group.membersLength }}</td>
                 <td class="button-td">
@@ -273,6 +282,7 @@ export default {
           )
         });
       this.loadGroups();
+      this.$router.push({ name: "dashboard" });
     },
     saveChanges() {
       if (this.activeTab === 1) {
