@@ -57,11 +57,12 @@ firebase deploy
 # Main Technologies
 
 - Vue.js
+- Vue Router
 - Vuex
 - Firebase / Vuefire
 - Marked (markdown renderer)
 - UUID
-- Vee - Validate
 - Animate.css
 - Anime.js
 - Spectre.css
+- Vue-Flatpickr

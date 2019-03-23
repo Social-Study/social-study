@@ -49,7 +49,6 @@
       </div>
         <div id="studyBtn" @click="goStudy">Study</div>
     </div>
-
 </template>
 
 <script>
@@ -105,9 +104,15 @@ $card-height: 230px;
 /* Icon itself */
 #flashcard {
   background-color: white;
-  height: $card-height;
-  width: $card-width;
   padding-top: 5px;
+
+  min-height: $card-height;
+  max-height: $card-height;
+  min-width: $card-width;
+  max-width: $card-width;
+  // padding: 1em;
+  border: 2px solid $secondary-light;
+  
   display: flex;
   flex-direction: column;
   justify-content: space-between;

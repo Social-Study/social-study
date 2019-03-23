@@ -1,15 +1,21 @@
 <template>
   <div id="question">
     <h1>{{ definition }}</h1>
-    <div class="choices" :class="{ correct }">
-      <div v-for="i in 4" :key="i" class="answers">
+    <div
+      class="choices"
+      :class="{ correct }"
+    >
+      <div
+        v-for="i in 4"
+        :key="i"
+        class="answers"
+      >
         <input
-          v-model.number="picked"
           type="radio"
           class="custom-radio"
           :name="definition"
           :value="i - 1"
-          @change="checkCorrect()"
+          @change="checkCorrect(i-1)"
         />
         {{ choices[i - 1] }}
       </div>
@@ -38,20 +44,12 @@ export default {
     return {
       choices: [],
       correctIndex: null,
-      picked: null,
-      keys: [],
+      picked: false,
       correct: false
     };
   },
-  watch: {
-    picked(newVal, oldVal) {
-      // console.log(oldVal, newVal);
-      if (oldVal === null && newVal !== null) {
-        this.$emit("answered", true);
-      }
-    }
-  },
   created() {
+    // Determine what index will hold the correct value
     this.correctIndex = Math.floor(Math.random() * 4);
     for (let i = 0; i < 4; i++) {
       this.choices.push(this.getChoice(i));
@@ -60,6 +58,10 @@ export default {
   },
   methods: {
     // TODO: Make sure all choices are non duplicates
+    /**
+     * Determine which term to place in the given index
+     * The correct term will be placed in the proper index
+     */
     getChoice(index) {
       if (index === this.correctIndex) {
         return this.term;
@@ -70,19 +72,29 @@ export default {
         do {
           randomIndex = Math.floor(Math.random() * this.choiceList.length);
           wrongChoice = this.choiceList[randomIndex];
-          // console.log("wrongChoice:", wrongChoice, "term:", this.term);
         } while (wrongChoice === this.term);
 
         return wrongChoice;
       }
     },
-    checkCorrect() {
-      if (this.picked == this.correctIndex) {
+    checkCorrect(chosenIndex) {
+      console.log(chosenIndex, "vs", this.correctIndex);
+
+      // Items can only be selected once. Set picked to true when the click an option
+      if (!this.picked) {
+        this.picked = true;
+        this.$emit("answered", true);
+      }
+
+      if (chosenIndex == this.correctIndex) {
         this.$emit("correct", true);
         this.correct = true;
       } else {
-        this.$emit("correct", false);
-        this.correct = false;
+        //  If already marked incorrect, do nothing
+        if (this.correct) {
+          this.correct = false;
+          this.$emit("correct", false);
+        }
       }
     }
   }

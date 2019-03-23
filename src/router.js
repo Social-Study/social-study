@@ -161,7 +161,7 @@ let router = new Router({
       props: true
     },
     {
-      path: "/:groupID/agenda",
+      path: "/:groupID/agenda/:itemID?",
       name: "agenda",
       component: GroupAgenda,
       meta: {
@@ -169,6 +169,15 @@ let router = new Router({
         requiresAuth: true
       }
     },
+    // {
+    //   path: "/:groupID/agenda",
+    //   name: "agenda",
+    //   component: GroupAgenda,
+    //   meta: {
+    //     title: "Group Agenda | Social Study",
+    //     requiresAuth: true
+    //   }
+    // },
     {
       path: "/:groupID/members",
       name: "members",

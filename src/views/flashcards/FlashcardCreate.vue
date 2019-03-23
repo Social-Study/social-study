@@ -8,6 +8,7 @@
           type="text"
           maxlength="30"
           placeholder="Untitled Flashcard Deck"
+          @change="isSaved = false"
         />
       </template>
 
@@ -18,7 +19,10 @@
           :values="['Private', 'Public']"
           @toggle="toggled = $event"
         ></toggle-switch>
-        <button class="btn btn-action split" @click="saveDeck">
+        <button
+          class="btn btn-action split"
+          @click="saveDeck"
+        >
           <i class="fas fa-save"></i>
         </button>
         <button
@@ -31,21 +35,30 @@
       </template>
     </page-title>
 
-    <div v-if="noTitle" class="toast toast-error">
+    <div
+      v-if="noTitle"
+      class="toast toast-error"
+    >
       <button
         class="btn btn-clear float-right"
         @click="noTitle = false"
       ></button>
       Please Enter a title for the flashcard deck
     </div>
-    <div v-if="!contentFilled" class="toast toast-error">
+    <div
+      v-if="!contentFilled"
+      class="toast toast-error"
+    >
       <button
         class="btn btn-clear float-right"
         @click="contentFilled = true"
       ></button>
       Please Enter term and definition for each flashcard
     </div>
-    <div class="page-content">
+    <div
+      v-if="!isLoading"
+      class="page-content"
+    >
       <!-- maxlength="100" -->
       <flashcard-create-form
         v-for="(term, index) in terms"
@@ -57,7 +70,10 @@
         @addNew="addCard"
         @delete="deleteCard(index)"
       />
-      <div class="addCard" @click="addCard">
+      <div
+        class="addCard"
+        @click="addCard"
+      >
         <div class="gradient-border add">
           <div class="add-button">
             <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
@@ -65,6 +81,10 @@
         </div>
       </div>
     </div>
+    <div
+      v-else
+      class="loading loading-lg"
+    ></div>
   </div>
 </template>
 
@@ -94,15 +114,27 @@ export default {
       default: false
     }
   },
+  beforeRouteLeave(to, from, next) {
+    if (!this.isSaved) {
+      if (confirm("Deck is not saved! Are you sure you want to leave?")) {
+        next();
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       terms: [null],
       definitions: [null],
-      hash: [new Date().getTime()], // Hash is used as a unique way to access each item. Without it there may not be any unique property to use as the key
+      hash: [new Date().getTime()], // Hash is used as a unique way to access each item.
+      // Without it there may not be any unique property to use as the key
       deckTitle: "",
       noTitle: false,
       contentFilled: true,
-      toggled: false
+      toggled: false,
+      isSaved: true,
+      isLoading: false
     };
   },
   created() {
@@ -112,6 +144,9 @@ export default {
       // This value is received from the FlashCardIcon where the user clicks the "edit button"
       this.toggled = !this.isPrivate; // Still need to set toggled to determine collection location
       this.loadDeck();
+      this.isLoading = true;
+    } else {
+      this.isSaved = false;
     }
   },
   methods: {
@@ -135,23 +170,28 @@ export default {
     },
     deleteCard(index) {
       if (this.terms.length !== 1) {
+        this.isSaved = false;
         this.$delete(this.terms, index);
         this.$delete(this.definitions, index);
         this.$delete(this.hash, index);
       }
     },
     termUpdated(value, index) {
+      this.isSaved = false;
       this.terms[index] = value.term;
     },
     defUpdated(value, index) {
+      this.isSaved = false;
       this.definitions[index] = value.def;
     },
     addCard() {
+      this.isSaved = false;
       this.terms.push(null);
       this.definitions.push(null);
       this.hash.push(new Date().getTime());
     },
     deleteDeck() {
+      this.isSaved = false;
       this.getCollection()
         .doc(this.deckID)
         .delete();
@@ -167,12 +207,10 @@ export default {
             this.terms = doc.data().terms;
             this.definitions = doc.data().definitions;
             this.hash = doc.data().hash;
-            // creatorName: user.displayName,
-            // creationDate: initDate,
-            // lastUpdated: initDate,
-            // creatorUID: this.$store.getters.uid,
-            // creatorPhoto: this.$store.getters.photoURL
           }
+        })
+        .then(() => {
+          this.isLoading = false;
         })
         .catch(err => {
           // console.log(err);
@@ -212,6 +250,7 @@ export default {
             .then(() => {
               // console.log("Flashcard Deck created with doc id: ", docRef.id);
               this.$router.push(`/${this.$route.params.groupID}/flashcards`);
+              this.isSaved = true;
             })
             .catch(error => {
               // console.error("Error updating document: ", error);
@@ -233,6 +272,7 @@ export default {
             .then(docRef => {
               // console.log("Flashcard Deck created with doc id: ", docRef.id);
               this.$router.push(`/${this.$route.params.groupID}/flashcards`);
+              this.isSaved = true;
             })
             .catch(error => {
               // console.error("Error adding document: ", error);

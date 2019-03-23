@@ -13,7 +13,6 @@
 
 <script>
 export default {
-  // TODO: Emit something if the user's input is correct
   name: "ShortAnswerQuestion",
   props: {
     term: {
@@ -32,24 +31,26 @@ export default {
       answered: false
     };
   },
-  watch: {
-    userAnswer(newVal, oldVal) {
-      // console.log(oldVal, newVal);
-      if (oldVal === "" && newVal !== "") {
-        this.$emit("answered", true);
-      } else if (oldVal !== "" && newVal == "") {
-        this.$emit("answered", false);
-      }
-    }
-  },
   methods: {
     handleInput() {
+      // Check if answered logic
+      if (!this.answered && this.userAnswer !== "") {
+        this.answered = true;
+        this.$emit("answered", true);
+      } else if (this.answered && this.userAnswer == "") {
+        this.answered = false;
+        this.$emit("answered", false);
+      }
+
+      // Check correct logic
       if (this.userAnswer.toLowerCase() === this.term.toLowerCase()) {
         this.correct = true;
         this.$emit("correct", true);
       } else {
-        this.correct = false;
-        this.$emit("correct", false);
+        if (this.correct) {
+          this.correct = false;
+          this.$emit("correct", false);
+        }
       }
     }
   }
