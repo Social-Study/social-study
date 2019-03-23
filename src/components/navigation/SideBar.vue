@@ -1,12 +1,11 @@
 <template>
   <div class="full-height">
     <div
-      id="sidebar"
       v-if="activeGroup"
+      id="sidebar"
       :class="show ? 'active' : 'collapsed'"
     >
       <ul class="menu">
-
         <!-- Group Details -->
         <li
           v-show="show"
@@ -23,7 +22,7 @@
         <hr
           v-show="show"
           class="section-divider"
-        >
+        />
 
         <!-- Home Link -->
         <li
@@ -35,7 +34,7 @@
             :to="{ name: 'home' }"
           >
             <i
-              :class="{'large-icon':!show}"
+              :class="{ 'large-icon': !show }"
               class="fas fa-home"
             ></i>
             <span v-show="show"> Home </span>
@@ -49,14 +48,20 @@
         >
           <router-link
             :class="
-              $route.name === 'flashcards' ? 'active' : '' ||
-              $route.name === 'study' ? 'active' : '' ||
-              $route.name === 'editFlashcards' ? 'active' : '' ||
-              $route.name === 'createFlashcards' ? 'active' : ''"
+              $route.name === 'flashcards'
+                ? 'active'
+                : '' || $route.name === 'study'
+                ? 'active'
+                : '' || $route.name === 'editFlashcards'
+                ? 'active'
+                : '' || $route.name === 'createFlashcards'
+                ? 'active'
+                : ''
+            "
             :to="{ name: 'flashcards' }"
           >
             <i
-              :class="{'large-icon': !show}"
+              :class="{ 'large-icon': !show }"
               class="fas fa-sticky-note"
             ></i>
             <span v-show="show"> Flashcards</span>
@@ -69,11 +74,16 @@
           :class="show ? 'text-left' : 'text-center'"
         >
           <router-link
-            :to="{name: 'createQuiz'}"
-            :class="$route.name === 'createQuiz' ? 'active' : '' ||
-              $route.name === 'quiz' ? 'active' : ''"
+            :to="{ name: 'createQuiz' }"
+            :class="
+              $route.name === 'createQuiz'
+                ? 'active'
+                : '' || $route.name === 'quiz'
+                ? 'active'
+                : ''
+            "
           ><i
-              :class="{'large-icon': !show}"
+              :class="{ 'large-icon': !show }"
               class="fas fa-pencil-alt"
             ></i>
             <span v-show="show"> Quizzes</span>
@@ -86,10 +96,10 @@
           :class="show ? 'text-left' : 'text-center'"
         >
           <router-link
-            :to="{name: 'agenda'}"
+            :to="{ name: 'agenda' }"
             :class="$route.name === 'agenda' ? 'active' : ''"
           ><i
-              :class="{'large-icon': !show}"
+              :class="{ 'large-icon': !show }"
               class="fas fa-calendar-alt"
             ></i>
             <span v-show="show"> Agenda</span>
@@ -102,12 +112,17 @@
           :class="show ? 'text-left' : 'text-center'"
         >
           <router-link
-            :to="{name: 'notes'}"
-            :class="$route.name === 'notes' ? 'active' : '' ||
-               $route.name === 'note' ? 'active' : ''"
+            :to="{ name: 'notes' }"
+            :class="
+              $route.name === 'notes'
+                ? 'active'
+                : '' || $route.name === 'note'
+                ? 'active'
+                : ''
+            "
           >
             <i
-              :class="{'large-icon': !show}"
+              :class="{ 'large-icon': !show }"
               class="fas fa-file"
             ></i>
             <span v-show="show"> Notes</span>
@@ -124,14 +139,14 @@
             class="menu-badge"
           >
             <label class="member-num label label-primary">
-              {{activeGroup.members.length}}
+              {{ activeGroup.members.length }}
             </label>
           </div>
           <router-link
             :class="$route.name === 'members' ? 'active' : ''"
             :to="{ name: 'members' }"
           ><i
-              :class="{'large-icon': !show}"
+              :class="{ 'large-icon': !show }"
               class="fas fa-user-circle"
             ></i>
             <span v-show="show"> Members</span>
@@ -145,11 +160,11 @@
           :class="show ? 'text-left' : 'text-center'"
         >
           <router-link
-            :to="{name: 'settings'}"
+            :to="{ name: 'settings' }"
             :class="$route.name === 'settings' ? 'active' : ''"
           >
             <i
-              :class="{'large-icon': !show}"
+              :class="{ 'large-icon': !show }"
               class="fas fa-cog"
             ></i>
             <span v-show="show"> Settings</span>
@@ -164,7 +179,7 @@
       >
         <i
           class="fas"
-          :class="show ? 'fa-arrow-left': 'fa-arrow-right'"
+          :class="show ? 'fa-arrow-left' : 'fa-arrow-right'"
         ></i>
       </a>
     </div>
@@ -210,11 +225,16 @@ export default {
   },
   data() {
     return {
-      sidebarActive: false,
       activeGroup: null,
       isMember: false,
       isLoading: true
     };
+  },
+  // Reload group data if the group's url changes
+  watch: {
+    "$route.params.groupID"(id) {
+      this.loadGroupData(id);
+    }
   },
   created() {
     this.loadGroupData(this.$route.params.groupID);
@@ -235,17 +255,10 @@ export default {
           this.isMember = true;
           this.isLoading = false;
         })
+        //  Catch load error
         .catch(() => {
-          console.log("load error!");
-
           this.isLoading = false;
         });
-    }
-  },
-  // Reload group data if the group's url changes
-  watch: {
-    "$route.params.groupID"(id) {
-      this.loadGroupData(id);
     }
   }
 };
@@ -283,10 +296,9 @@ export default {
   top: $nav-height;
   left: 0;
 
-  // background-color: $dark;
-  background-color: $transparent-dark;
+  background-color: $dark;
+  // background-color: $transparent-dark;
   transition: 0.25s;
-
 
   display: flex;
   flex-flow: column nowrap;
@@ -347,9 +359,9 @@ export default {
   }
 }
 
-.section-divider{
-  height:1px;
+.section-divider {
+  height: 1px;
   background-image: $orange-gradient;
-  border:none;
+  border: none;
 }
 </style>

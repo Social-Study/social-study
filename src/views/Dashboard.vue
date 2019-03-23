@@ -1,9 +1,5 @@
 <template>
-
-  <div
-    id="full-screen"
-    v-if="this.user !== null"
-  >
+  <div v-if="user !== null" id="full-screen">
     <!-- Centered Empty Dashboard Placeholder -->
     <div>
       <div class="empty">
@@ -13,13 +9,17 @@
             class="undraw-svg"
             src="../assets/undraw_no_data.svg"
             alt="No Study Groups"
-          >
+          />
         </div>
         <p
-          v-if="this.studyGroups && this.studyGroups.length === 0"
+          v-if="studyGroups && studyGroups.length === 0"
           class="empty-title h5"
-        >You don't have any Study Groups!</p>
-        <p class="empty-subtitle text-large text-bold">Welcome to your Dashboard</p>
+        >
+          You don't have any Study Groups!
+        </p>
+        <p class="empty-subtitle text-large text-bold">
+          Welcome to your Dashboard
+        </p>
         <p class="empty-subtitle">It is currently in development.</p>
       </div>
     </div>
@@ -34,7 +34,7 @@ import { db } from "@/firebaseConfig";
 import { getUserData } from "@/scripts/userFuncs";
 
 export default {
-  name: "dashboard",
+  name: "Dashboard",
   data() {
     return {
       user: null,
@@ -50,8 +50,9 @@ export default {
       .then(user => {
         this.user = user;
       })
+      // Catch error when loading user's account data
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
 
     // Get members list of joined study Groups

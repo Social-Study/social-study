@@ -3,8 +3,8 @@
     <NavBar v-if="$route.name !== 'landing'" />
     <router-view v-if="!$route.params.groupID" />
     <side-bar
-      :show="sidebarActive"
       v-else
+      :show="sidebarActive"
     >
       <router-view
         id="router-view"
@@ -17,7 +17,6 @@
     </side-bar>
   </div>
 </template>
-
 
 <script>
 import NavBar from "@/components/navigation/NavBar";
@@ -72,7 +71,6 @@ export default {
 };
 </script>
 
-
 // Global Styles
 <style lang="scss">
 @import "@/styles.scss";
@@ -107,18 +105,18 @@ body {
 
 // Applies to all modal-overlays
 a.modal-overlay {
-  background-image: $dark-gradient !important;
+  background-color: $transparent-dark !important;
 }
 
-// Sidebar Styles for Visible /
+// Sidebar Styles for Visible / Hidden
 .sidebar-active {
   margin-left: 200px;
-  transition: .25s;
+  transition: 0.25s;
 }
 
 .sidebar-inactive {
   margin-left: 50px;
-  transition: .25s;
+  transition: 0.25s;
 }
 
 // Chat Sidebar Styles for Visible / Hidden

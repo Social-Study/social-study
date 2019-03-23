@@ -3,9 +3,9 @@
     <div id="container">
       <div
         v-for="type in questionTypes"
-        :key="type.type"
         id="type-toggle"
-        :class="type.selected ? 'selected': ''"
+        :key="type.type"
+        :class="type.selected ? 'selected' : ''"
         @click="toggleSelected(type)"
       >
         <div id="type-header">
@@ -17,12 +17,9 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
-import { db } from "@/firebaseConfig";
-
 export default {
   name: "QuestionTypeSelector",
   data() {
@@ -83,7 +80,8 @@ export default {
               selected.shortAnswer = true;
               break;
             default:
-              console.log("WTF");
+            // This shoudl never be reached...
+            // console.er("WTF");
           }
         }
       });
@@ -115,7 +113,7 @@ export default {
     margin: 20px;
 
     display: flex;
-    flex-flow: col nowrap;
+    flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
 
@@ -139,7 +137,7 @@ export default {
       box-shadow: $shadow-hovered;
     }
 
-    &:hover{
+    &:hover {
       border-image: $orange-gradient;
       border-image-slice: 1;
       border-width: 2px;

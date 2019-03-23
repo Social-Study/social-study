@@ -3,38 +3,40 @@ import Router from "vue-router";
 import firebase from "@/firebaseConfig";
 
 // User login and signup page
-import Landing from "@/views/Landing.vue";
+// import Landing from "@/views/Landing.vue";
+const Landing = () => import("@/views/Landing");
 
 // User Specific Homepage
-import Dashboard from "@/views/Dashboard.vue";
+const Dashboard = () => import("@/views/Dashboard");
 
 // Create a New Group
-import CreateGroup from "@/views/CreateGroup";
+const CreateGroup = () => import("@/views/CreateGroup");
 
 // Group Specific Homepage
-import GroupHomePage from "@/views/GroupHomePage";
+const GroupHomePage = () => import("@/views/GroupHomePage");
 
 // Flashcard Functionality Pages
-import FlashcardCollection from "@/views/flashcards/FlashcardCollection";
-import FlashcardStudy from "@/views/flashcards/FlashcardStudy";
-import FlashcardCreate from "@/views/flashcards/FlashcardCreate";
+const FlashcardCollection = () =>
+  import("@/views/flashcards/FlashcardCollection");
+const FlashcardStudy = () => import("@/views/flashcards/FlashcardStudy");
+const FlashcardCreate = () => import("@/views/flashcards/FlashcardCreate");
 
 // Quiz Functionality Pages
-import QuizCreate from "@/views/quiz/QuizCreate";
-import Quiz from "@/views/quiz/Quiz";
+const QuizCreate = () => import("@/views/quiz/QuizCreate");
+const Quiz = () => import("@/views/quiz/Quiz");
 
 // Agenda Functionality Pages
-import GroupAgenda from "@/views/agenda/GroupAgenda.vue";
+const GroupAgenda = () => import("@/views/agenda/GroupAgenda.vue");
 
 // Note Functionality Pages
-import NotesCollection from "@/views/notes/NotesCollection";
-import NotePage from "@/views/notes/NotePage";
+const NotesCollection = () => import("@/views/notes/NotesCollection");
+const NotePage = () => import("@/views/notes/NotePage");
 
 // Group Members Listing
-import MembersPage from "@/views/MembersPage";
+const MembersPage = () => import("@/views/MembersPage");
 
 // Group Settings Page (Only the Group Owner can access)
-import GroupSettings from "@/views/GroupSettings";
+const GroupSettings = () => import("@/views/GroupSettings");
 
 Vue.use(Router);
 
@@ -159,7 +161,7 @@ let router = new Router({
       props: true
     },
     {
-      path: "/:groupID/agenda",
+      path: "/:groupID/agenda/:itemID?",
       name: "agenda",
       component: GroupAgenda,
       meta: {
@@ -167,6 +169,15 @@ let router = new Router({
         requiresAuth: true
       }
     },
+    // {
+    //   path: "/:groupID/agenda",
+    //   name: "agenda",
+    //   component: GroupAgenda,
+    //   meta: {
+    //     title: "Group Agenda | Social Study",
+    //     requiresAuth: true
+    //   }
+    // },
     {
       path: "/:groupID/members",
       name: "members",

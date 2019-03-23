@@ -1,51 +1,41 @@
 <template>
   <div id="container">
     <div id="card-header">
-      <label
-        class="form-label"
-        id="label-term"
-      >
+      <label id="label-term" class="form-label">
         Term
       </label>
-      <i
-        id="delete"
-        class="fas fa-minus"
-        @click="$emit('delete')"
-      ></i>
+      <i id="delete" class="fas fa-minus" @click="$emit('delete')"></i>
     </div>
     <input
+      id="input-term"
+      v-model.trim="data.term"
       type="text"
       class="form-input"
-      id="input-term"
       maxlength="30"
-      v-model.trim="data.term"
-      v-on:input="TermUpdated"
       autofocus
-    >
-    <label
-      class="form-label"
-      id="label-def"
-    >
+      @input="termUpdated"
+    />
+    <label id="label-def" class="form-label">
       Definition
     </label>
     <textarea
+      id="input-def"
+      v-model.trim="data.def"
       type="text"
       class="form-input"
-      id="input-def"
       rows="3"
       maxlength="150"
-      v-model.trim="data.def"
-      v-on:input="DefUpdated"
+      @input="defUpdated"
       @keydown.ctrl.enter="$emit('addNew')"
-      @keydown.tab="$emit('addNew')"
+      @keydown.tab.exact="$emit('addNew')"
     >
-  </textarea>
+    </textarea>
   </div>
 </template>
 
 <script>
 export default {
-  name: "flashcardCreateForm",
+  name: "FlashcardCreateForm",
   props: {
     initTerm: {
       type: String,
@@ -69,13 +59,10 @@ export default {
   },
   created() {},
   methods: {
-    debug() {
-      console.log("clicked");
-    },
-    TermUpdated(event) {
+    termUpdated() {
       this.$emit("termUpdated", this.data);
     },
-    DefUpdated(event) {
+    defUpdated() {
       this.$emit("defUpdated", this.data);
     }
   }

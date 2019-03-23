@@ -5,42 +5,37 @@
         <button
           class="btn btn-primary"
           @click="$router.push(`/${$route.params.groupID}/flashcards/create`)"
-        >New Deck <i class="fas fa-plus"></i>
+        >
+          New Deck <i class="fas fa-plus"></i>
         </button>
       </template>
-      <template slot="center">Flashcard Collection</template>
+      <template slot="center"
+        >Flashcard Collection</template
+      >
       <template slot="right">
         <div class="has-icon-left">
           <input
-            type="search"
-            class="form-input"
-            placeholder="Search by Title"
             v-model="searchQuery"
-          >
+            type="search"
+            class="search-input"
+            placeholder="Search by Title"
+          />
           <i class="form-icon fas fa-search"></i>
         </div>
       </template>
     </page-title>
-    <div
-      v-if="!publicIsLoading && !privateIsLoading"
-      class="card-container"
-    >
+    <div v-if="!publicIsLoading && !privateIsLoading" class="card-container">
       <flashcard-icon
         v-for="deck in combined"
         :key="deck.creationDate.toDate().getTime()"
         :info="deck"
-        :isPrivate="deck.isPrivate"
+        :is-private="deck.isPrivate"
         @toggle="changeVisibility(deck)"
       >
       </flashcard-icon>
     </div>
-    <div
-      v-else
-      style="margin-top: 35%;"
-      class="loading loading-lg"
-    ></div>
+    <div v-else class="loading loading-lg"></div>
   </div>
-
 </template>
 
 <script>
@@ -73,6 +68,18 @@ export default {
       groupID: this.$route.params.groupID,
       uid: this.$store.getters.uid
     };
+  },
+  computed: {
+    combined() {
+      // Combine the public and private decks into a single array
+      let decks = this.privateDecks.concat(this.publicDecks);
+      // Filter the deck display based on the search word
+      return decks.filter(deck => {
+        return deck.title
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+      });
+    }
   },
   created() {
     this.loadDecks();
@@ -155,37 +162,27 @@ export default {
 
       // This is run as a transaction because it needs to be atomic.
       // Ensures that both the moving and deleting are executed together
-      return db
-        .runTransaction(transaction => {
-          // This code may get re-run multiple times if there are conflicts.
-          return transaction.get(from).then(deck => {
-            // Get the contents of the existing document
-            if (!deck.exists) {
-              throw "Deck does not exist!";
-            }
-            transaction.set(to, deck.data()); // Create new document
-            transaction.delete(from); // Delete old document
-          });
-        })
-        .then(() => {
-          console.log("Transaction successfully committed!");
-          this.loadDecks();
-        })
-        .catch(error => {
-          console.log("Transaction failed: ", error);
-        });
-    }
-  },
-  computed: {
-    combined() {
-      // Combine the public and private decks into a single array
-      let decks = this.privateDecks.concat(this.publicDecks);
-      // Filter the deck display based on the search word
-      return decks.filter(deck => {
-        return deck.title
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase());
-      });
+      return (
+        db
+          .runTransaction(transaction => {
+            // This code may get re-run multiple times if there are conflicts.
+            return transaction.get(from).then(deck => {
+              // Get the contents of the existing document
+              if (!deck.exists) {
+                throw "Deck does not exist!";
+              }
+              transaction.set(to, deck.data()); // Create new document
+              transaction.delete(from); // Delete old document
+            });
+          })
+          .then(() => {
+            this.loadDecks();
+          })
+          // Error switching flashcard deck location
+          .catch(error => {
+            // console.log("Transaction failed: ", error);
+          })
+      );
     }
   }
 };
@@ -207,6 +204,6 @@ h5 {
   grid-template-columns: repeat(auto-fit, minmax(100px, 288px));
   grid-auto-rows: 218px;
   justify-content: center;
-  // transition: all 350ms ease-in;
+  transition: all 350ms ease-in;
 }
 </style>

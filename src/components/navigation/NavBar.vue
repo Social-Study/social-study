@@ -9,40 +9,44 @@
           height="38px"
           width="38px"
           alt=""
-        >
+        />
         <h1>Social Study</h1>
       </router-link>
 
-      <group-dropdown :studyGroups="studyGroups" />
+      <group-dropdown :study-groups="studyGroups" />
 
       <create-join-popover></create-join-popover>
-
     </section>
 
     <profile-settings
       v-if="user && firestoreUser"
-      profile-settings
-      :user="this.user"
-      :photoURL="this.firestoreUser.photoURL"
-      @closeSettings="isSettingsActive = false;"
       v-show="isSettingsActive"
+      profile-settings
+      :user="user"
+      :photo-u-r-l="firestoreUser.photoURL"
+      @closeSettings="isSettingsActive = false"
     />
 
     <!-- Right Side Menu and Avatar -->
     <section class="navbar-section">
       <button
         v-if="$route.params.groupID"
+        id="chat-button"
         style="width: 36px; height: 36px;margin-right: 20px;"
         class="btn btn-action"
-        id="chat-button"
         @click="$store.commit('toggleChatActive')"
-      ><i class="fas fa-comment-alt"></i></button>
-      <div
-        @mouseover="menuActive = true;"
-        @mouseout="menuActive = false;"
-        class="menu-container"
       >
-        <Avatar :user="firestoreUser" class="avatar" />
+        <i class="fas fa-comment-alt"></i>
+      </button>
+      <div
+        class="menu-container"
+        @mouseover="menuActive = true"
+        @mouseout="menuActive = false"
+      >
+        <Avatar
+          :user="firestoreUser"
+          class="avatar"
+        />
 
         <ul
           v-show="menuActive == true"
@@ -60,9 +64,9 @@
           <!-- Settings Button -->
           <li class="menu-item text-left">
             <a
-              @click="isSettingsActive = true;"
               id="settings"
               class="text-center c-pointer"
+              @click="isSettingsActive = true"
             >
               <i
                 class="fas fa-cog"
@@ -72,13 +76,11 @@
           </li>
 
           <!-- Log Out Button -->
-          <li 
-            class="menu-item text-left"
-          >
+          <li class="menu-item text-left">
             <a
-              @click="logOut"
               id="logOutButton"
               class="text-center"
+              @click="logOut"
             >
               <i
                 class="fas fa-sign-out-alt"
@@ -136,6 +138,7 @@ export default {
           user => {
             this.firestoreUser === user;
             this.$store.commit("setPhoto", user.photoURL);
+            this.$store.commit("setSidebarOpen", user.sidebarOpen);
           }
         );
       } else {
@@ -178,7 +181,7 @@ a.navbar-brand {
   min-width: 200px;
   justify-content: space-between;
   align-items: center;
-  margin-right: 15px;
+  margin-right: 25px;
   padding-right: 10px;
 
   h1 {
@@ -193,7 +196,7 @@ a.navbar-brand {
 .menu {
   cursor: pointer;
   background-color: $transparent-dark;
-  color:white;
+  color: white;
   li {
     margin-top: 0;
   }
@@ -203,18 +206,18 @@ a.navbar-brand {
   padding: 2px;
 }
 
-#settings:hover, 
-#logOutButton:hover{
+#settings:hover,
+#logOutButton:hover {
   background-image: $orange-gradient;
-  color:white;
+  color: white;
 }
 
-#chat-button{
+#chat-button {
   background-color: $transparent-dark;
-  color:white;
+  color: white;
   border: solid 2px $primary;
 
-  &:hover{
+  &:hover {
     border-image: $orange-gradient;
     border-image-slice: 1;
     border-width: 2px;
@@ -223,7 +226,7 @@ a.navbar-brand {
 
 .settings-menu {
   position: absolute;
-  top: 40px;
+  top: 25px;
   right: 30px;
 }
 

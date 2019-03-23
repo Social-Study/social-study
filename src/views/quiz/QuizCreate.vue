@@ -4,10 +4,14 @@
       <template slot="left">
         <button
           class="btn btn-success"
-          :class="selectedDecks == null ||
-                  questionCount === 0 ||
-                  selectedQTypes == null ||
-                  selectedQTypes.length === 0 ? 'disabled': ''"
+          :class="
+            selectedDecks == null ||
+            questionCount === 0 ||
+            selectedQTypes == null ||
+            selectedQTypes.length === 0
+              ? 'disabled'
+              : ''
+          "
           @click="loadQuiz()"
         >
           Generate
@@ -19,7 +23,7 @@
       </template>
       <template slot="right">
         <!-- Using the title class in the PageTitle component -->
-        <h2 class="title">{{questionCount}}/100</h2>
+        <h2 class="title">{{ questionCount }}/100</h2>
       </template>
     </page-title>
     <div class="content-container">
@@ -29,11 +33,7 @@
       <h3 id="step-instruction">Select Decks to Generate Your Quiz</h3>
       <h5 id="step-hint">Quiz has a 100 card limit</h5>
       <!-- Component that displays checkboxes of each available flashcard deck -->
-      <deck-selector
-        :limit="100"
-        @selected="selectedDecks = $event"
-      />
-
+      <deck-selector :limit="100" @selected="selectedDecks = $event" />
     </div>
   </div>
 </template>
@@ -55,6 +55,23 @@ export default {
       selectedDecks: null,
       selectedQTypes: null
     };
+  },
+  computed: {
+    questionCount() {
+      // Return the total number of cards/questions in the selected decks
+      if (this.selectedDecks !== null) {
+        let total = 0;
+        this.selectedDecks.public.forEach(deck => {
+          total += deck.terms.length;
+        });
+        this.selectedDecks.private.forEach(deck => {
+          total += deck.terms.length;
+        });
+
+        return total;
+      }
+      return 0;
+    }
   },
   methods: {
     loadQuiz() {
@@ -78,23 +95,6 @@ export default {
           questionTypes: this.selectedQTypes
         }
       });
-    }
-  },
-  computed: {
-    questionCount() {
-      // Return the total number of cards/questions in the selected decks
-      if (this.selectedDecks !== null) {
-        let total = 0;
-        this.selectedDecks.public.forEach(deck => {
-          total += deck.terms.length;
-        });
-        this.selectedDecks.private.forEach(deck => {
-          total += deck.terms.length;
-        });
-
-        return total;
-      }
-      return 0;
     }
   }
 };

@@ -3,31 +3,32 @@
     <page-title>
       <template slot="left">
         <input
+          v-model="deckTitle"
           class="name-input"
           type="text"
-          v-model="deckTitle"
           maxlength="30"
           placeholder="Untitled Flashcard Deck"
-        >
+          @change="isSaved = false"
+        />
       </template>
 
       <template slot="right">
         <toggle-switch
           v-if="deckID === null"
-          @toggle="toggled = $event"
           :default="toggled"
           :values="['Private', 'Public']"
+          @toggle="toggled = $event"
         ></toggle-switch>
         <button
-          @click="saveDeck"
           class="btn btn-action split"
+          @click="saveDeck"
         >
           <i class="fas fa-save"></i>
         </button>
         <button
           v-if="deckID !== null"
-          @click="deleteDeck"
           class="btn btn-error btn-action split"
+          @click="deleteDeck"
         >
           <i class="fas fa-trash"></i>
         </button>
@@ -35,8 +36,8 @@
     </page-title>
 
     <div
-      class="toast toast-error"
       v-if="noTitle"
+      class="toast toast-error"
     >
       <button
         class="btn btn-clear float-right"
@@ -45,8 +46,8 @@
       Please Enter a title for the flashcard deck
     </div>
     <div
-      class="toast toast-error"
       v-if="!contentFilled"
+      class="toast toast-error"
     >
       <button
         class="btn btn-clear float-right"
@@ -54,13 +55,16 @@
       ></button>
       Please Enter term and definition for each flashcard
     </div>
-    <div class="page-content">
+    <div
+      v-if="!isLoading"
+      class="page-content"
+    >
       <!-- maxlength="100" -->
       <flashcard-create-form
         v-for="(term, index) in terms"
         :key="hash[index]"
-        :initTerm="term"
-        :initDef="definitions[index]"
+        :init-term="term"
+        :init-def="definitions[index]"
         @termUpdated="termUpdated($event, index)"
         @defUpdated="defUpdated($event, index)"
         @addNew="addCard"
@@ -77,7 +81,10 @@
         </div>
       </div>
     </div>
-
+    <div
+      v-else
+      class="loading loading-lg"
+    ></div>
   </div>
 </template>
 
@@ -107,15 +114,27 @@ export default {
       default: false
     }
   },
+  beforeRouteLeave(to, from, next) {
+    if (!this.isSaved) {
+      if (confirm("Deck is not saved! Are you sure you want to leave?")) {
+        next();
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       terms: [null],
       definitions: [null],
-      hash: [new Date().getTime()], // Hash is used as a unique way to access each item. Without it there may not be any unique property to use as the key
+      hash: [new Date().getTime()], // Hash is used as a unique way to access each item.
+      // Without it there may not be any unique property to use as the key
       deckTitle: "",
       noTitle: false,
       contentFilled: true,
-      toggled: false
+      toggled: false,
+      isSaved: true,
+      isLoading: false
     };
   },
   created() {
@@ -125,6 +144,9 @@ export default {
       // This value is received from the FlashCardIcon where the user clicks the "edit button"
       this.toggled = !this.isPrivate; // Still need to set toggled to determine collection location
       this.loadDeck();
+      this.isLoading = true;
+    } else {
+      this.isSaved = false;
     }
   },
   methods: {
@@ -147,25 +169,29 @@ export default {
       }
     },
     deleteCard(index) {
-      console.log("delete: " + index);
       if (this.terms.length !== 1) {
+        this.isSaved = false;
         this.$delete(this.terms, index);
         this.$delete(this.definitions, index);
         this.$delete(this.hash, index);
       }
     },
     termUpdated(value, index) {
+      this.isSaved = false;
       this.terms[index] = value.term;
     },
     defUpdated(value, index) {
+      this.isSaved = false;
       this.definitions[index] = value.def;
     },
     addCard() {
+      this.isSaved = false;
       this.terms.push(null);
       this.definitions.push(null);
       this.hash.push(new Date().getTime());
     },
     deleteDeck() {
+      this.isSaved = false;
       this.getCollection()
         .doc(this.deckID)
         .delete();
@@ -181,26 +207,22 @@ export default {
             this.terms = doc.data().terms;
             this.definitions = doc.data().definitions;
             this.hash = doc.data().hash;
-            // creatorName: user.displayName,
-            // creationDate: initDate,
-            // lastUpdated: initDate,
-            // creatorUID: this.$store.getters.uid,
-            // creatorPhoto: this.$store.getters.photoURL
           }
         })
+        .then(() => {
+          this.isLoading = false;
+        })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     //saves the current deck and pushes it to firebase
     saveDeck() {
       for (let i = 0; i < this.terms.length; i++) {
         if (this.terms[i] === null) {
-          console.log("term null Term Found");
           this.contentFilled = false;
         }
         if (this.definitions[i] === null) {
-          console.log("def null Term Found");
           this.contentFilled = false;
         }
       }
@@ -224,15 +246,14 @@ export default {
               creatorName: user.displayName,
               lastUpdated: initDate,
               creatorPhoto: this.$store.getters.photoURL
-              // creatorUID: this.$store.getters.uid,
-              // creationDate: initDate,
             })
             .then(() => {
               // console.log("Flashcard Deck created with doc id: ", docRef.id);
               this.$router.push(`/${this.$route.params.groupID}/flashcards`);
+              this.isSaved = true;
             })
             .catch(error => {
-              console.error("Error updating document: ", error);
+              // console.error("Error updating document: ", error);
             });
         } else {
           // Otherwise create a brand new document
@@ -249,22 +270,21 @@ export default {
               creatorPhoto: this.$store.getters.photoURL
             })
             .then(docRef => {
-              console.log("Flashcard Deck created with doc id: ", docRef.id);
+              // console.log("Flashcard Deck created with doc id: ", docRef.id);
               this.$router.push(`/${this.$route.params.groupID}/flashcards`);
+              this.isSaved = true;
             })
             .catch(error => {
-              console.error("Error adding document: ", error);
+              // console.error("Error adding document: ", error);
             });
         }
       } else {
-        console.log("noTitle");
         this.noTitle = true;
       }
     }
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 @import "@/styles.scss";
@@ -279,6 +299,21 @@ export default {
   margin: 20px;
 }
 
+.gradient-border {
+  margin: 30px auto;
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+  background-image: $nav-gradient;
+}
+
+// Icon on the new members button
+.button-icon {
+  font-size: 6em;
+  position: relative;
+  top: 20px;
+}
+
 .addCard {
   cursor: pointer;
   box-shadow: $shadow;
@@ -291,36 +326,30 @@ export default {
   margin: 0 40px 40px 0;
 
   &:hover {
-    box-shadow: $shadow-hovered;
+    box-shadow: $shadow-heavy;
+    border-image: $orange-gradient;
+    border-image-slice: 1;
   }
 }
 
-.gradient-border {
-  margin: 30px auto;
-  height: 160px;
-  width: 160px;
-  border-radius: 50%;
+.add {
   background-image: $nav-gradient;
-}
-
-.button-icon {
-  text-align: center;
-  font-size: 8em;
-  bottom: 2px;
-  position: relative;
-  vertical-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 // Circle background between the gradient and add icon
 .add-button {
-  position: relative;
-  top: 10px;
-  left: 10px;
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  // background-color: #bebebe;
   background-color: $light;
   user-select: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

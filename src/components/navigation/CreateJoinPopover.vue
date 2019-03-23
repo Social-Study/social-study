@@ -5,33 +5,39 @@
       position="right top"
     />
     <div class="popover popover-bottom">
-      <button 
-        class="btn btn-action"
+      <button
         id="button"
-      ><i class="fas fa-plus"></i></button>
+        class="btn btn-action"
+      >
+        <i class="fas fa-plus"></i>
+      </button>
       <div class="popover-container">
         <div class="card">
           <div class="card-body text-bold">
             <div class="section-title">Create</div>
             <button
-              @click="$router.push('/dashboard/create')"
               id="create-button"
               class="btn btn-primary btn-create"
-            >New Study Group</button> 
-            <hr id="divider">
+              @click="$router.push('/dashboard/create')"
+            >
+              New Study Group
+            </button>
+            <hr id="divider" />
             <div class="section-title">Join</div>
             <div class="empty-action input-group input-inline">
               <input
-                @keydown.enter="fetchStudyGroup"
                 v-model="inviteCode"
                 class="form-input"
                 placeholder="Invite Code"
                 type="text"
-              >
+                @keydown.enter="fetchStudyGroup"
+              />
               <button
-                @click="fetchStudyGroup"
                 class="btn btn-primary input-group-btn"
-              >Join</button>
+                @click="fetchStudyGroup"
+              >
+                Join
+              </button>
             </div>
           </div>
         </div>
@@ -44,38 +50,57 @@
       class="modal modal-sm active"
     >
       <a
-        @click="showModal = false"
         href="#close"
         class="modal-overlay"
         aria-label="Close"
+        @click="showModal = false"
       ></a>
       <div class="modal-container">
         <div class="modal-header">
-          <div class="modal-title h5 text-bold text-large">Join {{inviteGroup.className}}?</div>
+          <div class="modal-title h5 text-bold text-large">
+            Join {{ inviteGroup.className }}?
+          </div>
         </div>
         <div class="modal-body">
-          <div class="text-uppercase text-bold text-left text-dark">Instructor</div>
-          <div class="text-center text-primary">{{inviteGroup.instructorName}}</div>
-          <div class="text-uppercase text-left text-bold text-dark"># of Members</div>
-          <div class="text-center text-primary">{{inviteGroup.members.length}}</div>
+          <div class="text-uppercase text-bold text-left text-dark">
+            Instructor
+          </div>
+          <div class="text-center text-primary">
+            {{ inviteGroup.instructorName }}
+          </div>
+          <div class="text-uppercase text-left text-bold text-dark">
+            # of Members
+          </div>
+          <div class="text-center text-primary">
+            {{ inviteGroup.members.length }}
+          </div>
+          <div class="text-uppercase text-left text-bold text-dark">
+            Description
+          </div>
+          <div class="text-center text-primary">
+            {{ inviteGroup.extraInfo }}
+          </div>
         </div>
         <div class="modal-footer">
           <button
-            @click="showModal=false"
-            class="btn modal-btn"
-          >Cancel</button>
+            class="btn btn-link"
+            id="cancel-btn"
+            @click="showModal = false"
+          >
+            Cancel
+          </button>
           <button
-            @click="joinStudyGroup"
-            class="btn btn-primary modal-btn"
+            class="btn btn-primary"
             :class="isLoading ? 'loading' : ''"
-          >Join</button>
+            @click="joinStudyGroup"
+          >
+            Join
+          </button>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-
 
 <script>
 import { db, FirebaseConsts } from "@/firebaseConfig";
@@ -180,26 +205,32 @@ export default {
 .popover-container {
   // top: -10px !important;
   .card {
-      background-color: $transparent-dark;
-      color:white;
+    background-color: $transparent-dark;
+    color: white;
   }
 }
 
-hr{
+hr {
   background-image: $orange-gradient;
-  height:1px;
-  border:none;
+  height: 1px;
+  border: none;
 }
-.section-title{
+.section-title {
   text-align: center;
   padding-bottom: 2%;
 }
-#button{
+
+#cancel-btn {
+  margin-right: 10px;
+  color: $error-color;
+}
+
+#button {
   background-color: $transparent-dark;
-  color:white;
+  color: white;
   border: solid 2px $primary;
 
-  &:hover{
+  &:hover {
     border-image: $orange-gradient;
     border-image-slice: 1;
     border-width: 2px;

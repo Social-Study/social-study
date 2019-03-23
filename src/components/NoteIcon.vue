@@ -2,30 +2,34 @@
   <!-- Note Icon -->
   <div id="note">
     <!-- Title -->
-    <h2 id="title">{{info.title}}</h2>
+    <h2 id="title">{{ info.title }}</h2>
     <div>
       <!-- Created -->
-      <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
+      <p id="created">
+        <i>Created on</i> {{ info.creationDate.toDate().toLocaleDateString() }}
+      </p>
       <!-- Modified -->
       <!-- <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p> -->
-      <p id="modified"><i>Modified</i> {{calcDays(info.lastUpdated.toDate())}}</p>
+      <p id="modified">
+        <i>Modified</i> {{ calcDays(info.lastUpdated.toDate()) }}
+      </p>
     </div>
 
     <div id="button-container">
+      <button id="deleteBtn" @click="deleteNote(info.id)">Delete</button>
       <button
-        @click="deleteNote(info.id)"
-        id="deleteBtn"
-      >Delete</button>
-      <button
-        @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
         id="editBtn"
-      >Edit</button>
+        @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
+      >
+        Edit
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import { db } from "@/firebaseConfig";
+import { distanceInWordsToNow } from "date-fns";
 
 export default {
   name: "NoteIcon",
@@ -46,16 +50,8 @@ export default {
         .doc(id)
         .delete();
     },
-    calcDays(modDate) {
-      let currentDate = new Date();
-      modDate = new Date(modDate);
-      if (currentDate.toDateString() === modDate.toDateString()) {
-        return "today";
-      }
-      let timeDiff = Math.abs(currentDate.getTime() - modDate.getTime());
-      let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      let retString = days > 1 ? days + " days ago" : days + " day ago";
-      return retString;
+    calcDays(date) {
+      return distanceInWordsToNow(date) + " ago";
     }
   }
 };
@@ -76,10 +72,10 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 
-  &:hover{
-      border-image: $orange-gradient;
-      border-image-slice: 1;
-      box-shadow: $shadow-heavy;
+  &:hover {
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    box-shadow: $shadow-heavy;
   }
 }
 

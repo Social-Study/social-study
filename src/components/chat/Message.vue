@@ -1,5 +1,4 @@
 <template>
-
   <!-- Messages from other members -->
   <div
     v-if="!sender"
@@ -7,7 +6,11 @@
     @click="showDate = !showDate"
   >
     <div id="details-container">
-      <div class="message-sender">{{details.displayName}}</div>
+      <!-- Only show the sender's name if they didn't send the previous message -->
+      <div
+        v-if="showName"
+        class="message-sender"
+      >{{ details.displayName }}</div>
       <transition
         name="dateTransition"
         enter-active-class="animated fadeIn slow"
@@ -15,19 +18,30 @@
       >
         >
         <div
-          class="message-date"
           v-show="showDate"
-        >{{getSent}}
-        </div>
+          class="message-date"
+        >{{ getSent }}</div>
       </transition>
     </div>
     <div class="message-inline">
       <div class="message-profile">
-        <Avatar :user="{photoURL: details.photoURL, displayName: details.displayName}" />
+        <!-- Only show sender avatar if they didn't send the previous message -->
+        <Avatar
+          v-if="showName"
+          :user="{
+            photoURL: details.photoURL,
+            displayName: details.displayName
+          }"
+        />
       </div>
-      <p class="message-content">{{details.message}}</p>
+      <!-- When the avatar is not displayed, add a margin of the same size -->
+      <p
+        class="message-content"
+        :class="showName ? '': 'add-space'"
+      >{{ details.message }}</p>
     </div>
   </div>
+
   <!-- Messages from logged-in user -->
   <div
     v-else
@@ -41,16 +55,15 @@
         leave-active-class="animated fadeOut"
       >
         <div
-          class="message-date"
           v-show="showDate"
-        >{{getSent}}</div>
+          class="message-date"
+        >{{ getSent }}</div>
       </transition>
     </div>
     <div class="message-inline">
-      <p class="message-content">{{details.message}}</p>
+      <p class="message-content">{{ details.message }}</p>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -61,19 +74,38 @@ export default {
   components: {
     Avatar
   },
+  props: {
+    /**
+     * Denotes if the current user is the message sender.
+     * If they are the message is shown on the right.
+     */
+    sender: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * The message's details
+     */
+    details: {
+      type: Object,
+      default: null
+    },
+    /**
+     * Whether or not the avatar and name should be shown with the message.
+     * Only show the avatar and name for the first message in a chain of messages
+     */
+    showName: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       showDate: false
     };
   },
-  props: {
-    sender: {
-      type: Boolean,
-      default: false
-    },
-    details: Object
-  },
   computed: {
+    // TODO: Maybe use date-fns to compute this?
     getSent() {
       const monthNames = [
         "Jan",
@@ -108,7 +140,6 @@ export default {
 };
 </script>
 
-
 <style lang="scss" scoped>
 .message {
   cursor: pointer;
@@ -138,6 +169,10 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
 
+    .message-content.add-space {
+      margin-left: 36px;
+    }
+
     .message-profile {
       align-self: flex-end;
       display: inline-block;
@@ -152,11 +187,11 @@ export default {
     }
 
     .message-content {
+      white-space: pre-wrap;
       text-align: left;
       margin: 0 4px;
-      // display: inline-block;
       padding: 3px 6px;
-      border-radius: 18px;
+      border-radius: 14px;
       color: black;
       // TODO: If the word is over a certain number of characters, enable break all...
       word-break: normal;

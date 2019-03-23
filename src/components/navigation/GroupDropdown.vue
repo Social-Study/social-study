@@ -1,12 +1,9 @@
 <template>
   <!-- Study Group Switcher -->
-  <div
-    v-if="studyGroups.length > 0"
-    class="dropdown"
-  >
+  <div v-if="studyGroups.length > 0" class="dropdown">
     <a
-      class="group-dropdown-button btn btn-primary dropdown-toggle"
       id="group-button"
+      class="group-dropdown-button btn btn-primary dropdown-toggle"
       tabindex="0"
     >
       Study Groups <i class="fas fa-caret-down"></i>
@@ -14,10 +11,7 @@
 
     <!-- Your Study Group List Dropdown Items -->
     <ul class="menu group-menu">
-      <div
-        v-for="(group, index) in studyGroups"
-        :key="index"
-      >
+      <div v-for="(group, index) in studyGroups" :key="index">
         <li>
           <div
             class="group-card"
@@ -40,7 +34,10 @@
                 {{ group.instructorName }}
               </p>
               <p class="card-text text-ellipsis text-center">
-                {{ getAbrev(group.meetingDays) }} @ {{ getTime(group.meetingTime[0])}}-{{ getTime(group.meetingTime[1]) }}
+                {{ getAbrev(group.meetingDays) }} @
+                {{ getTime(group.meetingTime[0]) }}-{{
+                  getTime(group.meetingTime[1])
+                }}
               </p>
             </router-link>
           </div>
@@ -48,7 +45,6 @@
       </div>
     </ul>
   </div>
-
 </template>
 
 <script>
@@ -106,6 +102,7 @@ export default {
   max-width: 250px;
   min-width: 250px;
   margin-top: 4px;
+  padding-top: 0;
 }
 
 .group-card {
@@ -115,19 +112,18 @@ export default {
   background-color: white;
   border: solid 2px white;
   transition: padding-top 0.1s, padding-bottom 0.1s;
-  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
-  &:hover{
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  &:hover {
     padding-top: 5%;
     padding-bottom: 5%;
     border-image: $orange-gradient;
     border-image-slice: 1;
     border-width: 2px;
 
-    #instructorText{
+    #instructorText {
       font-size: 15px;
       color: $dark;
     }
-
   }
   a {
     text-decoration: none;
@@ -135,12 +131,11 @@ export default {
 }
 
 .current-group {
-
   background-image: $orange-gradient;
   border: none;
 
   p {
-    // color: white;
+    color: white;
   }
 }
 
@@ -149,12 +144,12 @@ export default {
   margin: 0;
   color: $secondary;
 }
-#group-button{
-  background-color:$transparent-dark;
+#group-button {
+  background-color: $transparent-dark;
   color: white;
   border: solid 2px $primary;
 
-  &:hover{
+  &:hover {
     border-image: $orange-gradient;
     border-image-slice: 1;
     border-width: 2px;

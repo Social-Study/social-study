@@ -24,7 +24,8 @@ async function getUserGroups(uid) {
     });
     return Promise.all(groupList);
   } catch (error) {
-    console.log("getUserGroup: " + error);
+    //  Catch error loading user groups
+    // console.log("getUserGroup: " + error);
   }
 }
 

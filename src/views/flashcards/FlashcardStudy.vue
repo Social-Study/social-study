@@ -7,19 +7,20 @@
     <!-- Page Title -->
     <page-title>
       <template slot="center">
-        {{deckName}}
+        {{ deckName }}
       </template>
       <template slot="left">
         <button
-          @click="shuffleDeck"
           class="btn"
-          :class="isShuffled ? 'btn-primary': 'btn-action'"
+          :class="isShuffled ? 'btn-primary' : 'btn-action'"
+          @click="shuffleDeck"
         >
           <!-- Icon flashes when shuffle enabled -->
           <i
             :class="isShuffled ? 'animated flash' : ''"
             class="fas fa-random"
-          ></i></button>
+          ></i>
+        </button>
       </template>
     </page-title>
 
@@ -27,44 +28,52 @@
     <div class="page-content">
       <div class="center-content">
         <button
-          @click.prevent="prevCard"
-          class="btn btn-action btn-primary btn-lg s-circle"
+          class="btn btn-action btn-primary btn-lg"
           :class="cardIndex === 0 ? 'disabled' : ''"
-        > <i class="fas fa-arrow-left"></i>
+          @click.prevent="prevCard"
+        >
+          <i class="fas fa-arrow-left"></i>
         </button>
         <div class="flashcard-container">
           <div
             class="flashcard"
-            :style="{backgroundColor: cardColor}"
+            :style="{ backgroundColor: cardColor }"
             @click.prevent="flipCard"
           >
             <h1 class="flashcard-content">
-              {{currentContent}}
+              {{ currentContent }}
             </h1>
           </div>
         </div>
         <!-- Button icon and color changes when user reaches the end -->
         <button
-          @click.prevent="nextCard"
-          class="btn btn-action btn-lg s-circle"
+          class="btn btn-action btn-lg"
           style="transition: .5s;"
-          :class="cardIndex === termList.length -1 ? 'btn-success btn-rotate' : 'btn-primary'"
+          :class="
+            cardIndex === termList.length - 1
+              ? 'btn-success btn-rotate'
+              : 'btn-primary'
+          "
+          @click.prevent="nextCard"
         >
           <i
-            :class="cardIndex === termList.length -1 ? 'fa-undo-alt' : 'fa-arrow-right'"
+            :class="
+              cardIndex === termList.length - 1
+                ? 'fa-undo-alt'
+                : 'fa-arrow-right'
+            "
             class="fas fa-arrow-right"
           >
           </i>
         </button>
       </div>
-      <h1 id="cardIndex">{{cardIndex + 1}} / {{termList.length}}</h1>
+      <h1 id="cardIndex">{{ cardIndex + 1 }} / {{ termList.length }}</h1>
     </div>
   </div>
   <div
     v-else
     class="loading loading-lg"
   ></div>
-
 </template>
 
 <script>
@@ -110,7 +119,6 @@ export default {
 
     // Load from different firestore location if the deck if public or private
     if (this.isPrivate) {
-      console.log("private set");
       flashcardCollection = flashcardCollection
         .doc("private")
         .collection(this.$store.getters.uid)
@@ -135,14 +143,22 @@ export default {
 
           this.currentContent = this.termList[0];
           this.dataloaded = true;
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
         }
+        // else {
+        // console.log("No such document!");
+        // }
       })
       .catch(error => {
-        console.log("Error getting document:", error);
+        // console.log("Error getting document:", error);
       });
+  },
+  //creates the key event listener
+  beforeMount() {
+    window.addEventListener("keyup", this.keyPressed);
+  },
+  //destroys the key event listener
+  beforeDestroy() {
+    window.removeEventListener("keyup", this.keyPressed);
   },
   methods: {
     shuffleDeck() {
@@ -292,14 +308,6 @@ export default {
           break;
       }
     }
-  },
-  //creates the key event listener
-  beforeMount() {
-    window.addEventListener("keyup", this.keyPressed);
-  },
-  //destroys the key event listener
-  beforeDestroy() {
-    window.removeEventListener("keyup", this.keyPressed);
   }
 };
 </script>
