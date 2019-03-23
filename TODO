@@ -1,5 +1,4 @@
 Branding:
-  ☐ PURPLE Social Study icon for the favicon @high
   ☐ Think of better slogan.
 
 General:
@@ -88,15 +87,10 @@ Members Page:
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
-  ✘ Automatically update to the file picker's picture so user can preview what it will look like @low @cancelled(19-03-23 11:18)
   ☐ Create a placeholder for when the user doesn't have any study groups. Don't just show an empty table
 
 Side Bar:
   ☐ Add more Study Group information (meeting time, location, extra info) possibly do this in a modal
-
-NavBar:
-  ✔ Redesign dnavbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility @done(19-03-23 11:18)
-    Maybe a complete redesign or maybe just some improvements
 
 Create Study Group:
   ☐ Add transitions to make it look nice
@@ -116,7 +110,6 @@ Animations / Transitions:
 
 Possible Features (Time Permitting):
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
-  ✘ Video/Audio Chat with WebRTC @cancelled(19-03-23 11:19)
   ☐ Make the site mobile friendly.
     Hardest part is making the navbar change into a mobile form.
   ☐ Indicators that show online group members in the sidebar
@@ -126,6 +119,11 @@ Possible Features (Time Permitting):
     https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
 
 Archive:
+  ✔ PURPLE Social Study icon for the favicon @high @done(19-03-23 15:39) @project(Branding)
+  ✘ Automatically update to the file picker's picture so user can preview what it will look like @low @cancelled(19-03-23 11:18) @project(Profile Settings)
+  ✔ Redesign dnavbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility @done(19-03-23 11:18) @project(NavBar)
+    Maybe a complete redesign or maybe just some improvements
+  ✘ Video/Audio Chat with WebRTC @cancelled(19-03-23 11:19) @project(Possible Features (Time Permitting))
   ✔ Apply new transparency effects to all modal backgrounds @low @done(19-03-22 17:42) @project(General)
   ✔ Update all date / time pickers to use new component library @done(19-03-22 17:42) @project(General)
   ✔ Show description when user tries to join the group... @done(19-03-22 17:42) @project(General)
