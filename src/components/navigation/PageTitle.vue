@@ -32,13 +32,6 @@ export default {
   width: 100%;
 }
 
-// hr {
-//   margin: 0px;
-//   height: 1px;
-//   background-image: $orange-gradient;
-//   border: none;
-// }
-
 .header-container {
   padding: 4px 8px;
   background-color: white;
@@ -68,7 +61,7 @@ export default {
     font-family: $primary-font;
     font-weight: 400;
     border-bottom: 1px solid $dark;
-    background-color: $light;
+    background-color: transparent;
   }
 
   .search-input {

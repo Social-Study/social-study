@@ -122,16 +122,18 @@ p > i {
 
 #editBtn {
   cursor: pointer;
-  border: none;
-  /* padding: 0.3em 0.5em 0.3em 0.5em; */
-  width: 100%;
   background-color: $primary;
+  width: 100%;
   color: white;
   font-size: 120%;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
   font-weight: 400;
-}
+  border: none;
 
-#editBtn:hover {
-  background-color: lighten($primary, 10);
+  &:hover {
+    background-color: lighten($primary, 10);
+  }
 }
 </style>

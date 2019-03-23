@@ -1,9 +1,16 @@
 <template>
   <!-- Messages from other members -->
-  <div v-if="!sender" class="message" @click="showDate = !showDate">
+  <div
+    v-if="!sender"
+    class="message"
+    @click="showDate = !showDate"
+  >
     <div id="details-container">
       <!-- Only show the sender's name if they didn't send the previous message -->
-      <div v-if="showName" class="message-sender">
+      <div
+        v-if="showName"
+        class="message-sender"
+      >
         {{ details.displayName }}
       </div>
       <transition
@@ -12,7 +19,10 @@
         leave-active-class="animated fadeOut"
       >
         >
-        <div v-show="showDate" class="message-date">{{ getSent }}</div>
+        <div
+          v-show="showDate"
+          class="message-date"
+        >{{ getSent }}</div>
       </transition>
     </div>
     <div class="message-inline">
@@ -27,21 +37,29 @@
         />
       </div>
       <!-- When the avatar is not displayed, add a margin of the same size -->
-      <p class="message-content" :class="showName ? '' : 'add-space'">
-        {{ details.message }}
-      </p>
+      <p
+        class="message-content"
+        :class="showName ? '' : 'add-space'"
+      > {{ details.message }} </p>
     </div>
   </div>
 
   <!-- Messages from logged-in user -->
-  <div v-else class="message sent" @click="showDate = !showDate">
+  <div
+    v-else
+    class="message sent"
+    @click="showDate = !showDate"
+  >
     <div id="details-container">
       <transition
         name="dateTransition"
         enter-active-class="animated fadeIn slow"
         leave-active-class="animated fadeOut"
       >
-        <div v-show="showDate" class="message-date">{{ getSent }}</div>
+        <div
+          v-show="showDate"
+          class="message-date"
+        >{{ getSent }}</div>
       </transition>
     </div>
     <div class="message-inline">

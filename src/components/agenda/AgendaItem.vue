@@ -123,6 +123,11 @@ export default {
     background-image: $orange-gradient;
     color: white;
     box-shadow: $shadow-heavy;
+
+    h3 {
+      font-weight: 700;
+    }
+
     #days {
       color: $dark;
     }

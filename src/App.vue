@@ -2,9 +2,18 @@
   <div id="app">
     <NavBar v-if="$route.name !== 'landing'" />
     <router-view v-if="!$route.params.groupID" />
-    <side-bar v-else :show="sidebarActive">
-      <router-view id="router-view" :class="getActive" />
-      <chat :show="chatActive" :user="user" />
+    <side-bar
+      v-else
+      :show="sidebarActive"
+    >
+      <router-view
+        id="router-view"
+        :class="getActive"
+      />
+      <chat
+        :show="chatActive"
+        :user="user"
+      />
     </side-bar>
   </div>
 </template>
@@ -71,9 +80,6 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Pacifico");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
-// @import "node_modules/spectre.css/src/spectre-icons.scss";
-// @import url("https://rsms.me/inter/inter-ui.css");
-// @import url("https://fonts.googleapis.com/css?family=Montserrat:400,600");
 
 html,
 body {

@@ -32,6 +32,7 @@ export default {
 .date-header {
   color: $dark;
   font-size: 1em;
+  text-align: left;
   width: 200px;
   margin: 0 0 10px 0;
 }

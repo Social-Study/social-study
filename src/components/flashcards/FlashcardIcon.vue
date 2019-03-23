@@ -23,7 +23,10 @@
         data-tooltip="Toggle Visibility"
         @click="$emit('toggle')"
       >
-        <i class="far" :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"></i>
+        <i
+          class="far"
+          :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"
+        ></i>
       </div>
     </div>
     <!-- title -->
@@ -47,7 +50,10 @@
       />
       {{ info.creatorName }}
     </div>
-    <div id="studyBtn" @click="goStudy">Study</div>
+    <div
+      id="studyBtn"
+      @click="goStudy"
+    >Study</div>
   </div>
 </template>
 
@@ -111,7 +117,6 @@ $card-height: 230px;
   min-width: $card-width;
   max-width: $card-width;
   // padding: 1em;
-  border: 2px solid $secondary-light;
 
   display: flex;
   flex-direction: column;

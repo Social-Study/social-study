@@ -1,7 +1,10 @@
 // The details of a specific agenda item.
 
 <template>
-  <div v-if="selectedItem !== null" class="item-detail">
+  <div
+    v-if="selectedItem !== null"
+    class="item-detail"
+  >
     <div id="title-container">
       <h1 id="title">
         {{ selectedItem.title }}
@@ -60,7 +63,7 @@ export default {
 .item-detail {
   background-color: white;
   padding: 1em;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   box-shadow: $shadow-hovered;
 }
 
