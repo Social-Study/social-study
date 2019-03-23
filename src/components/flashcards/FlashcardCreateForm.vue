@@ -104,17 +104,14 @@ export default {
   height: 250px;
   width: 250px;
   margin: 0 40px 40px 0;
-  // box-shadow: $shadow-hovered;
-  border: 2px solid $secondary-light;
+  background-color:white;
 
   .form-label {
     color: $secondary;
   }
 
   &:hover {
-    box-shadow: $shadow-heavy;
-    border-image: $orange-gradient;
-    border-image-slice: 1;
+    box-shadow: $shadow-hovered;
   }
 }
 #input-term {

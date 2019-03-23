@@ -346,8 +346,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: $light-grey;
-  border-radius: 10px;
+  background-color: white;
   width: 500px;
   height: 300px;
   box-shadow: $shadow-heavy;

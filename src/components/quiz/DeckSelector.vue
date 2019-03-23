@@ -172,6 +172,7 @@ export default {
   #deck {
     cursor: pointer;
     user-select: none;
+    background-color: white;
 
     width: 288px;
     height: 60px;
@@ -180,8 +181,6 @@ export default {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-
-    border: 2px solid $secondary-light;
 
     #deck-details {
       text-align: center;
@@ -220,7 +219,7 @@ export default {
       background-image: $orange-gradient;
       border: none;
       color: white;
-      box-shadow: $shadow-hovered;
+      box-shadow: $shadow-heavy;
 
       #deck-details #deck-author {
         color: $dark;
@@ -230,7 +229,7 @@ export default {
       border-image: $orange-gradient;
       border-image-slice: 1;
       border-width: 2px;
-      box-shadow: $shadow-heavy;
+      box-shadow: $shadow-hovered;
     }
   }
 }

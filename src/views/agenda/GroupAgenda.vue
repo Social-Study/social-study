@@ -349,7 +349,6 @@ export default {
   overflow: auto;
   flex: 1;
 }
-
 .item-detail-container {
   padding: 20px;
   height: 100%;

@@ -3,6 +3,14 @@
     <!-- Notification displays when a new code is generated -->
     <notifications group="generateInvite" position="left top" />
     <page-title>
+      <template slot="left">
+        <button
+          class="btn btn-primary"
+          @click="inviteMember()"
+        >
+          Invite Member <i class="fas fa-plus"></i>
+        </button>
+      </template>
       <template slot="center"
         >Members</template
       >
@@ -19,9 +27,6 @@
         appear
         class="content-container"
       >
-        <!-- Invite New Member Card -->
-        <member-card key="addButton" add @click.native="inviteMember()">
-        </member-card>
 
         <!-- Show card for each group member -->
         <member-card

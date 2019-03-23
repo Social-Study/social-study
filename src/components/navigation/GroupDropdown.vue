@@ -116,9 +116,6 @@ export default {
   &:hover {
     padding-top: 5%;
     padding-bottom: 5%;
-    border-image: $orange-gradient;
-    border-image-slice: 1;
-    border-width: 2px;
 
     #instructorText {
       font-size: 15px;
@@ -150,9 +147,8 @@ export default {
   border: solid 2px $primary;
 
   &:hover {
-    border-image: $orange-gradient;
-    border-image-slice: 1;
-    border-width: 2px;
+    background-color: white;
+    color: $primary;
   }
 }
 </style>

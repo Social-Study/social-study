@@ -61,6 +61,13 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles.scss";
 
+.item-detail{
+  background-color: white;
+  padding: 1em;
+  margin-bottom: 10px;
+  box-shadow: $shadow-hovered;
+}
+
 #title-container {
   display: flex;
   flex-flow: row nowrap;

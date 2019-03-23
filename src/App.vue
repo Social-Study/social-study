@@ -70,13 +70,13 @@ export default {
   }
 };
 </script>
-
 // Global Styles
 <style lang="scss">
 @import "@/styles.scss";
 @import "node_modules/animate.css/animate";
 @import "node_modules/spectre.css/src/spectre.scss";
 @import "node_modules/spectre.css/src/spectre-exp.scss";
+@import "node_modules/spectre.css/src/spectre-icons.scss";
 @import url("https://fonts.googleapis.com/css?family=Pacifico");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");

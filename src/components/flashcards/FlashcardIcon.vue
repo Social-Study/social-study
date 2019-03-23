@@ -1,60 +1,54 @@
 <template>
   <!-- Flashcard Icon -->
-  <div id="flashcard">
-    <!-- Title -->
-    <h2 id="title">{{ info.title }}</h2>
-    <!-- Created -->
-    <p id="created">
-      <i>Created on</i> {{ info.creationDate.toDate().toLocaleDateString() }}
-    </p>
-    <!-- Last Updated -->
-    <p id="modified">
-      <i>Updated</i> {{ calcDays(info.lastUpdated.toDate()) }}
-    </p>
-    <!-- Creator Avatar and Name Chip -->
-    <!-- TODO: Figure out how to use my existing avatar component -->
-    <div class="chip text-ellipsis">
-      <!-- Set background to transparent when there is an image. Fixes fuzzy outline  -->
-      <img
-        :src="info.creatorPhoto"
-        class="avatar avatar-sm"
-        :class="info.creatorPhoto !== '' ? 'chip-transp' : ''"
-      />
-      {{ info.creatorName }}
-    </div>
-    <!-- Edit and Study Buttons -->
-    <div id="button-container">
-      <!-- Edit only shows if you are the deck creator -->
-      <button
-        v-if="$store.getters.uid === info.creatorUID"
-        id="editBtn"
-        @click="
-          $router.push({
-            name: 'editFlashcards',
-            params: { deckID: info.id, isPrivate: isPrivate }
-          })
-        "
-      >
-        Edit
-      </button>
-      <div
-        v-if="info.creatorUID === $store.getters.uid"
-        id="indicator"
-        class="tooltip tooltip-bottom"
-        data-tooltip="Toggle Visibility"
-        @click="$emit('toggle')"
-      >
-        <i
-          class="far"
-          :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"
-        ></i>
+    <div id="flashcard">
+        <!-- Edit and Study Buttons -->
+        <div id="button-container">
+          <!-- Edit only shows if you are the deck creator -->
+          <button
+            v-if="$store.getters.uid === info.creatorUID"
+            id="editBtn"
+            @click="
+              $router.push({
+                name: 'editFlashcards',
+                params: { deckID: info.id, isPrivate: isPrivate }
+              })
+            "
+          >
+            Edit
+          </button>
+          <div
+            v-if="info.creatorUID === $store.getters.uid"
+            id="indicator"
+            class="tooltip tooltip-bottom"
+            data-tooltip="Toggle Visibility"
+            @click="$emit('toggle')"
+          >
+            <i class="far" :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </div>
+        </div>
+                  <!-- title -->
+          <span id="title">{{ info.title }}</span>
+      <!-- Created -->
+      <p id="created">
+        <i>Created on</i> {{ info.creationDate.toDate().toLocaleDateString() }}
+      </p>
+      <!-- Last Updated -->
+      <p id="modified">
+        <i>Updated</i> {{ calcDays(info.lastUpdated.toDate()) }}
+      </p>
+      <!-- Creator Avatar and Name Chip -->
+      <!-- TODO: Figure out how to use my existing avatar component -->
+      <div class="chip text-ellipsis">
+        <!-- Set background to transparent when there is an image. Fixes fuzzy outline  -->
+        <img
+          :src="info.creatorPhoto"
+          class="avatar avatar-sm"
+          :class="info.creatorPhoto !== '' ? 'chip-transp' : ''"
+        />
+        {{ info.creatorName }}
       </div>
-      <button
-        id="studyBtn"
-        @click="goStudy"
-      >Study</button>
+        <div id="studyBtn" @click="goStudy">Study</div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -105,66 +99,37 @@ export default {
 @import "@/styles.scss";
 
 $card-width: 288px;
-$card-height: 218px;
+$card-height: 230px;
 
 /* Icon itself */
 #flashcard {
   background-color: white;
+  padding-top: 5px;
+
   min-height: $card-height;
   max-height: $card-height;
   min-width: $card-width;
   max-width: $card-width;
-  padding: 1em;
+  // padding: 1em;
   border: 2px solid $secondary-light;
-
+  
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  &:hover {
-    border-image: $orange-gradient;
-    border-image-slice: 1;
-    box-shadow: $shadow-heavy;
+  &:hover{
+    box-shadow: $shadow-hovered;
   }
 }
 
-#indicator {
-  cursor: pointer;
-  position: relative;
-  display: inline-block;
-
-  top: 0px;
-  left: 0px;
-
-  margin: 5px;
-  height: 30px;
-  width: 30px;
-  padding: 5px;
-  border-radius: 50%;
-  background-color: whitesmoke;
-  align-self: center;
-
-  &:hover {
-    background-color: darken(whitesmoke, 20);
-  }
-
-  i.fa-eye {
-    color: $success-color;
-  }
-
-  i.fa-eye-slash {
-    color: $error-color;
-  }
-}
 
 #title {
   font-family: $secondary-font;
   font-weight: 700;
+  font-size: 30px;
   white-space: nowrap;
-  margin: 0;
   text-overflow: ellipsis;
   max-width: $card-width;
-  max-height: 100px;
   text-align: center;
 }
 
@@ -195,40 +160,58 @@ p > i {
 }
 
 #button-container {
-  align-self: space-between;
-  margin-top: 8px;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  align-items: center;
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 10px;
 }
 
 #editBtn {
   cursor: pointer;
+  float:left;
   border: none;
-  padding: 0.3em;
   background-color: transparent;
   color: lighten($secondary, 30);
   font-weight: 500;
+ 
+  &:hover {
+    // color: $primary;
+    color: $success-color;
+  }
 }
 
-#editBtn:hover {
-  // color: $primary;
-  color: $success-color;
+
+#indicator {
+  cursor: pointer;
+  float:right;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  align-self: center;
+  color: darken(whitesmoke, 20);
+
+  i.fa-eye:hover {
+    color: $success-color;
+  }
+
+  i.fa-eye-slash:hover {
+    color: $error-color;
+  }
 }
 
 #studyBtn {
   cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  padding: 4px 8px 4px 8px;
   background-color: $primary;
+  width: 100%;
   color: white;
+  font-size: 120%;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
   font-weight: 400;
-}
 
-#studyBtn:hover {
-  /* color: hsl(0, 0%, 85%); */
-  background-color: lighten($primary, 10);
+  &:hover{
+    background-color: lighten($primary, 10);
+  }
 }
 </style>

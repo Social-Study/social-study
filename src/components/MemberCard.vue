@@ -15,16 +15,15 @@
   <div
     v-else
     class="profile-card"
-    :class="description !== null ? 'tooltip tooltip-bottom' : ''"
-    :data-tooltip="description"
   >
+    <div class="profile-background"></div>
     <div class="gradient-border">
       <Avatar
         class="profile-image"
         :user="{ photoURL: photoURL, displayName: displayName }"
       />
     </div>
-    <h2 style="width: 100%;" class="text-ellipsis">
+    <h2 style="width: 100%;" class="text-ellipsis" id="member-name">
       {{ displayName }}
       <!-- Show crown icon on the owner's card -->
       <i
@@ -33,6 +32,7 @@
         class="fas fa-crown"
       ></i>
     </h2>
+    <p class="profile-desc">{{ description }}</p>
   </div>
 </template>
 
@@ -80,11 +80,8 @@ export default {
   height: 300px;
   width: 300px;
   margin: 0 20px 20px 0px;
-  // border-radius: 16px;
-  background-color: white;
-  box-shadow: $shadow;
   user-select: none;
-  border: 2px solid $secondary-light;
+  z-index: 1;
 
   .gradient-underline {
     display: none;
@@ -94,6 +91,27 @@ export default {
     margin-top: -15px;
     background-image: $orange-gradient;
   }
+    &:hover{
+    .profile-background{
+      box-shadow: $shadow-hovered;
+    }
+
+  }
+}
+
+.profile-desc{
+  color: $secondary-light;
+  font-size: 14px;
+  padding: 1em;
+}
+
+.profile-background{
+  margin-top: 70px;
+  position: absolute;
+  background-color:white;
+  width: 300px;
+  height: 200px;
+  z-index: -1;
 }
 
 .hoverable {
@@ -124,11 +142,13 @@ h2 {
 
 // gradient background around border
 .gradient-border {
-  margin: 30px auto;
-  height: 160px;
-  width: 160px;
+  margin: 10px auto;
+  margin-top: 20px;
+  height: 110px;
+  width: 110px;
   border-radius: 50%;
   background-image: $blue-gradient;
+  z-index: 10;
 }
 
 // Icon on the new members button
@@ -148,8 +168,8 @@ h2 {
 
 // Circle background between the gradient and add icon
 .add-button {
-  width: 140px;
-  height: 140px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background-color: $light;
   user-select: none;
@@ -162,102 +182,13 @@ h2 {
 // Image on top of the gradient background
 .profile-image {
   position: relative;
-  top: 10px;
-  width: 140px;
-  height: 140px;
+  top: 5px;
+  width: 100px;
+  height: 100px;
   font-size: 60px;
 }
 
-// // Individual info card
-// .profile-card {
-//   // cursor: pointer;
-//   height: 200px;
-//   width: 200px;
-//   background-color: transparent;
-//   user-select: none;
-
-//   .gradient-underline {
-//     display: none;
-//     height: 4px;
-//     width: 60%;
-//     margin: auto;
-//     margin-top: -15px;
-//     background-image: $orange-gradient;
-//   }
-// }
-
-// .hoverable {
-//   &:hover {
-//     box-shadow: $shadow-hovered;
-//     h2 {
-//       font-weight: 700;
-//     }
-//     .gradient-underline {
-//       display: block;
-//     }
-
-//     // .add-button > .button-icon {
-//     //   transform: scale(1.05);
-//     //   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-//     // }
-//   }
-// }
-
-// h2 {
-//   margin-top: 5px;
-//   font-size: 1.2em;
-// }
-
-// // gradient background around border
-// .gradient-border {
-//   margin: 0px auto;
-//   height: 110px;
-//   width: 110px;
-//   border-radius: 50%;
-//   background-image: $blue-gradient;
-// }
-
-// .add {
-//   background-image: $nav-gradient;
-//   cursor: pointer;
-//   display: flex;
-//   flex-flow: row nowrap;
-//   justify-content: center;
-//   align-items: center;
-// }
-
-// // Icon on the new members button
-// .button-icon {
-//   text-align: center;
-//   font-size: 4em;
-//   top: 10px;
-//   position: relative;
-//   display: flex;
-//   flex-flow: row nowrap;
-//   justify-content: center;
-//   align-items: center;
-// }
-
-// // Circle background between the gradient and add icon
-// .add-button {
-
-//   position: relative;
-//   top: 5px;
-//   left: 5px;
-//   width: 100px;
-//   height: 100px;
-
-//   border-radius: 50%;
-//   background-color: $light;
-//   user-select: none;
-// }
-
-// // Image on top of the gradient background
-// .profile-image {
-//   position: relative;
-//   top: 5px;
-//   width: 100px;
-//   height: 100px;
-//   font-size: 60px;
-// }
+#member-name{
+  font-size: 20px;
+}
 </style>

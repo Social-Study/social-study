@@ -30,11 +30,9 @@ export default {
 @import "@/styles.scss";
 
 .date-header {
-  // background-color: $secondary-light;
-  background-color: $primary;
+  color: $dark;
   font-size: 1em;
   width: 200px;
   margin: 0 0 10px 0;
-  color: white;
 }
 </style>
