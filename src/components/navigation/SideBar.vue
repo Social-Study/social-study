@@ -1,9 +1,17 @@
 <template>
   <div class="full-height">
-    <div v-if="activeGroup" id="sidebar" :class="show ? 'active' : 'collapsed'">
+    <div
+      v-if="activeGroup"
+      id="sidebar"
+      :class="show ? 'active' : 'collapsed'"
+    >
       <ul class="menu">
         <!-- Group Details -->
-        <li v-show="show" class="menu-item" style="padding-top: 10px;">
+        <li
+          v-show="show"
+          class="menu-item"
+          style="padding-top: 10px;"
+        >
           <div class="tile tile-centered">
             <div class="tile-content">
               <h5>{{ activeGroup.className }}</h5>
@@ -11,21 +19,33 @@
             </div>
           </div>
         </li>
-        <hr v-show="show" class="section-divider" />
+        <hr
+          v-show="show"
+          class="section-divider"
+        />
 
         <!-- Home Link -->
-        <li class="menu-item" :class="show ? 'text-left' : 'text-center'">
+        <li
+          class="menu-item"
+          :class="show ? 'text-left' : 'text-center'"
+        >
           <router-link
             :class="$route.name === 'home' ? 'active' : ''"
             :to="{ name: 'home' }"
           >
-            <i :class="{ 'large-icon': !show }" class="fas fa-home"></i>
+            <i
+              :class="{ 'large-icon': !show }"
+              class="fas fa-home"
+            ></i>
             <span v-show="show"> Home </span>
           </router-link>
         </li>
 
         <!-- Flashcards Link -->
-        <li class="menu-item" :class="show ? 'text-left' : 'text-center'">
+        <li
+          class="menu-item"
+          :class="show ? 'text-left' : 'text-center'"
+        >
           <router-link
             :class="
               $route.name === 'flashcards'
@@ -40,13 +60,19 @@
             "
             :to="{ name: 'flashcards' }"
           >
-            <i :class="{ 'large-icon': !show }" class="fas fa-sticky-note"></i>
+            <i
+              :class="{ 'large-icon': !show }"
+              class="fas fa-sticky-note"
+            ></i>
             <span v-show="show"> Flashcards</span>
           </router-link>
         </li>
 
         <!-- Quizzes Link-->
-        <li class="menu-item" :class="show ? 'text-left' : 'text-center'">
+        <li
+          class="menu-item"
+          :class="show ? 'text-left' : 'text-center'"
+        >
           <router-link
             :to="{ name: 'createQuiz' }"
             :class="
@@ -56,17 +82,23 @@
                 ? 'active'
                 : ''
             "
-            ><i :class="{ 'large-icon': !show }" class="fas fa-pencil-alt"></i>
+          ><i
+              :class="{ 'large-icon': !show }"
+              class="fas fa-pencil-alt"
+            ></i>
             <span v-show="show"> Quizzes</span>
           </router-link>
         </li>
 
         <!-- Agenda Link-->
-        <li class="menu-item" :class="show ? 'text-left' : 'text-center'">
+        <li
+          class="menu-item"
+          :class="show ? 'text-left' : 'text-center'"
+        >
           <router-link
             :to="{ name: 'agenda' }"
             :class="$route.name === 'agenda' ? 'active' : ''"
-            ><i
+          ><i
               :class="{ 'large-icon': !show }"
               class="fas fa-calendar-alt"
             ></i>
@@ -75,7 +107,10 @@
         </li>
 
         <!-- Notes Link -->
-        <li class="menu-item" :class="show ? 'text-left' : 'text-center'">
+        <li
+          class="menu-item"
+          :class="show ? 'text-left' : 'text-center'"
+        >
           <router-link
             :to="{ name: 'notes' }"
             :class="
@@ -86,14 +121,23 @@
                 : ''
             "
           >
-            <i :class="{ 'large-icon': !show }" class="fas fa-file"></i>
+            <i
+              :class="{ 'large-icon': !show }"
+              class="fas fa-file"
+            ></i>
             <span v-show="show"> Notes</span>
           </router-link>
         </li>
 
         <!-- Group Members Link -->
-        <li class="menu-item" :class="show ? 'text-left' : 'text-center'">
-          <div v-show="show" class="menu-badge">
+        <li
+          class="menu-item"
+          :class="show ? 'text-left' : 'text-center'"
+        >
+          <div
+            v-show="show"
+            class="menu-badge"
+          >
             <label class="member-num label label-primary">
               {{ activeGroup.members.length }}
             </label>
@@ -101,7 +145,10 @@
           <router-link
             :class="$route.name === 'members' ? 'active' : ''"
             :to="{ name: 'members' }"
-            ><i :class="{ 'large-icon': !show }" class="fas fa-user-circle"></i>
+          ><i
+              :class="{ 'large-icon': !show }"
+              class="fas fa-user-circle"
+            ></i>
             <span v-show="show"> Members</span>
           </router-link>
         </li>
@@ -116,15 +163,24 @@
             :to="{ name: 'settings' }"
             :class="$route.name === 'settings' ? 'active' : ''"
           >
-            <i :class="{ 'large-icon': !show }" class="fas fa-cog"></i>
+            <i
+              :class="{ 'large-icon': !show }"
+              class="fas fa-cog"
+            ></i>
             <span v-show="show"> Settings</span>
           </router-link>
         </li>
       </ul>
 
       <!-- Sidebar Toggle Button -->
-      <a id="toggle-button" @click="$store.commit('toggleSidebarActive')">
-        <i class="fas" :class="show ? 'fa-arrow-left' : 'fa-arrow-right'"></i>
+      <a
+        id="toggle-button"
+        @click="$store.commit('toggleSidebarActive')"
+      >
+        <i
+          class="fas"
+          :class="show ? 'fa-arrow-left' : 'fa-arrow-right'"
+        ></i>
       </a>
     </div>
 
@@ -134,7 +190,10 @@
       <slot v-if="isMember && !isLoading"></slot>
 
       <!-- If they are not a member, show the generic error message -->
-      <div v-else-if="!isMember && !isLoading" style="margin-top: 10%;">
+      <div
+        v-else-if="!isMember && !isLoading"
+        style="margin-top: 10%;"
+      >
         <img
           style="width: 10em;"
           class="undraw-svg"
@@ -166,7 +225,6 @@ export default {
   },
   data() {
     return {
-      sidebarActive: false,
       activeGroup: null,
       isMember: false,
       isLoading: true
