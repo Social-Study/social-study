@@ -1,7 +1,9 @@
 <template>
   <!-- Note Icon -->
   <div id="note">
-    <span class="icon icon-delete" id="deleteBtn" @click="deleteNote(info.id)"></span>
+    <div class="button-container">
+      <span class="icon icon-delete" id="deleteBtn" @click="deleteNote(info.id)"></span>
+    </div>
     <!-- Title -->
     <h2 id="title">{{ info.title }}</h2>
     <div>
@@ -73,10 +75,12 @@ export default {
 }
 
 #title {
+  text-align: center;
   font-family: $secondary-font;
   font-weight: 700;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding-bottom: 30px;
   /* white-space: ; */
   max-width: 10em;
   max-height: 5em;
@@ -99,9 +103,8 @@ p > i {
 }
 
 #deleteBtn {
-  float:left;
-  padding: 10px;
-  margin: 15px;
+  float:right;
+  margin: 15px 15px 0 0;
   cursor: pointer;
   background-color: transparent;
   width: 10px;

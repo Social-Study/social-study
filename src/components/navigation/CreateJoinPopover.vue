@@ -206,9 +206,8 @@ hr {
   border: solid 2px $primary;
 
   &:hover {
-    border-image: $orange-gradient;
-    border-image-slice: 1;
-    border-width: 2px;
+    background-color: white;
+    color: $primary;
   }
 }
 </style>

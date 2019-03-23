@@ -82,7 +82,7 @@ export default {
     font-family: $primary-font;
     font-weight: 400;
     border-bottom: 1px solid $dark;
-    background-color: $light;
+    background-color: transparent;
   }
 
   button {

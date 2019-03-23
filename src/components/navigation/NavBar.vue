@@ -186,8 +186,8 @@ a.navbar-brand {
 
 #settings:hover,
 #logOutButton:hover {
-  background-image: $orange-gradient;
-  color: white;
+  background-color: white;
+  color: $primary;
 }
 
 #chat-button {
@@ -196,9 +196,8 @@ a.navbar-brand {
   border: solid 2px $primary;
 
   &:hover {
-    border-image: $orange-gradient;
-    border-image-slice: 1;
-    border-width: 2px;
+    color: $primary;
+    background-color: white;
   }
 }
 
