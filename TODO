@@ -15,8 +15,6 @@ General:
     - Chat notifications on. etc...
   ☐ Sequential loading animations when list are being displayed for the first time
        Every list is loading from firebase so there is a delay before the data is shown. Figure out how to get loading list to be animated 1-by-1 when shown for the first time
-  ☐ Small QOL Features
-    ☐ Always verify delete actions
   ☐ Do something with the extra study group info @high
   ☐ Confirmation email when signing up @high
 
@@ -71,10 +69,10 @@ Vuex Store:
     Reset the number when the user opens the chat sidebar
 
 Agenda:
+  ☐ Search bar?
   ☐ Should old events be purged when they expire?
     - Feel that the agenda would be too cluttered over time without it
     - Could possible have a load previous button...
-  ☐ Create new event input box should expand to the text's length
   ☐ Notifications?
 
 Homepage:
@@ -119,6 +117,8 @@ Possible Features (Time Permitting):
     https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
 
 Archive:
+  ✔ Always verify delete actions @done(19-03-23 17:50) @project(General)
+  ✘ Create new event input box should expand to the text's length @cancelled(19-03-23 17:50) @project(Agenda)
   ✔ PURPLE Social Study icon for the favicon @high @done(19-03-23 15:39) @project(Branding)
   ✘ Automatically update to the file picker's picture so user can preview what it will look like @low @cancelled(19-03-23 11:18) @project(Profile Settings)
   ✔ Redesign dnavbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility @done(19-03-23 11:18) @project(NavBar)
