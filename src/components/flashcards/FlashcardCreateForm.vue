@@ -104,7 +104,7 @@ export default {
   height: 250px;
   width: 250px;
   margin: 0 40px 40px 0;
-  background-color:white;
+  background-color: white;
 
   .form-label {
     color: $secondary;

@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="dataloaded"
-    class="content-container"
-    @keyup.space="flipCard()"
-  >
+  <div v-if="dataloaded" class="content-container" @keyup.space="flipCard()">
     <!-- Page Title -->
     <page-title>
       <template slot="center">
@@ -70,10 +66,7 @@
       <h1 id="cardIndex">{{ cardIndex + 1 }} / {{ termList.length }}</h1>
     </div>
   </div>
-  <div
-    v-else
-    class="loading loading-lg"
-  ></div>
+  <div v-else class="loading loading-lg"></div>
 </template>
 
 <script>

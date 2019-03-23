@@ -2,7 +2,11 @@
   <!-- Note Icon -->
   <div id="note">
     <div class="button-container">
-      <span class="icon icon-delete" id="deleteBtn" @click="deleteNote(info.id)"></span>
+      <span
+        id="deleteBtn"
+        class="icon icon-delete"
+        @click="deleteNote(info.id)"
+      ></span>
     </div>
     <!-- Title -->
     <h2 id="title">{{ info.title }}</h2>
@@ -17,12 +21,12 @@
         <i>Modified</i> {{ calcDays(info.lastUpdated.toDate()) }}
       </p>
     </div>
-      <button
-        id="editBtn"
-        @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
-      >
-        Open
-      </button>
+    <button
+      id="editBtn"
+      @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
+    >
+      Open
+    </button>
   </div>
 </template>
 
@@ -103,7 +107,7 @@ p > i {
 }
 
 #deleteBtn {
-  float:right;
+  float: right;
   margin: 15px 15px 0 0;
   cursor: pointer;
   background-color: transparent;

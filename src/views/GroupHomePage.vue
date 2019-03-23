@@ -9,12 +9,12 @@
 
     <div class="page-content">
       <div class="left-right-container">
-
         <div class="agenda-container">
-
           <div class="tile-header">
             <h4>Upcoming Events</h4>
-            <router-link :to="`/${$route.params.groupID}/agenda/`">View All</router-link>
+            <router-link :to="`/${$route.params.groupID}/agenda/`"
+              >View All</router-link
+            >
           </div>
           <div
             v-if="agendaLoading"
@@ -27,7 +27,6 @@
             v-else
             :key="item.creationDate.toDate().getTime()"
           >
-
             <agenda-item-date-header
               v-if="showDateHeader(index)"
               :date="item.date.toDate()"
@@ -47,13 +46,12 @@
           <div class="notes-container">
             <div class="tile-header">
               <h4>Recent Notes</h4>
-              <router-link :to="`/${$route.params.groupID}/notes/`">View All</router-link>
+              <router-link :to="`/${$route.params.groupID}/notes/`"
+                >View All</router-link
+              >
             </div>
             <div class="icon-container">
-              <div
-                v-if="notesLoading"
-                class="loading loading-lg"
-              ></div>
+              <div v-if="notesLoading" class="loading loading-lg"></div>
               <note-icon
                 v-for="note in recentNotes"
                 v-else
@@ -68,14 +66,13 @@
           <div class="flashcards-container">
             <div class="tile-header">
               <h4>Recent Flashcards</h4>
-              <router-link :to="`/${$route.params.groupID}/flashcards/`">View All</router-link>
+              <router-link :to="`/${$route.params.groupID}/flashcards/`"
+                >View All</router-link
+              >
             </div>
 
             <div class="icon-container">
-              <div
-                v-if="flashcardsLoading"
-                class="loading loading-lg"
-              ></div>
+              <div v-if="flashcardsLoading" class="loading loading-lg"></div>
               <flashcard-icon
                 v-for="deck in recentFlashcards"
                 v-else

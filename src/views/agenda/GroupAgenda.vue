@@ -2,10 +2,7 @@
   <div>
     <page-title>
       <template slot="left">
-        <button
-          class="btn btn-primary"
-          @click="showCreateForm(true)"
-        >
+        <button class="btn btn-primary" @click="showCreateForm(true)">
           Add Item <i class="fas fa-plus"></i>
         </button>
       </template>
@@ -24,10 +21,12 @@
         </button>
 
         <!-- Existing Item Button Bar -->
-        <div v-if="
+        <div
+          v-if="
             selectedIndex !== -1 &&
               selectedItem.creatorID === $store.getters.uid
-          ">
+          "
+        >
           <!-- Edit an existing agenda item that you've created -->
           <button
             v-if="!isShowingItemForm"
@@ -156,6 +155,23 @@ export default {
       newItem: null // New Agenda item emitted from AgendaCreateForm
     };
   },
+  computed: {
+    /**
+     * Show/Hide the save button depending on if all the required form fields are entered
+     */
+    validInfoEntered() {
+      if (
+        this.newItem !== null &&
+        this.newItem.title !== "" &&
+        this.newItem.description !== "" &&
+        this.newItem.date !== null
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
 
   created() {
     this.$bind(
@@ -176,7 +192,7 @@ export default {
   methods: {
     searchForItem(itemID) {
       for (let i = 0; i < this.agendaItems.length; i++) {
-        if (this.agendaItems[i].id === this.$route.params.itemID) {
+        if (this.agendaItems[i].id === itemID) {
           this.selectedItem = this.agendaItems[i];
           this.selectedIndex = i;
           break;
@@ -292,23 +308,6 @@ export default {
             this.selectedItem = null;
             this.selectedIndex = -1;
           });
-      }
-    }
-  },
-  computed: {
-    /**
-     * Show/Hide the save button depending on if all the required form fields are entered
-     */
-    validInfoEntered() {
-      if (
-        this.newItem !== null &&
-        this.newItem.title !== "" &&
-        this.newItem.description !== "" &&
-        this.newItem.date !== null
-      ) {
-        return true;
-      } else {
-        return false;
       }
     }
   }

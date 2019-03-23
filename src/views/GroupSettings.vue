@@ -1,7 +1,9 @@
 <template>
   <div v-if="userAuthorized && !isLoading">
     <page-title>
-      <template slot="center">Study Group Admin Settings</template>
+      <template slot="center"
+        >Study Group Admin Settings</template
+      >
       <template slot="right">
         <div class="popover popover-left">
           <button class="btn btn-action btn-error">
@@ -17,10 +19,7 @@
                 transferring ownership and leaving instead.
               </div>
               <div class="card-footer">
-                <button
-                  class="btn btn-error"
-                  @click="deleteGroup"
-                >
+                <button class="btn btn-error" @click="deleteGroup">
                   Yes, Delete the Group
                 </button>
               </div>
@@ -29,10 +28,7 @@
         </div>
       </template>
     </page-title>
-    <notifications
-      group="save"
-      position="left top"
-    />
+    <notifications group="save" position="left top" />
     <div class="container">
       <div class="columns">
         <div class="column col-5 col-mx-auto col-xl-10">
@@ -46,10 +42,9 @@
             >
               <!-- Class Name Input -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Class Name</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Class Name</label
+                >
                 <input
                   v-model="details.className"
                   class="col-9 form-input"
@@ -60,10 +55,9 @@
 
               <!-- Course Code Input (Optional) -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Course Code</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Course Code</label
+                >
                 <input
                   v-model="details.courseCode"
                   class="col-9 form-input"
@@ -74,10 +68,9 @@
 
               <!-- Class Instructor Input -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Instructor Name</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Instructor Name</label
+                >
                 <input
                   v-model="details.instructorName"
                   class="col-9 form-input"
@@ -88,10 +81,9 @@
 
               <!-- Class Meeting Location Input -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Meeting Location</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Meeting Location</label
+                >
                 <input
                   v-model="details.location"
                   class="col-9 form-input"
@@ -102,26 +94,22 @@
 
               <!-- Class Meeting Time Input -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Meeting Time</label>
-                <div
-                  id="time-group"
-                  class="col-9"
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Meeting Time</label
                 >
+                <div id="time-group" class="col-9">
                   <flat-pickr
+                    v-model="details.meetingTime[0]"
                     :config="config"
                     class="form-input"
-                    v-model="details.meetingTime[0]"
                     style="margin-right: 10px;"
                     placeholder="Time"
                   />
                   -
                   <flat-pickr
+                    v-model="details.meetingTime[1]"
                     :config="config"
                     class="form-input"
-                    v-model="details.meetingTime[1]"
                     style="margin-left: 10px;"
                     placeholder="Time"
                   />
@@ -130,10 +118,9 @@
 
               <!-- Meeting Days -->
               <div class="form-group day-selector">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Meeting Days</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Meeting Days</label
+                >
                 <div class="col-9 btn-group btn-group-block">
                   <button
                     :class="details.meetingDays.monday ? 'active' : ''"
@@ -175,10 +162,9 @@
 
               <!-- Website URL (Optional) -->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Course Website</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Course Website</label
+                >
                 <input
                   v-model="details.url"
                   class="col-9 form-input"
@@ -189,10 +175,9 @@
 
               <!-- Study Group Description (Optional-->
               <div class="form-group">
-                <label
-                  class=" col-3 form-label"
-                  for="input-example-1"
-                >Group Description</label>
+                <label class=" col-3 form-label" for="input-example-1"
+                  >Group Description</label
+                >
                 <textarea
                   v-model="details.description"
                   class="col-9 form-input"
@@ -200,7 +185,7 @@
                   placeholder="Optional Description"
                   style="resize: none;"
                 />
-                </div>
+              </div>
             </form>
             <div v-else class="loading loading-lg"></div>
             <div id="btn-container">
@@ -316,8 +301,6 @@ import PageTitle from "@/components/navigation/PageTitle";
 
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
-import ConfirmDatePlugin from "flatpickr/dist/plugins/confirmDate/confirmDate.js";
-import "flatpickr/dist/plugins/confirmDate/confirmDate.css";
 
 export default {
   name: "GroupSettings",

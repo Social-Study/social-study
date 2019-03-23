@@ -4,10 +4,7 @@
     <notifications group="generateInvite" position="left top" />
     <page-title>
       <template slot="left">
-        <button
-          class="btn btn-primary"
-          @click="inviteMember()"
-        >
+        <button class="btn btn-primary" @click="inviteMember()">
           Invite Member <i class="fas fa-plus"></i>
         </button>
       </template>
@@ -27,7 +24,6 @@
         appear
         class="content-container"
       >
-
         <!-- Show card for each group member -->
         <member-card
           v-for="member in memberDetails"

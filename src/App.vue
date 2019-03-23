@@ -2,18 +2,9 @@
   <div id="app">
     <NavBar v-if="$route.name !== 'landing'" />
     <router-view v-if="!$route.params.groupID" />
-    <side-bar
-      v-else
-      :show="sidebarActive"
-    >
-      <router-view
-        id="router-view"
-        :class="getActive"
-      />
-      <chat
-        :show="chatActive"
-        :user="user"
-      />
+    <side-bar v-else :show="sidebarActive">
+      <router-view id="router-view" :class="getActive" />
+      <chat :show="chatActive" :user="user" />
     </side-bar>
   </div>
 </template>

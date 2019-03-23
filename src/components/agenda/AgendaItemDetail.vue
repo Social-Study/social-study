@@ -30,13 +30,9 @@
 
 <script>
 import { format, distanceInWordsToNow } from "date-fns";
-import Avatar from "@/components/Avatar";
 
 export default {
   name: "AgendaItemDetail",
-  components: {
-    Avatar
-  },
   props: {
     selectedItem: {
       type: Object,
@@ -61,7 +57,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles.scss";
 
-.item-detail{
+.item-detail {
   background-color: white;
   padding: 1em;
   margin-bottom: 10px;

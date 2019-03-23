@@ -13,7 +13,10 @@ export default {
   name: "MessageBar",
   props: {
     visible: Boolean,
-    type: String
+    type: {
+      type: String,
+      default: "Error"
+    }
   },
   data() {
     return {};

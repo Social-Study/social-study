@@ -19,10 +19,7 @@
           :values="['Private', 'Public']"
           @toggle="toggled = $event"
         ></toggle-switch>
-        <button
-          class="btn btn-action split"
-          @click="saveDeck"
-        >
+        <button class="btn btn-action split" @click="saveDeck">
           <i class="fas fa-save"></i>
         </button>
         <button
@@ -35,30 +32,21 @@
       </template>
     </page-title>
 
-    <div
-      v-if="noTitle"
-      class="toast toast-error"
-    >
+    <div v-if="noTitle" class="toast toast-error">
       <button
         class="btn btn-clear float-right"
         @click="noTitle = false"
       ></button>
       Please Enter a title for the flashcard deck
     </div>
-    <div
-      v-if="!contentFilled"
-      class="toast toast-error"
-    >
+    <div v-if="!contentFilled" class="toast toast-error">
       <button
         class="btn btn-clear float-right"
         @click="contentFilled = true"
       ></button>
       Please Enter term and definition for each flashcard
     </div>
-    <div
-      v-if="!isLoading"
-      class="page-content"
-    >
+    <div v-if="!isLoading" class="page-content">
       <!-- maxlength="100" -->
       <flashcard-create-form
         v-for="(term, index) in terms"
@@ -70,10 +58,7 @@
         @addNew="addCard"
         @delete="deleteCard(index)"
       />
-      <div
-        class="addCard"
-        @click="addCard"
-      >
+      <div class="addCard" @click="addCard">
         <div class="gradient-border add">
           <div class="add-button">
             <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
@@ -81,10 +66,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-else
-      class="loading loading-lg"
-    ></div>
+    <div v-else class="loading loading-lg"></div>
   </div>
 </template>
 

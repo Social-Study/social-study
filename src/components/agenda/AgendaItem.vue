@@ -9,7 +9,7 @@
       @click="$emit('itemSelected')"
     >
       <h3>{{ item.title }}</h3>
-      <p  id="days">{{ getRemainingDays(item.date.toDate()) }}</p>
+      <p id="days">{{ getRemainingDays(item.date.toDate()) }}</p>
     </div>
   </div>
 </template>
@@ -91,10 +91,10 @@ export default {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  background-color:white;
+  background-color: white;
   font-family: $secondary-font;
 
-  #days{
+  #days {
     color: $secondary-light;
   }
 
@@ -107,7 +107,7 @@ export default {
   h3 {
     font-size: 1.3em;
 
-    &.selected{
+    &.selected {
       color: $dark;
     }
   }
@@ -116,15 +116,15 @@ export default {
     font-family: $primary-font;
   }
 
-  &:hover{
-     box-shadow: $shadow-hovered;
+  &:hover {
+    box-shadow: $shadow-hovered;
   }
   &.selected {
     background-image: $orange-gradient;
-    color:white;
+    color: white;
     box-shadow: $shadow-heavy;
-    #days{
-      color:$dark;
+    #days {
+      color: $dark;
     }
   }
 }

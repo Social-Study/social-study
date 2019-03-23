@@ -1,10 +1,8 @@
 <template>
   <header class="navbar">
     <section class="navbar-section">
-      <router-link
-        class="navbar-brand"
-        to="/dashboard"
-      ><img
+      <router-link class="navbar-brand" to="/dashboard"
+        ><img
           src="../../assets/icons/social_study_white.png"
           height="38px"
           width="38px"
@@ -43,20 +41,11 @@
         @mouseover="menuActive = true"
         @mouseout="menuActive = false"
       >
-        <Avatar
-          :user="firestoreUser"
-          class="avatar"
-        />
+        <Avatar :user="firestoreUser" class="avatar" />
 
-        <ul
-          v-show="menuActive == true"
-          class="menu settings-menu"
-        >
+        <ul v-show="menuActive == true" class="menu settings-menu">
           <li class="menu-item text-left">
-            <p
-              v-if="user"
-              class="h5 text-center text-ellipsis"
-            >
+            <p v-if="user" class="h5 text-center text-ellipsis">
               {{ user.displayName }}
             </p>
           </li>
@@ -68,24 +57,14 @@
               class="text-center c-pointer"
               @click="isSettingsActive = true"
             >
-              <i
-                class="fas fa-cog"
-                style="margin-right: 10px;"
-              ></i> Settings
+              <i class="fas fa-cog" style="margin-right: 10px;"></i> Settings
             </a>
           </li>
 
           <!-- Log Out Button -->
           <li class="menu-item text-left">
-            <a
-              id="logOutButton"
-              class="text-center"
-              @click="logOut"
-            >
-              <i
-                class="fas fa-sign-out-alt"
-                style="margin-right: 10px;"
-              ></i>
+            <a id="logOutButton" class="text-center" @click="logOut">
+              <i class="fas fa-sign-out-alt" style="margin-right: 10px;"></i>
               Log Out
             </a>
           </li>

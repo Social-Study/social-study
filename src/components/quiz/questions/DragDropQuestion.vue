@@ -11,7 +11,8 @@
         :draggable="term.draggable"
         :class="{ placed: !term.draggable }"
         :transfer-data="{ from: index, term: term.term }"
-      >{{ term.term }}</drag>
+        >{{ term.term }}</drag
+      >
     </div>
 
     <!-- Definitions Box -->

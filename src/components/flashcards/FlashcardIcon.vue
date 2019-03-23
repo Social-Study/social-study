@@ -1,54 +1,54 @@
 <template>
   <!-- Flashcard Icon -->
-    <div id="flashcard">
-        <!-- Edit and Study Buttons -->
-        <div id="button-container">
-          <!-- Edit only shows if you are the deck creator -->
-          <button
-            v-if="$store.getters.uid === info.creatorUID"
-            id="editBtn"
-            @click="
-              $router.push({
-                name: 'editFlashcards',
-                params: { deckID: info.id, isPrivate: isPrivate }
-              })
-            "
-          >
-            Edit
-          </button>
-          <div
-            v-if="info.creatorUID === $store.getters.uid"
-            id="indicator"
-            class="tooltip tooltip-bottom"
-            data-tooltip="Toggle Visibility"
-            @click="$emit('toggle')"
-          >
-            <i class="far" :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"></i>
-          </div>
-        </div>
-                  <!-- title -->
-          <span id="title">{{ info.title }}</span>
-      <!-- Created -->
-      <p id="created">
-        <i>Created on</i> {{ info.creationDate.toDate().toLocaleDateString() }}
-      </p>
-      <!-- Last Updated -->
-      <p id="modified">
-        <i>Updated</i> {{ calcDays(info.lastUpdated.toDate()) }}
-      </p>
-      <!-- Creator Avatar and Name Chip -->
-      <!-- TODO: Figure out how to use my existing avatar component -->
-      <div class="chip text-ellipsis">
-        <!-- Set background to transparent when there is an image. Fixes fuzzy outline  -->
-        <img
-          :src="info.creatorPhoto"
-          class="avatar avatar-sm"
-          :class="info.creatorPhoto !== '' ? 'chip-transp' : ''"
-        />
-        {{ info.creatorName }}
+  <div id="flashcard">
+    <!-- Edit and Study Buttons -->
+    <div id="button-container">
+      <!-- Edit only shows if you are the deck creator -->
+      <button
+        v-if="$store.getters.uid === info.creatorUID"
+        id="editBtn"
+        @click="
+          $router.push({
+            name: 'editFlashcards',
+            params: { deckID: info.id, isPrivate: isPrivate }
+          })
+        "
+      >
+        Edit
+      </button>
+      <div
+        v-if="info.creatorUID === $store.getters.uid"
+        id="indicator"
+        class="tooltip tooltip-bottom"
+        data-tooltip="Toggle Visibility"
+        @click="$emit('toggle')"
+      >
+        <i class="far" :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"></i>
       </div>
-        <div id="studyBtn" @click="goStudy">Study</div>
     </div>
+    <!-- title -->
+    <span id="title">{{ info.title }}</span>
+    <!-- Created -->
+    <p id="created">
+      <i>Created on</i> {{ info.creationDate.toDate().toLocaleDateString() }}
+    </p>
+    <!-- Last Updated -->
+    <p id="modified">
+      <i>Updated</i> {{ calcDays(info.lastUpdated.toDate()) }}
+    </p>
+    <!-- Creator Avatar and Name Chip -->
+    <!-- TODO: Figure out how to use my existing avatar component -->
+    <div class="chip text-ellipsis">
+      <!-- Set background to transparent when there is an image. Fixes fuzzy outline  -->
+      <img
+        :src="info.creatorPhoto"
+        class="avatar avatar-sm"
+        :class="info.creatorPhoto !== '' ? 'chip-transp' : ''"
+      />
+      {{ info.creatorName }}
+    </div>
+    <div id="studyBtn" @click="goStudy">Study</div>
+  </div>
 </template>
 
 <script>
@@ -112,16 +112,15 @@ $card-height: 230px;
   max-width: $card-width;
   // padding: 1em;
   border: 2px solid $secondary-light;
-  
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  &:hover{
+  &:hover {
     box-shadow: $shadow-hovered;
   }
 }
-
 
 #title {
   font-family: $secondary-font;
@@ -168,22 +167,21 @@ p > i {
 
 #editBtn {
   cursor: pointer;
-  float:left;
+  float: left;
   border: none;
   background-color: transparent;
   color: lighten($secondary, 30);
   font-weight: 500;
- 
+
   &:hover {
     // color: $primary;
     color: $success-color;
   }
 }
 
-
 #indicator {
   cursor: pointer;
-  float:right;
+  float: right;
   height: 30px;
   width: 30px;
   border-radius: 50%;
@@ -210,7 +208,7 @@ p > i {
   padding-bottom: 5px;
   font-weight: 400;
 
-  &:hover{
+  &:hover {
     background-color: lighten($primary, 10);
   }
 }

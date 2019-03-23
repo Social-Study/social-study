@@ -88,6 +88,14 @@ export default {
       }
     };
   },
+  computed: {
+    getTitle() {
+      if (this.editItem) {
+        return "Edit Existing Agenda Item";
+      }
+      return "Create New Agenda Item";
+    }
+  },
   created() {
     // Transfer all the prop data to the editable data if they are editing an existing event
     if (this.editItem !== null) {
@@ -96,14 +104,6 @@ export default {
 
       this.item.date = this.editItem.date.toDate();
       this.config.defaultDate = this.item.date;
-    }
-  },
-  computed: {
-    getTitle() {
-      if (this.editItem) {
-        return "Edit Existing Agenda Item";
-      }
-      return "Create New Agenda Item";
     }
   }
 };

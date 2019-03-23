@@ -1,14 +1,8 @@
 <template>
   <div>
-    <notifications
-      group="joinErrors"
-      position="right top"
-    />
+    <notifications group="joinErrors" position="right top" />
     <div class="popover popover-bottom">
-      <button
-        id="button"
-        class="btn btn-action"
-      >
+      <button id="button" class="btn btn-action">
         <i class="fas fa-plus"></i>
       </button>
       <div class="popover-container">
@@ -45,10 +39,7 @@
     </div>
 
     <!-- Class Join Confirmation Modal -->
-    <div
-      v-if="showModal && inviteGroup !== null"
-      class="modal modal-sm active"
-    >
+    <div v-if="showModal && inviteGroup !== null" class="modal modal-sm active">
       <a
         href="#close"
         class="modal-overlay"
@@ -83,8 +74,8 @@
         </div>
         <div class="modal-footer">
           <button
-            class="btn btn-link"
             id="cancel-btn"
+            class="btn btn-link"
             @click="showModal = false"
           >
             Cancel

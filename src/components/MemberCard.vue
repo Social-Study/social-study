@@ -12,10 +12,7 @@
   </div>
 
   <!-- Member Display Card -->
-  <div
-    v-else
-    class="profile-card"
-  >
+  <div v-else class="profile-card">
     <div class="profile-background"></div>
     <div class="gradient-border">
       <Avatar
@@ -23,7 +20,7 @@
         :user="{ photoURL: photoURL, displayName: displayName }"
       />
     </div>
-    <h2 style="width: 100%;" class="text-ellipsis" id="member-name">
+    <h2 id="member-name" style="width: 100%;" class="text-ellipsis">
       {{ displayName }}
       <!-- Show crown icon on the owner's card -->
       <i
@@ -91,24 +88,23 @@ export default {
     margin-top: -15px;
     background-image: $orange-gradient;
   }
-    &:hover{
-    .profile-background{
+  &:hover {
+    .profile-background {
       box-shadow: $shadow-hovered;
     }
-
   }
 }
 
-.profile-desc{
+.profile-desc {
   color: $secondary-light;
   font-size: 14px;
   padding: 1em;
 }
 
-.profile-background{
+.profile-background {
   margin-top: 70px;
   position: absolute;
-  background-color:white;
+  background-color: white;
   width: 300px;
   height: 200px;
   z-index: -1;
@@ -188,7 +184,7 @@ h2 {
   font-size: 60px;
 }
 
-#member-name{
+#member-name {
   font-size: 20px;
 }
 </style>

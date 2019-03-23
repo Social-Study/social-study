@@ -2,19 +2,17 @@
   <div id="full-screen">
     <!-- Page Title -->
     <page-title>
-      <template slot="center">Create New Study Group</template>
+      <template slot="center"
+        >Create New Study Group</template
+      >
     </page-title>
 
     <!-- Notification -->
-    <notifications
-      group="create"
-      position="right bottom"
-    />
+    <notifications group="create" position="right bottom" />
 
     <div class="create-content">
       <!-- Contains Center Content; Buttons and Content -->
       <div class="nav-container">
-
         <!-- Back Button -->
         <button
           class="btn btn-action btn-success btn-lg"
@@ -25,10 +23,7 @@
         </button>
 
         <!-- Class Name Card -->
-        <div
-          v-if="active === 0"
-          class="infoContainer"
-        >
+        <div v-if="active === 0" class="infoContainer">
           <h2>What is the name of the class?</h2>
 
           <div
@@ -48,8 +43,8 @@
               type="text"
               placeholder="Class Name"
               name="className"
-              @keydown.enter="next"
               required
+              @keydown.enter="next"
             />
             <p class="form-input-hint">{{ errors.first("className") }}</p>
           </div>
@@ -66,10 +61,7 @@
         </div>
 
         <!-- Instructor Name Form -->
-        <div
-          v-else-if="active === 1"
-          class="infoContainer"
-        >
+        <div v-else-if="active === 1" class="infoContainer">
           <!-- TODO: Figure out why validation isn't working... -->
           <h2>What is the course intructor's name?</h2>
           <div
@@ -97,10 +89,7 @@
         </div>
 
         <!-- Class Meeting Time Form -->
-        <div
-          v-else-if="active === 2"
-          class="infoContainer"
-        >
+        <div v-else-if="active === 2" class="infoContainer">
           <h2>When does your class meet?</h2>
 
           <!-- Day Selector Button Block -->
@@ -146,18 +135,18 @@
           <!-- TODO: Transition to use new flatpickr -->
           <div class="time-group">
             <flat-pickr
+              v-model="meetingTime[0]"
               :config="config"
               class="time-picker form-input"
-              v-model="meetingTime[0]"
               style="margin-right: 10px;"
               placeholder="Time"
               required
             />
             <p>to</p>
             <flat-pickr
+              v-model="meetingTime[1]"
               :config="config"
               class="time-picker form-input"
-              v-model="meetingTime[1]"
               style="margin-left: 10px;"
               placeholder="Time"
               required
@@ -166,10 +155,7 @@
         </div>
 
         <!-- Class Meeting Location Form -->
-        <div
-          v-else-if="active === 3"
-          class="infoContainer"
-        >
+        <div v-else-if="active === 3" class="infoContainer">
           <h2>Where does the class meet?</h2>
 
           <input
@@ -186,18 +172,12 @@
         </div>
 
         <!-- Instructor Website Form -->
-        <div
-          v-else-if="active === 4"
-          class="infoContainer"
-        >
+        <div v-else-if="active === 4" class="infoContainer">
           <h2>Does your instructor have a website?</h2>
 
           <div class="form-group switch">
             <label class="form-switch">
-              <input
-                v-model="hasWebsite"
-                type="checkbox"
-              />
+              <input v-model="hasWebsite" type="checkbox" />
               <i class="form-icon"></i>
             </label>
           </div>
@@ -207,11 +187,7 @@
             enter-active-class="animated fadeInDown"
             leave-active-class="animated fadeOutUp"
           >
-            <div
-              v-show="hasWebsite"
-              key="input"
-              class="input-group"
-            >
+            <div v-show="hasWebsite" key="input" class="input-group">
               <span class="input-group-addon">https://</span>
               <input
                 v-model="websiteURL"
@@ -224,12 +200,9 @@
                 @keydown.enter="next"
               />
             </div>
-            <span
-              key="error-string"
-              style="color: red;"
-            >{{
+            <span key="error-string" style="color: red;">{{
               errors.first("url")
-              }}</span>
+            }}</span>
 
             <br key="break" />
             <br key="break2" />
@@ -238,31 +211,22 @@
               key="link"
               target="_blank"
               :href="formattedURL"
-            >{{ formattedURL }}</a>
+              >{{ formattedURL }}</a
+            >
           </transition-group>
         </div>
 
         <!-- Extra Group Info Form -->
-        <div
-          v-else-if="active === 5"
-          class="infoContainer"
-        >
+        <div v-else-if="active === 5" class="infoContainer">
           <h2>Would you like to enter any additional information?</h2>
           <div class="form-group switch">
             <label class="form-switch">
-              <input
-                v-model="hasExtraInfo"
-                type="checkbox"
-              />
+              <input v-model="hasExtraInfo" type="checkbox" />
               <i class="form-icon"></i>
             </label>
           </div>
           <br />
-          <div
-            v-show="hasExtraInfo"
-            key="input"
-            class="input-group"
-          >
+          <div v-show="hasExtraInfo" key="input" class="input-group">
             <transition
               name="transition"
               enter-active-class="animated fadeInDown"
@@ -284,28 +248,16 @@
         </div>
 
         <!-- Create Group with previous data confirmation -->
-        <div
-          v-else-if="active === 6"
-          class="infoContainer"
-        >
-          <button
-            class="createBtn"
-            @click="createStudyGroup"
-          >
+        <div v-else-if="active === 6" class="infoContainer">
+          <button class="createBtn" @click="createStudyGroup">
             Create Study Group
           </button>
         </div>
 
         <!-- Invite Code / New Group Links -->
-        <div
-          v-else-if="active === 7"
-          class="infoContainer"
-        >
+        <div v-else-if="active === 7" class="infoContainer">
           <h3>Your new Study Group has been created!</h3>
-          <div
-            style="width: 50%; margin: 20px auto;"
-            class="input-group"
-          >
+          <div style="width: 50%; margin: 20px auto;" class="input-group">
             <input
               ref="inviteDisplay"
               v-model="inviteCode"
@@ -314,23 +266,20 @@
               placeholder="Invite Code"
               style="margin: 0;"
             />
-            <button
-              class="btn btn-primary input-group-btn"
-              @click="copyCode"
-            >
+            <button class="btn btn-primary input-group-btn" @click="copyCode">
               Copy Code
             </button>
           </div>
           <div id="btnContainer">
-            <router-link
-              class="btn"
-              :to="{ name: 'dashboard' }"
-            >Dashboard</router-link>
+            <router-link class="btn" :to="{ name: 'dashboard' }"
+              >Dashboard</router-link
+            >
             <router-link
               style="margin: 0px 10px;"
               class="btn btn-success"
               :to="{ name: 'home', params: { groupID: newGroupID } }"
-            >Go to Group</router-link>
+              >Go to Group</router-link
+            >
           </div>
         </div>
 

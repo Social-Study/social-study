@@ -1,16 +1,10 @@
 <template>
   <div>
-    <div
-      class="sidebar"
-      :class="show ? 'active' : 'collapsed'"
-    >
+    <div class="sidebar" :class="show ? 'active' : 'collapsed'">
       <div class="content">
         <h3 id="header">Study Group Chat</h3>
         <div class="divider-gradient mb-2"></div>
-        <div
-          ref="messages"
-          class="messages"
-        >
+        <div ref="messages" class="messages">
           <transition-group
             name="chatTransition"
             enter-active-class="animated fadeInDown"
@@ -18,7 +12,7 @@
             <message
               v-for="(message, index) in groupMessages"
               :key="message.date.toString()"
-              :showName="showSender(index)"
+              :show-name="showSender(index)"
               :sender="message.sender === $store.getters.uid ? true : false"
               :details="message"
             ></message>
