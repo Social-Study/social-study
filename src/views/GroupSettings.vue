@@ -1,34 +1,29 @@
 <template>
   <div v-if="userAuthorized && !isLoading">
     <page-title>
-      <template slot="center"
-        >Study Group Admin Settings</template
+      <template slot="center">Study Group Admin Settings</template>
+      <template
+        slot="right"
+        @buttonClicked="deleteGroup"
       >
-      <template slot="right">
-        <div class="popover popover-left">
-          <button class="btn btn-action btn-error">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-          <div class="popover-container">
-            <div class="card">
-              <div class="card-header">
-                <h5>Delete Group?</h5>
-              </div>
-              <div class="card-body">
-                This will delete the group and all of its content. Consider
-                transferring ownership and leaving instead.
-              </div>
-              <div class="card-footer">
-                <button class="btn btn-error" @click="deleteGroup">
-                  Yes, Delete the Group
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <confirm-button>
+          <template v-slot:title>
+            Delete Group?
+          </template>
+          <template v-slot:body>
+            This will delete the group and all of its content. Consider
+            transferring ownership and leaving instead.
+          </template>
+          <template v-slot:button-text>
+            Yes, Delete the Group
+          </template>
+        </confirm-button>
       </template>
     </page-title>
-    <notifications group="save" position="left top" />
+    <notifications
+      group="save"
+      position="left top"
+    />
     <div class="container">
       <div class="columns">
         <div class="column col-5 col-mx-auto col-xl-10">
@@ -42,9 +37,10 @@
             >
               <!-- Class Name Input -->
               <div class="form-group">
-                <label class=" col-3 form-label" for="input-example-1"
-                  >Class Name</label
-                >
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Class Name</label>
                 <input
                   v-model="details.className"
                   class="col-9 form-input"
@@ -55,9 +51,10 @@
 
               <!-- Course Code Input (Optional) -->
               <div class="form-group">
-                <label class=" col-3 form-label" for="input-example-1"
-                  >Course Code</label
-                >
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Course Code</label>
                 <input
                   v-model="details.courseCode"
                   class="col-9 form-input"
@@ -68,9 +65,10 @@
 
               <!-- Class Instructor Input -->
               <div class="form-group">
-                <label class=" col-3 form-label" for="input-example-1"
-                  >Instructor Name</label
-                >
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Instructor Name</label>
                 <input
                   v-model="details.instructorName"
                   class="col-9 form-input"
@@ -81,9 +79,10 @@
 
               <!-- Class Meeting Location Input -->
               <div class="form-group">
-                <label class=" col-3 form-label" for="input-example-1"
-                  >Meeting Location</label
-                >
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Meeting Location</label>
                 <input
                   v-model="details.location"
                   class="col-9 form-input"
@@ -94,10 +93,14 @@
 
               <!-- Class Meeting Time Input -->
               <div class="form-group">
-                <label class=" col-3 form-label" for="input-example-1"
-                  >Meeting Time</label
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Meeting Time</label>
+                <div
+                  id="time-group"
+                  class="col-9"
                 >
-                <div id="time-group" class="col-9">
                   <flat-pickr
                     v-model="details.meetingTime[0]"
                     :config="config"
@@ -118,9 +121,10 @@
 
               <!-- Meeting Days -->
               <div class="form-group day-selector">
-                <label class=" col-3 form-label" for="input-example-1"
-                  >Meeting Days</label
-                >
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Meeting Days</label>
                 <div class="col-9 btn-group btn-group-block">
                   <button
                     :class="details.meetingDays.monday ? 'active' : ''"
@@ -162,9 +166,10 @@
 
               <!-- Website URL (Optional) -->
               <div class="form-group">
-                <label class=" col-3 form-label" for="input-example-1"
-                  >Course Website</label
-                >
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Course Website</label>
                 <input
                   v-model="details.url"
                   class="col-9 form-input"
@@ -175,9 +180,10 @@
 
               <!-- Study Group Description (Optional-->
               <div class="form-group">
-                <label class=" col-3 form-label" for="input-example-1"
-                  >Group Description</label
-                >
+                <label
+                  class=" col-3 form-label"
+                  for="input-example-1"
+                >Group Description</label>
                 <textarea
                   v-model="details.description"
                   class="col-9 form-input"
@@ -185,7 +191,7 @@
                   placeholder="Optional Description"
                   style="resize: none;"
                 />
-              </div>
+                </div>
             </form>
             <div v-else class="loading loading-lg"></div>
             <div id="btn-container">
@@ -298,6 +304,7 @@
 import { checkOwner } from "@/scripts/groupFuncs";
 import { db, FirebaseConsts } from "@/firebaseConfig";
 import PageTitle from "@/components/navigation/PageTitle";
+import ConfirmButton from "@/components/ConfirmButton";
 
 import flatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
@@ -305,6 +312,7 @@ import "flatpickr/dist/flatpickr.css";
 export default {
   name: "GroupSettings",
   components: {
+    ConfirmButton,
     PageTitle,
     flatPickr
   },
@@ -567,25 +575,5 @@ export default {
 .transfer-group {
   width: 50%;
   margin: 0 auto 40px auto;
-}
-
-.popover-container {
-  top: 100px !important;
-  .card {
-    box-shadow: $shadow-heavy;
-  }
-  .card-body {
-    font-family: $primary-font;
-  }
-
-  .card-header {
-    h5 {
-      font-weight: 700;
-    }
-  }
-
-  .card-footer > button {
-    font-family: $primary-font;
-  }
 }
 </style>

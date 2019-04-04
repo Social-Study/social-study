@@ -7,7 +7,10 @@
           <button class="btn btn-primary">
             New Note <i class="fas fa-plus"></i>
           </button>
-          <div style="margin-top: 20px;" class="popover-container">
+          <div
+            style="margin-top: 20px;"
+            class="popover-container"
+          >
             <div class="card">
               <div class="card-header">
                 Enter a title for your new note:
@@ -50,12 +53,20 @@
     </page-title>
     <!-- In the future this will hold other things like the sort buttons, etc. -->
 
-    <div v-if="!isLoading" class="content-container">
-      <note-icon v-for="note in filteredNotes" :key="note.id" :info="note" />
-      <!-- @delete="deleteNote(note.id)"
-        @viewNote="$router.push(`/${$route.params.groupID}/notes/${note.id}`)" -->
+    <div
+      v-if="!isLoading"
+      class="content-container"
+    >
+      <note-icon
+        v-for="note in filteredNotes"
+        :key="note.id"
+        :info="note"
+      />
     </div>
-    <div v-else class="loading loading-lg"></div>
+    <div
+      v-else
+      class="loading loading-lg"
+    ></div>
   </div>
 </template>
 
@@ -146,8 +157,6 @@ export default {
   top: 60px !important;
 
   .card {
-    border-radius: 10px !important;
-
     .card-header {
       font-family: $secondary-font;
       font-weight: 700;

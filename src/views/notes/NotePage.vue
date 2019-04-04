@@ -1,6 +1,9 @@
 <template>
   <div v-if="!isLoading && !isError">
-    <notifications group="notes" position="left top" />
+    <notifications
+      group="notes"
+      position="left top"
+    />
 
     <!-- New Header Component -->
     <page-title>
@@ -10,7 +13,7 @@
           class="name-input"
           type="text"
           maxlength="40"
-          @input="handleChange()"
+          @input="isSaved = false"
         />
       </template>
       <template slot="right">
@@ -22,7 +25,10 @@
             data-tooltip="Preview Style"
             tabindex="0"
           >
-            <i style="color: #5755d9" class="fas fa-palette"></i>
+            <i
+              style="color: #5755d9"
+              class="fas fa-palette"
+            ></i>
           </a>
           <!-- menu component -->
           <ul class="menu">
@@ -31,14 +37,35 @@
           </ul>
         </div>
 
+        <confirm-button
+          class="split"
+          @buttonClicked="deleteNote"
+        >
+          <template v-slot:title>
+            Delete Note?
+          </template>
+          <template v-slot:body>
+            The note will be permanently deleted.
+          </template>
+          <template v-slot:button-text>
+            Delete Note
+          </template>
+        </confirm-button>
+
         <!-- Open link to markdown cheatsheet in new browser tab -->
-        <a target="_blank" href="https://www.markdownguide.org/cheat-sheet">
+        <a
+          target="_blank"
+          href="https://www.markdownguide.org/cheat-sheet"
+        >
           <button class="btn btn-action split">
             <i class="fas fa-info"></i>
           </button>
         </a>
         <!-- Save the markdown to database -->
-        <button class="btn btn-success btn-action split" @click="saveNote">
+        <button
+          class="btn btn-success btn-action split"
+          @click="saveNote"
+        >
           <i class="fas fa-save"></i>
         </button>
       </template>
@@ -48,7 +75,7 @@
       <textarea
         v-model="userText"
         class="page-edit"
-        @input="handleChange()"
+        @input="isSaved = false"
         @keydown.ctrl.83.prevent="saveNote"
       >
       </textarea>
@@ -66,7 +93,10 @@
       ></div>
     </div>
   </div>
-  <div v-else-if="!isLoading && isError" id="error-container">
+  <div
+    v-else-if="!isLoading && isError"
+    id="error-container"
+  >
     <img
       style="width: 10em;"
       class="undraw-svg"
@@ -75,11 +105,15 @@
     />
     <h1>Error loading note...</h1>
   </div>
-  <div v-else class="loading loading-lg"></div>
+  <div
+    v-else
+    class="loading loading-lg"
+  ></div>
 </template>
 
 <script>
 import PageTitle from "@/components/navigation/PageTitle";
+import ConfirmButton from "@/components/ConfirmButton";
 import { db } from "@/firebaseConfig";
 
 let marked = require("marked");
@@ -87,6 +121,7 @@ let marked = require("marked");
 export default {
   name: "NotePage",
   components: {
+    ConfirmButton,
     PageTitle
   },
   beforeRouteLeave(to, from, next) {
@@ -144,8 +179,16 @@ export default {
       });
   },
   methods: {
-    handleChange() {
-      this.isSaved = false;
+    deleteNote(id) {
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("notes")
+        .doc(this.$store.getters.uid)
+        .collection("private")
+        .doc(this.$route.params.noteID)
+        .delete();
+
+      this.$router.go(-1);
     },
     saveNote() {
       // TODO: Display notification saying that the document has been saved

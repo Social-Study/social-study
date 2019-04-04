@@ -43,7 +43,10 @@
           class="form-input form-inline mx-1"
           autocomplete="off"
         />
-        <button class="btn btn-primary m-1" @click="logIn">Log In</button>
+        <button
+          class="btn btn-primary m-1"
+          @click="logIn"
+        >Log In</button>
       </form>
       <!-- </section> -->
     </header>
@@ -54,7 +57,10 @@
       enter-active-class="animated fadeInRight"
       leave-active-class="animated fadeOutRight"
     >
-      <MessageBar v-show="message.show" type="success">
+      <MessageBar
+        v-show="message.show"
+        type="success"
+      >
         {{ message.message }}
       </MessageBar>
     </transition>
@@ -76,12 +82,15 @@
           href="#"
           style="cursor: pointer"
           @click="modalActive = true"
-          >Forgot Password?</a
-        >
+        >Forgot Password?</a>
       </MessageBar>
     </transition>
     <!-- Password Reset Modal -->
-    <div v-show="modalActive" id="modal-id" class="modal modal-sm active">
+    <div
+      v-show="modalActive"
+      id="modal-id"
+      class="modal modal-sm active"
+    >
       <a
         href="#"
         class="modal-overlay"
@@ -112,7 +121,10 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary m-1" @click="sendResetEmail">
+          <button
+            class="btn btn-primary m-1"
+            @click="sendResetEmail"
+          >
             Reset
           </button>
         </div>
@@ -123,7 +135,10 @@
       <!-- Left Block: Information -->
       <div class="column col-6 col-md-12">
         <div style="margin-left: 20px; margin-right: 20px;">
-          <h1 id="logo" class="hide-sm hide-xs">Social Study</h1>
+          <h1
+            id="logo"
+            class="hide-sm hide-xs"
+          >Social Study</h1>
           <p style="margin-top: 20px;">
             The <i>free</i> learning tool for all ages.
           </p>
@@ -199,7 +214,10 @@
         style="margin-bottom: 30px;"
       >
         <div id="right-container form-group">
-          <form data-vv-scope="signup" @submit.prevent>
+          <form
+            data-vv-scope="signup"
+            @submit.prevent
+          >
             <h1 style="margin-top: 40px;">Sign Up</h1>
             <span id="name-container">
               <input
@@ -236,10 +254,16 @@
               name="password"
               placeholder="Password"
             /><br />
-            <button class="btn btn-primary mx-1" @click="createAccount">
+            <button
+              class="btn btn-primary mx-1"
+              @click="createAccount"
+            >
               Sign Up
             </button>
-            <button class="btn mx-1" @click="googleSignIn">
+            <button
+              class="btn mx-1"
+              @click="googleSignIn"
+            >
               <i class="fab fa-google"></i>
               Sign in with Google
             </button>
@@ -248,7 +272,10 @@
       </div>
     </div>
 
-    <div class="show-xs show-sm" style="margin-top: 80px;">
+    <div
+      class="show-xs show-sm"
+      style="margin-top: 80px;"
+    >
       <p>Unfortunately, <i>Social Study</i> is only available on desktop.</p>
       <p>To sign up, please visit the site on your desktop!</p>
     </div>
@@ -434,7 +461,8 @@ export default {
           displayName: userAccount.displayName,
           photoURL: userAccount.photoURL,
           description: null,
-          studyGroups: []
+          studyGroups: [],
+          sidebarOpen: true
         });
     }
   }
