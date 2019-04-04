@@ -1,29 +1,23 @@
-
 <template>
   <div v-if="userAuthorized && !isLoading">
     <page-title>
       <template slot="center">Study Group Admin Settings</template>
-      <template slot="right">
-        <div class="popover popover-left">
-          <button class="btn btn-action btn-error"><i class="fas fa-trash-alt"></i></button>
-          <div class="popover-container">
-            <div class="card">
-              <div class="card-header">
-                <h5>Delete Group?</h5>
-              </div>
-              <div class="card-body">
-                This will delete the group and all of its content.
-                Consider transferring ownership and leaving instead.
-              </div>
-              <div class="card-footer">
-                <button
-                  @click="deleteGroup"
-                  class="btn btn-error"
-                >Yes, Delete the Group</button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <template
+        slot="right"
+        @buttonClicked="deleteGroup"
+      >
+        <confirm-button>
+          <template v-slot:title>
+            Delete Group?
+          </template>
+          <template v-slot:body>
+            This will delete the group and all of its content. Consider
+            transferring ownership and leaving instead.
+          </template>
+          <template v-slot:button-text>
+            Yes, Delete the Group
+          </template>
+        </confirm-button>
       </template>
     </page-title>
     <notifications
@@ -48,11 +42,11 @@
                   for="input-example-1"
                 >Class Name</label>
                 <input
+                  v-model="details.className"
                   class="col-9 form-input"
                   type="text"
-                  v-model="details.className"
                   placeholder="Class Name"
-                >
+                />
               </div>
 
               <!-- Course Code Input (Optional) -->
@@ -62,11 +56,11 @@
                   for="input-example-1"
                 >Course Code</label>
                 <input
+                  v-model="details.courseCode"
                   class="col-9 form-input"
                   type="text"
-                  v-model="details.courseCode"
                   placeholder="Course Code"
-                >
+                />
               </div>
 
               <!-- Class Instructor Input -->
@@ -76,11 +70,11 @@
                   for="input-example-1"
                 >Instructor Name</label>
                 <input
+                  v-model="details.instructorName"
                   class="col-9 form-input"
                   type="text"
-                  v-model="details.instructorName"
                   placeholder="Instructor Name"
-                >
+                />
               </div>
 
               <!-- Class Meeting Location Input -->
@@ -90,11 +84,11 @@
                   for="input-example-1"
                 >Meeting Location</label>
                 <input
+                  v-model="details.location"
                   class="col-9 form-input"
                   type="text"
-                  v-model="details.location"
                   placeholder="Meeting Location"
-                >
+                />
               </div>
 
               <!-- Class Meeting Time Input -->
@@ -104,26 +98,24 @@
                   for="input-example-1"
                 >Meeting Time</label>
                 <div
-                  class="col-9"
                   id="time-group"
+                  class="col-9"
                 >
-                  <input
-                    class="form-input"
-                    type="time"
-                    style="margin-right: 10px;"
-                    placeholder="Instructor Name"
+                  <flat-pickr
                     v-model="details.meetingTime[0]"
-                    required
-                  >
-                  -
-                  <input
+                    :config="config"
                     class="form-input"
-                    type="time"
-                    style="margin-left: 10px;"
+                    style="margin-right: 10px;"
+                    placeholder="Time"
+                  />
+                  -
+                  <flat-pickr
                     v-model="details.meetingTime[1]"
-                    placeholder="Instructor Name"
-                    required
-                  >
+                    :config="config"
+                    class="form-input"
+                    style="margin-left: 10px;"
+                    placeholder="Time"
+                  />
                 </div>
               </div>
 
@@ -135,37 +127,37 @@
                 >Meeting Days</label>
                 <div class="col-9 btn-group btn-group-block">
                   <button
-                    @click.prevent="toggle('monday');"
                     :class="details.meetingDays.monday ? 'active' : ''"
                     class="btn btn-block"
+                    @click.prevent="toggle('monday')"
                   >
                     Mon
                   </button>
                   <button
-                    @click.prevent="toggle('tuesday');"
                     :class="details.meetingDays.tuesday ? 'active' : ''"
                     class="btn btn-block"
+                    @click.prevent="toggle('tuesday')"
                   >
                     Tue
                   </button>
                   <button
-                    @click.prevent="toggle('wednesday');"
                     :class="details.meetingDays.wednesday ? 'active' : ''"
                     class="btn btn-block"
+                    @click.prevent="toggle('wednesday')"
                   >
                     Wed
                   </button>
                   <button
-                    @click.prevent="toggle('thursday');"
                     :class="details.meetingDays.thursday ? 'active' : ''"
                     class="btn btn-block"
+                    @click.prevent="toggle('thursday')"
                   >
                     Thu
                   </button>
                   <button
-                    @click.prevent="toggle('friday');"
                     :class="details.meetingDays.friday ? 'active' : ''"
                     class="btn btn-block"
+                    @click.prevent="toggle('friday')"
                   >
                     Fri
                   </button>
@@ -179,11 +171,11 @@
                   for="input-example-1"
                 >Course Website</label>
                 <input
+                  v-model="details.url"
                   class="col-9 form-input"
                   type="url"
-                  v-model="details.url"
                   placeholder="Optional Website URL"
-                >
+                />
               </div>
 
               <!-- Study Group Description (Optional-->
@@ -193,27 +185,28 @@
                   for="input-example-1"
                 >Group Description</label>
                 <textarea
+                  v-model="details.description"
                   class="col-9 form-input"
                   type="url"
-                  v-model="details.description"
                   placeholder="Optional Description"
                   style="resize: none;"
                 />
                 </div>
-          </form>
-          <div v-else class="loading loading-lg"></div>
-          <div id="btn-container">
-            <button v-if="!loading.details"
-                class="btn btn-primary "
+            </form>
+            <div v-else class="loading loading-lg"></div>
+            <div id="btn-container">
+              <button
+                v-if="!loading.details"
                 id="save-btn"
+                class="btn btn-primary "
                 @click="saveData"
-              >Save Changes <i class="fas fa-save"></i>
-            </button>
+              >
+                Save Changes <i class="fas fa-save"></i>
+              </button>
+            </div>
           </div>
         </div>
-        </div>
         <div class="column col-6 col-xl-12">
-
           <div class="columns">
             <div class="group-details column col-10 col-mx-auto">
               <h2>Active Invite Codes</h2>
@@ -226,9 +219,12 @@
                 </thead>
                 <tbody>
                   <tr v-for="code in inviteCodes" :key="code">
-                    <td style="width: 95%;">{{code}}</td>
+                    <td style="width: 95%;">{{ code }}</td>
                     <td class="button-td">
-                      <button @click="removeCode(code)" class="btn btn-action btn-error">
+                      <button
+                        class="btn btn-action btn-error"
+                        @click="removeCode(code)"
+                      >
                         <i class="fas fa-times"></i>
                       </button>
                     </td>
@@ -248,10 +244,13 @@
                 </thead>
                 <tbody>
                   <!-- Show all members but you; the admin -->
-                  <tr v-for="member in membersWithoutYou" :key="member.uid ">
-                    <td style="width: 95%;">{{member.displayName}}</td>
+                  <tr v-for="member in membersWithoutYou" :key="member.uid">
+                    <td style="width: 95%;">{{ member.displayName }}</td>
                     <td class="button-td">
-                      <button @click="removeMember(member.uid)" class="btn btn-action btn-error">
+                      <button
+                        class="btn btn-action btn-error"
+                        @click="removeMember(member.uid)"
+                      >
                         <i class="fas fa-times"></i>
                       </button>
                     </td>
@@ -264,26 +263,31 @@
               <h2>Transfer Group Ownership</h2>
               <p id="info">Choose another member to manage the Study Group.</p>
               <div v-if="!loading.members" class="transfer-group input-group">
-                <select class="form-select" v-model="selected">
+                <select v-model="selected" class="form-select">
                   <option
                     v-for="member in membersWithoutYou"
                     :key="member.uid"
-                    :value="member.uid">{{member.displayName}}
+                    :value="member.uid"
+                    >{{ member.displayName }}
                   </option>
                 </select>
-                <button @click="changeOwner" class="btn btn-error input-group-btn">Transfer</button>
+                <button
+                  class="btn btn-primary input-group-btn"
+                  @click="changeOwner"
+                >
+                  Transfer
+                </button>
               </div>
               <div v-else class="loading loading-lg"></div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
   </div>
 
   <!-- TODO: Craft error landing page -->
-  <h1  v-else-if="!isLoading && !userAuthorized"> WTF ARE YOU DOING HERE</h1>
+  <h1 v-else-if="!isLoading && !userAuthorized">WTF ARE YOU DOING HERE</h1>
   <div v-else class="loading loading-lg"></div>
 </template>
 
@@ -297,23 +301,28 @@
  *  Transfer Ownership ?
  *  Delete Group
  */
-
 import { checkOwner } from "@/scripts/groupFuncs";
 import { db, FirebaseConsts } from "@/firebaseConfig";
 import PageTitle from "@/components/navigation/PageTitle";
-// TODO: Form validation
+import ConfirmButton from "@/components/ConfirmButton";
+
+import flatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
 
 export default {
   name: "GroupSettings",
   components: {
-    PageTitle
-  },
-  created() {
-    this.checkAuth();
-    this.loadData();
+    ConfirmButton,
+    PageTitle,
+    flatPickr
   },
   data() {
     return {
+      config: {
+        dateFormat: "h:i K",
+        enableTime: true,
+        noCalendar: true
+      },
       isLoading: true,
       userAuthorized: false,
       loading: {
@@ -344,6 +353,18 @@ export default {
       selected: ""
     };
   },
+  computed: {
+    // Returns the member's list without you
+    membersWithoutYou() {
+      return this.memberDetails.filter(member => {
+        return member.uid !== this.$store.getters.uid;
+      });
+    }
+  },
+  created() {
+    this.checkAuth();
+    this.loadData();
+  },
   methods: {
     deleteGroup() {
       // db.collection("study-groups").doc(this.$route.params.groupID).delete();
@@ -351,7 +372,6 @@ export default {
       // Have to manually find and delete subcollections
     },
     changeOwner() {
-      console.log(this.selected);
       db.collection("study-groups")
         .doc(this.$route.params.groupID)
         .update({
@@ -446,7 +466,7 @@ export default {
           });
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
         });
     },
     parseDays(days) {
@@ -483,18 +503,9 @@ export default {
     toggle(key) {
       this.details.meetingDays[key] = !this.details.meetingDays[key];
     }
-  },
-  computed: {
-    // Returns the member's list without you
-    membersWithoutYou() {
-      return this.memberDetails.filter(member => {
-        return member.uid !== this.$store.getters.uid;
-      });
-    }
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 @import "../styles";
@@ -509,16 +520,11 @@ export default {
 #time-group {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
-}
+  justify-content: space-between;
 
-#btn-container {
-  background-color: $light;
-  border-radius: 0 0 16px 16px;
-}
-
-input[type="time"] {
-  width: 120px;
+  .form-input {
+    width: 150px;
+  }
 }
 
 .container {
@@ -532,19 +538,24 @@ input[type="time"] {
 }
 
 .group-details {
+  cursor: pointer;
   padding: 0;
-  box-shadow: $shadow-heavy;
-  border-radius: 16px;
+  border: 2px solid $secondary-light;
   background-color: white;
   margin-bottom: 40px;
   h2 {
-    border-radius: 16px 16px 0 0;
     font-family: $secondary-font;
     font-weight: 700;
-    background-color: $secondary;
-    color: $light;
+    color: $secondary;
     padding: 5px;
     font-size: 32px;
+    border-bottom: 2px solid $secondary-light;
+  }
+
+  &:hover {
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    box-shadow: $shadow-heavy;
   }
 
   form {
@@ -554,7 +565,6 @@ input[type="time"] {
     margin: auto;
     width: 95%;
     margin: 0 auto 10px auto;
-    border-radius: 16px;
   }
 
   #info {
@@ -565,25 +575,5 @@ input[type="time"] {
 .transfer-group {
   width: 50%;
   margin: 0 auto 40px auto;
-}
-
-.popover-container {
-  top: 100px !important;
-  .card {
-    border-radius: $border-round;
-  }
-  .card-body {
-    font-family: $primary-font;
-  }
-
-  .card-header {
-    h5 {
-      font-weight: 700;
-    }
-  }
-
-  .card-footer > button {
-    font-family: $primary-font;
-  }
 }
 </style>

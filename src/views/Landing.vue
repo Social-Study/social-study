@@ -1,6 +1,5 @@
 <template>
   <div class="landing">
-
     <!-- Header Section -->
     <header class="navbar">
       <section class="navbar-section">
@@ -9,7 +8,7 @@
           height="50px"
           width="50px"
           alt=""
-        >
+        />
         <!-- <a
           href="#"
           class="navbar-brand m-2"
@@ -20,33 +19,33 @@
       <!-- Login Form -->
       <form
         class="hide-sm hide-xs navbar-section login-container form-group"
-        @submit.prevent
         method=""
         data-vv-scope="login"
+        @submit.prevent
       >
         <input
-          v-validate.disable="'required|email'"
-          name="email"
           ref="email"
           v-model="email"
+          v-validate.disable="'required|email'"
+          name="email"
           placeholder="Email"
           type="text"
           class="form-input form-inline mx-1"
           autofocus
           autocomplete="off"
-        >
+        />
         <input
+          v-model="password"
           v-validate.disable="'required|min:6'"
           name="password"
-          v-model="password"
           placeholder="Password"
           type="password"
           class="form-input form-inline mx-1"
           autocomplete="off"
-        >
+        />
         <button
-          @click="logIn"
           class="btn btn-primary m-1"
+          @click="logIn"
         >Log In</button>
       </form>
       <!-- </section> -->
@@ -62,7 +61,7 @@
         v-show="message.show"
         type="success"
       >
-        {{ this.message.message }}
+        {{ message.message }}
       </MessageBar>
     </transition>
 
@@ -73,11 +72,11 @@
       leave-active-class="animated fadeOutRight"
     >
       <MessageBar
-        @closeMessage="error.show=false"
         v-show="error.show"
         type="error"
+        @closeMessage="error.show = false"
       >
-        {{ this.error.message }}
+        {{ error.message }}
         <a
           v-show="error.passPrompt"
           href="#"
@@ -89,22 +88,22 @@
     <!-- Password Reset Modal -->
     <div
       v-show="modalActive"
-      class="modal modal-sm active"
       id="modal-id"
+      class="modal modal-sm active"
     >
       <a
-        @click="modalActive = false"
         href="#"
         class="modal-overlay"
         aria-label="Close"
+        @click="modalActive = false"
       ></a>
       <div class="modal-container">
         <div class="modal-header">
           <a
             href="#"
-            @click="modalActive = false"
             class="btn btn-clear float-right"
             aria-label="Close"
+            @click="modalActive = false"
           ></a>
           <div class="modal-title h5">Enter your email</div>
         </div>
@@ -112,20 +111,22 @@
           <div class="content">
             <!-- TODO: Add vvalidate to this. May need to put inside form -->
             <input
-              @focus="$event.target.select()"
-              value="email"
               v-model="resetEmail"
+              value="email"
               type="text"
               class="form-input"
               autofocus
-            >
+              @focus="$event.target.select()"
+            />
           </div>
         </div>
         <div class="modal-footer">
           <button
-            @click="sendResetEmail"
             class="btn btn-primary m-1"
-          >Reset</button>
+            @click="sendResetEmail"
+          >
+            Reset
+          </button>
         </div>
       </div>
     </div>
@@ -138,7 +139,9 @@
             id="logo"
             class="hide-sm hide-xs"
           >Social Study</h1>
-          <p style="margin-top: 20px;">The <i>free</i> learning tool for all ages.</p>
+          <p style="margin-top: 20px;">
+            The <i>free</i> learning tool for all ages.
+          </p>
 
           <div class="columns">
             <div
@@ -149,7 +152,7 @@
                 class="img-responsive undraw-svg"
                 src="../assets/undraw_studying.svg"
                 alt="studying"
-              >
+              />
             </div>
             <div
               class=" col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
@@ -159,7 +162,7 @@
                 class="img-responsive  undraw-svg"
                 src="../assets/undraw_exams.svg"
                 alt="quizzes"
-              >
+              />
             </div>
             <div
               class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
@@ -169,7 +172,7 @@
                 class="img-responsive  undraw-svg"
                 src="../assets/undraw_taking_notes.svg"
                 alt="note taking"
-              >
+              />
             </div>
             <div
               class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
@@ -179,7 +182,7 @@
                 class="img-responsive  undraw-svg"
                 src="../assets/undraw_events.svg"
                 alt="schedule management"
-              >
+              />
             </div>
             <div
               class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
@@ -189,7 +192,7 @@
                 class="img-responsive  undraw-svg"
                 src="../assets/undraw_group_chat.svg"
                 alt="communication"
-              >
+              />
             </div>
             <div
               class="col-4 col-md-6 col-sm-12 tooltip tooltip-bottom"
@@ -199,7 +202,7 @@
                 class="img-responsive  undraw-svg"
                 src="../assets/undraw_grad.svg"
                 alt="success"
-              >
+              />
             </div>
           </div>
         </div>
@@ -210,55 +213,56 @@
         class="column col-6 col-sm-12 col-md-12 hide-xs hide-sm"
         style="margin-bottom: 30px;"
       >
-
         <div id="right-container form-group">
           <form
-            @submit.prevent
             data-vv-scope="signup"
+            @submit.prevent
           >
             <h1 style="margin-top: 40px;">Sign Up</h1>
             <span id="name-container">
               <input
-                v-validate.disable="'required|alpha'"
                 v-model.trim="firstName"
+                v-validate.disable="'required|alpha'"
                 class="form-input"
                 type="text"
                 name="firstname"
                 placeholder="First Name"
-              >
+              />
               <input
-                v-validate.disable="'required|alpha'"
                 v-model.trim="lastName"
+                v-validate.disable="'required|alpha'"
                 class="form-input"
                 type="text"
                 name="lastname"
                 placeholder="Last Name"
-              >
+              />
             </span>
-            <br>
+            <br />
             <input
-              v-validate.disable="'required|email'"
               v-model="newEmail"
+              v-validate.disable="'required|email'"
               type="text"
               class="form-input"
               name="email"
               placeholder="Email Address"
-            ><br>
+            /><br />
             <input
-              v-validate.disable="'required|min:6'"
               v-model="newPassword"
+              v-validate.disable="'required|min:6'"
               class="form-input"
               type="password"
               name="password"
               placeholder="Password"
-            ><br>
+            /><br />
             <button
-              @click="createAccount"
               class="btn btn-primary mx-1"
-            >Sign Up</button>
+              @click="createAccount"
+            >
+              Sign Up
+            </button>
             <button
-              @click="googleSignIn"
               class="btn mx-1"
+              @click="googleSignIn"
             >
               <i class="fab fa-google"></i>
               Sign in with Google
@@ -283,7 +287,7 @@ import firebase, { db, FirebaseConsts } from "@/firebaseConfig";
 import MessageBar from "@/components/MessageBar";
 
 export default {
-  name: "landing",
+  name: "Landing",
   components: {
     MessageBar
   },
@@ -457,7 +461,8 @@ export default {
           displayName: userAccount.displayName,
           photoURL: userAccount.photoURL,
           description: null,
-          studyGroups: []
+          studyGroups: [],
+          sidebarOpen: true
         });
     }
   }

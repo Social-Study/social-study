@@ -1,13 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
+import { db } from "@/firebaseConfig";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     uid: "",
     photoURL: "",
-    // user: null,
     chatActive: false,
     sidebarActive: true
   },
@@ -24,6 +25,14 @@ export default new Vuex.Store({
     },
     toggleSidebarActive(state) {
       state.sidebarActive = !state.sidebarActive;
+      db.collection("users")
+        .doc(state.uid)
+        .update({
+          sidebarOpen: state.sidebarActive
+        });
+    },
+    setSidebarOpen(state, isOpen) {
+      state.sidebarActive = isOpen;
     }
   },
   actions: {},

@@ -9,12 +9,12 @@
     <page-title>
       <template slot="left">
         <input
-          @input="handleChange()"
-          class="name-input"
           v-model="noteTitle"
+          class="name-input"
           type="text"
           maxlength="40"
-        >
+          @input="isSaved = false"
+        />
       </template>
       <template slot="right">
         <!-- Change preview theme css -->
@@ -37,35 +37,59 @@
           </ul>
         </div>
 
+        <confirm-button
+          class="split"
+          @buttonClicked="deleteNote"
+        >
+          <template v-slot:title>
+            Delete Note?
+          </template>
+          <template v-slot:body>
+            The note will be permanently deleted.
+          </template>
+          <template v-slot:button-text>
+            Delete Note
+          </template>
+        </confirm-button>
+
         <!-- Open link to markdown cheatsheet in new browser tab -->
         <a
           target="_blank"
           href="https://www.markdownguide.org/cheat-sheet"
         >
-          <button class="btn btn-action split"><i class="fas fa-info"></i></button>
+          <button class="btn btn-action split">
+            <i class="fas fa-info"></i>
+          </button>
         </a>
         <!-- Save the markdown to database -->
         <button
-          @click="saveNote"
           class="btn btn-success btn-action split"
-        ><i class="fas fa-save"></i></button>
-
+          @click="saveNote"
+        >
+          <i class="fas fa-save"></i>
+        </button>
       </template>
     </page-title>
 
     <div class="content-container">
       <textarea
-        @input="handleChange()"
-        @keydown.ctrl.83.prevent="saveNote"
         v-model="userText"
         class="page-edit"
+        @input="isSaved = false"
+        @keydown.ctrl.83.prevent="saveNote"
       >
       </textarea>
       <!-- TODO: Use a computed property for the styling when I add more styles -->
       <div
-        v-html="render"
         class="page-view"
-        :class="markStyleNum === 1 ? 'markdown-css': '' || markStyleNum === 2 ? 'markdown-body': ''"
+        :class="
+          markStyleNum === 1
+            ? 'markdown-css'
+            : '' || markStyleNum === 2
+            ? 'markdown-body'
+            : ''
+        "
+        v-html="render"
       ></div>
     </div>
   </div>
@@ -89,6 +113,7 @@
 
 <script>
 import PageTitle from "@/components/navigation/PageTitle";
+import ConfirmButton from "@/components/ConfirmButton";
 import { db } from "@/firebaseConfig";
 
 let marked = require("marked");
@@ -96,6 +121,7 @@ let marked = require("marked");
 export default {
   name: "NotePage",
   components: {
+    ConfirmButton,
     PageTitle
   },
   beforeRouteLeave(to, from, next) {
@@ -119,6 +145,21 @@ export default {
       markStyleNum: 2
     };
   },
+  computed: {
+    render() {
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        gfm: true,
+        tables: true,
+        breaks: true,
+        pedantic: false,
+        sanitize: true,
+        smartLists: true,
+        smartypants: false
+      });
+      return marked(this.userText);
+    }
+  },
   created() {
     db.collection("study-groups")
       .doc(this.$route.params.groupID)
@@ -132,14 +173,22 @@ export default {
         this.userText = doc.data().content;
         this.isLoading = false;
       })
-      .catch(err => {
+      .catch(() => {
         this.isLoading = false;
         this.isError = true;
       });
   },
   methods: {
-    handleChange() {
-      this.isSaved = false;
+    deleteNote(id) {
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("notes")
+        .doc(this.$store.getters.uid)
+        .collection("private")
+        .doc(this.$route.params.noteID)
+        .delete();
+
+      this.$router.go(-1);
     },
     saveNote() {
       // TODO: Display notification saying that the document has been saved
@@ -163,21 +212,6 @@ export default {
             text: "The note has been saved successfully."
           });
         });
-    }
-  },
-  computed: {
-    render() {
-      marked.setOptions({
-        renderer: new marked.Renderer(),
-        gfm: true,
-        tables: true,
-        breaks: true,
-        pedantic: false,
-        sanitize: true,
-        smartLists: true,
-        smartypants: false
-      });
-      return marked(this.userText);
     }
   }
 };

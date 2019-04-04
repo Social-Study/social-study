@@ -1,12 +1,44 @@
 <template>
   <!-- Flashcard Icon -->
   <div id="flashcard">
-    <!-- Title -->
-    <h2 id="title">{{info.title}}</h2>
+    <!-- Edit and Study Buttons -->
+    <div id="button-container">
+      <!-- Edit only shows if you are the deck creator -->
+      <button
+        v-if="$store.getters.uid === info.creatorUID"
+        id="editBtn"
+        @click="
+          $router.push({
+            name: 'editFlashcards',
+            params: { deckID: info.id, isPrivate: isPrivate }
+          })
+        "
+      >
+        Edit
+      </button>
+      <div
+        v-if="info.creatorUID === $store.getters.uid"
+        id="indicator"
+        class="tooltip tooltip-bottom"
+        data-tooltip="Toggle Visibility"
+        @click="$emit('toggle')"
+      >
+        <i
+          class="far"
+          :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"
+        ></i>
+      </div>
+    </div>
+    <!-- title -->
+    <span id="title">{{ info.title }}</span>
     <!-- Created -->
-    <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
+    <p id="created">
+      <i>Created on</i> {{ info.creationDate.toDate().toLocaleDateString() }}
+    </p>
     <!-- Last Updated -->
-    <p id="modified"><i>Updated</i> {{calcDays(info.lastUpdated.toDate())}}</p>
+    <p id="modified">
+      <i>Updated</i> {{ calcDays(info.lastUpdated.toDate()) }}
+    </p>
     <!-- Creator Avatar and Name Chip -->
     <!-- TODO: Figure out how to use my existing avatar component -->
     <div class="chip text-ellipsis">
@@ -15,45 +47,21 @@
         :src="info.creatorPhoto"
         class="avatar avatar-sm"
         :class="info.creatorPhoto !== '' ? 'chip-transp' : ''"
-      >
-      {{info.creatorName}}
+      />
+      {{ info.creatorName }}
     </div>
-    <!-- Edit and Study Buttons -->
-    <div id="button-container">
-      <!-- Edit only shows if you are the deck creator -->
-      <button
-        v-if="$store.getters.uid === info.creatorUID"
-        id="editBtn"
-        @click="$router.push({name: 'editFlashcards', params: {deckID: info.id, isPrivate: isPrivate}})"
-      >Edit</button>
-      <div
-        v-if="info.creatorUID === $store.getters.uid"
-        @click="$emit('toggle')"
-        id="indicator"
-        class="tooltip tooltip-bottom"
-        data-tooltip="Toggle Visibility"
-      >
-        <i
-          class="far"
-          :class="isPrivate ? 'fa-eye-slash' : 'fa-eye'"
-        ></i>
-      </div>
-      <button
-        @click="goStudy"
-        id="studyBtn"
-      >Study</button>
-    </div>
+    <div
+      id="studyBtn"
+      @click="goStudy"
+    >Study</div>
   </div>
 </template>
 
 <script>
-import Avatar from "@/components/Avatar";
+import { distanceInWordsToNow } from "date-fns";
 
 export default {
   name: "FlashcardIcon",
-  components: {
-    Avatar
-  },
   props: {
     info: {
       type: Object,
@@ -75,16 +83,19 @@ export default {
         this.$router.push({ name: "study", params: { deckID: this.info.id } });
       }
     },
-    calcDays(modDate) {
-      let currentDate = new Date();
-      modDate = new Date(modDate);
-      if (currentDate.toDateString() === modDate.toDateString()) {
-        return "today";
-      }
-      let timeDiff = Math.abs(currentDate.getTime() - modDate.getTime());
-      let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      let retString = days > 1 ? days + " days ago" : days + " day ago";
-      return retString;
+    calcDays(date) {
+      // Old manual date calculations
+
+      // let currentDate = new Date();
+      // modDate = new Date(modDate);
+      // if (currentDate.toDateString() === modDate.toDateString()) {
+      //   return "today";
+      // }
+      // let timeDiff = Math.abs(currentDate.getTime() - modDate.getTime());
+      // let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      // let retString = days > 1 ? days + " days ago" : days + " day ago";
+      // return retString;
+      return distanceInWordsToNow(date) + " ago";
     }
   }
 };
@@ -94,64 +105,35 @@ export default {
 @import "@/styles.scss";
 
 $card-width: 288px;
-$card-height: 218px;
+$card-height: 230px;
 
 /* Icon itself */
 #flashcard {
   background-color: white;
-  height: $card-height;
-  width: $card-width;
-  padding: 1em;
-  border: 2px solid $secondary-light;
+  padding-top: 5px;
+
+  min-height: $card-height;
+  max-height: $card-height;
+  min-width: $card-width;
+  max-width: $card-width;
+  // padding: 1em;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  &:hover{
-      border-image: $orange-gradient;
-      border-image-slice: 1;
-      box-shadow: $shadow-heavy;
-  }
-}
-
-#indicator {
-  cursor: pointer;
-  position: relative;
-  display: inline-block;
-
-  top: 0px;
-  left: 0px;
-
-  margin: 5px;
-  height: 30px;
-  width: 30px;
-  padding: 5px;
-  border-radius: 50%;
-  background-color: whitesmoke;
-  align-self: center;
-
   &:hover {
-    background-color: darken(whitesmoke, 20);
-  }
-
-  i.fa-eye {
-    color: $success-color;
-  }
-
-  i.fa-eye-slash {
-    color: $error-color;
+    box-shadow: $shadow-hovered;
   }
 }
 
 #title {
   font-family: $secondary-font;
   font-weight: 700;
+  font-size: 30px;
   white-space: nowrap;
-  margin: 0;
   text-overflow: ellipsis;
   max-width: $card-width;
-  max-height: 100px;
   text-align: center;
 }
 
@@ -182,40 +164,57 @@ p > i {
 }
 
 #button-container {
-  align-self: space-between;
-  margin-top: 8px;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  align-items: center;
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 10px;
 }
 
 #editBtn {
   cursor: pointer;
+  float: left;
   border: none;
-  padding: 0.3em;
   background-color: transparent;
   color: lighten($secondary, 30);
   font-weight: 500;
+
+  &:hover {
+    // color: $primary;
+    color: $success-color;
+  }
 }
 
-#editBtn:hover {
-  // color: $primary;
-  color: $success-color;
+#indicator {
+  cursor: pointer;
+  float: right;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  align-self: center;
+  color: darken(whitesmoke, 20);
+
+  i.fa-eye:hover {
+    color: $success-color;
+  }
+
+  i.fa-eye-slash:hover {
+    color: $error-color;
+  }
 }
 
 #studyBtn {
   cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  padding: 4px 8px 4px 8px;
   background-color: $primary;
+  width: 100%;
   color: white;
+  font-size: 120%;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
   font-weight: 400;
-}
 
-#studyBtn:hover {
-  /* color: hsl(0, 0%, 85%); */
-  background-color: lighten($primary, 10);
+  &:hover {
+    background-color: lighten($primary, 10);
+  }
 }
 </style>

@@ -1,41 +1,46 @@
 <template>
   <div id="question">
     <h1>Match each term to its definition</h1>
+    <!-- Terms Box -->
     <div id="terms-holder">
       <!-- Create draggable component for each term -->
       <drag
         v-for="(term, index) in drag"
-        :key="term.term"
+        :key="index"
         class="drag"
         :draggable="term.draggable"
         :class="{ placed: !term.draggable }"
         :transfer-data="{ from: index, term: term.term }"
-      >{{term.term}}</drag>
+        >{{ term.term }}</drag
+      >
     </div>
 
+    <!-- Definitions Box -->
     <div id="defs-holder">
       <div id="left">
         <!-- Show a drop area for each term -->
         <drop
-          v-for="slot in drop"
+          v-for="(slot, index) in drop"
+          :key="index"
           class="drop"
-          :key="slot.definition"
           :class="{ over: slot.over, filled: slot.filled }"
           @click.native="resetDrop(slot)"
           @dragover="handleDragOver(slot)"
           @dragleave="handleDragLeave(slot)"
           @drop="handleDrop(slot, ...arguments)"
         >
-          {{slot.text}}
+          {{ slot.text }}
         </drop>
       </div>
       <div id="right">
         <!-- Show all definitions -->
         <h2
-          v-for="slot in drop"
-          :key="slot.definition"
-          :class="{correct: slot.isCorrect}"
-        >{{slot.definition}}</h2>
+          v-for="(slot, index) in drop"
+          :key="index"
+          :class="{ correct: slot.isCorrect }"
+        >
+          {{ slot.definition }}
+        </h2>
       </div>
     </div>
   </div>
@@ -90,6 +95,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Logic to handle what happens when a question is term is dropped on a def
+     */
     handleDrop(drop, data) {
       if (drop.from == null) {
         // Dropping to an unfilled area
@@ -101,7 +109,7 @@ export default {
         drop.text = data.term;
         this.$emit("answered", true);
       } else {
-        // Dropping to a take drop zone
+        // Dropping to a taken drop zone
         // Replace existing term and enable its draggable property
         this.drag[drop.from].draggable = true;
         drop.from = data.from;
@@ -112,13 +120,18 @@ export default {
       }
       this.checkCorrect(drop);
     },
+    /**
+     * Check whether or not the term matches the definition
+     */
     checkCorrect(drop) {
       if (drop.text === drop.correctTerm) {
         this.$emit("correct", true);
         drop.isCorrect = true;
       } else {
+        if (drop.isCorrect) {
+          this.$emit("correct", false);
+        }
         drop.isCorrect = false;
-        this.$emit("correct", false);
       }
     },
     handleDragOver(drop) {
@@ -132,6 +145,8 @@ export default {
       }
     },
     resetDrop(drop) {
+      console.log("reset drop");
+
       if (drop.from !== null) {
         drop.text = "";
         drop.filled = false;
@@ -140,6 +155,7 @@ export default {
         drop.from = null;
         drop.isCorrect = false;
         this.$emit("answered", false);
+        this.$emit("correct", false);
       }
     }
   }
@@ -179,9 +195,9 @@ h1 {
   align-items: center;
 
   background-color: #e7e7e7;
-  #left {
-    // Nothing for now
-  }
+  // #left {
+  //   // Nothing for now
+  // }
   #right {
     flex: 6;
     text-align: center;

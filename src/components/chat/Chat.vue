@@ -1,47 +1,41 @@
 <template>
   <div>
-    <div
-      class="sidebar"
-      :class="show ? 'active' : 'collapsed'"
-    >
+    <div class="sidebar" :class="show ? 'active' : 'collapsed'">
       <div class="content">
         <h3 id="header">Study Group Chat</h3>
         <div class="divider-gradient mb-2"></div>
-        <div
-          class="messages"
-          ref="messages"
-        >
+        <div ref="messages" class="messages">
           <transition-group
             name="chatTransition"
             enter-active-class="animated fadeInDown"
           >
             <message
-              v-for="message in groupMessages"
+              v-for="(message, index) in groupMessages"
               :key="message.date.toString()"
-              :sender="message.sender === $store.getters.uid ? true: false"
+              :show-name="showSender(index)"
+              :sender="message.sender === $store.getters.uid ? true : false"
               :details="message"
             ></message>
           </transition-group>
-
         </div>
         <div class="divider-gradient my-2"></div>
         <input
-          @keydown.enter="sendMessage"
+          v-model="userMessage"
           type="text"
           class="form-input message-input"
           placeholder="Group Message"
-          v-model="userMessage"
-        >
+          @keydown.enter="sendMessage"
+        />
         <button
-          @click="sendMessage"
           class="btn btn-primary"
           :class="userMessage === '' ? 'disabled' : ''"
-        >Send</button>
+          @click="sendMessage"
+        >
+          Send
+        </button>
       </div>
-
     </div>
   </div>
-
 </template>
 
 <script>
@@ -73,7 +67,52 @@ export default {
       groupMessages: []
     };
   },
+  computed: {
+    messageLength() {
+      return this.groupMessages.length;
+    }
+  },
+  watch: {
+    // Reload the group's messages when the user switches groups
+    "$route.params.groupID"() {
+      this.loadGroupMessages();
+    },
+    messageLength(newVal, oldVal) {
+      // Only play notification when message is from another person
+      // Only play notification when the chat sidebar is closed
+      // Only play notification when the user gets a new message, not when the messages are loaded
+      if (
+        oldVal !== 0 &&
+        newVal !== 0 &&
+        this.groupMessages[this.groupMessages.length - 1].sender !==
+          this.$store.getters.uid
+      ) {
+        if (!this.$store.getters.chatActive) {
+          notification.play();
+        } else {
+          // Have to adjust the time depending on the speed of message animation
+          setTimeout(() => {
+            this.scrollToBottom(); //Always scroll to bottom when a new message comes in
+          }, 500);
+        }
+      }
+    }
+  },
+  created() {
+    this.loadGroupMessages();
+  },
   methods: {
+    showSender(index) {
+      if (index !== 0) {
+        return (
+          this.groupMessages[index].sender !=
+          this.groupMessages[index - 1].sender
+        );
+      } else {
+        // The first item will always show the header.
+        return true;
+      }
+    },
     scrollToBottom() {
       this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
     },
@@ -108,40 +147,6 @@ export default {
         this.scrollToBottom();
       });
     }
-  },
-  created() {
-    this.loadGroupMessages();
-  },
-  computed: {
-    messageLength() {
-      return this.groupMessages.length;
-    }
-  },
-  watch: {
-    // Reload the group's messages when the user switches groups
-    "$route.params.groupID"() {
-      this.loadGroupMessages();
-    },
-    messageLength(newVal, oldVal) {
-      // Only play notification when message is from another person
-      // Only play notification when the chat sidebar is closed
-      // Only play notification when the user gets a new message, not when the messages are loaded
-      if (
-        oldVal !== 0 &&
-        newVal !== 0 &&
-        this.groupMessages[this.groupMessages.length - 1].sender !==
-          this.$store.getters.uid
-      ) {
-        if (!this.$store.getters.chatActive) {
-          notification.play();
-        } else {
-          // Have to adjust the time depending on the speed of message animation
-          setTimeout(() => {
-            this.scrollToBottom(); //Always scroll to bottom when a new message comes in
-          }, 500);
-        }
-      }
-    }
   }
 };
 </script>
@@ -154,6 +159,10 @@ export default {
   display: block;
   transition: 0.25s;
   margin-bottom: 9px;
+  font-family: $secondary-font;
+  user-select: none;
+  font-size: 1.6em;
+  font-weight: 700;
 }
 
 .sidebar {

@@ -4,7 +4,9 @@
       <template slot="left">
         <!-- Show a popover menu when the user chooses to create a new note -->
         <div class="popover popover-right">
-          <button class="btn btn-primary">New Note <i class="fas fa-plus"></i></button>
+          <button class="btn btn-primary">
+            New Note <i class="fas fa-plus"></i>
+          </button>
           <div
             style="margin-top: 20px;"
             class="popover-container"
@@ -15,18 +17,20 @@
               </div>
               <div class="card-body">
                 <input
-                  @keydown.enter="createNote"
                   v-model="noteTitle"
                   type="text"
                   class="form-input"
-                >
+                  @keydown.enter="createNote"
+                />
               </div>
               <div class="card-footer">
                 <button
-                  @click="createNote"
                   class="btn btn-primary"
                   :class="loadingNewNote ? 'loading' : ''"
-                >Create Note</button>
+                  @click="createNote"
+                >
+                  Create Note
+                </button>
               </div>
             </div>
           </div>
@@ -38,11 +42,11 @@
       <template slot="right">
         <div class="has-icon-left">
           <input
-            type="text"
-            class="form-input"
-            placeholder="Search by Title"
             v-model="searchQuery"
-          >
+            type="text"
+            class="search-input"
+            placeholder="Search by Title"
+          />
           <i class="form-icon fas fa-search"></i>
         </div>
       </template>
@@ -55,11 +59,9 @@
     >
       <note-icon
         v-for="note in filteredNotes"
-        :info="note"
         :key="note.id"
+        :info="note"
       />
-      <!-- @delete="deleteNote(note.id)"
-        @viewNote="$router.push(`/${$route.params.groupID}/notes/${note.id}`)" -->
     </div>
     <div
       v-else
@@ -91,6 +93,17 @@ export default {
       loadingNewNote: false
     };
   },
+  computed: {
+    filteredNotes() {
+      // Filter the note list by the query string. Including partial matches.
+      // Converted to lowercase to avoid capitalization enforcement
+      return this.notesList.filter(note => {
+        return note.title
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+      });
+    }
+  },
   created() {
     // Load all user's notes on page load
     notesRef = db
@@ -103,17 +116,6 @@ export default {
       this.notesList === notesList;
       this.isLoading = false;
     });
-  },
-  computed: {
-    filteredNotes() {
-      // Filter the note list by the query string. Including partial matches.
-      // Converted to lowercase to avoid capitalization enforcement
-      return this.notesList.filter(note => {
-        return note.title
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase());
-      });
-    }
   },
   methods: {
     createNote() {
@@ -155,8 +157,6 @@ export default {
   top: 60px !important;
 
   .card {
-    border-radius: 10px !important;
-
     .card-header {
       font-family: $secondary-font;
       font-weight: 700;
@@ -165,9 +165,6 @@ export default {
 }
 
 .content-container {
-  // width: 100%;
-  // padding: 20px;
-  // margin: 0 auto;
   margin: 20px;
   display: grid;
   grid-gap: 20px;

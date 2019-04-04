@@ -1,13 +1,13 @@
 <template>
   <div id="switch-container">
     <input
-      type="checkbox"
       id="switch"
       v-model="toggled"
+      type="checkbox"
       @change="$emit('toggle', toggled)"
     /><label for="switch">Toggle</label>
 
-    <h4 v-if="values">{{status}}</h4>
+    <h4 v-if="values">{{ status }}</h4>
   </div>
 </template>
 
@@ -18,7 +18,8 @@ export default {
     // Values are the strings that should be displayed when the switch is toggled on or off. Array should contain two strings (off val then on val)
     values: {
       type: Array,
-      required: false
+      required: false,
+      default: ["Off", "On"]
     },
     default: {
       type: Boolean,

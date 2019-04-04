@@ -1,14 +1,11 @@
 Branding:
-    - My brother is working on a design
   ☐ Think of better slogan.
 
 General:
   ☐ Go through and error check all inputs where necessary
-    - Cannot apply the blur effect because it requires backdrop-filter that is only available in certain browsers
   ☐ Make sure that each page that loads from firebase has error checking
     ☐ Should display an error message if the firebase load fails
     ☐ User's should be limited to what they are permitted to access..
-  ☐ Lazy loading of subpages. @high
     - Sub-pages are pages that you are taken to after clicking a main page
     - Ex) Study-flashcard, take-quiz
   ☐ Paginate collection pages so they scale when more information is added.
@@ -18,17 +15,15 @@ General:
     - Chat notifications on. etc...
   ☐ Sequential loading animations when list are being displayed for the first time
        Every list is loading from firebase so there is a delay before the data is shown. Figure out how to get loading list to be animated 1-by-1 when shown for the first time
-  ☐ Small QOL Features
-    ☐ Always verify delete actions
-
-  ☐ The user's "bio" information should be displayed somewhere....
+  ☐ Do something with the extra study group info @high
+  ☐ Confirmation email when signing up @high
 
 Components Needed:
   ☐ Notification popup
     Currently using vue-notifications but would be willing to switch to something better.
 
 Firebase Functions File:
-  ☐ Remove expired invite codes
+  ☐ Improve functions file code to match requirements. Right now, there are some errors thrown but it works
   ☐ Downscale images?
   ☐ Remove messages once size reaches > 1000 messages
   ☐ Function to increment message counter of the document everytime a new document is created
@@ -36,18 +31,15 @@ Firebase Functions File:
 
 Modals:
   ☐ Improve modals with new design...
+    - Partially complete
 
-New Sidebar:
-  ☐ Create a smooth transition between collapsed and visible states
-    Right now the text pops around as the transition plays
-    May have to do something like "inline-block" so that elements don't break
+Group Settings:
+  ☐ Update to match new design
 
 Notes:
   ☐ Find more markdown css themes
     ☐ Dark theme
-  ☐ Maybe extract the view component if we want to use it for aiding users in creating their flashcards.
   ☐ Autoscroll viewing content to match...
-  ☐ Alert user when they try to leave without saving their notes.
   ☐ Scale the views to be on top of eachother when window width is too small
   ☐ Add a switch to show preview vs edit views...
   Maybes:
@@ -55,15 +47,12 @@ Notes:
 
 Chat:
   Maybes:
-    ☐ Total number of messages indicator (Could either be total messages or unread messages...)
-       Not sure how I would implement tracking unread messages
-    ☐ Transition when the button first appears
-    ☐ Allow user's to delete their own messages
       - Maybe allow editing?
-
+    ☐ Scroll down button when not at chat end?
 
 Quiz:
-  ☐ When the user refreshes the page, the route props are lost...
+  ☐ Add T/F question type
+  ☐ Fix questions to match new design
 
 Known Bugs:
   ☐ Form validation is broken
@@ -74,40 +63,35 @@ Known Bugs:
         This is due to the button capturing focus and the spacebar is pressing it instead of flipping the card.
   Flashcard Create / Edit:
     ☐ Prompt users before leaving if not saved (similar to note page)
-  Chat:
-    ☐ When user changes their profile picture, the old image is deleted but we still need the image at the old url.
-      Need to make sure I am uploading to the same url not creating a new one
 
 Vuex Store:
   ☐ Save the number of unread messages to the store.
     Reset the number when the user opens the chat sidebar
 
+Agenda:
+  ☐ Search bar?
+  ☐ Should old events be purged when they expire?
+    - Feel that the agenda would be too cluttered over time without it
+    - Could possible have a load previous button...
+  ☐ Notifications?
+
 Homepage:
-  ☐ Display an empty placeholder if the user doesn't have any recent notes or books.
+  ☐ Display an empty placeholder if the user doesn't have any recent notes or flaschards.
   ☐ Think of better design for dashboard and homepage
     - The current design feels cluttered not very useful.
 
 Members Page:
-  ☐ Add members list page sort filters
     - Joined Date, Alphabetical, etc...
-  ☐ Fix plus icon scaling and positioning
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
-  ☐ Automatically update to the file picker's picture so user can preview what it will look like @low
   ☐ Create a placeholder for when the user doesn't have any study groups. Don't just show an empty table
 
 Side Bar:
   ☐ Add more Study Group information (meeting time, location, extra info) possibly do this in a modal
 
-NavBar:
-  ☐ Redesign navbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility
-    Maybe a complete redesign or maybe just some improvements
-  ☐ Style the currently active group dropdown based on the route parameters
-
 Create Study Group:
   ☐ Add transitions to make it look nice
-  ☐ Put a conditional on the meeting days and times. Ask "Does the have designated meeting days and times?"
   ☐ Maybe split the code into pieces to make it more manageble...
 
 Flashcards Collection:
@@ -124,7 +108,6 @@ Animations / Transitions:
 
 Possible Features (Time Permitting):
   ☐ Maybe allow users to upload pdfs and save notes to their own documents
-  ☐ Video/Audio Chat with WebRTC
   ☐ Make the site mobile friendly.
     Hardest part is making the navbar change into a mobile form.
   ☐ Indicators that show online group members in the sidebar
@@ -134,6 +117,47 @@ Possible Features (Time Permitting):
     https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
 
 Archive:
+  ✔ Always verify delete actions @done(19-03-23 17:50) @project(General)
+  ✘ Create new event input box should expand to the text's length @cancelled(19-03-23 17:50) @project(Agenda)
+  ✔ PURPLE Social Study icon for the favicon @high @done(19-03-23 15:39) @project(Branding)
+  ✘ Automatically update to the file picker's picture so user can preview what it will look like @low @cancelled(19-03-23 11:18) @project(Profile Settings)
+  ✔ Redesign dnavbar to scale properly on all screen sizes. Employ the use of a custom flexbox setup that allows more flexibility @done(19-03-23 11:18) @project(NavBar)
+    Maybe a complete redesign or maybe just some improvements
+  ✘ Video/Audio Chat with WebRTC @cancelled(19-03-23 11:19) @project(Possible Features (Time Permitting))
+  ✔ Apply new transparency effects to all modal backgrounds @low @done(19-03-22 17:42) @project(General)
+  ✔ Update all date / time pickers to use new component library @done(19-03-22 17:42) @project(General)
+  ✔ Show description when user tries to join the group... @done(19-03-22 17:42) @project(General)
+  ✘ Total number of messages indicator (Could either be total messages or unread messages...) @cancelled(19-03-22 17:43) @project(Chat.Maybes)
+    Not sure how I would implement tracking unread messages
+  ✔ Fix Griffin's bug? @done(19-03-22 17:43) @project(Quiz)
+  ✔ Bug where submitting all correct answers shows as 0 correct...@critical @done(19-03-22 17:43) @project(Quiz)
+  ✔ When user changes their profile picture, the old image is deleted but we still need the image at the old url. @done(19-03-22 17:44) @project(Known Bugs.Chat)
+    Need to make sure I am uploading to the same url not creating a new one
+  ✔ Write agenda rules in firebase @critical @done(19-03-22 17:44) @project(Agenda)
+  ✔ Reduce page title split between action buttons @done(19-03-22 17:44) @project(Agenda)
+  ✘ Add members list page sort filters @cancelled(19-03-22 17:44) @project(Members Page)
+  ✔ Fix plus icon scaling and positioning @done(19-03-22 17:44) @project(Members Page)
+  ✔ Style the currently active group dropdown based on the route parameters @done(19-03-22 17:45) @project(NavBar)
+  ✘ Put a conditional on the meeting days and times. Ask "Does the have designated meeting days and times?" @cancelled(19-03-22 17:45) @project(Create Study Group)
+  ✔ Update design to match new theme @done(19-03-21 15:00) @project(Chat)
+  ✘ Try out squares instead of rounded bubbles? @cancelled(19-03-21 14:59) @project(Chat)
+  ✔ Change title to be smaller and use secondary font @done(19-03-21 14:59) @project(Chat)
+  ✔ Use same logic as agenda page to only show names for ungrouped chat messages @done(19-03-21 14:59) @project(Chat)
+  ✘ Create a smooth transition between collapsed and visible states @cancelled(19-03-20 20:48) @project(New Sidebar)
+    Right now the text pops around as the transition plays
+    May have to do something like "inline-block" so that elements don't break
+  ✔ Lazy loading of subpages. @high @done(19-03-17 18:24) @project(General)
+  ✔ The user's "bio" information should be displayed somewhere.... @done(19-03-15 14:11) @project(General)
+  ✔ Remove old agenda items from display (maybe paginate the items and allow users to go back...) @done(19-03-17 18:25) @project(Firebase Functions File)
+  ✘ Remove expired invite codes @cancelled(19-03-17 18:25) @project(Firebase Functions File)
+  ✔ Edit items @done(19-03-17 18:26) @project(Agenda)
+  ✔ Delete items @done(19-03-17 18:26) @project(Agenda)
+  ✔ loading indicators @done(19-03-17 18:26) @project(Agenda)
+  ✔ empty placeholders @done(19-03-17 18:26) @project(Agenda)
+  ✘ Maybe extract the view component if we want to use it for aiding users in creating their flashcards. @cancelled(19-03-17 18:26) @project(Notes)
+  ✔ Alert user when they try to leave without saving their notes. @done(19-03-17 18:26) @project(Notes)
+  ✘ Transition when the button first appears @cancelled(19-03-17 18:26) @project(Chat.Maybes)
+  ✘ Allow user's to delete their own messages @cancelled(19-03-17 18:26) @project(Chat.Maybes)
   ✔ Design a logo / titlebar icon @done(19-02-28 22:55) @project(Branding)
   ✔ Find better flashcard sidebar icon @done(19-02-28 22:55) @project(Branding)
   ✘ Modal that can be used for all other modals. @cancelled(19-02-28 22:56) @project(Components Needed)

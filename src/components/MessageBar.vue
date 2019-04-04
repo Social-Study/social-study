@@ -1,11 +1,8 @@
 <template>
-  <div
-    class="toast"
-    :class="color"
-  >
+  <div class="toast" :class="color">
     <button
-      @click="$emit('closeMessage')"
       class="btn btn-clear float-right"
+      @click="$emit('closeMessage')"
     ></button>
     <slot>Message Here</slot>
   </div>
@@ -16,7 +13,10 @@ export default {
   name: "MessageBar",
   props: {
     visible: Boolean,
-    type: String
+    type: {
+      type: String,
+      default: "Error"
+    }
   },
   data() {
     return {};

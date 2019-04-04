@@ -1,18 +1,21 @@
 <template>
   <div>
     <!-- Notification displays when a new code is generated -->
-    <notifications
-      group="generateInvite"
-      position="left top"
-    />
+    <notifications group="generateInvite" position="left top" />
     <page-title>
-      <template slot="center">Members</template>
+      <template slot="left">
+        <button class="btn btn-primary" @click="inviteMember()">
+          Invite Member <i class="fas fa-plus"></i>
+        </button>
+      </template>
+      <template slot="center"
+        >Members</template
+      >
     </page-title>
     <div
       v-if="!loading"
       style="display: flex; flex-flow: row nowrap; justify-content: center;"
     >
-
       <!-- Display card for each member of the Study Group -->
       <transition-group
         name="transition"
@@ -21,67 +24,50 @@
         appear
         class="content-container"
       >
-        <!-- Invite New Member Card -->
-        <member-card
-          key="addButton"
-          @click.native="inviteMember()"
-          add
-        > </member-card>
-
         <!-- Show card for each group member -->
         <member-card
           v-for="member in memberDetails"
           :key="member.uid"
-          :photoURL="member.photoURL"
-          :displayName="member.displayName"
+          :photo-u-r-l="member.photoURL"
+          :display-name="member.displayName"
           :description="member.description"
           :owner="member.uid === studyGroup.owner"
         >
         </member-card>
       </transition-group>
-
     </div>
-    <div
-      v-else
-      class="loading loading-lg"
-    ></div>
+    <div v-else class="loading loading-lg"></div>
 
     <!-- Display Invite Code Modal -->
-    <div
-      v-show="displayModal"
-      class="modal modal-sm active"
-      id="modal-id"
-    >
+    <div v-show="displayModal" id="modal-id" class="modal modal-sm active">
       <a
-        @click="displayModal = false"
         href="#"
         class="modal-overlay"
         aria-label="Close"
+        @click="displayModal = false"
       ></a>
       <div class="modal-container">
         <div class="modal-header">
           <a
             href="#"
-            @click="displayModal = false"
             class="btn btn-clear float-right"
             aria-label="Close"
+            @click="displayModal = false"
           ></a>
           <div class="modal-title h5">Generate New Invite</div>
-
         </div>
         <div class="modal-body">
           <div class="content">
             <div class="input-group">
               <input
-                v-model="inviteCode"
                 ref="invite"
+                v-model="inviteCode"
                 type="text"
                 class="form-input"
-              >
-              <button
-                @click="copyCode"
-                class="btn btn-primary input-group-btn"
-              >Generate</button>
+              />
+              <button class="btn btn-primary input-group-btn" @click="copyCode">
+                Generate
+              </button>
             </div>
           </div>
         </div>
@@ -120,7 +106,7 @@ export default {
         this.studyGroup = group;
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
 
     // Watch for changes on the document, if there is, set study group to new info
@@ -194,7 +180,7 @@ export default {
   width: 100%;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 250px));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 300px));
   grid-auto-rows: 300px;
   justify-content: center;
   padding: 20px;

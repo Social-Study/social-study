@@ -3,8 +3,8 @@
     <NavBar v-if="$route.name !== 'landing'" />
     <router-view v-if="!$route.params.groupID" />
     <side-bar
-      :show="sidebarActive"
       v-else
+      :show="sidebarActive"
     >
       <router-view
         id="router-view"
@@ -17,7 +17,6 @@
     </side-bar>
   </div>
 </template>
-
 
 <script>
 import NavBar from "@/components/navigation/NavBar";
@@ -71,20 +70,16 @@ export default {
   }
 };
 </script>
-
-
 // Global Styles
 <style lang="scss">
 @import "@/styles.scss";
 @import "node_modules/animate.css/animate";
 @import "node_modules/spectre.css/src/spectre.scss";
 @import "node_modules/spectre.css/src/spectre-exp.scss";
+@import "node_modules/spectre.css/src/spectre-icons.scss";
 @import url("https://fonts.googleapis.com/css?family=Pacifico");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
-// @import "node_modules/spectre.css/src/spectre-icons.scss";
-// @import url("https://rsms.me/inter/inter-ui.css");
-// @import url("https://fonts.googleapis.com/css?family=Montserrat:400,600");
 
 html,
 body {
@@ -107,18 +102,18 @@ body {
 
 // Applies to all modal-overlays
 a.modal-overlay {
-  background-image: $dark-gradient !important;
+  background-color: $transparent-dark !important;
 }
 
-// Sidebar Styles for Visible /
+// Sidebar Styles for Visible / Hidden
 .sidebar-active {
   margin-left: 200px;
-  transition: .25s;
+  transition: 0.25s;
 }
 
 .sidebar-inactive {
   margin-left: 50px;
-  transition: .25s;
+  transition: 0.25s;
 }
 
 // Chat Sidebar Styles for Visible / Hidden

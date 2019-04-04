@@ -1,184 +1,183 @@
 <template>
   <div id="full-screen">
-
     <!-- Page Title -->
     <page-title>
-      <template slot="center">Create New Study Group</template>
+      <template slot="center"
+        >Create New Study Group</template
+      >
     </page-title>
 
     <!-- Notification -->
-    <notifications
-      group="create"
-      position="right bottom"
-    />
+    <notifications group="create" position="right bottom" />
 
     <div class="create-content">
-
       <!-- Contains Center Content; Buttons and Content -->
       <div class="nav-container">
+        <!-- Back Button -->
         <button
-          @click="back"
-          class="btn btn-action btn-success btn-lg s-circle"
+          class="btn btn-action btn-success btn-lg"
           :class="active === 0 ? 'disabled c-not-allowed' : ''"
+          @click="back"
         >
           <i class="fas fa-arrow-left"></i>
         </button>
 
-        <!-- Class Name Form -->
-        <div
-          v-if="active === 0"
-          class="infoContainer"
-        >
+        <!-- Class Name Card -->
+        <div v-if="active === 0" class="infoContainer">
           <h2>What is the name of the class?</h2>
 
           <div
             class="form-group"
-            :class="errors.first('className') ?  'has-error' : '' || !errors.first('className') && className ? 'has-success' : ''"
+            :class="
+              errors.first('className')
+                ? 'has-error'
+                : '' || (!errors.first('className') && className)
+                ? 'has-success'
+                : ''
+            "
           >
             <input
-              @keydown.enter="next"
+              v-model="className"
+              v-validate="'required'"
               class="form-input"
               type="text"
-              v-model="className"
               placeholder="Class Name"
               name="className"
-              v-validate="'required'"
               required
+              @keydown.enter="next"
             />
             <p class="form-input-hint">{{ errors.first("className") }}</p>
           </div>
           <!-- <span style="color: red;">{{ errors.first("className") }}</span> -->
           <h3 style="margin-top: 20px;">Course Code? (Optional)</h3>
           <input
-            @keydown.enter="next"
+            v-model="courseCode"
             class="form-input"
             type="text"
-            v-model="courseCode"
             style="width: 200px;"
             placeholder="Course Code "
+            @keydown.enter="next"
           />
         </div>
 
         <!-- Instructor Name Form -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 1"
-        >
+        <div v-else-if="active === 1" class="infoContainer">
           <!-- TODO: Figure out why validation isn't working... -->
           <h2>What is the course intructor's name?</h2>
           <div
             class="form-group"
-            :class="errors.first('instructorName') ?  'has-error' : '' || !errors.first('instructorName') && instructorName ? 'has-success' : ''"
+            :class="
+              errors.first('instructorName')
+                ? 'has-error'
+                : '' || (!errors.first('instructorName') && instructorName)
+                ? 'has-success'
+                : ''
+            "
           >
             <input
-              @keydown.enter="next"
+              v-model="instructorName"
+              v-validate="'required|alpha_spaces'"
               class="form-input"
               type="text"
-              v-model="instructorName"
               placeholder="Instructor Name"
               name="instructor"
-              v-validate="'required|alpha_spaces'"
               required
+              @keydown.enter="next"
             />
             <p class="form-input-hint">{{ errors.first("instructorName") }}</p>
           </div>
         </div>
 
         <!-- Class Meeting Time Form -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 2"
-        >
+        <div v-else-if="active === 2" class="infoContainer">
           <h2>When does your class meet?</h2>
 
           <!-- Day Selector Button Block -->
           <div class="btn-group btn-group-block">
             <button
-              @click="toggle('monday');"
               :class="meetingDays.monday ? 'active' : ''"
               class="btn"
+              @click="toggle('monday')"
             >
               Monday
             </button>
             <button
-              @click="toggle('tuesday');"
               :class="meetingDays.tuesday ? 'active' : ''"
               class="btn"
+              @click="toggle('tuesday')"
             >
               Tuesday
             </button>
             <button
-              @click="toggle('wednesday');"
               :class="meetingDays.wednesday ? 'active' : ''"
               class="btn"
+              @click="toggle('wednesday')"
             >
               Wednesday
             </button>
             <button
-              @click="toggle('thursday');"
               :class="meetingDays.thursday ? 'active' : ''"
               class="btn"
+              @click="toggle('thursday')"
             >
               Thursday
             </button>
             <button
-              @click="toggle('friday');"
               :class="meetingDays.friday ? 'active' : ''"
               class="btn"
+              @click="toggle('friday')"
             >
               Friday
             </button>
           </div>
 
           <br />
+          <!-- TODO: Transition to use new flatpickr -->
           <div class="time-group">
-            <input
-              type="time"
-              class="time-picker form-input"
+            <flat-pickr
               v-model="meetingTime[0]"
+              :config="config"
+              class="time-picker form-input"
+              style="margin-right: 10px;"
+              placeholder="Time"
               required
             />
-            <input
-              type="time"
-              class="time-picker form-input"
+            <p>to</p>
+            <flat-pickr
               v-model="meetingTime[1]"
+              :config="config"
+              class="time-picker form-input"
+              style="margin-left: 10px;"
+              placeholder="Time"
               required
             />
           </div>
         </div>
 
         <!-- Class Meeting Location Form -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 3"
-        >
+        <div v-else-if="active === 3" class="infoContainer">
           <h2>Where does the class meet?</h2>
 
           <input
-            @keydown.enter="next"
-            class="form-input"
-            type="text"
             v-model="location"
-            name="location"
             v-validate="'required'"
+            class="form-input"
+            style="width: 60%;"
+            type="text"
+            name="location"
             placeholder="Class Location"
+            @keydown.enter="next"
           />
           <span style="color: red;">{{ errors.first("location") }}</span>
         </div>
 
         <!-- Instructor Website Form -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 4"
-        >
+        <div v-else-if="active === 4" class="infoContainer">
           <h2>Does your instructor have a website?</h2>
 
           <div class="form-group switch">
             <label class="form-switch">
-              <input
-                type="checkbox"
-                v-model="hasWebsite"
-              />
+              <input v-model="hasWebsite" type="checkbox" />
               <i class="form-icon"></i>
             </label>
           </div>
@@ -188,62 +187,46 @@
             enter-active-class="animated fadeInDown"
             leave-active-class="animated fadeOutUp"
           >
-            <div
-              v-show="hasWebsite"
-              key="input"
-              class="input-group"
-            >
+            <div v-show="hasWebsite" key="input" class="input-group">
               <span class="input-group-addon">https://</span>
               <input
-                @keydown.enter="next"
+                v-model="websiteURL"
+                v-validate="'url'"
                 style="margin: 0;"
                 class="form-input"
                 type="text"
-                v-model="websiteURL"
                 name="url"
-                v-validate="'url'"
                 placeholder="Website URL"
+                @keydown.enter="next"
               />
             </div>
-            <span
-              key="error-string"
-              style="color: red;"
-            >{{
+            <span key="error-string" style="color: red;">{{
               errors.first("url")
-              }}</span>
+            }}</span>
 
             <br key="break" />
             <br key="break2" />
             <a
               v-show="hasWebsite && websiteURL !== ''"
-              target="_blank"
               key="link"
+              target="_blank"
               :href="formattedURL"
-            >{{ formattedURL }}</a>
+              >{{ formattedURL }}</a
+            >
           </transition-group>
         </div>
 
         <!-- Extra Group Info Form -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 5"
-        >
+        <div v-else-if="active === 5" class="infoContainer">
           <h2>Would you like to enter any additional information?</h2>
           <div class="form-group switch">
             <label class="form-switch">
-              <input
-                type="checkbox"
-                v-model="hasExtraInfo"
-              />
+              <input v-model="hasExtraInfo" type="checkbox" />
               <i class="form-icon"></i>
             </label>
           </div>
           <br />
-          <div
-            v-show="hasExtraInfo"
-            key="input"
-            class="input-group"
-          >
+          <div v-show="hasExtraInfo" key="input" class="input-group">
             <transition
               name="transition"
               enter-active-class="animated fadeInDown"
@@ -251,155 +234,66 @@
             >
               <textarea
                 v-show="hasExtraInfo"
-                @keydown.enter="next"
+                v-model="extraInfo"
                 style="resize: none"
                 class="form-input"
                 type="text-area"
-                v-model="extraInfo"
                 cols="53"
                 rows="3"
                 placeholder="Additional Class Info"
+                @keydown.enter="next"
               ></textarea>
             </transition>
           </div>
         </div>
 
         <!-- Create Group with previous data confirmation -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 6"
-        >
-          <button
-            @click="createStudyGroup"
-            class="createBtn"
-          >
+        <div v-else-if="active === 6" class="infoContainer">
+          <button class="createBtn" @click="createStudyGroup">
             Create Study Group
           </button>
         </div>
 
         <!-- Invite Code / New Group Links -->
-        <div
-          class="infoContainer"
-          v-else-if="active === 7"
-        >
+        <div v-else-if="active === 7" class="infoContainer">
           <h3>Your new Study Group has been created!</h3>
-          <div
-            style="width: 50%; margin: 20px auto;"
-            class="input-group"
-          >
+          <div style="width: 50%; margin: 20px auto;" class="input-group">
             <input
-              type="text"
               ref="inviteDisplay"
+              v-model="inviteCode"
+              type="text"
               class="form-input"
               placeholder="Invite Code"
-              v-model="inviteCode"
               style="margin: 0;"
             />
-            <button
-              @click="copyCode"
-              class="btn btn-primary input-group-btn"
-            >
+            <button class="btn btn-primary input-group-btn" @click="copyCode">
               Copy Code
             </button>
           </div>
           <div id="btnContainer">
-            <router-link
-              class="btn"
-              :to="{ name: 'dashboard' }"
-            >Dashboard</router-link>
+            <router-link class="btn" :to="{ name: 'dashboard' }"
+              >Dashboard</router-link
+            >
             <router-link
               style="margin: 0px 10px;"
               class="btn btn-success"
               :to="{ name: 'home', params: { groupID: newGroupID } }"
-            >Go to Group</router-link>
+              >Go to Group</router-link
+            >
           </div>
         </div>
 
         <!-- Next Button -->
         <button
-          @click="next"
-          class="btn btn-action btn-success btn-lg s-circle"
+          class="btn btn-action btn-success btn-lg"
           :class="active === 7 ? 'disabled' : ''"
+          @click="next"
         >
           <i class="fas fa-arrow-right"></i>
         </button>
       </div>
 
-      <!-- Bottom Of Page Steps Indicator -->
-      <ul class="step">
-        <li
-          :class="active === 0 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Group Name"
-          >Step 1</a>
-        </li>
-        <li
-          :class="active === 1 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Instructor's Name"
-          >Step 2</a>
-        </li>
-        <li
-          :class="active === 2 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Meeting Times"
-          >Step 3</a>
-        </li>
-        <li
-          :class="active === 3 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Meeting Location"
-          >Step 4</a>
-        </li>
-        <li
-          :class="active === 4 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Instructor Website"
-          >Step 5</a>
-        </li>
-        <li
-          :class="active === 5 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Additional Information"
-          >Step 6</a>
-        </li>
-        <li
-          :class="active === 6 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Confirm Creation"
-          >Step 7</a>
-        </li>
-        <li
-          :class="active === 7 ? 'active' : ''"
-          class="step-item"
-        >
-          <a
-            class="tooltip"
-            data-tooltip="Success"
-          >Done</a>
-        </li>
-      </ul>
+      <steps :active="active" />
     </div>
   </div>
 </template>
@@ -408,17 +302,31 @@
 import firebase, { db } from "@/firebaseConfig";
 import generateCode from "@/scripts/generateCode";
 import PageTitle from "@/components/navigation/PageTitle";
+import Steps from "@/components/create/Steps";
+
+import flatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+import ConfirmDatePlugin from "flatpickr/dist/plugins/confirmDate/confirmDate.js";
+import "flatpickr/dist/plugins/confirmDate/confirmDate.css";
 
 export default {
   name: "CreateGroup",
   components: {
-    PageTitle
+    PageTitle,
+    flatPickr,
+    Steps
   },
   data() {
     // TODO: refactor these into objects
     // TODO: Finish updating validation...
     return {
       active: 0,
+      config: {
+        dateFormat: "h:i K",
+        enableTime: true,
+        noCalendar: true,
+        plugins: [new ConfirmDatePlugin()]
+      },
       className: "",
       courseCode: "",
       instructorName: "",
@@ -438,6 +346,11 @@ export default {
       inviteCode: "",
       newGroupID: ""
     };
+  },
+  computed: {
+    formattedURL() {
+      return "https://" + this.websiteURL;
+    }
   },
   methods: {
     toggle(key) {
@@ -509,14 +422,10 @@ export default {
           this.newGroupID = docRef.id;
           this.next();
         })
+        // Catch error when creating Study Group
         .catch(error => {
-          console.log("CreateGroup: " + error);
+          // console.log("CreateGroup: " + error);
         });
-    }
-  },
-  computed: {
-    formattedURL() {
-      return "https://" + this.websiteURL;
     }
   }
 };
@@ -529,7 +438,7 @@ export default {
   height: $content-height;
 }
 
-button.s-circle {
+button.btn-action {
   margin: 15px;
 }
 
@@ -561,41 +470,52 @@ button.s-circle {
   min-height: 400px;
   width: 800px;
   background-color: rgb(255, 255, 255);
-  border-radius: 4px;
-  // border-radius: 16px;
-  box-shadow: 5px 12px 20px rgba(36, 37, 38, 0.13);
+  border: 2px solid $secondary-light;
+
+  &:hover {
+    border-image: $orange-gradient;
+    border-image-slice: 1;
+    border-width: 2px;
+    box-shadow: $shadow-hovered;
+  }
 }
 
 .createBtn {
   cursor: pointer;
-  background-image: $blue-gradient;
+  background-image: $orange-gradient;
   width: 300px;
   padding: 20px;
   font-family: $logo-font;
   font-size: 30px;
   color: white;
-  border-radius: 16px;
   border: 0;
 
   &:hover {
-    color: lightgrey;
     box-shadow: $shadow-heavy;
   }
 }
 
 .time-group {
-  display: block;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .time-picker {
-  width: 140px;
+  width: 100px;
 }
 
 input {
   margin-top: 15px;
   margin-left: auto;
   margin-right: auto;
-  width: 60%;
+  // width: 60%;
+}
+
+p {
+  margin: 0;
+  margin-top: 10px;
 }
 
 textarea {
@@ -613,15 +533,5 @@ textarea {
 .switch {
   margin: 0 auto 20px auto;
   width: 50px;
-}
-
-.step {
-  box-shadow: $shadow;
-  position: fixed;
-  bottom: 0;
-  padding: 5px 10px;
-  margin: 30px auto;
-  width: 80%;
-  border-radius: 10px;
 }
 </style>

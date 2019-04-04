@@ -5,22 +5,22 @@
       <h5>Public Flashcard Decks</h5>
       <div id="container">
         <div
-          id="deck"
           v-for="deck in publicDecks"
+          id="deck"
           :key="deck.title"
+          :class="deck.selected ? 'selected' : ''"
           @click="toggleSelected(deck)"
-          :class="deck.selected ? 'selected': ''"
         >
           <div id="deck-details">
             <div id="deck-name">
-              {{deck.title}}
+              {{ deck.title }}
             </div>
             <div id="deck-author">
-              {{deck.creatorName}}
+              {{ deck.creatorName }}
             </div>
           </div>
           <div id="card-count">
-            {{deck.terms.length}}
+            {{ deck.terms.length }}
           </div>
         </div>
       </div>
@@ -30,28 +30,27 @@
       <h5>Private Flashcard Decks</h5>
       <div id="container">
         <div
-          id="deck"
           v-for="deck in privateDecks"
+          id="deck"
           :key="deck.title"
+          :class="deck.selected ? 'selected private' : ''"
           @click="toggleSelected(deck)"
-          :class="deck.selected ? 'selected private': ''"
         >
           <div id="deck-details">
             <div id="deck-name">
-              {{deck.title}}
+              {{ deck.title }}
             </div>
             <div id="deck-author">
-              {{deck.creatorName}}
+              {{ deck.creatorName }}
             </div>
           </div>
           <div id="card-count">
-            {{deck.terms.length}}
+            {{ deck.terms.length }}
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -96,8 +95,9 @@ export default {
           this.publicDecks.push({ id: doc.id, selected: false, ...doc.data() });
         });
       })
+      // Catch public deck loading error
       .catch(function(error) {
-        console.log("Error getting public decks: ", error);
+        // console.log("Error getting public decks: ", error);
       });
 
     privateCollection
@@ -112,8 +112,9 @@ export default {
           });
         });
       })
+      // Catch public deck loading error
       .catch(function(error) {
-        console.log("Error getting private decks: ", error);
+        // console.log("Error getting private decks: ", error);
       });
   },
   methods: {
@@ -133,18 +134,6 @@ export default {
         this.$emit("selected", this.getAllSelected());
         this.totalSelected -= deck.terms.length;
       }
-
-      // if (this.allowSelect) {
-      //   deck.selected = !deck.selected;
-      //   this.$emit("selected", this.getAllSelected());
-      // } else {
-      //   // When the limit has been reached, you may still unselect
-      //   if (deck.selected) {
-      //     deck.selected = !deck.selected;
-      //     this.$emit("selected", this.getAllSelected());
-      //   }
-      //   console.log("allowSelect is false");
-      // }
     },
     getAllSelected() {
       let decks = { public: [], private: [] };
@@ -183,6 +172,7 @@ export default {
   #deck {
     cursor: pointer;
     user-select: none;
+    background-color: white;
 
     width: 288px;
     height: 60px;
@@ -191,8 +181,6 @@ export default {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-
-    border: 2px solid $secondary-light;
 
     #deck-details {
       text-align: center;
@@ -216,7 +204,7 @@ export default {
 
       // background-color: lighten($secondary-light, 20);
       background-color: $transparent-dark;
-      color:white;
+      color: white;
 
       display: flex;
       justify-content: center;
@@ -231,17 +219,17 @@ export default {
       background-image: $orange-gradient;
       border: none;
       color: white;
-      box-shadow: $shadow-hovered;
+      box-shadow: $shadow-heavy;
 
-      #deck-details #deck-author{
+      #deck-details #deck-author {
         color: $dark;
       }
     }
-    &:hover{
+    &:hover {
       border-image: $orange-gradient;
       border-image-slice: 1;
       border-width: 2px;
-      box-shadow: $shadow-heavy;
+      box-shadow: $shadow-hovered;
     }
   }
 }

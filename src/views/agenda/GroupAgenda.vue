@@ -1,22 +1,143 @@
 <template>
   <div>
     <page-title>
+      <template slot="left">
+        <button
+          class="btn btn-primary"
+          @click="showCreateForm(true)"
+        >
+          Add Item <i class="fas fa-plus"></i>
+        </button>
+      </template>
       <template slot="center">
         Group Agenda
       </template>
-    </page-title>
-    <div class="content-container">
-
-      <div class="item-list">
-        <div class="date-header">
-          Thursday, March 14
-        </div>
-        <div
-          v-for="item in agendaItems"
-          :key="item.title"
-          class="agenda-item"
+      <template slot="right">
+        <!-- Save Item Form Button -->
+        <button
+          v-if="isShowingItemForm"
+          class="btn btn-success btn-action split"
+          :class="!validInfoEntered ? 'disabled' : ''"
+          @click="createItem"
         >
-          {{item.title}}
+          <i class="fas fa-save"></i>
+        </button>
+
+        <!-- Existing Item Button Bar -->
+        <div v-if="
+            selectedIndex !== -1 &&
+              selectedItem.creatorID === $store.getters.uid
+          ">
+          <!-- Edit an existing agenda item that you've created -->
+          <button
+            v-if="!isShowingItemForm"
+            class="btn btn-success btn-action"
+            @click="showCreateForm(false)"
+          >
+            <i class="fas fa-pen"></i>
+          </button>
+
+          <!-- Delete an existing agenda item that you've created -->
+          <confirm-button
+            v-if="deckID !== null"
+            class="split"
+            @buttonClicked="deleteItem(selectedItem)"
+          >
+            <template v-slot:title>
+              Delete Agenda Item?
+            </template>
+            <template v-slot:body>
+              The agenda item will be permanently deleted.
+              Other members of the group will no longer see it.
+            </template>
+            <template v-slot:button-text>
+              Delete Agenda Item
+            </template>
+          </confirm-button>
+
+          <!-- <button
+            class="btn btn-error btn-action split"
+            @click="deleteItem(selectedItem)"
+          >
+            <i class="fas fa-trash"></i>
+          </button> -->
+        </div>
+      </template>
+    </page-title>
+
+    <div class="content-container">
+      <!-- List of all agenda items -->
+      <div class="item-list">
+        <div
+          v-if="isLoadingItems"
+          id="loading-indicator"
+          class="loading loading-lg"
+        ></div>
+        <div
+          v-for="(item, index) in agendaItems"
+          v-else
+          :key="item.creationDate.toDate().getTime()"
+        >
+          <agenda-item-date-header
+            v-if="showDateHeader(index)"
+            :date="item.date.toDate()"
+          />
+          <!-- :selected="checkSelected(index)" -->
+          <agenda-item
+            :selected="selectedIndex === index"
+            :item="item"
+            @itemSelected="handleSelected(index)"
+          />
+        </div>
+      </div>
+      <div class="divider-vert"></div>
+
+      <!-- Right side container -->
+      <div class="item-detail-container">
+        <!-- Clicked agenda item's details -->
+
+        <agenda-item-detail
+          v-if="selectedItem && !isShowingItemForm"
+          :selected-item="selectedItem"
+        />
+        <!-- Show create new item form -->
+        <agenda-create-form
+          v-else-if="isShowingItemForm"
+          :edit-item="selectedItem"
+          @publish="updateNewItem"
+        />
+        <div
+          v-else-if="!isLoadingItems && agendaItems.length === 0"
+          class="empty"
+        >
+          <div class="empty-icon">
+            <img
+              id="undraw"
+              class="undraw-svg"
+              src="@/assets/undraw_no_data.svg"
+              alt="No Study Groups"
+            />
+          </div>
+          <p class="empty-title h5">
+            Add an agenda item for the entire Study Group to see!
+          </p>
+        </div>
+
+        <div
+          v-else-if="!isLoadingItems && agendaItems.length > 0"
+          class="empty"
+        >
+          <div class="empty-icon">
+            <img
+              id="undraw"
+              class="undraw-svg"
+              src="@/assets/undraw_select.svg"
+              alt="No Study Groups"
+            />
+          </div>
+          <p class="empty-title h5">
+            Select an item to see its details.
+          </p>
         </div>
       </div>
     </div>
@@ -25,68 +146,189 @@
 
 <script>
 import PageTitle from "@/components/navigation/PageTitle";
+import AgendaItem from "@/components/agenda/AgendaItem";
+import AgendaItemDateHeader from "@/components/agenda/AgendaItemDateHeader";
+import AgendaItemDetail from "@/components/agenda/AgendaItemDetail";
+import AgendaCreateForm from "@/components/agenda/AgendaCreateForm";
+import ConfirmButton from "@/components/ConfirmButton";
+
+import { parse, isSameDay } from "date-fns";
+import firebase, { db } from "@/firebaseConfig";
 
 export default {
   name: "GroupAgenda",
   components: {
-    PageTitle
+    ConfirmButton,
+    PageTitle,
+    AgendaItem,
+    AgendaItemDateHeader,
+    AgendaItemDetail,
+    AgendaCreateForm
   },
   data() {
     return {
-      agendaItems: [
-        {
-          title: "Agenda Item 4",
-          value: 10
-        },
-        {
-          title: "Agenda Item 1",
-          value: 4
-        },
-        {
-          title: "Agenda Item 1",
-          value: 4
-        },
-        {
-          title: "Agenda Item 1",
-          value: 100
-        },
-        {
-          title: "Agenda Item 1",
-          value: 4
-        },
-        {
-          title: "Agenda Item 1",
-          value: 4
-        },
-        {
-          title: "Agenda Item 1",
-          value: 4
-        },
-        {
-          title: "Agenda Item 3",
-          value: 6
-        },
-        {
-          title: "Agenda Item 2",
-          value: 5
-        }
-      ]
+      isLoadingItems: true, // Show/Hide loading indicator
+      isShowingItemForm: false, // Show new item creation form
+      selectedItem: null, // Currently selected item to show details
+      agendaItems: [], // List of all agenda item objects
+      selectedIndex: -1, // Index of currently selected item (might use this only instead of both)
+      newItem: null // New Agenda item emitted from AgendaCreateForm
     };
   },
+  computed: {
+    /**
+     * Show/Hide the save button depending on if all the required form fields are entered
+     */
+    validInfoEntered() {
+      if (
+        this.newItem !== null &&
+        this.newItem.title !== "" &&
+        this.newItem.description !== "" &&
+        this.newItem.date !== null
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
+
   created() {
-    this.sortItems();
+    this.$bind(
+      "agendaItems",
+      db
+        .collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("agenda")
+        .orderBy("date", "asc")
+    ).then(agendaItems => {
+      this.agendaItems === agendaItems;
+      this.isLoadingItems = false;
+      if (this.$route.params.itemID) {
+        this.searchForItem(this.$route.params.itemID);
+      }
+    });
   },
   methods: {
-    compare(a, b) {
-      if (a.value > b.value) {
-        return 1;
-      } else if (a.value < b.value) {
-        return -1;
+    searchForItem(itemID) {
+      for (let i = 0; i < this.agendaItems.length; i++) {
+        if (this.agendaItems[i].id === itemID) {
+          this.selectedItem = this.agendaItems[i];
+          this.selectedIndex = i;
+          break;
+        }
       }
-      return 0;
     },
-    sortItems() {
-      console.log(this.agendaItems.sort(this.compare));
+    /**
+     * Logic to notify the items if they are selected
+     * Selected item is set to the agenda item at index
+     * The selectedIndex is set to that index.
+     */
+    handleSelected(index) {
+      this.isShowingItemForm = false;
+      this.selectedItem = this.agendaItems[index];
+      this.selectedIndex = index;
+      this.$router.push(
+        `/${this.$route.params.groupID}/agenda/${this.agendaItems[index].id}`
+      );
+    },
+    /**
+     * Determine if the previous agenda item has the same date as the current
+     * index item. (3/15/19 === 3/15/19)
+     *
+     * This is used to conditionally show the date header only when the dates
+     * are different. There will be blocks of items using the same header.
+     */
+    showDateHeader(index) {
+      if (index !== 0) {
+        return !isSameDay(
+          this.agendaItems[index].date.toDate(),
+          this.agendaItems[index - 1].date.toDate()
+        );
+      } else {
+        // The first item will always show the header.
+        return true;
+      }
+    },
+    /**
+     * Shows the create form component
+     * Pass true if creating new item
+     * Pass false if editing existing item
+     */
+    showCreateForm(isCreateNew) {
+      if (isCreateNew) {
+        this.selectedItem = null;
+        this.selectedIndex = -1;
+      }
+      this.isShowingItemForm = true;
+    },
+    /**
+     * Retreive the emitted value from the AgendaCreateForm and update local state
+     */
+    updateNewItem(item) {
+      this.newItem = item;
+    },
+    /**
+     * Delete current selected item. This should only work if the current user
+     * is the creator of the item
+     */
+    deleteItem(item) {
+      db.collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("agenda")
+        .doc(item.id)
+        .delete()
+        .then(() => {
+          this.selectedItem = null;
+          this.selectedIndex = -1;
+        });
+    },
+    /**
+     * Create a new agenda item. Each agenda item contains the following:
+     *
+     * Title
+     * Description
+     * Date/Time
+     *
+     */
+    createItem() {
+      // Create new item
+      let dateObj = parse(this.newItem.date);
+      let user = firebase.auth().currentUser;
+
+      if (this.selectedItem === null && this.selectedIndex === -1) {
+        db.collection("study-groups")
+          .doc(this.$route.params.groupID)
+          .collection("agenda")
+          .add({
+            title: this.newItem.title,
+            description: this.newItem.description,
+            date: dateObj,
+            creationDate: new Date(),
+            creatorID: this.$store.getters.uid,
+            creatorPhoto: this.$store.getters.photoURL,
+            creatorName: user.displayName
+          })
+          .then(() => {
+            this.isShowingItemForm = false;
+          });
+      } else {
+        // Update existing item
+        db.collection("study-groups")
+          .doc(this.$route.params.groupID)
+          .collection("agenda")
+          .doc(this.selectedItem.id)
+          .update({
+            title: this.newItem.title,
+            description: this.newItem.description,
+            date: dateObj
+          })
+          .then(() => {
+            this.isShowingItemForm = false;
+            this.selectedItem = null;
+            this.selectedIndex = -1;
+          });
+      }
     }
   }
 };
@@ -95,41 +337,45 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles.scss";
 
+#loading-indicator {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.empty {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  background-color: $light;
+}
+
+#undraw {
+  width: 10em;
+}
+
 .content-container {
   height: $page-with-header-height;
-  padding: 20px;
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .item-list {
   height: 100%;
-  border: 2px solid $secondary-light;
   padding: 20px;
+  overflow: auto;
+  flex: 1;
+}
+.item-detail-container {
+  padding: 20px;
+  height: 100%;
+  flex: 3;
   overflow: auto;
 }
 
-.date-header {
-  background-color: $secondary-light;
-  font-size: 1em;
-  width: 250px;
-  margin: 0 10px 10px 0;
-  border-radius: 5px;
-  color: white;
-}
-
-.agenda-item {
-  border: 2px solid $secondary-light;
-  height: 80px;
-  margin-bottom: 20px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:hover {
-    border-image: $orange-gradient;
-    border-image-slice: 1;
-    border-width: 2px;
-    box-shadow: $shadow-hovered;
-  }
+.divider-vert {
+  padding: 0;
 }
 </style>

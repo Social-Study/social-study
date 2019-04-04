@@ -1,31 +1,38 @@
 <template>
   <!-- Note Icon -->
   <div id="note">
+    <div class="button-container">
+      <span
+        id="deleteBtn"
+        class="icon icon-delete"
+        @click="deleteNote(info.id)"
+      ></span>
+    </div>
     <!-- Title -->
-    <h2 id="title">{{info.title}}</h2>
+    <h2 id="title">{{ info.title }}</h2>
     <div>
       <!-- Created -->
-      <p id="created"><i>Created:</i> {{info.creationDate.toDate().toLocaleDateString()}}</p>
+      <p id="created">
+        <i>Created on</i> {{ info.creationDate.toDate().toLocaleDateString() }}
+      </p>
       <!-- Modified -->
       <!-- <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p> -->
-      <p id="modified"><i>Modified</i> {{calcDays(info.lastUpdated.toDate())}}</p>
+      <p id="modified">
+        <i>Modified</i> {{ calcDays(info.lastUpdated.toDate()) }}
+      </p>
     </div>
-
-    <div id="button-container">
-      <button
-        @click="deleteNote(info.id)"
-        id="deleteBtn"
-      >Delete</button>
-      <button
-        @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
-        id="editBtn"
-      >Edit</button>
-    </div>
+    <button
+      id="editBtn"
+      @click="$router.push(`/${$route.params.groupID}/notes/${info.id}`)"
+    >
+      Open
+    </button>
   </div>
 </template>
 
 <script>
 import { db } from "@/firebaseConfig";
+import { distanceInWordsToNow } from "date-fns";
 
 export default {
   name: "NoteIcon",
@@ -46,16 +53,8 @@ export default {
         .doc(id)
         .delete();
     },
-    calcDays(modDate) {
-      let currentDate = new Date();
-      modDate = new Date(modDate);
-      if (currentDate.toDateString() === modDate.toDateString()) {
-        return "today";
-      }
-      let timeDiff = Math.abs(currentDate.getTime() - modDate.getTime());
-      let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      let retString = days > 1 ? days + " days ago" : days + " day ago";
-      return retString;
+    calcDays(date) {
+      return distanceInWordsToNow(date) + " ago";
     }
   }
 };
@@ -69,25 +68,23 @@ export default {
   background-color: white;
   height: 288px;
   width: 216px;
-  padding: 1em;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
-  border: 2px solid $secondary-light;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  &:hover{
-      border-image: $orange-gradient;
-      border-image-slice: 1;
-      box-shadow: $shadow-heavy;
+  &:hover {
+    box-shadow: $shadow-hovered;
   }
 }
 
 #title {
+  text-align: center;
   font-family: $secondary-font;
   font-weight: 700;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding-bottom: 30px;
   /* white-space: ; */
   max-width: 10em;
   max-height: 5em;
@@ -109,19 +106,13 @@ p > i {
   font-weight: 400;
 }
 
-#button-container {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
 #deleteBtn {
+  float: right;
+  margin: 15px 15px 0 0;
   cursor: pointer;
-  border: none;
-  padding: 0.3em;
   background-color: transparent;
-  color: lighten($secondary, 30);
+  width: 10px;
+  color: $secondary-light;
   font-weight: 500;
 }
 
@@ -131,16 +122,18 @@ p > i {
 
 #editBtn {
   cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  /* padding: 0.3em 0.5em 0.3em 0.5em; */
-  padding: 4px 16px 4px 16px;
   background-color: $primary;
+  width: 100%;
   color: white;
+  font-size: 120%;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
   font-weight: 400;
-}
+  border: none;
 
-#editBtn:hover {
-  background-color: lighten($primary, 10);
+  &:hover {
+    background-color: lighten($primary, 10);
+  }
 }
 </style>
