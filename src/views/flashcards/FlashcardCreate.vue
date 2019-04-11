@@ -272,13 +272,12 @@ export default {
 @import "@/styles.scss";
 
 .page-content {
-  margin: 0 auto;
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 250px));
-  grid-auto-rows: 250px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin: 20px;
+  align-items: center;
+  padding: 5em;
+  padding-top: 105px;
 }
 
 .gradient-border {

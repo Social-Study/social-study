@@ -58,6 +58,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles.scss";
+
 h1 {
   margin: 0;
   font-size: 28px;
@@ -65,9 +67,9 @@ h1 {
 
 .answer-input {
   margin-top: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
-  background-color: #e7e7e7;
+  box-shadow: $shadow;
+  text-align: center;
+  background-color: white;
   border: none;
   padding-left: 20px;
   padding-right: 20px;
@@ -79,9 +81,5 @@ h1 {
     outline: 0;
     background-color: darken(#e7e7e7, 5);
   }
-}
-
-.correct {
-  border: 2px solid green;
 }
 </style>
