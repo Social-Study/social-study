@@ -1,5 +1,12 @@
+<!-- SCI ID: 019 -->
+<!-- Name: MessageBar -->
+<!-- Version: 1.0 -->
+
 <template>
-  <div class="toast" :class="color">
+  <div
+    class="toast"
+    :class="color"
+  >
     <button
       class="btn btn-clear float-right"
       @click="$emit('closeMessage')"

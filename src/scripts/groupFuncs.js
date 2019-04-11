@@ -1,5 +1,9 @@
 // These functions all relate to loading firebase data for a specific Study Group
 
+// SCI ID: 044
+// Name: groupFuncs
+// Version: 1.0
+
 import { db } from "@/firebaseConfig";
 
 /**

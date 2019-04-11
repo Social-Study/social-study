@@ -1,3 +1,7 @@
+// SCI ID: 047
+// Name: router
+// Version: 1.0
+
 import Vue from "vue";
 import Router from "vue-router";
 import firebase from "@/firebaseConfig";

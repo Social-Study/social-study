@@ -1,10 +1,20 @@
+<!-- SCI ID: 035 -->
+<!-- Name: FlashcardCreateForm -->
+<!-- Version: 1.0 -->
 <template>
   <div id="container">
     <div id="card-header">
-      <label id="label-term" class="form-label">
+      <label
+        id="label-term"
+        class="form-label"
+      >
         Term
       </label>
-      <i id="delete" class="fas fa-minus" @click="$emit('delete')"></i>
+      <i
+        id="delete"
+        class="fas fa-minus"
+        @click="$emit('delete')"
+      ></i>
     </div>
     <input
       id="input-term"
@@ -15,7 +25,10 @@
       autofocus
       @input="termUpdated"
     />
-    <label id="label-def" class="form-label">
+    <label
+      id="label-def"
+      class="form-label"
+    >
       Definition
     </label>
     <textarea

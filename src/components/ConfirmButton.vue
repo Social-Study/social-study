@@ -1,3 +1,6 @@
+<!-- SCI ID: 021 -->
+<!-- Name: ConfirmButton -->
+<!-- Version: 1.0 -->
 <template>
   <div class="popover popover-left">
     <button class="btn btn-action btn-error">

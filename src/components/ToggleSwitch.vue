@@ -1,3 +1,6 @@
+<!-- SCI ID: 016 -->
+<!-- Name: ToggleSwitch -->
+<!-- Version: 1.0 -->
 <template>
   <div id="switch-container">
     <input

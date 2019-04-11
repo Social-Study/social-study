@@ -1,6 +1,13 @@
+<!-- SCI ID: 020 -->
+<!-- Name: MemberCard -->
+<!-- Version: 1.0 -->
+
 <template>
   <!-- Add Member Card -->
-  <div v-if="add" class="profile-card c-hand hoverable">
+  <div
+    v-if="add"
+    class="profile-card c-hand hoverable"
+  >
     <div class="gradient-border add">
       <div class="add-button">
         <!-- <h1 class="button-icon">+</h1> -->
@@ -12,7 +19,10 @@
   </div>
 
   <!-- Member Display Card -->
-  <div v-else class="profile-card">
+  <div
+    v-else
+    class="profile-card"
+  >
     <div class="profile-background"></div>
     <div class="gradient-border">
       <Avatar
@@ -20,7 +30,11 @@
         :user="{ photoURL: photoURL, displayName: displayName }"
       />
     </div>
-    <h2 id="member-name" style="width: 100%;" class="text-ellipsis">
+    <h2
+      id="member-name"
+      style="width: 100%;"
+      class="text-ellipsis"
+    >
       {{ displayName }}
       <!-- Show crown icon on the owner's card -->
       <i

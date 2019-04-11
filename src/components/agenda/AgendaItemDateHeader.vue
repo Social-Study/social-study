@@ -1,3 +1,7 @@
+<!-- SCI ID: 040 -->
+<!-- Name: AgendaItemDateHeader -->
+<!-- Version: 1.0 -->
+
 <template>
   <div class="date-header">
     {{ dateHeader(date) }}

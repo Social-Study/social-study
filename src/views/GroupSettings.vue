@@ -1,3 +1,6 @@
+<!-- SCI ID: 004 -->
+<!-- Name: GroupSettings -->
+<!-- Version: 1.0 -->
 <template>
   <div v-if="userAuthorized && !isLoading">
     <page-title>

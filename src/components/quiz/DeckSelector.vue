@@ -1,3 +1,6 @@
+<!-- SCI ID: 023 -->
+<!-- Name: DeckSelector -->
+<!-- Version: 1.0 -->
 <template>
   <div>
     <!-- Only show if there are public decks -->

@@ -1,3 +1,7 @@
+<!-- SCI ID: 001 -->
+<!-- Name: App -->
+<!-- Version: 1.0 -->
+
 <template>
   <div id="app">
     <NavBar v-if="$route.name !== 'landing'" />

@@ -1,3 +1,6 @@
+<!-- SCI ID: 012 -->
+<!-- Name: FlashcardCollection -->
+<!-- Version: 1.0 -->
 <template>
   <div>
     <page-title>
@@ -9,9 +12,7 @@
           New Deck <i class="fas fa-plus"></i>
         </button>
       </template>
-      <template slot="center"
-        >Flashcard Collection</template
-      >
+      <template slot="center">Flashcard Collection</template>
       <template slot="right">
         <div class="has-icon-left">
           <input
@@ -24,7 +25,10 @@
         </div>
       </template>
     </page-title>
-    <div v-if="!publicIsLoading && !privateIsLoading" class="card-container">
+    <div
+      v-if="!publicIsLoading && !privateIsLoading"
+      class="card-container"
+    >
       <flashcard-icon
         v-for="deck in combined"
         :key="deck.creationDate.toDate().getTime()"
@@ -34,7 +38,10 @@
       >
       </flashcard-icon>
     </div>
-    <div v-else class="loading loading-lg"></div>
+    <div
+      v-else
+      class="loading loading-lg"
+    ></div>
   </div>
 </template>
 

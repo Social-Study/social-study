@@ -1,3 +1,7 @@
+<!-- SCI ID: 002 -->
+<!-- Name: Landing -->
+<!-- Version: 1.0 -->
+
 <template>
   <div class="landing">
     <!-- Header Section -->

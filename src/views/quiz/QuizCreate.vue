@@ -1,3 +1,6 @@
+<!-- SCI ID: 009 -->
+<!-- Name: QuizCreate -->
+<!-- Version: 1.0 -->
 <template>
   <div>
     <page-title>
@@ -33,7 +36,10 @@
       <h3 id="step-instruction">Select Decks to Generate Your Quiz</h3>
       <h5 id="step-hint">Quiz has a 100 card limit</h5>
       <!-- Component that displays checkboxes of each available flashcard deck -->
-      <deck-selector :limit="100" @selected="selectedDecks = $event" />
+      <deck-selector
+        :limit="100"
+        @selected="selectedDecks = $event"
+      />
     </div>
   </div>
 </template>

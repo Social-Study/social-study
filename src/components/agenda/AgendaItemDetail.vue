@@ -1,5 +1,7 @@
 // The details of a specific agenda item.
-
+<!-- SCI ID: 039 -->
+<!-- Name: AgendaItemDetail -->
+<!-- Version: 1.0 -->
 <template>
   <div
     v-if="selectedItem !== null"

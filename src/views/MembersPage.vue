@@ -1,16 +1,24 @@
+<!-- SCI ID: 003 -->
+<!-- Name: MembersPage -->
+<!-- Version: 1.0 -->
+
 <template>
   <div>
     <!-- Notification displays when a new code is generated -->
-    <notifications group="generateInvite" position="left top" />
+    <notifications
+      group="generateInvite"
+      position="left top"
+    />
     <page-title>
       <template slot="left">
-        <button class="btn btn-primary" @click="inviteMember()">
+        <button
+          class="btn btn-primary"
+          @click="inviteMember()"
+        >
           Invite Member <i class="fas fa-plus"></i>
         </button>
       </template>
-      <template slot="center"
-        >Members</template
-      >
+      <template slot="center">Members</template>
     </page-title>
     <div
       v-if="!loading"
@@ -36,10 +44,17 @@
         </member-card>
       </transition-group>
     </div>
-    <div v-else class="loading loading-lg"></div>
+    <div
+      v-else
+      class="loading loading-lg"
+    ></div>
 
     <!-- Display Invite Code Modal -->
-    <div v-show="displayModal" id="modal-id" class="modal modal-sm active">
+    <div
+      v-show="displayModal"
+      id="modal-id"
+      class="modal modal-sm active"
+    >
       <a
         href="#"
         class="modal-overlay"
@@ -65,7 +80,10 @@
                 type="text"
                 class="form-input"
               />
-              <button class="btn btn-primary input-group-btn" @click="copyCode">
+              <button
+                class="btn btn-primary input-group-btn"
+                @click="copyCode"
+              >
                 Generate
               </button>
             </div>

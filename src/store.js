@@ -1,3 +1,7 @@
+// SCI ID: 048
+// Name: store
+// Version: 1.0
+
 import Vue from "vue";
 import Vuex from "vuex";
 

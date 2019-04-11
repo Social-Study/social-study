@@ -1,3 +1,6 @@
+<!-- SCI ID: 011 -->
+<!-- Name: NotesCollection -->
+<!-- Version: 1.0 -->
 <template>
   <div>
     <page-title>

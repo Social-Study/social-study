@@ -1,3 +1,6 @@
+<!-- SCI ID: 005 -->
+<!-- Name: GroupHomePage -->
+<!-- Version: 1.0 -->
 <template>
   <div>
     <!-- Title Bar -->
@@ -12,9 +15,7 @@
         <div class="agenda-container">
           <div class="tile-header">
             <h4>Upcoming Events</h4>
-            <router-link :to="`/${$route.params.groupID}/agenda/`"
-              >View All</router-link
-            >
+            <router-link :to="`/${$route.params.groupID}/agenda/`">View All</router-link>
           </div>
           <div
             v-if="agendaLoading"
@@ -46,12 +47,13 @@
           <div class="notes-container">
             <div class="tile-header">
               <h4>Recent Notes</h4>
-              <router-link :to="`/${$route.params.groupID}/notes/`"
-                >View All</router-link
-              >
+              <router-link :to="`/${$route.params.groupID}/notes/`">View All</router-link>
             </div>
             <div class="icon-container">
-              <div v-if="notesLoading" class="loading loading-lg"></div>
+              <div
+                v-if="notesLoading"
+                class="loading loading-lg"
+              ></div>
               <note-icon
                 v-for="note in recentNotes"
                 v-else
@@ -66,13 +68,14 @@
           <div class="flashcards-container">
             <div class="tile-header">
               <h4>Recent Flashcards</h4>
-              <router-link :to="`/${$route.params.groupID}/flashcards/`"
-                >View All</router-link
-              >
+              <router-link :to="`/${$route.params.groupID}/flashcards/`">View All</router-link>
             </div>
 
             <div class="icon-container">
-              <div v-if="flashcardsLoading" class="loading loading-lg"></div>
+              <div
+                v-if="flashcardsLoading"
+                class="loading loading-lg"
+              ></div>
               <flashcard-icon
                 v-for="deck in recentFlashcards"
                 v-else

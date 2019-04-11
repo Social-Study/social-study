@@ -1,3 +1,6 @@
+<!-- SCI ID: 013 -->
+<!-- Name: FlashcardCreate -->
+<!-- Version: 1.0 -->
 <template>
   <div class="content-container">
     <page-title>

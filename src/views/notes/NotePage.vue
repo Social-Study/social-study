@@ -1,3 +1,6 @@
+<!-- SCI ID: 010 -->
+<!-- Name: NotePage -->
+<!-- Version: 1.0 -->
 <template>
   <div v-if="!isLoading && !isError">
     <notifications

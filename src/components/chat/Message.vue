@@ -1,3 +1,6 @@
+<!-- SCI ID: 037 -->
+<!-- Name: Message -->
+<!-- Version: 1.0 -->
 <template>
   <!-- Messages from other members -->
   <div

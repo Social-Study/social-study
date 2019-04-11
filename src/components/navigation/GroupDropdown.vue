@@ -1,6 +1,12 @@
+<!-- SCI ID: 032 -->
+<!-- Name: GroupDropdown -->
+<!-- Version: 1.0 -->
 <template>
   <!-- Study Group Switcher -->
-  <div v-if="studyGroups.length > 0" class="dropdown">
+  <div
+    v-if="studyGroups.length > 0"
+    class="dropdown"
+  >
     <a
       id="group-button"
       class="group-dropdown-button btn btn-primary dropdown-toggle"
@@ -11,7 +17,10 @@
 
     <!-- Your Study Group List Dropdown Items -->
     <ul class="menu group-menu">
-      <div v-for="(group, index) in studyGroups" :key="index">
+      <div
+        v-for="(group, index) in studyGroups"
+        :key="index"
+      >
         <li>
           <div
             class="group-card"
@@ -36,7 +45,7 @@
               <p class="card-text text-ellipsis text-center">
                 {{ getAbrev(group.meetingDays) }} @
                 {{ getTime(group.meetingTime[0]) }}-{{
-                  getTime(group.meetingTime[1])
+                getTime(group.meetingTime[1])
                 }}
               </p>
             </router-link>
