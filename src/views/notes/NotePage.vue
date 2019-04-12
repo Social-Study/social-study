@@ -39,6 +39,7 @@
 
         <button
           class="btn btn-action split"
+          :class="pdfIsLoading ? 'loading':''"
           @click="exportNote"
         >
           <i class="fas fa-file-download"></i>
@@ -56,6 +57,7 @@
         <!-- Save the markdown to database -->
         <button
           class="btn btn-success btn-action split"
+          :class="isSaved ? 'disabled': ''"
           @click="saveNote"
         >
           <i class="fas fa-save"></i>
@@ -129,7 +131,8 @@ export default {
       isError: false,
       isSaved: true,
       noteTitle: "",
-      userText: ""
+      userText: "",
+      pdfIsLoading: false
     };
   },
   computed: {
@@ -168,8 +171,9 @@ export default {
   methods: {
     // Contact server to get PDF file of the note
     exportNote() {
-      // FIXME: Change address to server when setup
-      fetch("http://localhost:3000/", {
+      this.pdfIsLoading = true;
+
+      fetch("https://evanbuss.com/pdf", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -186,6 +190,7 @@ export default {
           a.href = href;
           a.click();
           a.href = "";
+          this.pdfIsLoading = false;
         });
     },
     deleteNote() {
