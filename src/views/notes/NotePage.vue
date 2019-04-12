@@ -1,6 +1,7 @@
 <!-- SCI ID: 010 -->
 <!-- Name: NotePage -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
+
 <template>
   <div v-if="!isLoading && !isError">
     <notifications
@@ -20,25 +21,6 @@
         />
       </template>
       <template slot="right">
-        <!-- Change preview theme css -->
-        <div class="dropdown split">
-          <a
-            href="#"
-            class="btn btn-action dropdown-toggle tooltip tooltip-bottom"
-            data-tooltip="Preview Style"
-            tabindex="0"
-          >
-            <i
-              style="color: #5755d9"
-              class="fas fa-palette"
-            ></i>
-          </a>
-          <!-- menu component -->
-          <ul class="menu">
-            <li @click="markStyleNum = 1">Social Study</li>
-            <li @click="markStyleNum = 2">Github</li>
-          </ul>
-        </div>
 
         <confirm-button
           class="split"
@@ -54,6 +36,13 @@
             Delete Note
           </template>
         </confirm-button>
+
+        <button
+          class="btn btn-action split"
+          @click="exportNote"
+        >
+          <i class="fas fa-file-download"></i>
+        </button>
 
         <!-- Open link to markdown cheatsheet in new browser tab -->
         <a
@@ -75,6 +64,10 @@
     </page-title>
 
     <div class="content-container">
+      <a
+        style="display: hidden"
+        id="hiddenLink"
+      ></a>
       <textarea
         v-model="userText"
         class="page-edit"
@@ -82,16 +75,8 @@
         @keydown.ctrl.83.prevent="saveNote"
       >
       </textarea>
-      <!-- TODO: Use a computed property for the styling when I add more styles -->
       <div
         class="page-view"
-        :class="
-          markStyleNum === 1
-            ? 'markdown-css'
-            : '' || markStyleNum === 2
-            ? 'markdown-body'
-            : ''
-        "
         v-html="render"
       ></div>
     </div>
@@ -144,8 +129,7 @@ export default {
       isError: false,
       isSaved: true,
       noteTitle: "",
-      userText: "",
-      markStyleNum: 2
+      userText: ""
     };
   },
   computed: {
@@ -182,7 +166,29 @@ export default {
       });
   },
   methods: {
-    deleteNote(id) {
+    // Contact server to get PDF file of the note
+    exportNote() {
+      // FIXME: Change address to server when setup
+      fetch("http://localhost:3000/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ title: this.noteTitle, content: this.userText })
+      })
+        .then(response => {
+          return response.blob();
+        })
+        .then(blob => {
+          const href = window.URL.createObjectURL(blob);
+          const a = document.getElementById("hiddenLink");
+          a.download = this.noteTitle + ".pdf";
+          a.href = href;
+          a.click();
+          a.href = "";
+        });
+    },
+    deleteNote() {
       db.collection("study-groups")
         .doc(this.$route.params.groupID)
         .collection("notes")
@@ -194,7 +200,6 @@ export default {
       this.$router.go(-1);
     },
     saveNote() {
-      // TODO: Display notification saying that the document has been saved
       db.collection("study-groups")
         .doc(this.$route.params.groupID)
         .collection("notes")
@@ -222,27 +227,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles.scss";
-@import "../../../node_modules/spectre-markdown.css/dist/markdown.min.css";
-@import "../../../node_modules/github-markdown-css/github-markdown.css";
+// @import "../../assets/markdownStyle.css";
+@import "../../assets/github.css";
 
 #error-container {
   max-height: 75%;
   margin-top: 200px;
-}
-
-.dropdown > ul.menu {
-  left: -70px;
-  border-radius: 10px;
-
-  li {
-    cursor: pointer;
-    border-radius: 5px;
-    padding: 5px;
-    &:hover {
-      background-image: $orange-gradient;
-      color: white;
-    }
-  }
 }
 
 .content-container {
