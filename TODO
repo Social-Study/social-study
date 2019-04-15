@@ -1,18 +1,10 @@
-Branding:
-  ☐ Think of better slogan.
-
 General:
   ☐ Go through and error check all inputs where necessary
-  ☐ Make sure that each page that loads from firebase has error checking
-    ☐ Should display an error message if the firebase load fails
-    ☐ User's should be limited to what they are permitted to access..
     - Sub-pages are pages that you are taken to after clicking a main page
     - Ex) Study-flashcard, take-quiz
   ☐ Paginate collection pages so they scale when more information is added.
   ☐ Not sure if I should save some things about the user's preferences to firebase
-    - Collapsed or Open Sidebar
-    - Collapsed or Open Chat
-    - Chat notifications on. etc...
+    ☐ Chat notifications on. etc...
   ☐ Sequential loading animations when list are being displayed for the first time
        Every list is loading from firebase so there is a delay before the data is shown. Figure out how to get loading list to be animated 1-by-1 when shown for the first time
   ☐ Do something with the extra study group info @high
@@ -37,13 +29,7 @@ Group Settings:
   ☐ Update to match new design
 
 Notes:
-  ☐ Find more markdown css themes
-    ☐ Dark theme
-  ☐ Autoscroll viewing content to match...
   ☐ Scale the views to be on top of eachother when window width is too small
-  ☐ Add a switch to show preview vs edit views...
-  Maybes:
-    ☐ Allow users to create collections to manage their own notes?
 
 Chat:
   Maybes:
@@ -81,7 +67,7 @@ Homepage:
     - The current design feels cluttered not very useful.
 
 Members Page:
-    - Joined Date, Alphabetical, etc...
+    - Maybe allow sorting by Joined Date, Alphabetical, etc...
 
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
@@ -107,7 +93,6 @@ Animations / Transitions:
     ☐ Animation when user navigates between cards
 
 Possible Features (Time Permitting):
-  ☐ Maybe allow users to upload pdfs and save notes to their own documents
   ☐ Make the site mobile friendly.
     Hardest part is making the navbar change into a mobile form.
   ☐ Indicators that show online group members in the sidebar
@@ -117,6 +102,18 @@ Possible Features (Time Permitting):
     https://medium.com/walmartlabs/the-benefits-of-server-side-rendering-over-client-side-rendering-5d07ff2cefe8
 
 Archive:
+  ✔ Think of better slogan. @done(19-04-11 23:43) @project(Branding)
+  ✔ Make sure that each page that loads from firebase has error checking @done(19-04-11 23:43) @project(General)
+  ✔ Should display an error message if the firebase load fails @done(19-04-11 23:43) @project(General)
+  ✔ User's should be limited to what they are permitted to access.. @done(19-04-11 23:43) @project(General)
+  ✔ Collapsed or Open Sidebar @done(19-04-11 23:43) @project(General)
+  ✘ Collapsed or Open Chat @cancelled(19-04-11 23:43) @project(General)
+  ✘ Find more markdown css themes @cancelled(19-04-11 23:44) @project(Notes)
+  ✘ Dark theme @cancelled(19-04-11 23:44) @project(Notes)
+  ✘ Autoscroll viewing content to match... @cancelled(19-04-11 23:44) @project(Notes)
+  ✘ Add a switch to show preview vs edit views... @cancelled(19-04-11 23:44) @project(Notes)
+  ✘ Allow users to create collections to manage their own notes? @cancelled(19-04-11 23:44) @project(Notes.Maybes)
+  ✘ Maybe allow users to upload pdfs and save notes to their own documents @cancelled(19-04-11 23:45) @project(Possible Features (Time Permitting))
   ✔ Always verify delete actions @done(19-03-23 17:50) @project(General)
   ✘ Create new event input box should expand to the text's length @cancelled(19-03-23 17:50) @project(Agenda)
   ✔ PURPLE Social Study icon for the favicon @high @done(19-03-23 15:39) @project(Branding)
