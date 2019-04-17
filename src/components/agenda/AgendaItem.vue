@@ -120,9 +120,7 @@ export default {
     box-shadow: $shadow-hovered;
   }
   &.selected {
-    background-image: $orange-gradient;
-    color: white;
-    box-shadow: $shadow-heavy;
+    border: $border-selected;
 
     h3 {
       font-weight: 700;

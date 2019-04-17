@@ -129,9 +129,8 @@ export default {
     }
 
     &.selected {
-      background-image: $orange-gradient;
-      color: white;
-      box-shadow: $shadow-heavy;
+      border: $border-selected;
+      box-shadow: $shadow;
     }
 
     &:hover {
