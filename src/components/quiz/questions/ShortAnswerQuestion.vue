@@ -1,3 +1,6 @@
+<!-- SCI ID: 025 -->
+<!-- Name: ShortAnswerQuestion -->
+<!-- Version: 1.0 -->
 <template>
   <div id="question">
     <h1>{{ definition }}</h1>

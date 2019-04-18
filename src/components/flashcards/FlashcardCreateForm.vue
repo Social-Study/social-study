@@ -1,3 +1,6 @@
+<!-- SCI ID: 035 -->
+<!-- Name: FlashcardCreateForm -->
+<!-- Version: 1.0 -->
 <template>
   <div id="container">
     <div class="term-container">
@@ -5,7 +8,6 @@
         Term
       </label>
       <!-- <i id="delete" class="fas fa-minus" @click="$emit('delete')"></i> -->
-
     <input
       id="input-term"
       v-model.trim="data.term"
@@ -31,7 +33,6 @@
       >
       </textarea>
     </div>
-
   </div>
 </template>
 

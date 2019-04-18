@@ -1,8 +1,14 @@
+<!-- SCI ID: 015 -->
+<!-- Name: GroupAgenda -->
+<!-- Version: 1.0 -->
 <template>
   <div>
     <page-title>
       <template slot="left">
-        <button class="btn btn-primary" @click="showCreateForm(true)">
+        <button
+          class="btn btn-primary"
+          @click="showCreateForm(true)"
+        >
           Add Item <i class="fas fa-plus"></i>
         </button>
       </template>
@@ -21,12 +27,10 @@
         </button>
 
         <!-- Existing Item Button Bar -->
-        <div
-          v-if="
+        <div v-if="
             selectedIndex !== -1 &&
               selectedItem.creatorID === $store.getters.uid
-          "
-        >
+          ">
           <!-- Edit an existing agenda item that you've created -->
           <button
             v-if="!isShowingItemForm"
@@ -37,12 +41,29 @@
           </button>
 
           <!-- Delete an existing agenda item that you've created -->
-          <button
+          <confirm-button
+            v-if="deckID !== null"
+            class="split"
+            @buttonClicked="deleteItem(selectedItem)"
+          >
+            <template v-slot:title>
+              Delete Agenda Item?
+            </template>
+            <template v-slot:body>
+              The agenda item will be permanently deleted.
+              Other members of the group will no longer see it.
+            </template>
+            <template v-slot:button-text>
+              Delete Agenda Item
+            </template>
+          </confirm-button>
+
+          <!-- <button
             class="btn btn-error btn-action split"
             @click="deleteItem(selectedItem)"
           >
             <i class="fas fa-trash"></i>
-          </button>
+          </button> -->
         </div>
       </template>
     </page-title>
@@ -132,6 +153,7 @@ import AgendaItem from "@/components/agenda/AgendaItem";
 import AgendaItemDateHeader from "@/components/agenda/AgendaItemDateHeader";
 import AgendaItemDetail from "@/components/agenda/AgendaItemDetail";
 import AgendaCreateForm from "@/components/agenda/AgendaCreateForm";
+import ConfirmButton from "@/components/ConfirmButton";
 
 import { parse, isSameDay } from "date-fns";
 import firebase, { db } from "@/firebaseConfig";
@@ -139,6 +161,7 @@ import firebase, { db } from "@/firebaseConfig";
 export default {
   name: "GroupAgenda",
   components: {
+    ConfirmButton,
     PageTitle,
     AgendaItem,
     AgendaItemDateHeader,

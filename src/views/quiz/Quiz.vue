@@ -1,8 +1,14 @@
+<!-- SCI ID: 008 -->
+<!-- Name: Quiz -->
+<!-- Version: 1.0 -->
 <template>
   <div>
     <page-title>
       <template slot="left">
-        <button class="btn btn-primary" @click="showScoreModal = true">
+        <button
+          class="btn btn-primary"
+          @click="showScoreModal = true"
+        >
           Submit Quiz
         </button>
       </template>
@@ -17,8 +23,16 @@
     </page-title>
 
     <!-- Quiz Score Modal -->
-    <div v-show="showScoreModal" id="modal-id" class="modal modal-sm active">
-      <a href="#close" class="modal-overlay" aria-label="Close"></a>
+    <div
+      v-show="showScoreModal"
+      id="modal-id"
+      class="modal modal-sm active"
+    >
+      <a
+        href="#close"
+        class="modal-overlay"
+        aria-label="Close"
+      ></a>
       <!--      @click="showScoreModal = false" -->
       <div class="modal-container">
         <div class="modal-header">
@@ -42,14 +56,20 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" @click="$router.go(-1)">
+          <button
+            class="btn btn-primary"
+            @click="$router.go(-1)"
+          >
             Done
           </button>
         </div>
       </div>
     </div>
 
-    <div v-if="terms && definitions && questionTypes" class="quiz-content">
+    <div
+      v-if="terms && definitions && questionTypes"
+      class="quiz-content"
+    >
       <div v-if="questionTypes.shortAnswer == true">
         <short-answer-question
           v-for="(term, index) in questionGroups.shortAnswer.terms"

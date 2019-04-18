@@ -1,3 +1,7 @@
+// SCI ID: 046
+// Name: main
+// Version: 1.0
+
 import Vue from "vue";
 import App from "@/App.vue";
 import router from "@/router";

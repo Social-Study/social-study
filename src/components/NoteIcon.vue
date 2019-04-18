@@ -1,3 +1,6 @@
+<!-- SCI ID: 018 -->
+<!-- Name: NoteIcon -->
+<!-- Version: 1.0 -->
 <template>
   <!-- Note Icon -->
   <div id="note">

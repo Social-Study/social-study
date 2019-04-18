@@ -1,10 +1,19 @@
+<!-- SCI ID: 038 -->
+<!-- Name: Chat -->
+<!-- Version: 1.0 -->
 <template>
   <div>
-    <div class="sidebar" :class="show ? 'active' : 'collapsed'">
+    <div
+      class="sidebar"
+      :class="show ? 'active' : 'collapsed'"
+    >
       <div class="content">
         <h3 id="header">Study Group Chat</h3>
         <div class="divider-gradient mb-2"></div>
-        <div ref="messages" class="messages">
+        <div
+          ref="messages"
+          class="messages"
+        >
           <transition-group
             name="chatTransition"
             enter-active-class="animated fadeInDown"

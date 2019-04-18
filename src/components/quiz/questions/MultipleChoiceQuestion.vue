@@ -1,8 +1,18 @@
+<!-- SCI ID: 026 -->
+<!-- Name: MultipleChoiceQuestion -->
+<!-- Version: 1.0 -->
 <template>
   <div id="question">
     <h1>{{ definition }}</h1>
-    <div class="choices" :class="{ correct }">
-      <div v-for="i in 4" :key="i" class="answers">
+    <div
+      class="choices"
+      :class="{ correct }"
+    >
+      <div
+        v-for="i in 4"
+        :key="i"
+        class="answers"
+      >
         <input
           type="radio"
           class="custom-radio"

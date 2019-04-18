@@ -1,3 +1,6 @@
+<!-- SCI ID: 034 -->
+<!-- Name: FlashcardIcon -->
+<!-- Version: 1.0 -->
 <template>
   <!-- Flashcard Icon -->
   <div id="flashcard">

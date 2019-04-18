@@ -1,3 +1,6 @@
+<!-- SCI ID: 022 -->
+<!-- Name: Avatar -->
+<!-- Version: 1.0 -->
 <template>
   <div
     v-if="!user"
@@ -12,7 +15,11 @@
     :class="getSize"
   ></figure>
 
-  <figure v-else class="avatar" :class="getSize">
+  <figure
+    v-else
+    class="avatar"
+    :class="getSize"
+  >
     <img :src="user.photoURL" />
   </figure>
 </template>

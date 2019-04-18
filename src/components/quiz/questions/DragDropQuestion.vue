@@ -1,3 +1,6 @@
+<!-- SCI ID: 028 -->
+<!-- Name: DragDropQuestion -->
+<!-- Version: 1.0 -->
 <template>
   <div id="question">
     <h1>Match each term to its definition</h1>
@@ -11,8 +14,7 @@
         :draggable="term.draggable"
         :class="{ placed: !term.draggable }"
         :transfer-data="{ from: index, term: term.term }"
-        >{{ term.term }}</drag
-      >
+      >{{ term.term }}</drag>
     </div>
 
     <!-- Definitions Box -->
