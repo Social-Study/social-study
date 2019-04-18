@@ -3,46 +3,36 @@
 <!-- Version: 1.0 -->
 <template>
   <div id="container">
-    <div id="card-header">
-      <label
-        id="label-term"
-        class="form-label"
-      >
+    <div class="term-container">
+      <label id="label-term" class="form-label">
         Term
       </label>
-      <i
-        id="delete"
-        class="fas fa-minus"
-        @click="$emit('delete')"
-      ></i>
-    </div>
+      <!-- <i id="delete" class="fas fa-minus" @click="$emit('delete')"></i> -->
     <input
       id="input-term"
       v-model.trim="data.term"
       type="text"
-      class="form-input"
       maxlength="30"
       autofocus
       @input="termUpdated"
     />
-    <label
-      id="label-def"
-      class="form-label"
-    >
-      Definition
-    </label>
-    <textarea
-      id="input-def"
-      v-model.trim="data.def"
-      type="text"
-      class="form-input"
-      rows="3"
-      maxlength="150"
-      @input="defUpdated"
-      @keydown.ctrl.enter="$emit('addNew')"
-      @keydown.tab.exact="$emit('addNew')"
-    >
-    </textarea>
+    </div>
+    <div class="def-container">
+      <label id="label-def" class="form-label">
+        Definition
+      </label>
+      <textarea
+        id="input-def"
+        v-model.trim="data.def"
+        type="text"
+        rows="3"
+        maxlength="150"
+        @input="defUpdated"
+        @keydown.ctrl.enter="$emit('addNew')"
+        @keydown.tab.exact="$emit('addNew')"
+      >
+      </textarea>
+    </div>
   </div>
 </template>
 
@@ -85,59 +75,55 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles.scss";
 
-#card-header {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-
-  #label-term {
-    flex: 2;
-  }
-
-  #delete {
-    cursor: pointer;
-    flex: 0;
-
-    position: relative;
-
-    color: red;
-    font-size: 20px;
-
-    &:hover {
-      color: lighten(red, 20);
-    }
-  }
-}
 
 #container {
-  // margin: 25px;
-  // margin-top: 30px;
-  // background-image: $orange-gradient;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 10px;
-  height: 250px;
-  width: 250px;
-  margin: 0 40px 40px 0;
+  margin: 10px;
+  width: 50%;
+  width: 500px;
   background-color: white;
 
   .form-label {
     color: $secondary;
   }
 
+  text-align: left;
+
   &:hover {
     box-shadow: $shadow-hovered;
   }
-}
-#input-term {
-  text-align: center;
+
+  .term-container{
+    text-align: center;
+    margin: 10px;
+
+  }
+  #input-term, #input-def{
+    color: $dark;
+    margin: auto;
+    width: 50%;
+  }
+
+
+  .def-container{
+    text-align: center;
+    float:right;
+  }
 }
 
-#label-def {
-  margin-top: 10px;
-}
-label {
-  color: white;
+input, textarea{
+  border: none;
+  background-color: $light;
+
+  &:focus{
+    outline: none;
+  }
 }
 textarea {
+  width: 75%;
   resize: none;
 }
 </style>

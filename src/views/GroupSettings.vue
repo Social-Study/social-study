@@ -543,7 +543,6 @@ export default {
 .group-details {
   cursor: pointer;
   padding: 0;
-  border: 2px solid $secondary-light;
   background-color: white;
   margin-bottom: 40px;
   h2 {
@@ -552,13 +551,16 @@ export default {
     color: $secondary;
     padding: 5px;
     font-size: 32px;
-    border-bottom: 2px solid $secondary-light;
+
+    // Create bottom gradient border without <hr> element
+    background-image: none, $orange-gradient;
+    background-size: 100% 1px;
+    background-position: 0% 0%, 0% 100%;
+    background-repeat: no-repeat;
   }
 
   &:hover {
-    border-image: $orange-gradient;
-    border-image-slice: 1;
-    box-shadow: $shadow-heavy;
+    box-shadow: $shadow-hovered;
   }
 
   form {

@@ -173,8 +173,6 @@ h1 {
 }
 
 #terms-holder {
-  border-radius: 26px;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
   padding: 10px;
   margin-top: 10px;
 
@@ -182,21 +180,17 @@ h1 {
   flex-flow: row nowrap;
   justify-content: space-evenly;
   align-items: center;
-
-  background-color: #e7e7e7;
+  background-color: white;
 }
 
 #defs-holder {
-  border-radius: 26px;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
   padding: 10px;
-  margin-top: 10px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-
-  background-color: #e7e7e7;
+  box-shadow: $shadow;
+  background-color: white;
   // #left {
   //   // Nothing for now
   // }
@@ -212,7 +206,6 @@ h1 {
   user-select: none;
 
   height: 50px;
-  padding: 0 20px 0 20px;
   margin: 5px;
   min-width: 86px;
 
@@ -221,34 +214,34 @@ h1 {
   justify-content: center;
   align-items: center;
 
-  background-color: #c4c4c4;
-  border-radius: 18px;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
+  background-image: $orange-gradient;
+  color:white;
+}
+
+.drop{
+  background-image: none;
+  background-color: $transparent-hover;
 }
 
 // Change style when the term has already been placed
 .drag.placed {
   cursor: default;
   box-shadow: none;
-  background-color: lighten(#c4c4c4, 10);
+  background-image: none;
+  background-color: $transparent-hover
 }
 
-.drop {
-  cursor: default;
-  box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.35);
-}
+// .drop { 
+  
+// }
 
 .drop.over {
-  border-color: #aaa;
-  background-image: $green-gradient;
+  color:white;
+  background-image: $orange-gradient;
 }
 
 .drop.filled {
   box-shadow: none;
   cursor: pointer;
-}
-
-.correct {
-  color: green;
 }
 </style>

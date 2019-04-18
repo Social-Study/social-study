@@ -66,6 +66,10 @@ export default {
     font-weight: 400;
     border-bottom: 1px solid $dark;
     background-color: transparent;
+
+    &:focus{
+      outline: none;
+    }
   }
 
   .search-input {
@@ -80,6 +84,10 @@ export default {
     font-weight: 400;
     border-bottom: 1px solid $dark;
     background-color: transparent;
+   
+     &:focus{
+      outline: none;
+    } 
   }
 
   button {

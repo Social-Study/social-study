@@ -121,15 +121,8 @@ h1 {
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
-
-  border-radius: 26px;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
-
-  background-color: #e7e7e7;
-
-  &.correct {
-    border: 2px solid green;
-  }
+  background-color: white;
+  box-shadow: $shadow;
   .answers {
     justify-items: stretch;
     padding: 10px;
@@ -150,10 +143,10 @@ h1 {
   appearance: none;
   display: inline-block;
   position: relative;
-  background-color: #bebebe;
-  color: #666;
-  height: 30px;
-  width: 30px;
+  background-color:$secondary-light;
+  color: $secondary-light;
+  height: 20px;
+  width: 20px;
   border: 0;
   border-radius: 50px;
   cursor: pointer;
@@ -161,13 +154,13 @@ h1 {
   outline: none;
 }
 .custom-radio:hover {
-  background-color: #f1f1f1;
+  background-color: $light;
 }
 .custom-radio:checked {
   background-image: $green-gradient2;
 }
 label {
-  color: #666;
+  color: $secondary-light;
   cursor: pointer;
 }
 </style>

@@ -219,19 +219,15 @@ export default {
       font-weight: 700;
     }
     &.selected {
-      background-image: $orange-gradient;
-      border: none;
-      color: white;
-      box-shadow: $shadow-heavy;
+      border: $border-selected;
+      box-shadow: $shadow;
 
       #deck-details #deck-author {
         color: $dark;
       }
     }
     &:hover {
-      border-image: $orange-gradient;
-      border-image-slice: 1;
-      border-width: 2px;
+      border-color: $primary;
       box-shadow: $shadow-hovered;
     }
   }
