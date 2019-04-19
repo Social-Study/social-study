@@ -84,7 +84,7 @@
           </div>
           <div class="tile">
             <div class="tile-content text-left">
-              <div class="tile-title text-bold">About You</div>
+              <div class="tile-title text-bold">Description</div>
               <div class="tile-subtitle">
                 <textarea
                   v-model="profileDetails.newBio"
@@ -100,72 +100,94 @@
         </div>
 
         <!-- Tab Two Content -->
-        <div v-if="activeTab === 2">
+        <!-- This content shows before the user successfully reauthenticates -->
+        <div v-else-if="activeTab === 2 && !didReauth && !isGoogleAccount">
           <div class="tile">
             <div class="tile-content text-left">
-              <div class="tile-title text-bold">Email</div>
-              <div class="tile-subtitle">
+              <div class="tile-title text-bold">Enter current password to change account details...</div>
+              <div
+                id="input-button-container"
+                class="tile-subtitle"
+              >
                 <input
                   class="form-input"
-                  :value="user.email"
-                  type="text"
-                  placeholder="New Email"
+                  v-model="reauth.password"
+                  type="password"
+                  placeholder="Current Password"
                 />
+                <button
+                  class="btn btn-success"
+                  @click="reauthenticateUser"
+                >Login</button>
               </div>
             </div>
           </div>
-          <div class="tile">
+        </div>
+
+        <!-- This content shows once the user has reauthenticated -->
+        <div v-else-if="activeTab === 2 && didReauth == true">
+          <div
+            v-if="!isGoogleAccount"
+            class="tile"
+          >
             <div class="tile-content text-left">
-              <div class="tile-title text-bold">Password</div>
-              <div class="tile-subtitle">
-                <div class="form-group">
-                  <label
-                    class="form-label"
-                    for="currentPassword"
-                  >Confirm Current Password</label>
-                  <input
-                    id="currentPassword"
-                    class="form-input"
-                    type="password"
-                    placeholder="Old Password"
-                  />
-                  <label
-                    class="form-label"
-                    for="newPassword"
-                  >Enter New Password</label>
-                  <input
-                    id="newPassword"
-                    class="form-input"
-                    type="password"
-                    placeholder="New Password"
-                  />
-                </div>
+              <div class="tile-title text-bold">Change Email</div>
+              <div
+                id="input-button-container"
+                class="tile-subtitle"
+              >
+                <input
+                  class="form-input form-inline"
+                  v-model="newCreds.email"
+                  type="text"
+                  :placeholder="user.email"
+                />
+                <button
+                  class="btn btn-success form-inline"
+                  @click="updateEmail"
+                >Update</button>
+              </div>
+            </div>
+          </div>
+          <div
+            v-if="!isGoogleAccount"
+            class="tile"
+          >
+            <div class="tile-content text-left">
+              <div class="tile-title text-bold">Change Password</div>
+              <div
+                id="input-button-container"
+                class="tile-subtitle"
+              >
+                <input
+                  v-model="newCreds.password"
+                  class="form-input"
+                  type="password"
+                  placeholder="New Password"
+                />
+
+                <button
+                  class="btn btn-success"
+                  @click="updatePassword"
+                >Update</button>
               </div>
             </div>
           </div>
           <div class="tile">
             <div class="tile-content text-left">
               <div class="tile-title text-bold">Delete Account</div>
-              <div class="tile-subtitle">
-                <div class="form-group">
-                  <label
-                    for="deleteBtn"
-                    class="form-label text-warning"
-                  >This cannot be undone!</label>
-                  <button
-                    id="deleteBtn"
-                    class="btn btn-error"
-                  >
-                    Delete Account
-                  </button>
-                </div>
+              <div class="tile-subtitle delete-container">
+                <button
+                  class="btn btn-error"
+                  @dblclick="deleteAccount"
+                >Delete</button>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Tab Three Content -->
-        <div v-if="activeTab === 3">
+        <div v-else-if="activeTab === 3">
           <table class="table table-striped table-hover">
             <thead>
               <tr>
@@ -197,7 +219,7 @@
 
       <div class="modal-footer">
         <button
-          v-if="activeTab !== 3"
+          v-if="activeTab !== 3 && activeTab !== 2"
           class="save-btn btn btn-primary"
           @click="saveChanges"
         >
@@ -210,7 +232,7 @@
 
 <script>
 import { getUserData, getUserGroups } from "@/scripts/userFuncs";
-import { FirebaseConsts, Storage, db } from "@/firebaseConfig";
+import firebase, { FirebaseConsts, Storage, db } from "@/firebaseConfig";
 
 let picRef = Storage.ref();
 
@@ -228,12 +250,26 @@ export default {
   },
   data() {
     return {
+      // Only show certain settings if not using google sign in
+      isGoogleAccount: false,
+      // User must reauthenticate to update their account information
+      didReauth: false,
+      newCreds: {
+        email: "",
+        password: ""
+      },
+      reauth: {
+        password: ""
+      },
+      // Determines which fields are displayed
       activeTab: 1,
+      // Load the user's existing profile details
       profileDetails: {
         newName: "",
         newPhoto: null,
         newBio: ""
       },
+      // List of Groups that user belongs to, for tab 3
       groupList: [],
       userBio: ""
     };
@@ -259,9 +295,64 @@ export default {
 
     this.loadGroups();
 
-    // db.collection("study-groups").where();
+    this.user.providerData.forEach(profile => {
+      if (profile.providerId === "google.com") {
+        this.isGoogleAccount = true;
+        this.didReauth = true;
+      }
+    });
   },
   methods: {
+    deleteAccount() {
+      console.log("Deleting user account");
+    },
+    updateEmail() {
+      this.user
+        .updateEmail(this.newCreds.email)
+        .then(function() {
+          // Update successful.
+          console.log("Email updated");
+        })
+        .catch(function(error) {
+          // An error happened.
+          console.log("Email update failure");
+        });
+    },
+
+    updatePassword() {
+      this.user
+        .updatePassword(this.newCreds.password)
+        .then(function() {
+          // Update successful.
+          console.log("Password updated");
+        })
+        .catch(function(error) {
+          // An error happened.
+          console.log("Error updating password...");
+        });
+    },
+    reauthenticateUser() {
+      let credential;
+
+      credential = FirebaseConsts.auth.EmailAuthProvider.credential(
+        this.user.email,
+        this.reauth.password
+      );
+
+      // Reauthenticate user based on the credential
+      this.user
+        .reauthenticateAndRetrieveDataWithCredential(credential)
+        .then(() => {
+          // User re-authenticated.
+          console.log("Successful reauth");
+          this.didReauth = true;
+        })
+        .catch(error => {
+          // An error happened.
+          console.log("ERROR BTW");
+          console.log(error);
+        });
+    },
     closeAndReset() {
       this.activeTab = 1;
       this.$emit("closeSettings");
@@ -358,6 +449,26 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles.scss";
+
+#input-button-container {
+  display: flex;
+  flex-flow: row nowrap;
+
+  input {
+    margin-right: 20px;
+  }
+}
+
+.delete-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    width: 150px;
+  }
+}
 
 .modal-container {
   #close {
