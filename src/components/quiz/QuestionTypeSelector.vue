@@ -1,6 +1,6 @@
 <!-- SCI ID: 024 -->
 <!-- Name: QuestionTypeSelector -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <div>
     <div id="container">

@@ -1,37 +1,52 @@
 <!-- SCI ID: 035 -->
 <!-- Name: FlashcardCreateForm -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
-  <div id="container">
-    <div class="term-container">
-      <label id="label-term" class="form-label">
-        Term
-      </label>
-      <!-- <i id="delete" class="fas fa-minus" @click="$emit('delete')"></i> -->
-    <input
-      id="input-term"
-      v-model.trim="data.term"
-      type="text"
-      maxlength="30"
-      autofocus
-      @input="termUpdated"
-    />
-    </div>
-    <div class="def-container">
-      <label id="label-def" class="form-label">
-        Definition
-      </label>
+  <div id="form">
+    <span
+      id="deleteBtn"
+      class="icon icon-delete"
+      @click="$emit('delete')"
+    ></span> 
+    <div id="container">
+      <div class="term-container">
+        <label id="label-term" class="form-label">
+          Front Side
+        </label>
       <textarea
-        id="input-def"
-        v-model.trim="data.def"
+        id="input-term"
+        v-model.trim="data.term"
         type="text"
-        rows="3"
+        rows="1"
+        cols="34"
         maxlength="150"
-        @input="defUpdated"
-        @keydown.ctrl.enter="$emit('addNew')"
-        @keydown.tab.exact="$emit('addNew')"
-      >
-      </textarea>
+        ref="termText"
+        autofocus
+        placeholder="Enter Text"
+        @input="termUpdated"
+      />
+      </div>
+      <div class="center">
+          {{initNum + 1}}          
+      </div>
+      <div class="def-container">
+        <label id="label-def" class="form-label">
+          Back Side
+        </label>
+        <textarea
+          id="input-def"
+          v-model.trim="data.def"
+          type="text"
+          rows="1"
+          maxlength="150"
+          ref="definitionText"
+          placeholder="Enter Text"
+          @input="defUpdated"
+          @keydown.ctrl.enter="$emit('addNew')"
+          @keydown.tab.exact="$emit('addNew')"
+        >
+        </textarea>
+      </div>
     </div>
   </div>
 </template>
@@ -49,7 +64,8 @@ export default {
       type: String,
       default: "",
       required: false
-    }
+    },
+    initNum: Number
   },
   data() {
     return {
@@ -60,13 +76,19 @@ export default {
       }
     };
   },
-  created() {},
   methods: {
     termUpdated() {
       this.$emit("termUpdated", this.data);
+        const textBox = this.$refs.termText;
+        textBox.style.height = "1px"
+        textBox.style.height = (textBox.scrollHeight + 1) + "px";
+        
     },
     defUpdated() {
       this.$emit("defUpdated", this.data);
+      const textBox = this.$refs.definitionText;
+      textBox.style.height = "1px"
+      textBox.style.height = (textBox.scrollHeight + 1) + "px";
     }
   }
 };
@@ -75,55 +97,67 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles.scss";
 
-
-#container {
-  display:flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 10px;
-  margin: 10px;
-  width: 50%;
-  width: 500px;
+#form{
   background-color: white;
-
-  .form-label {
-    color: $secondary;
-  }
-
-  text-align: left;
-
+  width: 90%;
+  margin: 10px;
   &:hover {
     box-shadow: $shadow-hovered;
   }
+}
 
-  .term-container{
-    text-align: center;
-    margin: 10px;
+.center{
+  color: $secondary-light;
+  font-size: 30px;
+  text-align: center;
+  margin: auto;
+  padding: 0px;
+  height: 100%;
+  float:left;
+  width: 100px;
+}
 
-  }
-  #input-term, #input-def{
-    color: $dark;
-    margin: auto;
-    width: 50%;
-  }
+#deleteBtn{
 
+  padding: 0px;
+  margin: 2px;
+  margin-right: 5px;
+  margin-top: 5px;
+  float:right;
+  color:$secondary-light;
 
-  .def-container{
-    text-align: center;
-    float:right;
+  &:hover{
+    color:red;
   }
 }
 
-input, textarea{
-  border: none;
-  background-color: $light;
+#container {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  text-align: left;
+  #input-term, #input-def{
+    color:$secondary;
+    background-color: transparent;
+    border-bottom: 1px solid black;
+  }
+}
 
+
+.def-container{
+  float:right;
+}
+.term-container, .def-container{
+  width: 30%;
+}
+
+textarea{  
+  border: none;
+  resize:none;
+  width:100%;
   &:focus{
     outline: none;
   }
-}
-textarea {
-  width: 75%;
-  resize: none;
 }
 </style>

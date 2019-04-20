@@ -77,6 +77,7 @@
         :key="hash[index]"
         :init-term="term"
         :init-def="definitions[index]"
+        :initNum="index"
         @termUpdated="termUpdated($event, index)"
         @defUpdated="defUpdated($event, index)"
         @addNew="addCard"
