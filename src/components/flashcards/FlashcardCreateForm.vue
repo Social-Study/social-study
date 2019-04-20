@@ -3,15 +3,18 @@
 <!-- Version: 1.1 -->
 <template>
   <div id="form">
+    <span class="number">
+        {{initNum + 1}}          
+    </span>
     <span
       id="deleteBtn"
       class="icon icon-delete"
       @click="$emit('delete')"
-    ></span> 
+    ></span>
     <div id="container">
       <div class="term-container">
         <label id="label-term" class="form-label">
-          Front Side
+          Term
         </label>
       <textarea
         id="input-term"
@@ -26,12 +29,9 @@
         @input="termUpdated"
       />
       </div>
-      <div class="center">
-          {{initNum + 1}}          
-      </div>
       <div class="def-container">
         <label id="label-def" class="form-label">
-          Back Side
+          Definition
         </label>
         <textarea
           id="input-def"
@@ -99,28 +99,23 @@ export default {
 
 #form{
   background-color: white;
-  width: 90%;
+  width: 500px;
   margin: 10px;
   &:hover {
     box-shadow: $shadow-hovered;
   }
 }
 
-.center{
+.number{
   color: $secondary-light;
-  font-size: 30px;
+  font-size: 20px;
   text-align: center;
-  margin: auto;
-  padding: 0px;
-  height: 100%;
+  padding-left: 10px;
   float:left;
-  width: 100px;
 }
 
 #deleteBtn{
-
   padding: 0px;
-  margin: 2px;
   margin-right: 5px;
   margin-top: 5px;
   float:right;
@@ -133,10 +128,11 @@ export default {
 
 #container {
   display:flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px;
-  text-align: left;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
   #input-term, #input-def{
     color:$secondary;
     background-color: transparent;
@@ -144,12 +140,15 @@ export default {
   }
 }
 
-
-.def-container{
-  float:right;
-}
 .term-container, .def-container{
-  width: 30%;
+  width: 90%;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+label{
+  margin-top: 0px;
+  padding-top: 0px;
 }
 
 textarea{  
