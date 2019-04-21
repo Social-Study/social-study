@@ -48,6 +48,7 @@
           autocomplete="off"
         />
         <button
+          id="loginButton"
           class="btn btn-primary m-1"
           @click="logIn"
         >Log In</button>
@@ -76,6 +77,7 @@
       leave-active-class="animated fadeOutRight"
     >
       <MessageBar
+        id="errorMessage"
         v-show="error.show"
         type="error"
         @closeMessage="error.show = false"
