@@ -1,6 +1,6 @@
 <!-- SCI ID: 017 -->
 <!-- Name: ProfileSettings -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 
 <template>
   <div class="modal modal-md active">
@@ -175,8 +175,10 @@
           </div>
           <div class="tile">
             <div class="tile-content text-left">
-              <div class="tile-title text-bold">Delete Account</div>
+              <div class="tile-title text-bold">Delete Account (Double Click)</div>
               <div class="tile-subtitle delete-container">
+                Your Social Study account will be permanently deleted and all
+                of your content will be lost.
                 <button
                   class="btn btn-error"
                   @dblclick="deleteAccount"
@@ -461,7 +463,7 @@ export default {
 
 .delete-container {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
 
