@@ -1,6 +1,6 @@
 <!-- SCI ID: 028 -->
 <!-- Name: DragDropQuestion -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <div id="question">
     <h1>Match each term to its definition</h1>
@@ -208,15 +208,14 @@ h1 {
   height: 50px;
   margin: 5px;
   min-width: 86px;
-
+  padding: 10px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
 
-  background-image: $orange-gradient;
-  color:white;
-}
+  background-color: $primary;
+  color: white}
 
 .drop{
   background-image: none;
@@ -236,8 +235,7 @@ h1 {
 // }
 
 .drop.over {
-  color:white;
-  background-image: $orange-gradient;
+  background-color: $primary
 }
 
 .drop.filled {

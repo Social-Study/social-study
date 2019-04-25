@@ -1,6 +1,6 @@
 <!-- SCI ID: 006 -->
 <!-- Name: Dashboard -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <div
     v-if="user !== null"
@@ -8,14 +8,16 @@
   >
     <!-- Centered Empty Dashboard Placeholder -->
     <div>
+      <p class="welcome-msg">
+          Hello, 
+          <span>{{ user.displayName }}</span>
+          <p> 
+            it is {{new Date().getMonth()}} / {{ new Date().getDate()}} / {{new Date().getFullYear()}} 
+
+          </P>
+      </p>
       <div class="empty">
         <div class="empty-icon">
-          <img
-            id="undraw"
-            class="undraw-svg"
-            src="../assets/undraw_no_data.svg"
-            alt="No Study Groups"
-          />
         </div>
         <p
           v-if="studyGroups && studyGroups.length === 0"
@@ -23,10 +25,6 @@
         >
           You don't have any Study Groups!
         </p>
-        <p class="empty-subtitle text-large text-bold">
-          Welcome to your Dashboard
-        </p>
-        <p class="empty-subtitle">It is currently in development.</p>
       </div>
     </div>
   </div>
@@ -77,6 +75,15 @@ export default {
 <style lang="scss" scoped>
 @import "../styles.scss";
 
+
+.welcome-msg{
+  font-size: 300%;
+
+  span{
+    color: $primary;
+  }
+}
+
 #undraw {
   width: 10em;
 }
@@ -86,7 +93,7 @@ export default {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  align-items: center;
+  align-items: space-between;
 }
 
 .empty {

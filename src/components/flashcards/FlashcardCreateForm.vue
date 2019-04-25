@@ -101,9 +101,16 @@ export default {
   background-color: white;
   width: 500px;
   margin: 10px;
+  animation-name: grow;
+  animation-duration: 0.25s;
   &:hover {
     box-shadow: $shadow-hovered;
   }
+}
+
+@keyframes grow {
+  0% {  width:0; opacity: 0;  }
+  100% {  width: 500px; opacity: 1; }
 }
 
 .number{

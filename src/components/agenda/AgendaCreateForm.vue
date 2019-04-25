@@ -1,6 +1,6 @@
 <!-- SCI ID: 042 -->
 <!-- Name: AgendaCreateForm -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <div class="agenda-form">
     <div class="modal-title h5">{{ getTitle }}</div>
@@ -12,9 +12,10 @@
           <div class="tile-subtitle">
             <input
               v-model="item.title"
-              class="form-input"
+              id="title-input"
               type="text"
               maxlength="26"
+              placeholder="Enter Title"
               @input="$emit('publish', item)"
             />
           </div>
@@ -42,8 +43,10 @@
         <div class="tile-subtitle">
           <textarea
             v-model="item.description"
-            class="form-input"
+            id="desc-input"
+            rows="1"
             name="description"
+            placeholder="Enter Description"
             @input="$emit('publish', item)"
           ></textarea>
         </div>
@@ -108,6 +111,11 @@ export default {
       this.item.date = this.editItem.date.toDate();
       this.config.defaultDate = this.item.date;
     }
+  },
+  methods:{
+    inputChanged(){
+
+    }
   }
 };
 </script>
@@ -116,9 +124,17 @@ export default {
 @import "@/styles.scss";
 
 textarea {
+  resize: none;
+}
+
+#title-input, #desc-input{
   width: 100%;
-  height: 100%;
-  resize: vertical;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid $dark;
+  &:focus{
+    outline: none;
+  }
 }
 
 .horiz-tiles {

@@ -338,6 +338,10 @@ export default {
   user-select: none;
   padding-top: 10px;
 
+  h1{
+    font-weight: 1;
+  }
+
   &:hover {
     box-shadow: $shadow-hovered;
     border-image-slice: 1;
