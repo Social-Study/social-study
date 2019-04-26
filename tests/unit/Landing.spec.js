@@ -36,7 +36,6 @@ describe("Landing", () => {
     wrapper.vm.email = "ecb11@ptd.net";
     wrapper.vm.password = "123456";
     loginButton.trigger("click");
-    console.log(loginButton.text());
     expect(wrapper.vm.$route.name).toEqual("dashboard");
   });
 });

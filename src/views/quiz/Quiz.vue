@@ -1,6 +1,7 @@
 <!-- SCI ID: 008 -->
 <!-- Name: Quiz -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
+
 <template>
   <div>
     <page-title>
@@ -170,7 +171,7 @@ export default {
     // If the props are not found go back to quiz create page
     // This only happens when the user refreshes (right now there is no fix)
     if (!this.terms && !this.definitions && !this.questionTypes) {
-      this.$router.go(-1);
+      this.$router.push({ name: "createQuiz" });
     }
 
     // Shuffle All Term/Def combos
@@ -281,7 +282,8 @@ export default {
 @import "@/styles.scss";
 
 #question {
-  margin-top: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .quiz-content {
@@ -289,7 +291,6 @@ export default {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  padding-bottom: 20px;
   max-height: $page-with-header-height;
   overflow-y: auto;
 }

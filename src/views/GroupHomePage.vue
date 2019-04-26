@@ -1,6 +1,7 @@
 <!-- SCI ID: 005 -->
 <!-- Name: GroupHomePage -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
+
 <template>
   <div>
     <!-- Title Bar -->
@@ -238,6 +239,14 @@ export default {
       padding: 0;
     }
 
+    // This prevents nav bar overlap when the window height is below 800px
+    @media only screen and (max-height: 800px) {
+      .recent-container,
+      .agenda-container {
+        min-height: 800px;
+      }
+    }
+
     .recent-container {
       display: flex;
       flex-flow: column nowrap;
@@ -263,8 +272,7 @@ export default {
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-  overflow-y: auto;
-  padding-bottom: 100px;
+  overflow-y: hidden;
 
   #note {
     margin-left: 20px;
