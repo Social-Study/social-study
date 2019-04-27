@@ -26,7 +26,7 @@
         <div class="tile-content text-left">
           <div class="tile-title text-bold">Event Date / Time</div>
           <div class="tile-subtitle date-time-container">
-            <flat-pickr
+            <flat-pickr 
               v-model="item.date"
               class="form-input"
               :config="config"
@@ -47,7 +47,8 @@
             rows="1"
             name="description"
             placeholder="Enter Description"
-            @input="$emit('publish', item)"
+            ref="descInput"
+            @input="inputChanged"
           ></textarea>
         </div>
       </div>
@@ -114,7 +115,10 @@ export default {
   },
   methods:{
     inputChanged(){
-
+      this.$emit('publish', this.item);
+      const textBox = this.$refs.descInput;
+      textBox.style.height = "1px"
+      textBox.style.height = (textBox.scrollHeight + 1) + "px";
     }
   }
 };
@@ -122,6 +126,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles.scss";
+
+
+.agenda-form{
+  background-color: white;
+  padding: 10px;
+}
 
 textarea {
   resize: none;

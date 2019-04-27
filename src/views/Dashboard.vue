@@ -6,16 +6,24 @@
     v-if="user !== null"
     id="full-screen"
   >
-    <!-- Centered Empty Dashboard Placeholder -->
-    <div>
-      <p class="welcome-msg">
+        <div class="welcome-msg">
           Hello, 
-          <span>{{ user.displayName }}</span>
-          <p> 
-            it is {{new Date().getMonth()}} / {{ new Date().getDate()}} / {{new Date().getFullYear()}} 
-
-          </P>
-      </p>
+          <span>{{ user.displayName }}.</span>
+          <p id="date">it is {{new Date().getMonth() + 1 }}/{{ new Date().getDate()}}/{{new Date().getFullYear()}}</p> 
+        </div>
+    <!-- Centered Empty Dashboard Placeholder -->
+    <div v-if="studyGroups && studyGroups.length > 0">
+          <p id="group-header">Your Study Groups</p>
+          <div class="studyGroups">
+            <router-link class="group-card"  
+              :to="{ name: 'home', params: { groupID: group.id } }"
+              v-for="(group, index) in studyGroups"
+              :key="index"
+            >
+              <div id="name">{{group.className}}</div>
+              <div id="professor">{{group.instructorName}}</div>
+            </router-link>
+          </div>
       <div class="empty">
         <div class="empty-icon">
         </div>
@@ -78,9 +86,14 @@ export default {
 
 .welcome-msg{
   font-size: 300%;
-
+  margin: 20px;
   span{
-    color: $primary;
+    color: white;
+  }
+
+  #date{
+    font-size: 75%;
+    font-family: $secondary-font;
   }
 }
 
@@ -92,20 +105,58 @@ export default {
   height: $content-height;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: space-between;
+  background-image: $dashboard-gradient;
+  color: $secondary-light;
 }
 
 .empty {
-  background-color: $light;
+  background-color: transparent;
 }
 
-.modal-container {
-  border-radius: 10px;
+.studyGroups{
+  display:flex;
+  flex-direction: row;
+  width: 50%;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
 }
 
-.modal-btn {
-  margin: 4px;
-  min-width: 80px;
+.group-card{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  color: $dark;
+  padding: 10px;
+  box-shadow: $shadow;
+  margin: 10px;
+  min-width: 250px;
+  height: 150px;
+  text-align: center;
+  text-decoration: none;
+
+  #name{
+    font-weight: bold;
+    font-size: 125%;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  #professor{
+    font-family: $secondary-font;
+    font-size: 100%;
+  }
+
+  &:hover{
+    box-shadow: $shadow-heavy;
+  }
+}
+
+#group-header{
+  padding-top: 100px;
+  font-size: 50px;
 }
 </style>
