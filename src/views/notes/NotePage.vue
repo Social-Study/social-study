@@ -170,6 +170,7 @@ export default {
   },
   methods: {
     // Contact server to get PDF file of the note
+    // Download button displays loading indicator until PDF is received
     exportNote() {
       this.pdfIsLoading = true;
 

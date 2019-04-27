@@ -1,70 +1,46 @@
 <!-- SCI ID: 008 -->
 <!-- Name: Quiz -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.2 -->
+
 <template>
   <div>
     <page-title>
       <template slot="left">
         <button
+          v-if="showCorrect === false"
           class="btn btn-primary"
-          @click="showScoreModal = true"
+          @click="showCorrect = true"
         >
           Submit Quiz
+        </button>
+        <button
+          v-else
+          class="btn btn-error"
+          @click="$router.go(-1)"
+        >
+          Done
         </button>
       </template>
       <template slot="center">
         Quiz
       </template>
       <template slot="right">
-        <h2 class="title">
+        <h2
+          v-if="showCorrect === false"
+          class="title"
+        >
           Answered: {{ answeredQuestions }}/{{ totalQuestions }}
         </h2>
+        <h2
+          v-else
+          class="title"
+        >
+          Score: {{ Math.round((correctQuestions / totalQuestions) * 100) }}%
+          ({{correctQuestions}} / {{totalQuestions}})
+        </h2>
+
       </template>
     </page-title>
-
-    <!-- Quiz Score Modal -->
-    <div
-      v-show="showScoreModal"
-      id="modal-id"
-      class="modal modal-sm active"
-    >
-      <a
-        href="#close"
-        class="modal-overlay"
-        aria-label="Close"
-      ></a>
-      <!--      @click="showScoreModal = false" -->
-      <div class="modal-container">
-        <div class="modal-header">
-          <!-- <a
-            href="#close"
-            class="btn btn-clear float-right"
-            aria-label="Close"
-            @click="showScoreModal = false"
-          ></a> -->
-          <div class="modal-title h5">Quiz Results</div>
-        </div>
-        <div class="modal-body">
-          <div class="content">
-            <h2>
-              {{ Math.round((correctQuestions / totalQuestions) * 100) }} %
-            </h2>
-            <h3>
-              You got {{ correctQuestions }} out of
-              {{ totalQuestions }} correct!
-            </h3>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            class="btn btn-primary"
-            @click="$router.go(-1)"
-          >
-            Done
-          </button>
-        </div>
-      </div>
-    </div>
 
     <div
       v-if="terms && definitions && questionTypes"
@@ -76,6 +52,7 @@
           :key="index"
           :term="term"
           :definition="questionGroups.shortAnswer.definitions[index]"
+          :showCorrect="showCorrect"
           @answered="handleAnswered"
           @correct="handleCorrect"
         />
@@ -87,6 +64,7 @@
           :term="term"
           :definition="questionGroups.multipleChoice.definitions[index]"
           :choice-list="shuffledTerms"
+          :showCorrect="showCorrect"
           @answered="handleAnswered"
           @correct="handleCorrect"
         />
@@ -97,6 +75,7 @@
           :key="index"
           :terms="termArray"
           :defs="questionGroups.dragAndDrop.definitions[index]"
+          :showCorrect="showCorrect"
           @answered="handleAnswered"
           @correct="handleCorrect"
         />
@@ -142,9 +121,10 @@ export default {
   },
   data() {
     return {
+      // If true, the questions will show which are correct
+      showCorrect: false,
       answeredQuestions: 0,
       correctQuestions: 0,
-      showScoreModal: false,
       totalQuestions: this.terms.length,
       // Shuffled versions of the props
       shuffledTerms: this.terms,
@@ -170,7 +150,7 @@ export default {
     // If the props are not found go back to quiz create page
     // This only happens when the user refreshes (right now there is no fix)
     if (!this.terms && !this.definitions && !this.questionTypes) {
-      this.$router.go(-1);
+      this.$router.push({ name: "createQuiz" });
     }
 
     // Shuffle All Term/Def combos
@@ -281,7 +261,8 @@ export default {
 @import "@/styles.scss";
 
 #question {
-  margin-top: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .quiz-content {
@@ -289,7 +270,6 @@ export default {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  padding-bottom: 20px;
   max-height: $page-with-header-height;
   overflow-y: auto;
 }

@@ -8,7 +8,7 @@
       v-model.trim="userAnswer"
       class="answer-input"
       type="text"
-      :class="{ correct }"
+      :class="getStyle()"
       @input="handleInput()"
     />
   </div>
@@ -25,6 +25,11 @@ export default {
     definition: {
       type: String,
       required: true
+    },
+    showCorrect: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   data() {
@@ -35,6 +40,17 @@ export default {
     };
   },
   methods: {
+    getStyle() {
+      if (this.showCorrect) {
+        if (this.correct) {
+          return "correct";
+        } else {
+          return "incorrect";
+        }
+      } else {
+        return "no-border";
+      }
+    },
     handleInput() {
       // Check if answered logic
       if (!this.answered && this.userAnswer !== "") {
@@ -68,12 +84,23 @@ h1 {
   font-size: 28px;
 }
 
+.correct {
+  border: 2px solid green;
+}
+
+.incorrect {
+  border: 2px solid red;
+}
+
+.no-border {
+  border: none;
+}
+
 .answer-input {
   margin-top: 10px;
   box-shadow: $shadow;
   text-align: center;
   background-color: white;
-  border: none;
   padding-left: 20px;
   padding-right: 20px;
   font-size: 24px;

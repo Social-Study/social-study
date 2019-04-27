@@ -39,7 +39,7 @@
         <h2
           v-for="(slot, index) in drop"
           :key="index"
-          :class="{ correct: slot.isCorrect }"
+          :class="getStyle(slot)"
         >
           {{ slot.definition }}
         </h2>
@@ -61,6 +61,11 @@ export default {
     defs: {
       type: Array,
       required: true
+    },
+    showCorrect: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   data: function() {
@@ -97,6 +102,15 @@ export default {
     }
   },
   methods: {
+    getStyle(slot) {
+      if (this.showCorrect) {
+        if (slot.isCorrect) {
+          return "correct";
+        } else {
+          return "incorrect";
+        }
+      }
+    },
     /**
      * Logic to handle what happens when a question is term is dropped on a def
      */
@@ -200,6 +214,14 @@ h1 {
   }
 }
 
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
+}
+
 .drag,
 .drop {
   cursor: pointer;
@@ -213,11 +235,11 @@ h1 {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-
   background-color: $primary;
-  color: white}
+  color: white;
+}
 
-.drop{
+.drop {
   background-image: none;
   background-color: $transparent-hover;
 }
@@ -227,15 +249,11 @@ h1 {
   cursor: default;
   box-shadow: none;
   background-image: none;
-  background-color: $transparent-hover
+  background-color: $transparent-hover;
 }
 
-// .drop { 
-  
-// }
-
 .drop.over {
-  background-color: $primary
+  background-color: lighten($primary, 20);
 }
 
 .drop.filled {

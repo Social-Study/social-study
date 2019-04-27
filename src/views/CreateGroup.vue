@@ -1,18 +1,13 @@
 <!-- SCI ID: 007 -->
 <!-- Name: CreateGroup -->
-<!-- Version: 1.1 -->
+<!-- Version: 1.2 -->
+
 <template>
   <div id="full-screen">
     <!-- Page Title -->
     <page-title>
       <template slot="center">Create New Study Group</template>
     </page-title>
-
-    <!-- Notification -->
-    <notifications
-      group="create"
-      position="right bottom"
-    />
 
     <div class="create-content">
       <!-- Contains Center Content; Buttons and Content -->
@@ -32,20 +27,9 @@
           class="infoContainer"
         >
           <h2>What is the name of the class?</h2>
-
-          <div
-            class="form-group"
-            :class="
-              errors.first('className')
-                ? 'has-error'
-                : '' || (!errors.first('className') && className)
-                ? 'has-success'
-                : ''
-            "
-          >
+          <div class="form-group">
             <input
               v-model="className"
-              v-validate="'required'"
               class="form-input"
               type="text"
               placeholder="Class Name"
@@ -53,9 +37,7 @@
               required
               @keydown.enter="next"
             />
-            <p class="form-input-hint">{{ errors.first("className") }}</p>
           </div>
-          <!-- <span style="color: red;">{{ errors.first("className") }}</span> -->
           <h3 style="margin-top: 20px;">Course Code? (Optional)</h3>
           <input
             v-model="courseCode"
@@ -72,21 +54,10 @@
           v-else-if="active === 1"
           class="infoContainer"
         >
-          <!-- TODO: Figure out why validation isn't working... -->
           <h2>What is the course intructor's name?</h2>
-          <div
-            class="form-group"
-            :class="
-              errors.first('instructorName')
-                ? 'has-error'
-                : '' || (!errors.first('instructorName') && instructorName)
-                ? 'has-success'
-                : ''
-            "
-          >
+          <div class="form-group">
             <input
               v-model="instructorName"
-              v-validate="'required|alpha_spaces'"
               class="form-input"
               type="text"
               placeholder="Instructor Name"
@@ -94,7 +65,6 @@
               required
               @keydown.enter="next"
             />
-            <p class="form-input-hint">{{ errors.first("instructorName") }}</p>
           </div>
         </div>
 
@@ -145,7 +115,6 @@
           </div>
 
           <br />
-          <!-- TODO: Transition to use new flatpickr -->
           <div class="time-group">
             <flat-pickr
               v-model="meetingTime[0]"
@@ -176,7 +145,6 @@
 
           <input
             v-model="location"
-            v-validate="'required'"
             class="form-input"
             style="width: 60%;"
             type="text"
@@ -184,7 +152,6 @@
             placeholder="Class Location"
             @keydown.enter="next"
           />
-          <span style="color: red;">{{ errors.first("location") }}</span>
         </div>
 
         <!-- Instructor Website Form -->
@@ -217,7 +184,6 @@
               <span class="input-group-addon">https://</span>
               <input
                 v-model="websiteURL"
-                v-validate="'url'"
                 style="margin: 0;"
                 class="form-input"
                 type="text"
@@ -226,13 +192,6 @@
                 @keydown.enter="next"
               />
             </div>
-            <span
-              key="error-string"
-              style="color: red;"
-            >{{
-              errors.first("url")
-              }}</span>
-
             <br key="break" />
             <br key="break2" />
             <a
@@ -370,8 +329,6 @@ export default {
     Steps
   },
   data() {
-    // TODO: refactor these into objects
-    // TODO: Finish updating validation...
     return {
       active: 0,
       config: {
@@ -410,32 +367,10 @@ export default {
       this.meetingDays[key] = !this.meetingDays[key];
     },
     next() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          this.active++;
-        } else {
-          this.$notify({
-            group: "create",
-            type: "error",
-            title: "Validation Errors!",
-            text: "All errors must be corrected."
-          });
-        }
-      });
+      this.active++;
     },
     back() {
-      this.$validator.validateAll().then(result => {
-        if (result && this.active !== 0) {
-          this.active--;
-        } else {
-          this.$notify({
-            group: "create",
-            type: "error",
-            title: "Validation Errors!",
-            text: "All errors must be corrected."
-          });
-        }
-      });
+      this.active--;
     },
     copyCode() {
       // Allows user to copy the invite code on button click

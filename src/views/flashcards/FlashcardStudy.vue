@@ -9,13 +9,10 @@
   >
     <!-- Page Title -->
     <page-title>
-      <template slot="center">
-        {{ deckName }}
-      </template>
       <template slot="left">
         <button
           class="btn"
-          :class="isShuffled ? 'btn-primary' : 'btn-action'"
+          :class="isShuffled ? 'btn-success' : 'btn-action'"
           @click="shuffleDeck"
         >
           <!-- Icon flashes when shuffle enabled -->
@@ -24,6 +21,21 @@
             class="fas fa-random"
           ></i>
         </button>
+      </template>
+      <template slot="center">
+        {{ deckName }}
+      </template>
+      <template slot="right">
+        <button
+          class="btn btn-action split"
+          @click="downvoteDeck()"
+          :class="myRating === -1 ? 'btn-error' : ''"
+        ><i class="fas fa-frown"></i></button>
+        <button
+          class="btn btn-action split"
+          @click="upvoteDeck()"
+          :class="myRating === 1 ? 'btn-success': ''"
+        ><i class="fas fa-smile"></i></button>
       </template>
     </page-title>
 
@@ -82,8 +94,10 @@
 <script>
 import PageTitle from "@/components/navigation/PageTitle";
 import { setTimeout } from "timers";
-import { db } from "@/firebaseConfig";
+import { db, FirebaseConsts } from "@/firebaseConfig";
 import anime from "animejs";
+
+let flashcardCollection = null;
 
 export default {
   name: "FlashcardStudy",
@@ -109,13 +123,16 @@ export default {
       originalDefinitionList: [],
       cardColor: "#FFFFFF",
       deckName: "",
-      dataloaded: false
+      dataloaded: false,
+      upvoteList: [],
+      downvoteList: [],
+      myRating: 0
     };
   },
   created() {
     const groupID = this.$route.params.groupID;
     const deckID = this.$route.params.deckID;
-    let flashcardCollection = db
+    flashcardCollection = db
       .collection("study-groups")
       .doc(groupID)
       .collection("flashcards");
@@ -143,13 +160,15 @@ export default {
           // Use slice to copy the array by value to avoid modification
           this.termList = this.originalTermList.slice();
           this.definitionList = this.originalDefinitionList.slice();
+          this.upvoteList = doc.data().upvotes;
+          this.downvoteList = doc.data().downvotes;
 
           this.currentContent = this.termList[0];
+
+          this.determineRating();
+
           this.dataloaded = true;
         }
-        // else {
-        // console.log("No such document!");
-        // }
       })
       .catch(error => {
         // console.log("Error getting document:", error);
@@ -164,6 +183,75 @@ export default {
     window.removeEventListener("keyup", this.keyPressed);
   },
   methods: {
+    determineRating() {
+      if (this.upvoteList.includes(this.$store.getters.uid)) {
+        this.myRating = 1;
+      } else if (this.downvoteList.includes(this.$store.getters.uid)) {
+        this.myRating = -1;
+      } else {
+        this.myRating = 0;
+      }
+    },
+    upvoteDeck() {
+      // Just remove the rating if they click same button
+      if (this.myRating === 1) {
+        flashcardCollection.update({
+          upvotes: FirebaseConsts.firestore.FieldValue.arrayRemove(
+            this.$store.getters.uid
+          )
+        });
+        this.myRating = 0;
+      } else {
+        // If they already downvoted, remove it and then upvote
+        if (this.myRating === -1) {
+          flashcardCollection.update({
+            downvotes: FirebaseConsts.firestore.FieldValue.arrayRemove(
+              this.$store.getters.uid
+            )
+          });
+          this.myRating = 0;
+        }
+
+        if (this.myRating === 0) {
+          flashcardCollection.update({
+            upvotes: FirebaseConsts.firestore.FieldValue.arrayUnion(
+              this.$store.getters.uid
+            )
+          });
+          this.myRating = 1;
+        }
+      }
+    },
+    downvoteDeck() {
+      // Just remove the rating if they click same button
+      if (this.myRating === -1) {
+        flashcardCollection.update({
+          downvotes: FirebaseConsts.firestore.FieldValue.arrayRemove(
+            this.$store.getters.uid
+          )
+        });
+        this.myRating = 0;
+      } else {
+        // If they already upvoted, remove it then downvote
+        if (this.myRating === 1) {
+          flashcardCollection.update({
+            upvotes: FirebaseConsts.firestore.FieldValue.arrayRemove(
+              this.$store.getters.uid
+            )
+          });
+          this.myRating = 0;
+        }
+
+        if (this.myRating === 0) {
+          flashcardCollection.update({
+            downvotes: FirebaseConsts.firestore.FieldValue.arrayUnion(
+              this.$store.getters.uid
+            )
+          });
+          this.myRating = -1;
+        }
+      }
+    },
     shuffleDeck() {
       if (this.isShuffled) {
         // If shuffled, reload original, unmodified lists

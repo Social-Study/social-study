@@ -258,7 +258,9 @@ export default {
               hash: this.hash,
               creatorName: user.displayName,
               lastUpdated: initDate,
-              creatorPhoto: this.$store.getters.photoURL
+              creatorPhoto: this.$store.getters.photoURL,
+              downvotes: [],
+              upvotes: []
             })
             .then(() => {
               // console.log("Flashcard Deck created with doc id: ", docRef.id);
@@ -280,7 +282,9 @@ export default {
               creatorName: user.displayName,
               creationDate: initDate,
               lastUpdated: initDate,
-              creatorPhoto: this.$store.getters.photoURL
+              creatorPhoto: this.$store.getters.photoURL,
+              downvotes: [],
+              upvotes: []
             })
             .then(docRef => {
               // console.log("Flashcard Deck created with doc id: ", docRef.id);

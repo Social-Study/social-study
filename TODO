@@ -32,12 +32,9 @@ Notes:
   ☐ Scale the views to be on top of eachother when window width is too small
 
 Chat:
-  Maybes:
-      - Maybe allow editing?
     ☐ Scroll down button when not at chat end?
 
 Quiz:
-  ☐ Add T/F question type
   ☐ Fix questions to match new design
 
 Known Bugs:
@@ -72,6 +69,10 @@ Members Page:
 Profile Settings:
   ☐ When I implement the account deletion make sure to remove the photos as well as the user account
   ☐ Create a placeholder for when the user doesn't have any study groups. Don't just show an empty table
+  ☐ To Implement
+    ✔ Password Change @done(19-04-19 18:10)
+    ✔ Email Change @done(19-04-19 18:10)
+    ☐ Delete Account
 
 Side Bar:
   ☐ Add more Study Group information (meeting time, location, extra info) possibly do this in a modal
@@ -83,9 +84,8 @@ Create Study Group:
 Flashcards Collection:
   ☐ Display a "deck standing" color indicator to show whether the flashcard deck is good or bad
   ☐ Use the avatar component or show the user's initials if they don't have a profile picture.
-
   ☐ Autofocus after using keybind to create a new flashcard
-  ☐ Extract firebase functions to a separate file to be reused.... @high
+  ✘ Extract firebase functions to a separate file to be reused.... @high @cancelled(19-04-19 18:10)
 
 Animations / Transitions:
   Create Page:

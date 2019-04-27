@@ -1,6 +1,7 @@
 <!-- SCI ID: 005 -->
 <!-- Name: GroupHomePage -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.2 -->
+
 <template>
   <div>
     <!-- Title Bar -->
@@ -77,8 +78,9 @@
                 class="loading loading-lg"
               ></div>
               <flashcard-icon
-                v-for="deck in recentFlashcards"
                 v-else
+                v-for="deck in recentFlashcards"
+                @click.native="changeVisibility(deck)"
                 :key="deck.id"
                 :info="deck"
               ></flashcard-icon>
@@ -119,17 +121,17 @@ export default {
       agendaLoading: true
     };
   },
-  computed: {
-    filteredDecks() {
-      // Filter the note list by the query string. Including partial matches.
-      // Converted to lowercase to avoid capitalization enforcement
-      return this.decks.filter(deck => {
-        return deck.title
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase());
-      });
-    }
-  },
+  // computed: {
+  //   filteredDecks() {
+  //     // Filter the deck list by the query string. Including partial matches.
+  //     // Converted to lowercase to avoid capitalization enforcement
+  //     return this.decks.filter(deck => {
+  //       return deck.title
+  //         .toLowerCase()
+  //         .includes(this.searchQuery.toLowerCase());
+  //     });
+  //   }
+  // },
   watch: {
     // reload the group data when route changes
     "$route.params.groupID"() {
@@ -140,6 +142,59 @@ export default {
     this.loadData();
   },
   methods: {
+    // Switch the decks location in firebase to public or private
+    changeVisibility(deck) {
+      console.log("test");
+
+      // Modify the document in firebase when the user toggles.
+      let privateCol = db
+        .collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("flashcards")
+        .doc("private")
+        .collection(this.$store.getters.uid)
+        .doc(deck.id);
+
+      let publicCol = db
+        .collection("study-groups")
+        .doc(this.$route.params.groupID)
+        .collection("flashcards")
+        .doc(deck.id);
+
+      // Determine what firestore route the deck needs to be transferred to and from
+      let from, to;
+      if (deck.isPrivate) {
+        from = privateCol;
+        to = publicCol;
+      } else {
+        from = publicCol;
+        to = privateCol;
+      }
+
+      // This is run as a transaction because it needs to be atomic.
+      // Ensures that both the moving and deleting are executed together
+      return (
+        db
+          .runTransaction(transaction => {
+            // This code may get re-run multiple times if there are conflicts.
+            return transaction.get(from).then(deck => {
+              // Get the contents of the existing document
+              if (!deck.exists) {
+                throw "Deck does not exist!";
+              }
+              transaction.set(to, deck.data()); // Create new document
+              transaction.delete(from); // Delete old document
+            });
+          })
+          .then(() => {
+            this.loadDecks();
+          })
+          // Error switching flashcard deck location
+          .catch(error => {
+            // console.log("Transaction failed: ", error);
+          })
+      );
+    },
     handleAgendaSelected(index) {
       this.$router.push(
         `/${this.$route.params.groupID}/agenda/${this.agendaItems[index].id}`
@@ -186,6 +241,7 @@ export default {
           .collection("study-groups")
           .doc(this.$route.params.groupID)
           .collection("flashcards")
+          .orderBy("lastUpdated", "desc")
           .limit(6)
       ).then(flashcards => {
         this.recentFlashcards = flashcards;
@@ -238,6 +294,14 @@ export default {
       padding: 0;
     }
 
+    // This prevents nav bar overlap when the window height is below 800px
+    @media only screen and (max-height: 800px) {
+      .recent-container,
+      .agenda-container {
+        min-height: 800px;
+      }
+    }
+
     .recent-container {
       display: flex;
       flex-flow: column nowrap;
@@ -263,8 +327,7 @@ export default {
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-  overflow-y: auto;
-  padding-bottom: 100px;
+  overflow-y: hidden;
 
   #note {
     margin-left: 20px;

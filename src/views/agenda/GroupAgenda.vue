@@ -42,7 +42,6 @@
 
           <!-- Delete an existing agenda item that you've created -->
           <confirm-button
-            v-if="deckID !== null"
             class="split"
             @buttonClicked="deleteItem(selectedItem)"
           >
@@ -57,13 +56,6 @@
               Delete Agenda Item
             </template>
           </confirm-button>
-
-          <!-- <button
-            class="btn btn-error btn-action split"
-            @click="deleteItem(selectedItem)"
-          >
-            <i class="fas fa-trash"></i>
-          </button> -->
         </div>
       </template>
     </page-title>

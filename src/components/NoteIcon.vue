@@ -1,6 +1,7 @@
 <!-- SCI ID: 018 -->
 <!-- Name: NoteIcon -->
 <!-- Version: 1.0 -->
+
 <template>
   <!-- Note Icon -->
   <div id="note">
@@ -20,7 +21,6 @@
         <i>Created on</i> {{ info.creationDate.toDate().toLocaleDateString() }}
       </p>
       <!-- Modified -->
-      <!-- <p id="modified"><i>Modified:</i> {{info.lastUpdated.toDate().toLocaleDateString()}}</p> -->
       <p id="modified">
         <i>Modified</i> {{ calcDays(info.lastUpdated.toDate()) }}
       </p>

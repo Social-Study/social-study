@@ -1,12 +1,12 @@
 <!-- SCI ID: 026 -->
 <!-- Name: MultipleChoiceQuestion -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <div id="question">
     <h1>{{ definition }}</h1>
     <div
       class="choices"
-      :class="{ correct }"
+      :class="getStyle()"
     >
       <div
         v-for="i in 4"
@@ -41,6 +41,11 @@ export default {
     choiceList: {
       type: Array,
       required: true
+    },
+    showCorrect: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   data() {
@@ -60,7 +65,15 @@ export default {
     // console.log("Correct Index:", this.correctIndex);
   },
   methods: {
-    // TODO: Make sure all choices are non duplicates
+    getStyle(slot) {
+      if (this.showCorrect) {
+        if (this.correct) {
+          return "correct";
+        } else {
+          return "incorrect";
+        }
+      }
+    },
     /**
      * Determine which term to place in the given index
      * The correct term will be placed in the proper index
@@ -112,6 +125,14 @@ h1 {
   font-size: 28px;
 }
 
+.correct {
+  border: 2px solid green;
+}
+
+.incorrect {
+  border: 2px solid red;
+}
+
 // TODO: Improve alignment and centering
 .choices {
   padding: 30px;
@@ -143,7 +164,7 @@ h1 {
   appearance: none;
   display: inline-block;
   position: relative;
-  background-color:$secondary-light;
+  background-color: $secondary-light;
   color: $secondary-light;
   height: 20px;
   width: 20px;
