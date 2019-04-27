@@ -1,7 +1,7 @@
 // The individual agenda item card.
 <!-- SCI ID: 041 -->
 <!-- Name: AgendaItem -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <div>
     <!-- :style="getBorderColor" -->

@@ -1,6 +1,6 @@
 <!-- SCI ID: 013 -->
 <!-- Name: FlashcardCreate -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <div class="content-container">
     <page-title>
@@ -77,6 +77,7 @@
         :key="hash[index]"
         :init-term="term"
         :init-def="definitions[index]"
+        :initNum="index"
         @termUpdated="termUpdated($event, index)"
         @defUpdated="defUpdated($event, index)"
         @addNew="addCard"
@@ -86,11 +87,8 @@
         class="addCard"
         @click="addCard"
       >
-        <div class="gradient-border add">
-          <div class="add-button">
-            <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
-          </div>
-        </div>
+          <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
+          <h1>Add Card</h1>
       </div>
     </div>
     <div
@@ -323,25 +321,29 @@ export default {
 
 // Icon on the new members button
 .button-icon {
-  font-size: 6em;
+  font-size: 3em;
   position: relative;
   top: 20px;
 }
 
 .addCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  box-shadow: $shadow;
-  width: 250px;
+  width: 500px;
   height: 250px;
-  border: 2px solid $secondary-light;
   background-color: white;
   user-select: none;
   padding-top: 10px;
-  margin: 0 40px 40px 0;
+
+  h1{
+    font-weight: 1;
+  }
 
   &:hover {
-    box-shadow: $shadow-heavy;
-    border-image: $orange-gradient;
+    box-shadow: $shadow-hovered;
     border-image-slice: 1;
   }
 }

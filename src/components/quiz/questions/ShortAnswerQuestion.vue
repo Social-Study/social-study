@@ -1,6 +1,6 @@
 <!-- SCI ID: 025 -->
 <!-- Name: ShortAnswerQuestion -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <div id="question">
     <h1>{{ definition }}</h1>
@@ -82,7 +82,6 @@ h1 {
 
   &:focus {
     outline: 0;
-    background-color: darken(#e7e7e7, 5);
   }
 }
 </style>
