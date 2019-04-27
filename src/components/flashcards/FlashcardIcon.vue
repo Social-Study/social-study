@@ -42,14 +42,21 @@
     <p id="modified">
       <i>Updated</i> {{ calcDays(info.lastUpdated.toDate()) }}
     </p>
+    <!-- Color status indicator based on deck rating -->
+    <div
+      id="status"
+      class="tooltip"
+      :data-tooltip="'Upvotes: ' + this.info.upvotes.length + ' Downvotes: ' + this.info.downvotes.length"
+      :class="determineStatus()"
+    ></div>
     <!-- Creator Avatar and Name Chip -->
     <!-- TODO: Figure out how to use my existing avatar component -->
     <div class="chip text-ellipsis">
       <!-- Set background to transparent when there is an image. Fixes fuzzy outline  -->
       <img
+        v-if="info.creatorPhoto !== null"
         :src="info.creatorPhoto"
         class="avatar avatar-sm"
-        :class="info.creatorPhoto !== '' ? 'chip-transp' : ''"
       />
       {{ info.creatorName }}
     </div>
@@ -75,7 +82,17 @@ export default {
       default: false
     }
   },
+  created() {
+    console.log(this.info.creatorPhoto);
+  },
   methods: {
+    determineStatus() {
+      if (this.info.downvotes.length > this.info.upvotes.length) {
+        return "low-rating";
+      } else if (this.info.downvotes.length < this.info.upvotes.length) {
+        return "high-rating";
+      }
+    },
     goStudy() {
       if (this.isPrivate) {
         this.$router.push({
@@ -87,17 +104,6 @@ export default {
       }
     },
     calcDays(date) {
-      // Old manual date calculations
-
-      // let currentDate = new Date();
-      // modDate = new Date(modDate);
-      // if (currentDate.toDateString() === modDate.toDateString()) {
-      //   return "today";
-      // }
-      // let timeDiff = Math.abs(currentDate.getTime() - modDate.getTime());
-      // let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      // let retString = days > 1 ? days + " days ago" : days + " day ago";
-      // return retString;
       return distanceInWordsToNow(date) + " ago";
     }
   }
@@ -109,6 +115,22 @@ export default {
 
 $card-width: 288px;
 $card-height: 230px;
+
+#status {
+  width: 80px;
+  height: 10px;
+  border-radius: 200px;
+  background-color: $primary;
+  align-self: center;
+}
+
+.low-rating {
+  background-color: $error-color !important;
+}
+
+.high-rating {
+  background-color: $success-color !important;
+}
 
 /* Icon itself */
 #flashcard {
@@ -160,10 +182,6 @@ p > i {
   padding: 15px;
   margin: 0 auto;
   text-align: center;
-}
-
-.chip-transp {
-  background-color: transparent;
 }
 
 #button-container {
