@@ -82,9 +82,6 @@ export default {
       default: false
     }
   },
-  created() {
-    console.log(this.info.creatorPhoto);
-  },
   methods: {
     determineStatus() {
       if (this.info.downvotes.length > this.info.upvotes.length) {

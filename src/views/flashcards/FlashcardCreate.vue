@@ -87,8 +87,8 @@
         class="addCard"
         @click="addCard"
       >
-          <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
-          <h1>Add Card</h1>
+        <h1 class="button-icon"><i class="fas fa-plus"></i></h1>
+        <h1>Add Card</h1>
       </div>
     </div>
     <div
@@ -263,9 +263,8 @@ export default {
               upvotes: []
             })
             .then(() => {
-              // console.log("Flashcard Deck created with doc id: ", docRef.id);
-              this.$router.push(`/${this.$route.params.groupID}/flashcards`);
               this.isSaved = true;
+              this.$router.push(`/${this.$route.params.groupID}/flashcards`);
             })
             .catch(error => {
               // console.error("Error updating document: ", error);
@@ -342,7 +341,7 @@ export default {
   user-select: none;
   padding-top: 10px;
 
-  h1{
+  h1 {
     font-weight: 1;
   }
 
