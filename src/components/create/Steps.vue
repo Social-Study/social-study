@@ -1,6 +1,6 @@
 <!-- SCI ID: 036 -->
 <!-- Name: Steps -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <!-- Bottom Of Page Steps Indicator -->
   <ul class="step">
@@ -102,5 +102,6 @@ export default {
   margin: 30px auto;
   width: 80%;
   border-radius: 10px;
+  background-color: white;
 }
 </style>

@@ -457,20 +457,17 @@ button.btn-action {
   padding: 20px;
   min-height: 400px;
   width: 800px;
-  background-color: rgb(255, 255, 255);
-  border: 2px solid $secondary-light;
+  background-color: white;
 
   &:hover {
-    border-image: $orange-gradient;
-    border-image-slice: 1;
-    border-width: 2px;
     box-shadow: $shadow-hovered;
   }
 }
 
 .createBtn {
   cursor: pointer;
-  background-image: $orange-gradient;
+  background-color: $primary;
+  box-shadow: $shadow;
   width: 300px;
   padding: 20px;
   font-family: $logo-font;

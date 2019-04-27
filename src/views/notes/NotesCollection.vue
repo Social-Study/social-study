@@ -1,42 +1,20 @@
 <!-- SCI ID: 011 -->
 <!-- Name: NotesCollection -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <div>
     <page-title>
       <template slot="left">
         <!-- Show a popover menu when the user chooses to create a new note -->
         <div class="popover popover-right">
-          <button class="btn btn-primary">
-            New Note <i class="fas fa-plus"></i>
-          </button>
-          <div
-            style="margin-top: 20px;"
-            class="popover-container"
+          <button
+            class="btn btn-primary"
+            :class="loadingNewNote ? 'loading' : ''"
+            @keydown.enter="createNote"
+            @click="createNote"
           >
-            <div class="card">
-              <div class="card-header">
-                Enter a title for your new note:
-              </div>
-              <div class="card-body">
-                <input
-                  v-model="noteTitle"
-                  type="text"
-                  class="form-input"
-                  @keydown.enter="createNote"
-                />
-              </div>
-              <div class="card-footer">
-                <button
-                  class="btn btn-primary"
-                  :class="loadingNewNote ? 'loading' : ''"
-                  @click="createNote"
-                >
-                  Create Note
-                </button>
-              </div>
-            </div>
-          </div>
+            Create Note
+          </button>
         </div>
       </template>
       <template slot="center">
@@ -128,7 +106,7 @@ export default {
       notesRef
         .collection("private")
         .add({
-          title: this.noteTitle,
+          title: 'Untitled Note',
           creationDate: initDate,
           lastUpdated: initDate,
           content: "# Enter your note here"
@@ -155,17 +133,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles.scss";
-
-.popover-container {
-  top: 60px !important;
-
-  .card {
-    .card-header {
-      font-family: $secondary-font;
-      font-weight: 700;
-    }
-  }
-}
 
 .content-container {
   margin: 20px;

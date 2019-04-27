@@ -230,13 +230,12 @@ h1 {
   height: 50px;
   margin: 5px;
   min-width: 86px;
-
+  padding: 10px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-
-  background-image: $orange-gradient;
+  background-color: $primary;
   color: white;
 }
 
@@ -254,8 +253,7 @@ h1 {
 }
 
 .drop.over {
-  color: white;
-  background-image: $orange-gradient;
+  background-color: lighten($primary, 20);
 }
 
 .drop.filled {

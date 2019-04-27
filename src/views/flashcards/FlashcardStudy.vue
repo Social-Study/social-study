@@ -1,6 +1,6 @@
 <!-- SCI ID: 014 -->
 <!-- Name: FlashcardStudy -->
-<!-- Version: 1.0 -->
+<!-- Version: 1.1 -->
 <template>
   <div
     v-if="dataloaded"
@@ -121,7 +121,7 @@ export default {
       definitionList: [],
       originalTermList: [],
       originalDefinitionList: [],
-      cardColor: "#E7E7E7",
+      cardColor: "#FFFFFF",
       deckName: "",
       dataloaded: false,
       upvoteList: [],
@@ -295,7 +295,7 @@ export default {
         if (self.flipped) {
           self.getCurrentContent();
           self.flipped = false;
-          self.cardColor = "#E7E7E7";
+          self.cardColor = "#FFFFFF";
         }
         //term side
         else {
@@ -334,7 +334,7 @@ export default {
         setTimeout(() => {
           self.currentContent = self.termList[self.cardIndex];
           self.flipped = false;
-          self.cardColor = "#E7E7E7";
+          self.cardColor = "#FFFFFF";
         }, 110);
       } else {
         this.cardIndex = 0;
@@ -370,7 +370,7 @@ export default {
         setTimeout(() => {
           self.flipped = false;
           self.currentContent = self.termList[self.cardIndex];
-          self.cardColor = "#E7E7E7";
+          self.cardColor = "#FFFFFF";
         }, 110);
       }
     },

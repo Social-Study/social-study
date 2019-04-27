@@ -109,7 +109,6 @@ h1 {
 
   &:focus {
     outline: 0;
-    background-color: darken(#e7e7e7, 5);
   }
 }
 </style>

@@ -10,6 +10,7 @@
         id="deleteBtn"
         class="icon icon-delete"
         @click="deleteNote(info.id)"
+        
       ></span>
     </div>
     <!-- Title -->
