@@ -296,13 +296,16 @@ export default {
   font-size: 300%;
   margin: 20px;
   font-family: $secondary-font;
+
   span {
+    font-weight: 700;
     color: white;
   }
 
   #date {
     font-size: 75%;
     font-family: $primary-font;
+    color: darken(white, 20);
   }
 }
 
@@ -405,5 +408,6 @@ export default {
   font-size: 50px;
   color: white;
   font-family: $secondary-font;
+  font-weight: 700;
 }
 </style>
