@@ -1,6 +1,6 @@
 <!-- SCI ID: 006 -->
 <!-- Name: Dashboard -->
-<!-- Version: 1.1 -->
+<!-- Version: 1.2 -->
 <template>
   <div id="full-screen">
     <notifications
@@ -33,8 +33,9 @@
     </div>
 
     <!-- Centered Empty Dashboard Placeholder -->
-    <p id="group-header">Your Study Groups</p>
+
     <div v-if="!isLoadingGroups">
+      <p id="group-header">Your Study Groups</p>
       <div class="study-group-container">
         <router-link
           class="group-card"
@@ -54,6 +55,7 @@
     </div>
     <div
       v-else
+      style="margin-top: 200px;"
       class="loading loading-lg"
     ></div>
 
@@ -157,7 +159,6 @@ export default {
           this.studyGroups === studyGroups;
           this.isLoadingGroups = false;
         });
-        this.isLoadingGroups = false;
       })
       // Catch error when loading user's account data
       .catch(error => {
@@ -185,7 +186,7 @@ export default {
       return format(this.currentDT, "h:mm A");
     },
     getDate() {
-      return format(this.currentDT, "dddd, MMMM Mo, YYYY");
+      return format(this.currentDT, "dddd, MMMM Do, YYYY");
     },
     getClassTime(time) {
       try {
@@ -317,7 +318,7 @@ export default {
 
 .group-management {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: center;
   align-items: center;
 
@@ -333,7 +334,7 @@ export default {
 
     padding: 5px 15px 5px 15px;
     margin: 10px;
-    width: 240px;
+    width: 250px;
     height: 50px;
     text-align: center;
     text-decoration: none;

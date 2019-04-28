@@ -352,6 +352,6 @@ export default {
 }
 
 .loading.loading-lg {
-  margin: 20% auto;
+  margin: auto;
 }
 </style>

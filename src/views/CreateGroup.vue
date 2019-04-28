@@ -437,6 +437,7 @@ button.btn-action {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 80px;
 }
 
 // Aligns the card into a row between the two traversal buttons.
