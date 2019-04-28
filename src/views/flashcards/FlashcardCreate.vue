@@ -287,8 +287,8 @@ export default {
             })
             .then(docRef => {
               // console.log("Flashcard Deck created with doc id: ", docRef.id);
-              this.$router.push(`/${this.$route.params.groupID}/flashcards`);
               this.isSaved = true;
+              this.$router.push(`/${this.$route.params.groupID}/flashcards`);
             })
             .catch(error => {
               // console.error("Error adding document: ", error);

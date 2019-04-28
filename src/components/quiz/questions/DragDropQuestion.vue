@@ -215,11 +215,11 @@ h1 {
 }
 
 .correct {
-  color: green;
+  color: $success-color;
 }
 
 .incorrect {
-  color: red;
+  color: $error-color;
 }
 
 .drag,

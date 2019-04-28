@@ -16,9 +16,12 @@
         <h1>Social Study</h1>
       </router-link>
 
-      <group-dropdown :study-groups="studyGroups" />
-
-      <create-join-popover></create-join-popover>
+      <!-- Don't show these controls on the dashboard -->
+      <group-dropdown
+        v-if="$route.name !== 'dashboard'"
+        :study-groups="studyGroups"
+      />
+      <create-join-popover v-if="$route.name !== 'dashboard'"></create-join-popover>
     </section>
 
     <profile-settings

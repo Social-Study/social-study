@@ -85,11 +85,11 @@ h1 {
 }
 
 .correct {
-  border: 2px solid green;
+  border: 2px solid $success-color;
 }
 
 .incorrect {
-  border: 2px solid red;
+  border: 2px solid $error-color;
 }
 
 .no-border {
