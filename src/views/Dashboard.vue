@@ -35,7 +35,11 @@
     <!-- Centered Empty Dashboard Placeholder -->
 
     <div v-if="!isLoadingGroups">
-      <p id="group-header">Your Study Groups</p>
+      <p
+        v-if="studyGroups.length > 0"
+        id="group-header"
+      >Your Study Groups</p>
+      <p v-else>You are not currently a member of any Study Groups!</p>
       <div class="study-group-container">
         <router-link
           class="group-card"
