@@ -1,5 +1,9 @@
 # social-study
 
+## Project Design PDF
+
+- The project's design documentation can be found [here](https://docs.google.com/document/d/1VLUs46n88Mc5fQVVJzYb5N05U2duIdcwyDSCoB6VAJQ/edit?usp=sharing)
+
 ## Project setup
 
 ```
