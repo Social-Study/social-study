@@ -174,7 +174,7 @@ export default {
     exportNote() {
       this.pdfIsLoading = true;
 
-      fetch("https://evanbuss.com/pdf", {
+      fetch("https://ancient-dusk-74849.herokuapp.com/pdf", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
